@@ -1,0 +1,31 @@
+name: Python replication
+permissions:
+  contents: read
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --locked --extra test
+      - run: uv run --locked python -m pytest -q
+      - run: uv run --locked python -m grn_memory.suite --no-traces
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: replication-results
+          path: python/results/

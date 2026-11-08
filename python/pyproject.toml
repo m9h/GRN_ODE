@@ -1,0 +1,17 @@
+[project]
+name = "grn-memory-replication"
+version = "0.1.0"
+description = "SBML reproductions of finite-window memory experiments in biochemical networks"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "libroadrunner==2.11.0", "copasi-basico==0.92", "python-copasi==4.48.311",
+  "python-libsbml==5.21.2", "numpy==2.5.4", "pandas==3.1.1", "matplotlib==3.11.2",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.2.0", "scipy==1.18.1"]
+notebook = ["jupyterlab>=4,<5", "nbformat>=5,<6", "nbclient>=0.10,<1", "ipykernel>=6,<8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
