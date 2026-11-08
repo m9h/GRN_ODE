@@ -5,6 +5,7 @@ import json
 import libsbml
 import numpy as np
 import pytest
+import importlib.util
 from scipy.io import loadmat
 
 from grn_memory import Phase, regulation, retained, simulate
@@ -13,6 +14,9 @@ from grn_memory.simulation import model_info
 from grn_memory.suite import compare
 
 ROOT = Path(__file__).resolve().parents[1]
+ENGINES = ["roadrunner", "copasi"]
+if importlib.util.find_spec("jaxkineticmodel") is not None:
+    ENGINES.append("jaxkineticmodel")
 
 
 @pytest.fixture
@@ -51,7 +55,7 @@ def decay(tmp_path):
     return path
 
 
-@pytest.mark.parametrize("engine", ["roadrunner", "copasi"])
+@pytest.mark.parametrize("engine", ENGINES)
 def test_reset_timing_and_concentration_units(decay, engine):
     trace = simulate(decay, [Phase("baseline", .2), Phase("on", .3, {"A": 10}),
                              Phase("off", .2)], engine=engine)
@@ -67,7 +71,7 @@ def test_reset_timing_and_concentration_units(decay, engine):
     np.testing.assert_allclose(off.A, 10*np.exp(-(.1+off.time-.5)), rtol=2e-7)
 
 
-@pytest.mark.parametrize("engine", ["roadrunner", "copasi"])
+@pytest.mark.parametrize("engine", ENGINES)
 def test_drug_script_boundary_resets(decay, engine):
     trace = simulate(decay, [Phase("on", .2, {"A": 10}, True, True), Phase("off", .1)], engine=engine)
     assert trace.iloc[0].A == pytest.approx(10)

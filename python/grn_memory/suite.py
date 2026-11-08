@@ -44,15 +44,24 @@ def compare(a, b, rtol=2e-5, atol=1e-7):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", choices=list(CASES), action="append")
-    parser.add_argument("--engine", choices=["both", "roadrunner", "copasi"], default="both")
+    parser.add_argument("--engine", choices=["both", "all", "roadrunner", "copasi", "jaxkineticmodel"], default="both")
     parser.add_argument("--output", type=Path, default=ROOT / "results")
     parser.add_argument("--no-traces", action="store_true")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    engines = ["roadrunner", "copasi"] if args.engine == "both" else [args.engine]
+    engines = ["roadrunner", "copasi"] if args.engine in {"both", "all"} else [args.engine]
+    if args.engine == "all":
+        engines.append("jaxkineticmodel")
     report = {"versions": {p: version(p) for p in ["libroadrunner", "copasi-basico", "python-copasi", "python-libsbml", "numpy"]},
               "solver_rtol": 1e-9, "solver_atol": 1e-11, "comparison_rtol": 2e-5,
               "comparison_atol": 1e-7, "dt": 0.01, "reset_interval": 0.1, "cases": {}}
+    if "jaxkineticmodel" in engines:
+        report["versions"].update({p: version(p) for p in ["jaxkineticmodel", "jax", "jaxlib", "diffrax", "equinox"]})
+        import jaxkineticmodel.load_sbml as source
+        source_root = Path(source.__file__).parent
+        report["jaxkineticmodel_source_sha256"] = {
+            f"jaxkineticmodel/load_sbml/{p}": hashlib.sha256((source_root/p).read_bytes()).hexdigest()
+            for p in ("sbml_model.py", "jax_kinetic_model.py", "export_sbml.py")}
     passed = True
     from .plotting import plot_case
     for name in args.case or CASES:
@@ -70,18 +79,19 @@ def main():
                 for label, trace in traces.items():
                     trace.to_csv(args.output / f"{name}-{engine}-{label}.csv.gz", index=False,
                                  compression={"method": "gzip", "mtime": 0})
-        if len(engines) == 2:
-            entry["comparison"] = {label: compare(outputs["roadrunner"][label], outputs["copasi"][label])
-                                   for label in outputs["roadrunner"]}
+        if len(engines) > 1:
+            entry["comparison"] = {(label if len(engines) == 2 else f"{engine}/{label}"):
+                                    compare(outputs["roadrunner"][label], outputs[engine][label])
+                                    for engine in engines[1:] for label in outputs["roadrunner"]}
             passed &= all(item["passed"] for item in entry["comparison"].values())
             # Boolean conclusions are part of conformance, not just trajectories.
             entry["classification_agreement"] = all(
-                entry["scores"]["copasi"][k] == v
-                for k, v in entry["scores"]["roadrunner"].items() if isinstance(v, bool))
+                entry["scores"][engine][k] == v
+                for engine in engines[1:] for k, v in entry["scores"]["roadrunner"].items() if isinstance(v, bool))
             passed &= entry["classification_agreement"]
         plot_case(name, kind, outputs[engines[0]], entry["scores"][engines[0]], args.output)
         report["cases"][name] = entry
-    report["all_comparisons_passed"] = bool(passed) if len(engines) == 2 else None
+    report["all_comparisons_passed"] = bool(passed) if len(engines) > 1 else None
     (args.output / "report.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
     print(f"Saved {args.output / 'report.json'}", flush=True)
     if not passed:

@@ -6,9 +6,11 @@ The question is whether a network's response to an input depends on its previous
 stimulation. Its reaction equations and rate constants remain fixed throughout
 training. What changes is the molecular state.
 
-Five original SBML models, eight experiments, two independent simulators, and an
+Five original SBML models, eight experiments, two independent reference simulators, and an
 [executed notebook](examples/memory_lab.ipynb) are included. See
 [RESULTS.md](RESULTS.md) for what reproduced and what the controls revealed.
+An optional Jaxkineticmodel backend runs the same protocols on JAX 0.12.0.1;
+see [JAX validation](JAX_VALIDATION.md) for the migration and three-engine results.
 
 ## Run it
 

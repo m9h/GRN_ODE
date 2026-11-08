@@ -145,9 +145,14 @@ external additions/removals of material, not changes to reaction parameters.
             raise ValueError("Only independent, dynamic species can be clamped")
         if any(not np.isfinite(v) or v < 0 for v in phase.clamp.values()):
             raise ValueError("Clamp concentrations must be finite and nonnegative")
-    if engine not in {"roadrunner", "copasi"}:
+    if engine not in {"roadrunner", "copasi", "jaxkineticmodel"}:
         raise ValueError(f"Unknown engine: {engine}")
-    solver = (RoadRunner if engine == "roadrunner" else Copasi)(path, ids, dynamic, rtol, atol)
+    if engine == "jaxkineticmodel":
+        from .jaxkinetic import JaxKinetic
+        solver_type = JaxKinetic
+    else:
+        solver_type = RoadRunner if engine == "roadrunner" else Copasi
+    solver = solver_type(path, ids, dynamic, rtol, atol)
     try:
         state = solver.initial()
         if initial is not None:
