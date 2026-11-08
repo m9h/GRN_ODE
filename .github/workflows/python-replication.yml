@@ -17,11 +17,15 @@ jobs:
       MPLCONFIGDIR: /tmp/grn-mpl
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
           cache-dependency-glob: python/uv.lock
-      - run: uv sync --locked --extra test
+      # RoadRunner's Linux wheel links libpython; use setup-python's shared build.
+      - run: uv sync --python python --locked --extra test
       - run: uv run --locked python -m pytest -q
       - run: uv run --locked python -m grn_memory.suite --no-traces
       - uses: actions/upload-artifact@v4
