@@ -9,6 +9,9 @@ Start with the [Python guide and mathematics](python/README.md), the
 [executed learning notebook](python/examples/memory_lab.ipynb), and the
 [results and limits](python/RESULTS.md).
 
+The [BioModels guide](python/models/README.md) explains the biology, reactions,
+initial states, conserved quantities and role of each of the five models.
+
 The examples cover retained responses, pairing, transfer, associative recall,
 repeated stimulation, and a second intervention that reverses a response on
 rechallenge. They use five original BioModels from the paper, not synthetic
@@ -16,6 +19,14 @@ substitutes. This is a replication of selected experiments and their operational
 definitions; it is not a reproduction of the full 35-model survey.
 
 ![Associative recall with a sham-probe control](python/results/associative_recall.png)
+
+## License
+
+Original contributions in this fork are [MIT licensed](LICENSE), copyright 2026
+Morgan Hough. The downloaded BioModels are covered by
+[CC0](python/models/LICENSE). The inherited MATLAB scripts and saved data retain
+their authors' rights; no upstream license file was supplied. See
+[LICENSING.md](LICENSING.md) for the exact scope of each notice.
 
 ## Original repository description
 

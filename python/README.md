@@ -116,6 +116,15 @@ paper-style label so the distinction remains visible.
 
 ## Models and provenance
 
+These five models describe **MAPK protein signaling**, with species representing
+phosphorylation states and enzyme complexes. They do not explicitly model gene
+transcription or learn new reaction weights. One model is a three-stage cascade
+with negative feedback; four are related variants of a phosphorylation cycle.
+
+The [BioModels guide](models/README.md) explains each model's original scientific
+question, species, rate laws, initial conditions, conserved pools and role in our
+experiments, with links to the source records and exact XML files.
+
 | Paper network | BioModels ID | Example |
 |---|---|---|
 | 7 | BIOMD0000000010 | Kholodenko MAPK feedback; habituation-shaped response |
@@ -123,6 +132,17 @@ paper-style label so the distinction remains visible.
 | 16 | BIOMD0000000027 | Markevich reduced ordered model; accumulating response |
 | 18 | BIOMD0000000029 | Markevich random phosphorylation; breaking intervention |
 | 19 | BIOMD0000000031 | Markevich separate kinases; memory and no-memory pair |
+
+Model 26 tracks binding complexes explicitly, whereas models 27, 29 and 31
+replace them with saturating rate laws and fixed enzyme concentrations. Model 29
+distinguishes two possible first phosphorylation sites; model 31 uses separate
+kinases for its two phosphorylation steps. These structural differences matter:
+the same stimulus name need not have the same effect across models.
+
+BioModels curation checks reproduction of the **original model publication**.
+The memory protocols are later interventions, so their interpretation and our
+added controls still need to be assessed separately. The four Markevich variants
+also should not be counted as independent biological systems.
 
 The [supplement](https://www.mdpi.com/1422-0067/24/1/285/s1) establishes this
 mapping. Tests verify that the independent species' initial concentrations match
@@ -137,8 +157,14 @@ The original model papers are
 [Markevich et al. (2004)](https://doi.org/10.1083/jcb.200308060) and
 [Kholodenko (2000)](https://doi.org/10.1046/j.1432-1327.2000.01197.x).
 Original SBML annotations, attribution and terms-of-use notices are preserved.
-The existing MATLAB code belongs to its original authors; this fork does not
-relicense their code or the BioModels files.
+
+## License
+
+Original replication code and documentation are [MIT licensed](../LICENSE),
+copyright 2026 Morgan Hough. The downloaded model encodings and annotations have
+a separate [BioModels CC0 notice](models/LICENSE). The original MATLAB code and
+saved `.mat` files remain subject to their authors' rights; no upstream license
+file was supplied. [LICENSING.md](../LICENSING.md) defines these boundaries.
 
 ## Differences and limits
 
