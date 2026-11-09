@@ -3,6 +3,8 @@
 **9 November 2026: all 538 stimulation cases across all 35 models pass independent
 trajectory comparisons and the checks on resolved classifications. All 47 tests
 pass with the optional JAX and delay dependencies installed.**
+The [Linux reproduction](https://github.com/m9h/GRN_ODE/actions/runs/42707874609)
+also passes all 538 cases, the baseline catalog, and the existing memory/JAX suites.
 
 This extends the [baseline kinetics validation](CATALOG_VALIDATION.md) with a
 single-input retention screen. Every independently writable state is stimulated
