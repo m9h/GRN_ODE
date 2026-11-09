@@ -1,0 +1,140 @@
+{
+  "network": 27,
+  "biomodel_id": "BIOMD0000000275",
+  "name": "Goldbeter2007_Somitogenesis_Switch",
+  "sha256": "600e2c173146c24f77c738c9117aa684a0acf9aeedea227126efaf033f641e70",
+  "species": [
+    "RA",
+    "M_C",
+    "C",
+    "F",
+    "M_F"
+  ],
+  "observables": [
+    "RA",
+    "M_C",
+    "C",
+    "F",
+    "M_F",
+    "vs1",
+    "rho",
+    "alpha2",
+    "alpha1"
+  ],
+  "observable_types": {
+    "RA": "concentration",
+    "M_C": "concentration",
+    "C": "concentration",
+    "F": "concentration",
+    "M_F": "concentration",
+    "vs1": "parameter",
+    "rho": "parameter",
+    "alpha2": "parameter",
+    "alpha1": "parameter"
+  },
+  "reaction_count": 9,
+  "rules": [
+    {
+      "target": "M_F",
+      "type": "assignment",
+      "formula": "M_0 * (x / L)"
+    },
+    {
+      "target": "vs1",
+      "type": "assignment",
+      "formula": "ks1 * RALDH2_0 * (1 - x / L)"
+    },
+    {
+      "target": "rho",
+      "type": "assignment",
+      "formula": "alpha2 / alpha1"
+    },
+    {
+      "target": "alpha2",
+      "type": "assignment",
+      "formula": "F / (F + Kr2)"
+    },
+    {
+      "target": "alpha1",
+      "type": "assignment",
+      "formula": "RA / (RA + Kr1)"
+    }
+  ],
+  "events": [],
+  "delay_expressions": [],
+  "initial_assignment_count": 0,
+  "existing_reset_protocol": {
+    "supported": false,
+    "reason": "Only fixed global parameters are supported"
+  },
+  "status": "passed",
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "recorded_at": "2026-11-09T04:36:45.720560+00:00",
+  "implementation_sha256": {
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0"
+  },
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "solver_rtol": 1e-10,
+    "solver_atol": 1e-12,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "native_sbml_unchanged": true
+  },
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "comparison": {
+    "passed": true,
+    "max_scaled_error": 0.0003071273545908954,
+    "max_absolute_error": 6.241184991040427e-08,
+    "worst_observable": "rho",
+    "worst_time": 13.040000000000001,
+    "samples": 5001,
+    "observables": 9,
+    "per_observable_max_scaled_error": {
+      "RA": 0.0001709846341971975,
+      "M_C": 0.00018759798634610734,
+      "C": 0.00016209921905382366,
+      "F": 0.0002461935270395604,
+      "M_F": 0.0,
+      "vs1": 0.0,
+      "rho": 0.0003071273545908954,
+      "alpha2": 0.00018987919423162823,
+      "alpha1": 0.00012475995703604417
+    }
+  },
+  "initial_values": {
+    "RA": 0.1,
+    "M_C": 0.1,
+    "C": 0.1,
+    "F": 1.0,
+    "M_F": 1.5,
+    "vs1": 4.97,
+    "rho": 5.5,
+    "alpha2": 0.5,
+    "alpha1": 0.09090909090909091
+  },
+  "final_values": {
+    "RA": 0.19887343703738425,
+    "M_C": 6.9984581772591,
+    "C": 24.9908100106896,
+    "F": 0.754196359459004,
+    "M_F": 1.5,
+    "vs1": 4.97,
+    "rho": 2.591807752947248,
+    "alpha2": 0.4299383905297802,
+    "alpha1": 0.16588359612740572
+  },
+  "elapsed_seconds": 0.3973158749868162
+}

@@ -12,6 +12,12 @@ Five original SBML models, eight experiments, two independent reference simulato
 An optional Jaxkineticmodel backend runs the same protocols on JAX 0.12.0.1;
 see [JAX validation](JAX_VALIDATION.md) for the migration and three-engine results.
 
+The broader [35-model kinetics validation](CATALOG_VALIDATION.md) now passes
+baseline comparisons for every model: 34 through RoadRunner/COPASI and the
+delayed Scheper clock through two delay-preserving solvers. All 35 source SBML
+files are included. Full-catalog memory protocols and JAX coverage remain active
+work; the five-model suite above is the completed memory demonstration set.
+
 ## Run it
 
 Python 3.12 and [uv](https://docs.astral.sh/uv/) are required for the commands below.
@@ -37,7 +43,8 @@ All SBML inputs are checked in, so running the experiments after installation
 does not depend on BioModels availability. Model hashes, download URLs and native
 species orders are in [models/manifest.json](models/manifest.json). The complete
 35-model mapping from supplementary Table S1 is in
-[models/catalog.json](models/catalog.json). Only five are simulated here.
+[models/catalog.json](models/catalog.json). Five underpin the selected memory
+examples; all 35 run through the separate baseline validation command.
 
 ## The mathematics
 

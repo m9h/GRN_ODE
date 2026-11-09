@@ -1,4 +1,14 @@
-# The five BioModels used in this replication
+# BioModels: the memory examples and full kinetics catalog
+
+All 35 source files from supplementary Table S1 are now included and independently
+checked over their baseline trajectories. See the
+[full inventory, biological model names and validation results](../CATALOG_VALIDATION.md#model-by-model-inventory).
+That catalog includes cell cycles, circadian clocks, metabolic pathways, signaling
+and regulatory switches. The detailed descriptions below concern the original
+five-model memory demonstration set; those five should not be confused with
+the full catalog.
+
+## The five models used in the selected memory experiments
 
 These are **protein-signaling models** of the MAPK pathway. Although the parent
 repository is called `GRN_ODE`, these five networks do not model transcription,

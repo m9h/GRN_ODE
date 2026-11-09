@@ -224,6 +224,18 @@ wheels = [
 ]
 
 [[package]]
+name = "chspy"
+version = "1.2.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f3/fd/1cd88c5650e8f049e4e7b98ff62f6767984f1b770e8bbea6bd29ae6cd80f/chspy-1.2.3.tar.gz", hash = "sha256:134298fe2bfad80934a0c4976ba733983021b4b8d00c48c0ba1d6f211f9af585", size = 20543, upload-time = "2025-02-15T16:14:03.856Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/22/d2/aa823376f917cc9272ba6486df841d93f9d22fd4eec8d6a587a8b04fb2e3/CHSPy-1.2.3-py3-none-any.whl", hash = "sha256:2d474e5b3b1602b8f8983b7422b0cb2ab76b7a862e880dc41fbd11f145d06401", size = 11889, upload-time = "2025-02-15T16:14:00.49Z" },
+]
+
+[[package]]
 name = "cloudpickle"
 version = "3.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -420,6 +432,10 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+delay = [
+    { name = "jitcdde" },
+    { name = "scipy" },
+]
 jaxkineticmodel = [
     { name = "jaxkineticmodel" },
 ]
@@ -439,6 +455,7 @@ requires-dist = [
     { name = "copasi-basico", specifier = "==0.92" },
     { name = "ipykernel", marker = "extra == 'notebook'", specifier = ">=6,<8" },
     { name = "jaxkineticmodel", marker = "extra == 'jaxkineticmodel'", git = "https://github.com/m9h/jaxkineticmodel.git?rev=2a5b4c255d2d250cdcd36d5abc2f7f992d3a24e6" },
+    { name = "jitcdde", marker = "extra == 'delay'", specifier = "==1.8.3" },
     { name = "jupyterlab", marker = "extra == 'notebook'", specifier = ">=4,<5" },
     { name = "libroadrunner", specifier = "==2.11.0" },
     { name = "matplotlib", specifier = "==3.11.2" },
@@ -449,9 +466,10 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'test'", specifier = "==9.2.0" },
     { name = "python-copasi", specifier = "==4.48.311" },
     { name = "python-libsbml", specifier = "==5.21.2" },
+    { name = "scipy", marker = "extra == 'delay'", specifier = "==1.18.1" },
     { name = "scipy", marker = "extra == 'test'", specifier = "==1.18.1" },
 ]
-provides-extras = ["test", "notebook", "jaxkineticmodel"]
+provides-extras = ["test", "notebook", "jaxkineticmodel", "delay"]
 
 [[package]]
 name = "h11"
@@ -664,6 +682,36 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d", size = 245115, upload-time = "2025-03-05T20:05:02.478Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67", size = 134899, upload-time = "2025-03-05T20:05:00.369Z" },
+]
+
+[[package]]
+name = "jitcdde"
+version = "1.8.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "chspy" },
+    { name = "jitcxde-common" },
+    { name = "numpy" },
+    { name = "symengine" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/dd/ff/2cd2edbf526d32abd38cb2c658536bab8cd9020f78b5058f728b39f43033/jitcdde-1.8.3.tar.gz", hash = "sha256:d65db9d2bdd4c355e72911df10beb2578e267a181e0b28ccd6aa417abd24bdd6", size = 151818, upload-time = "2025-08-08T10:30:20.948Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/13/76/bf21f833da4cdac104a270a70c065bd929abda043ba082d89992ca97ba7f/jitcdde-1.8.3-py3-none-any.whl", hash = "sha256:f3e68bed580895c5ad576d129cd754658fc00b6b8247da2867e5e03a0018aa01", size = 36290, upload-time = "2025-08-08T10:30:19.501Z" },
+]
+
+[[package]]
+name = "jitcxde-common"
+version = "1.5.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "jinja2" },
+    { name = "numpy" },
+    { name = "setuptools" },
+    { name = "symengine" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/73/62/4a0f3195cb63502b6146fff0e828453d68d1af6410e8db0fdb9a5af697d9/jitcxde_common-1.5.6.tar.gz", hash = "sha256:db41fa10ed253b5c08ab6c4adecc12aaa9fed0bc204e8b2be3dbba0147f31933", size = 29435, upload-time = "2025-05-13T06:55:36.198Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2b/3e/3b3479672e7a740d60da8c855a06db071218dc48f35e618f19810b92322d/jitcxde_common-1.5.6-py3-none-any.whl", hash = "sha256:22a937bcc3ed237d2246dcf11ae27aab46862028a296c7b42a4f1fa36d4cc19b", size = 16147, upload-time = "2025-05-13T06:55:35.025Z" },
 ]
 
 [[package]]
@@ -1744,6 +1792,15 @@ wheels = [
 ]
 
 [[package]]
+name = "setuptools"
+version = "84.2.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/70/b3/c19426f783614d625699a4b247faf628ea9ab1db228674491767b417f9e1/setuptools-84.2.1.tar.gz", hash = "sha256:3ff8b3b5492a0aa66960f4419365a86b84e013070d4313e4d4a6894f5d64d6bc", size = 1230289, upload-time = "2026-10-20T19:01:37.742Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ef/55/6dc6d6bb953bdfc52519a0059592c52b6e3b8ad51cf8256dffceb55b0610/setuptools-84.2.1-py3-none-any.whl", hash = "sha256:ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2", size = 876263, upload-time = "2026-10-20T19:01:35.678Z" },
+]
+
+[[package]]
 name = "six"
 version = "1.17.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1773,6 +1830,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/28/e3/55dcc2cfbc3ca9c29519eb6884dd1415ecb53b0e934862d3559ddcb7e20b/stack_data-0.6.3.tar.gz", hash = "sha256:836a778de4fec4dcd1dcd89ed8abff8a221f58308462e1c4aa2a3cf30148f0b9", size = 44707, upload-time = "2023-09-30T13:58:05.479Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f1/7b/ce1eafaf1a76852e2ec9b22edecf1daa58175c090266e9f6c64afcd81d91/stack_data-0.6.3-py3-none-any.whl", hash = "sha256:d5558e0c25a4cb0853cddad3d77da9891a08cb85dd9f9f91b9f8cd66e511e695", size = 24521, upload-time = "2023-09-30T13:58:03.53Z" },
+]
+
+[[package]]
+name = "symengine"
+version = "0.15.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/76/f2/985d8b2e322e3dbe0a957a8d3f17c663390ac57dcc8cb956fac0968ce6f9/symengine-0.15.0.tar.gz", hash = "sha256:7f1f911c771e771bf0d73873c6bedb4af48148ffc887da2717b58aa846efca97", size = 107389, upload-time = "2026-10-31T04:29:27.657Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/59/6f/90230e26decc7cc8e11cea93ae45430b7a5539c50877ff270fa1b38d017e/symengine-0.15.0-cp311-abi3-macosx_11_0_arm64.whl", hash = "sha256:452d1ed85b9f3fbe3c2b5c29bce7d2d2f61437b69ed50765db322b5d5afe191f", size = 22779768, upload-time = "2026-10-31T04:27:51.608Z" },
+    { url = "https://files.pythonhosted.org/packages/5a/c3/b5742656285bb6d9203a27098e5a5f9200be140d5dc0c56ce2083e7f8eaa/symengine-0.15.0-cp311-abi3-macosx_11_0_x86_64.whl", hash = "sha256:cd9f38f011610ffe72c7e4fa0b0a8e441e91d46030cd7fbd0ccbfa5c714082e9", size = 25979496, upload-time = "2026-10-31T04:27:54.925Z" },
+    { url = "https://files.pythonhosted.org/packages/95/cd/a96d946de579e5f8c649e8cb4dd016fb0fc732f7bdf6251d794ec5341caa/symengine-0.15.0-cp311-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:18eb3b82791e0f4b98789fe2512f0217487036233f62430796acc76bae118218", size = 58499760, upload-time = "2026-10-31T04:27:59.932Z" },
+    { url = "https://files.pythonhosted.org/packages/b8/3c/9aae81a0df8ae99cab0fec88f84c2c106c6bb3cb9265e647a3ae08bcaa0c/symengine-0.15.0-cp311-abi3-manylinux2014_ppc64le.manylinux_2_17_ppc64le.whl", hash = "sha256:790fcbbc13a18863c2a7f3107b6b1d5faaddb4058801327fcac42b41cb19ea6d", size = 60747259, upload-time = "2026-10-31T04:28:05.82Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/7c/e74352a9a33a9bc2fb4387a6a09969c3a35735f84e69a7627dedaa80d682/symengine-0.15.0-cp311-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:30639ad83ec20f5d0d2b514b1150729f8d19f4d685dd187a3e6ec8b67fc89120", size = 48882606, upload-time = "2026-10-31T04:28:10.503Z" },
+    { url = "https://files.pythonhosted.org/packages/dd/3b/44906c009f401764e40315e95dc8835ded17904160521921602a9a15aa66/symengine-0.15.0-cp311-abi3-win_amd64.whl", hash = "sha256:80a565ed0638c1bfcdbba42be87851b21a705df8b504bd09694b0afebccdb6cb", size = 19092121, upload-time = "2026-10-31T04:28:14.114Z" },
 ]
 
 [[package]]

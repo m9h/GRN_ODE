@@ -42,6 +42,11 @@ def model_info(path):
     maths = [r.getKineticLaw().getMath() for r in m.getListOfReactions()]
     maths += [r.getMath() for r in m.getListOfRules()]
     maths += [f.getMath() for f in m.getListOfFunctionDefinitions()]
+    def has_delay(ast):
+        return ast is not None and (ast.getType() == libsbml.AST_FUNCTION_DELAY or
+                                    any(has_delay(ast.getChild(i)) for i in range(ast.getNumChildren())))
+    if any(has_delay(x) for x in maths):
+        raise ValueError("Delay models require a history-preserving solver")
     if any(has_time(x) for x in maths):
         raise ValueError("Time-dependent models require full state/restart semantics")
     assigned = {r.getVariable() for r in m.getListOfRules()}

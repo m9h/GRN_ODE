@@ -1,0 +1,211 @@
+{
+  "network": 28,
+  "biomodel_id": "BIOMD0000000697",
+  "name": "Ciliberto2003 - CyclinE / Cdk2 timer in the cell cycle of Xenopus laevis embryo",
+  "sha256": "49fa7d62694291db1d001a1c8c0a77c3f2c183e6def7d352b57a9714c542be33",
+  "species": [
+    "PCdk2_CycE",
+    "Cdk2_CycE",
+    "Wee1_a",
+    "Wee1_total",
+    "Cdk2_CycErem",
+    "PCdk2_CycErem",
+    "Deg_a",
+    "Xic",
+    "Xic_Cdk2_CycE",
+    "Xic_PCdk2_CycE",
+    "Xic_Cdk2_CycErem",
+    "Xic_PCdk2_CycErem",
+    "Xicrem",
+    "Cyc_total",
+    "Xic_total",
+    "Kin_a"
+  ],
+  "observables": [
+    "PCdk2_CycE",
+    "Cdk2_CycE",
+    "Wee1_a",
+    "Wee1_total",
+    "Cdk2_CycErem",
+    "PCdk2_CycErem",
+    "Deg_a",
+    "Xic",
+    "Xic_Cdk2_CycE",
+    "Xic_PCdk2_CycE",
+    "Xic_Cdk2_CycErem",
+    "Xic_PCdk2_CycErem",
+    "Xicrem",
+    "Cyc_total",
+    "Xic_total",
+    "Kin_a",
+    "pool",
+    "phi",
+    "x",
+    "Heav"
+  ],
+  "observable_types": {
+    "PCdk2_CycE": "concentration",
+    "Cdk2_CycE": "concentration",
+    "Wee1_a": "concentration",
+    "Wee1_total": "concentration",
+    "Cdk2_CycErem": "concentration",
+    "PCdk2_CycErem": "concentration",
+    "Deg_a": "concentration",
+    "Xic": "concentration",
+    "Xic_Cdk2_CycE": "concentration",
+    "Xic_PCdk2_CycE": "concentration",
+    "Xic_Cdk2_CycErem": "concentration",
+    "Xic_PCdk2_CycErem": "concentration",
+    "Xicrem": "concentration",
+    "Cyc_total": "concentration",
+    "Xic_total": "concentration",
+    "Kin_a": "concentration",
+    "pool": "parameter",
+    "phi": "parameter",
+    "x": "parameter",
+    "Heav": "parameter"
+  },
+  "reaction_count": 30,
+  "rules": [
+    {
+      "target": "Cyc_total",
+      "type": "assignment",
+      "formula": "Xic_PCdk2_CycE + Xic_Cdk2_CycE + Xic_PCdk2_CycErem + Xic_Cdk2_CycErem + PCdk2_CycErem + Cdk2_CycErem + Cdk2_CycE + PCdk2_CycE"
+    },
+    {
+      "target": "Xic_total",
+      "type": "assignment",
+      "formula": "(Xic + Xic_PCdk2_CycE + Xic_Cdk2_CycE + Xic_PCdk2_CycErem + Xic_Cdk2_CycErem + Xicrem) / 3"
+    },
+    {
+      "target": "pool",
+      "type": "assignment",
+      "formula": "Cdk2_CycErem + PCdk2_CycErem + Xic_Cdk2_CycErem + Xic_PCdk2_CycErem"
+    },
+    {
+      "target": "phi",
+      "type": "assignment",
+      "formula": "(epsilon + pool^n) / (L^n + pool^n)"
+    },
+    {
+      "target": "x",
+      "type": "assignment",
+      "formula": "Cdk2_CycErem - theta"
+    },
+    {
+      "target": "Heav",
+      "type": "assignment",
+      "formula": "piecewise(0, x < 0, 1)"
+    }
+  ],
+  "events": [],
+  "delay_expressions": [],
+  "initial_assignment_count": 0,
+  "existing_reset_protocol": {
+    "supported": false,
+    "reason": "Only fixed global parameters are supported"
+  },
+  "status": "passed",
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "recorded_at": "2026-11-09T04:36:45.823199+00:00",
+  "implementation_sha256": {
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0"
+  },
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "solver_rtol": 1e-10,
+    "solver_atol": 1e-12,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "native_sbml_unchanged": true
+  },
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "comparison": {
+    "passed": true,
+    "max_scaled_error": 0.005776913428626506,
+    "max_absolute_error": 7.499114551556829e-09,
+    "worst_observable": "Wee1_a",
+    "worst_time": 2.7800000000000002,
+    "samples": 5001,
+    "observables": 20,
+    "per_observable_max_scaled_error": {
+      "PCdk2_CycE": 0.00012936861131538643,
+      "Cdk2_CycE": 0.0002823690117637614,
+      "Wee1_a": 0.005776913428626506,
+      "Wee1_total": 5.547647843223781e-12,
+      "Cdk2_CycErem": 4.362414822465048e-06,
+      "PCdk2_CycErem": 5.745837876947546e-06,
+      "Deg_a": 0.0,
+      "Xic": 3.0465060147838595e-06,
+      "Xic_Cdk2_CycE": 0.00024049403516118406,
+      "Xic_PCdk2_CycE": 9.301450782534963e-05,
+      "Xic_Cdk2_CycErem": 1.9412935984354465e-05,
+      "Xic_PCdk2_CycErem": 1.6787148394916015e-05,
+      "Xicrem": 0.0,
+      "Cyc_total": 6.296787303844092e-10,
+      "Xic_total": 3.0379260209219955e-10,
+      "Kin_a": 0.00012070791214920695,
+      "pool": 6.208478954035364e-08,
+      "phi": 7.860697337203097e-11,
+      "x": 7.410972232713953e-08,
+      "Heav": 0.0
+    }
+  },
+  "initial_values": {
+    "PCdk2_CycE": 0.94,
+    "Cdk2_CycE": 0.0599999999999999,
+    "Wee1_a": 1.02,
+    "Wee1_total": 7.99999999999998,
+    "Cdk2_CycErem": 0.0,
+    "PCdk2_CycErem": 0.0,
+    "Deg_a": 0.0,
+    "Xic": 2.99999999999998,
+    "Xic_Cdk2_CycE": 0.0,
+    "Xic_PCdk2_CycE": 0.0,
+    "Xic_Cdk2_CycErem": 0.0,
+    "Xic_PCdk2_CycErem": 0.0,
+    "Xicrem": 0.0,
+    "Cyc_total": 0.9999999999999999,
+    "Xic_total": 0.9999999999999933,
+    "Kin_a": 0.6,
+    "pool": 0.0,
+    "phi": 0.03906249999999999,
+    "x": -0.3,
+    "Heav": 0.0
+  },
+  "final_values": {
+    "PCdk2_CycE": 0.0006425595069617375,
+    "Cdk2_CycE": 0.004172123065587996,
+    "Wee1_a": 0.009978380427248974,
+    "Wee1_total": 7.99999999999998,
+    "Cdk2_CycErem": 0.0012434616565889128,
+    "PCdk2_CycErem": 0.000582534668007026,
+    "Deg_a": 0.0,
+    "Xic": 1.9975711396209679,
+    "Xic_Cdk2_CycE": 0.8292607339633118,
+    "Xic_PCdk2_CycE": 0.12769455154350162,
+    "Xic_Cdk2_CycErem": 0.025377589103737316,
+    "Xic_PCdk2_CycErem": 0.01102644649231619,
+    "Xicrem": 0.0,
+    "Cyc_total": 1.0000000000000127,
+    "Xic_total": 0.9969768202412782,
+    "Kin_a": 0.9998319760154162,
+    "pool": 0.03823003192064944,
+    "phi": 0.039142674744140356,
+    "x": -0.2987565383434111,
+    "Heav": 0.0
+  },
+  "elapsed_seconds": 0.7682825420051813
+}

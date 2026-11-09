@@ -1,0 +1,103 @@
+{
+  "network": 3,
+  "biomodel_id": "BIOMD0000000003",
+  "name": "Goldbeter1991 - Min Mit Oscil",
+  "sha256": "a633872e4c602922e85ac487ef52ac8bd8ead762ec7c0f86f9e93032a84c90f5",
+  "species": [
+    "C",
+    "M",
+    "X"
+  ],
+  "observables": [
+    "C",
+    "M",
+    "X",
+    "V1",
+    "V3"
+  ],
+  "observable_types": {
+    "C": "concentration",
+    "M": "concentration",
+    "X": "concentration",
+    "V1": "parameter",
+    "V3": "parameter"
+  },
+  "reaction_count": 7,
+  "rules": [
+    {
+      "target": "V1",
+      "type": "assignment",
+      "formula": "C * VM1 * (C + Kc)^-1"
+    },
+    {
+      "target": "V3",
+      "type": "assignment",
+      "formula": "M * VM3"
+    }
+  ],
+  "events": [],
+  "delay_expressions": [],
+  "initial_assignment_count": 0,
+  "existing_reset_protocol": {
+    "supported": false,
+    "reason": "Only fixed global parameters are supported"
+  },
+  "status": "passed",
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "recorded_at": "2026-11-09T04:36:39.360516+00:00",
+  "implementation_sha256": {
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0"
+  },
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "solver_rtol": 1e-10,
+    "solver_atol": 1e-12,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "native_sbml_unchanged": true
+  },
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "comparison": {
+    "passed": true,
+    "max_scaled_error": 0.020127103865057446,
+    "max_absolute_error": 9.934497946506582e-09,
+    "worst_observable": "X",
+    "worst_time": 32.77,
+    "samples": 5001,
+    "observables": 5,
+    "per_observable_max_scaled_error": {
+      "C": 0.0006634852000142179,
+      "M": 0.004550953039402877,
+      "X": 0.020127103865057446,
+      "V1": 0.0004884844308132541,
+      "V3": 0.004550953039402877
+    }
+  },
+  "initial_values": {
+    "C": 0.01,
+    "M": 0.01,
+    "X": 0.01,
+    "V1": 0.0588235294117647,
+    "V3": 0.01
+  },
+  "final_values": {
+    "C": 0.5531960954391691,
+    "M": 0.3229769166850868,
+    "X": 0.008544605826989859,
+    "V1": 1.5757638045795075,
+    "V3": 0.3229769166850868
+  },
+  "elapsed_seconds": 0.541585374972783
+}

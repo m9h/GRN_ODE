@@ -6,6 +6,32 @@ on:
   pull_request:
   workflow_dispatch:
 jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_native_kinetics.py tests/test_delay_kinetics.py
+      - run: uv run --locked --extra delay python -m grn_memory.catalog_validation --workers 2 --output results/catalog-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-kinetics-validation
+          path: python/results/catalog-ci/
   reproduce:
     runs-on: ubuntu-latest
     timeout-minutes: 15
