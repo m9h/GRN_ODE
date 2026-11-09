@@ -118,10 +118,15 @@ independent SBML species lists. Some encodings include derived totals or fixed
 boundary species. Historical numeric indices require verified symbol identities
 before they can define interventions in the new simulations.
 
+The [catalog memory screen](CATALOG_MEMORY.md) now supplies a separate
+complete-state intervention route and runs 538 single-input cases across all 35
+models. The older concentration-reset runner retains its strict guard; it has
+not been made permissive for models whose state it cannot preserve.
+
 The remaining milestones are:
 
-1. Preserve complete state, native time and history through interventions and
-   matched controls; document which symbols may be independently stimulated.
+1. Complete catalog-wide paired learning, delayed probes and repeated input
+   using the validated state/history-preserving interventions.
 2. Extend memory-protocol coverage across the catalog, distinguishing original
    classifications from corrected controls and failures.
 3. Establish per-model JAX coverage against these references and resolve the

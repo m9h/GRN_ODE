@@ -3,10 +3,13 @@
 This code reproduces selected demonstrations from Biswas, Clawson and Levin,
 [Learning in Transcriptional Network Models: Computational Discovery of Pathway-Level Memory and Effective Interventions](https://doi.org/10.3390/ijms24010285).
 The question is whether a network's response to an input depends on its previous
-stimulation. Its reaction equations and rate constants remain fixed throughout
-training. What changes is the molecular state.
+stimulation. In the five MAPK demonstrations, reaction equations and rate
+constants remain fixed throughout training. What changes is the molecular state.
+The broader catalog preserves each model's native rules and events, including
+any parameter changes those events specify.
 
-Five original SBML models, eight experiments, two independent reference simulators, and an
+The selected demonstration suite uses five original SBML models, eight
+experiments, two independent reference simulators, and an
 [executed notebook](examples/memory_lab.ipynb) are included. See
 [RESULTS.md](RESULTS.md) for what reproduced and what the controls revealed.
 An optional Jaxkineticmodel backend runs the same protocols on JAX 0.12.0.1;
@@ -15,8 +18,11 @@ see [JAX validation](JAX_VALIDATION.md) for the migration and three-engine resul
 The broader [35-model kinetics validation](CATALOG_VALIDATION.md) now passes
 baseline comparisons for every model: 34 through RoadRunner/COPASI and the
 delayed Scheper clock through two delay-preserving solvers. All 35 source SBML
-files are included. Full-catalog memory protocols and JAX coverage remain active
-work; the five-model suite above is the completed memory demonstration set.
+files are included. The [catalog memory screen](CATALOG_MEMORY.md) adds 538
+single-input stimulation cases across all 35, with complete-state interventions,
+untreated controls and extended relaxation. Association, repeated stimulation
+and JAX coverage across the full catalog remain active work; the five-model
+suite above remains the broader collection of memory demonstrations.
 
 ## Run it
 
@@ -44,7 +50,7 @@ does not depend on BioModels availability. Model hashes, download URLs and nativ
 species orders are in [models/manifest.json](models/manifest.json). The complete
 35-model mapping from supplementary Table S1 is in
 [models/catalog.json](models/catalog.json). Five underpin the selected memory
-examples; all 35 run through the separate baseline validation command.
+examples; all 35 run through the separate baseline and retention-screen commands.
 
 ## The mathematics
 

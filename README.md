@@ -10,13 +10,21 @@ Start with the [Python guide and mathematics](python/README.md), the
 [results and limits](python/RESULTS.md).
 
 The [BioModels guide](python/models/README.md) explains the biology, reactions,
-initial states, conserved quantities and role of each of the five models.
+initial states, conserved quantities and role of the five demonstration models,
+with links to the full 35-model catalog.
 
 The examples cover retained responses, pairing, transfer, associative recall,
 repeated stimulation, and a second intervention that reverses a response on
 rechallenge. They use five original BioModels from the paper, not synthetic
 substitutes. This is a replication of selected experiments and their operational
 definitions; it is not a reproduction of the full 35-model survey.
+
+The extension to all 35 models now includes independently compared
+[baseline kinetics](python/CATALOG_VALIDATION.md) and a
+[538-case single-input retention screen](python/CATALOG_MEMORY.md).
+Paired learning and repeated-stimulation coverage across the catalog remain in
+progress. The retention screen preserves native events, rule variables and delay
+history, and distinguishes unresolved numerical labels from memory evidence.
 
 ![Associative recall with a sham-probe control](python/results/associative_recall.png)
 
