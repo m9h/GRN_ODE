@@ -1,0 +1,285 @@
+{
+  "network": 26,
+  "biomodel_id": "BIOMD0000000664",
+  "name": "Muller2008 - Simplified MAPK activation Dynamics (Model B)",
+  "configuration": {
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "prefix": [
+      {
+        "pulse": 1,
+        "start": 50.0,
+        "stop": 100.0,
+        "rest_stop": 160.0
+      },
+      {
+        "pulse": 2,
+        "start": 160.0,
+        "stop": 220.0,
+        "rest_stop": 290.0
+      },
+      {
+        "pulse": 3,
+        "start": 290.0,
+        "stop": 360.0,
+        "rest_stop": 440.0
+      },
+      {
+        "pulse": 4,
+        "start": 440.0,
+        "stop": 520.0,
+        "rest_stop": 610.0
+      },
+      {
+        "pulse": 5,
+        "start": 610.0,
+        "stop": 700.0,
+        "rest_stop": 800.0
+      },
+      {
+        "pulse": 6,
+        "start": 800.0,
+        "stop": 900.0,
+        "rest_stop": 1010.0
+      }
+    ],
+    "trials": {
+      "prefix": [
+        0.0,
+        1010.0
+      ],
+      "intervention_1": [
+        1010.0,
+        1110.0
+      ],
+      "pre_1": [
+        1110.0,
+        1210.0
+      ],
+      "cue_1": [
+        1210.0,
+        1310.0
+      ],
+      "post_1": [
+        1310.0,
+        1410.0
+      ],
+      "intervention_2": [
+        1410.0,
+        1510.0
+      ],
+      "pre_2": [
+        1510.0,
+        1610.0
+      ],
+      "cue_2": [
+        1610.0,
+        1710.0
+      ],
+      "post_2": [
+        1710.0,
+        1810.0
+      ],
+      "intervention_3": [
+        1810.0,
+        1910.0
+      ],
+      "pre_3": [
+        1910.0,
+        2010.0
+      ],
+      "cue_3": [
+        2010.0,
+        2110.0
+      ],
+      "post_3": [
+        2110.0,
+        2210.0
+      ]
+    },
+    "reset_interval": 0.1,
+    "prefix_endpoint_resets": true,
+    "later_endpoint_resets": false,
+    "later_resets_per_exposure": 999,
+    "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+    "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+    "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+    "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+    "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+    "integration_settings": {
+      "roadrunner": {
+        "rtol": 1e-12,
+        "atol": 1e-18
+      },
+      "copasi": {
+        "rtol": 1e-12,
+        "atol": 1e-18
+      }
+    },
+    "case_integration_overrides": {},
+    "integration_error_fallbacks": {},
+    "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+    "timed_drive_encoding": {
+      "method": "equivalent timed g1/g2 switches as events for t >= 0",
+      "sha256": "9c0e3e26bac9553c8062766b0a4e23adad0899089531b39e77fd5d6b271a320f"
+    },
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "candidate_plan_sha256": "77f2fdbd4c5af5cfb074b916f9dc33cc38d58ab0a026b9a1db245f4a63bdb71e",
+    "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+    "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+  },
+  "model_sha256": "382a22cca6d338f7f614406343cd86189d30370ec98ee49df22310b32566b538",
+  "reference_fingerprint": "f36912086d53e09c89c4a4e6de398de78efd020aa91342f7f71740a247829a75",
+  "reference_file_sha256": "b244bbec6a46a0919d9b85fd1ddf1189e71ae83d984a35f742caa8444c949435",
+  "implementation_sha256": {
+    "catalog_breaking.py": "047123f30579edf580f6383dd7d5d47593fead4a6065642df3097fa1ba66e51b",
+    "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+    "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+    "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+    "catalog_repeated.py": "15309e4fe6a5c160a91f98b4e35ba7d63f1e2a1d1b062f16989102491fb07e8e",
+    "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+    "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+    "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+    "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+    "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "fingerprint": "e3b8148d11cfc2b9b4b5c5df1b8cd274d60d92658b57e344efa27db08ed061e5",
+  "targets": {
+    "FGFR": "concentration",
+    "MSH": "concentration",
+    "B_Raf": "concentration",
+    "MAPK": "concentration",
+    "C_Raf_inactive": "concentration",
+    "C_Raf": "concentration"
+  },
+  "excluded_species": {
+    "g2_0": "assignment rule",
+    "g1_0": "assignment rule"
+  },
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "expected_cases": 118,
+  "expected_initial_response_assessments": 264,
+  "cases": {
+    "B_Raf__down--C_Raf__down": {
+      "record_id": "c0318030a12d7b91b29c8614ad8d9f086ac5549018ac4843bc1a3f30e338808a",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    }
+  },
+  "status": "incomplete_or_failed",
+  "no_candidates": false,
+  "started_at": "2026-11-10T05:36:14.577656+00:00",
+  "control_comparison": {
+    "passed": true,
+    "max_scaled_error": 4.014948073123294e-05,
+    "max_absolute_error": 1.9165757869643585e-10,
+    "worst_observable": "C_Raf",
+    "worst_time": 230.62,
+    "samples": 221001,
+    "observables": 10,
+    "per_observable_max_scaled_error": {
+      "FGFR": 4.130529624675184e-06,
+      "MSH": 1.5131259045442306e-07,
+      "B_Raf": 3.9345593749488446e-07,
+      "MAPK": 3.3733459428282734e-05,
+      "C_Raf_inactive": 2.9386430458580324e-06,
+      "g2_0": 0.0,
+      "C_Raf": 4.014948073123294e-05,
+      "g1_0": 0.0,
+      "g1": 0.0,
+      "g2": 0.0
+    }
+  },
+  "encoding_control_comparisons": {
+    "roadrunner": {
+      "passed": true,
+      "max_scaled_error": 0.0003277823893570864,
+      "max_absolute_error": 1.3608406623788483e-09,
+      "worst_observable": "C_Raf",
+      "worst_time": 233.12,
+      "samples": 221001,
+      "observables": 10,
+      "per_observable_max_scaled_error": {
+        "FGFR": 1.9482369095759076e-06,
+        "MSH": 1.892729130437141e-06,
+        "B_Raf": 1.6601176924832594e-06,
+        "MAPK": 0.0002793963290540784,
+        "C_Raf_inactive": 1.691467551995108e-06,
+        "g2_0": 0.0,
+        "C_Raf": 0.0003277823893570864,
+        "g1_0": 0.0,
+        "g1": 0.0,
+        "g2": 0.0
+      }
+    },
+    "copasi": {
+      "passed": true,
+      "max_scaled_error": 0.00029388465605667286,
+      "max_absolute_error": 1.2459766551842222e-09,
+      "worst_observable": "C_Raf",
+      "worst_time": 232.87,
+      "samples": 221001,
+      "observables": 10,
+      "per_observable_max_scaled_error": {
+        "FGFR": 4.4330053012441535e-07,
+        "MSH": 1.737947671804634e-06,
+        "B_Raf": 1.4433666284864943e-06,
+        "MAPK": 0.0002526001510348249,
+        "C_Raf_inactive": 8.136437473873487e-07,
+        "g2_0": 0.0,
+        "C_Raf": 0.00029388465605667286,
+        "g1_0": 0.0,
+        "g1": 0.0,
+        "g2": 0.0
+      }
+    }
+  },
+  "evidence_archives": {
+    "branches": [
+      {
+        "file": "evidence/BIOMD0000000664-branches-00000.jsonl.gz",
+        "records": 9,
+        "bytes": 17434,
+        "sha256": "874f19ee0b97df51a4d3716056d1f226facf5550765e23ed73151d0f01d54c22"
+      }
+    ],
+    "cases": [
+      {
+        "file": "evidence/BIOMD0000000664-cases-00000.jsonl.gz",
+        "records": 1,
+        "bytes": 1230,
+        "sha256": "f37762fede876c9d80dc4a14c150b98d91ea2d8704d46f83fd010409ee19ea34"
+      }
+    ]
+  },
+  "evaluated_cases": 1,
+  "passed_cases": 1,
+  "evaluated_unique_branches": 9,
+  "solver_retry_branches": 0,
+  "finished_at": "2026-11-10T05:36:24.916423+00:00",
+  "worker": {
+    "returncode": 1
+  }
+}

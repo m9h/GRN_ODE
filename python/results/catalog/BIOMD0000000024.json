@@ -1,0 +1,127 @@
+{
+  "network": 14,
+  "biomodel_id": "BIOMD0000000024",
+  "name": "Scheper1999_CircClock",
+  "sha256": "748514f402eea94c49346701a30f2b429c9c7d5de922cd450e5a155d5f69dbe1",
+  "species": [
+    "EmptySet",
+    "M",
+    "P"
+  ],
+  "observables": [
+    "EmptySet",
+    "M",
+    "P"
+  ],
+  "observable_types": {
+    "EmptySet": "concentration",
+    "M": "concentration",
+    "P": "concentration"
+  },
+  "reaction_count": 4,
+  "rules": [],
+  "events": [],
+  "delay_expressions": [
+    "delay(M, parameter_0000009)"
+  ],
+  "initial_assignment_count": 0,
+  "existing_reset_protocol": {
+    "supported": false,
+    "reason": "Delay models require a history-preserving solver"
+  },
+  "status": "passed",
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "jitcdde": "1.8.3",
+    "symengine": "0.15.0"
+  },
+  "recorded_at": "2026-11-09T04:36:42.477853+00:00",
+  "implementation_sha256": {
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0"
+  },
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "solver_rtol": 1e-10,
+    "solver_atol": 1e-12,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "native_sbml_unchanged": true,
+    "adapter": "scheper_delay",
+    "delay": 4.0,
+    "history": "constant initial concentrations for t <= 0: M=1, P=1",
+    "jitcdde_step": 0.001,
+    "jitcdde_refined_step": 0.0005,
+    "initial_discontinuity_step": 1e-10
+  },
+  "native_engine_limitations": {
+    "roadrunner": "Rejects delay(M, tau); no native DDE support",
+    "copasi": "Native delay import fails during the deterministic time course"
+  },
+  "engines": [
+    "scipy-method-of-steps",
+    "jitcdde"
+  ],
+  "comparison": {
+    "passed": true,
+    "max_scaled_error": 3.1595454295638656e-05,
+    "max_absolute_error": 2.33966890306192e-09,
+    "worst_observable": "M",
+    "worst_time": 38.83,
+    "samples": 5001,
+    "observables": 3,
+    "per_observable_max_scaled_error": {
+      "EmptySet": 0.0,
+      "M": 3.1595454295638656e-05,
+      "P": 2.2869226940300378e-05
+    }
+  },
+  "initial_values": {
+    "EmptySet": 0.0,
+    "M": 1.0,
+    "P": 1.0
+  },
+  "final_values": {
+    "EmptySet": 0.0,
+    "M": 0.6064487719106181,
+    "P": 13.538834474239605
+  },
+  "refinement": {
+    "versus_method_of_steps": {
+      "passed": true,
+      "max_scaled_error": 3.189772769928911e-05,
+      "max_absolute_error": 2.4036310719566245e-09,
+      "worst_observable": "M",
+      "worst_time": 38.83,
+      "samples": 5001,
+      "observables": 3,
+      "per_observable_max_scaled_error": {
+        "EmptySet": 0.0,
+        "M": 3.189772769928911e-05,
+        "P": 2.34941818477407e-05
+      }
+    },
+    "versus_original_step": {
+      "passed": true,
+      "max_scaled_error": 7.150533964783535e-07,
+      "max_absolute_error": 7.921485689621477e-11,
+      "worst_observable": "P",
+      "worst_time": 44.92,
+      "samples": 5001,
+      "observables": 3,
+      "per_observable_max_scaled_error": {
+        "EmptySet": 0.0,
+        "M": 3.175396216314181e-07,
+        "P": 7.150533964783535e-07
+      }
+    }
+  },
+  "elapsed_seconds": 1.1523976249736734
+}

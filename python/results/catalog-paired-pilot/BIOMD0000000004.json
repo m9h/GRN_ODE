@@ -1,0 +1,1615 @@
+{
+  "network": 4,
+  "biomodel_id": "BIOMD0000000004",
+  "name": "Goldbeter1991 - Min Mit Oscil, Expl Inact",
+  "configuration": {
+    "windows": {
+      "baseline": [
+        0.0,
+        50.0
+      ],
+      "train": [
+        50.0,
+        100.0
+      ],
+      "wash": [
+        100.0,
+        150.0
+      ],
+      "probe": [
+        150.0,
+        200.0
+      ],
+      "postprobe": [
+        200.0,
+        250.0
+      ],
+      "late": [
+        250.0,
+        300.0
+      ]
+    },
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "reset_interval": 0.1,
+    "include_onset": false,
+    "include_withdrawal": false,
+    "resets_per_training_or_probe": 499,
+    "calibration": "unchanged single-input reference levels from native t=0..50",
+    "summary_statistic": "arithmetic sample mean; not a continuous-time integral",
+    "candidate_selection": "resolved twofold UCS in both engines; no resolved twofold CS in either; three distinct identities",
+    "histories": [
+      "none",
+      "ucs",
+      "cs",
+      "paired"
+    ],
+    "probe_starts": [
+      150.0,
+      200.0
+    ],
+    "integration_settings": {
+      "roadrunner": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "copasi": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      }
+    },
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "timed_drive_encoding": null,
+    "candidate_plan_sha256": "5f5ce0eaa84846aaa28230ce2734ec5d48db15cf43d57d0cf659faa8c7a36660",
+    "negative_response_policy": "retain numerical result but exclude controlled learning interpretation"
+  },
+  "model_sha256": "504dc54b5697b4183bd0046fb11f0991702961e3dee0baf15ac1ecaad5009eb6",
+  "reference_fingerprint": "b4acd4d220865490aad0f6ab63640f63e8ef110a71a0bc2d63887273e95c8292",
+  "reference_file_sha256": "d40b2a8e47197d63dc39c215ecb411a08f8538c005c4f54a5e675aacd73a5dd7",
+  "implementation_sha256": {
+    "catalog_paired.py": "eedddae2c51ddcad8c11d4ef6de65d97ddb7539c73005d80318c90b26a0d1ccd",
+    "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+    "catalog_repeated.py": "15309e4fe6a5c160a91f98b4e35ba7d63f1e2a1d1b062f16989102491fb07e8e",
+    "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+    "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+    "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+    "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "fingerprint": "b446d8d32a700570ba711a165eb6e9d8bde0b7d2448ade4eddce470cebbdb1d8",
+  "targets": {
+    "C": "concentration",
+    "M": "concentration",
+    "X": "concentration",
+    "MI": "concentration",
+    "XI": "concentration"
+  },
+  "excluded_species": {},
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "expected_cases": 30,
+  "expected_response_assessments": 56,
+  "expected_unique_branches": 184,
+  "cases": {
+    "C__down--MI__up": {
+      "ucs": "C__down",
+      "cs": "MI__up",
+      "responses": [
+        "M",
+        "X"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "e52dfab42ece07cee45d1f1d1180b97fa625a550a82de926e81f37e684067af6",
+        "none_delayed": "2e18ccfbb4edf149b32c2d4463c3df18b46ec3e2be70b64031a6f229e901d69c",
+        "ucs_sham": "558eda33a0e9be24f134aa1f048bce67889c8cb0566c5ebc2d0088ab70cda807",
+        "ucs_normal": "e0de18300db66760a8d9a566c0004438612da192953d88b2ff7b8880c449852f",
+        "ucs_delayed": "5e5d6fc98d9515694778457d0bfd4e62fc721f8d7038704b829a240aabe317a5",
+        "cs_sham": "ed5ad9161be5cee7d98f41558baa25ac29b2798f10ea3553fc97a410de6076da",
+        "cs_normal": "9f6ccf500874830b3b5e3ba9444b71463b806d91035df898787352e37efcd86e",
+        "cs_delayed": "ffe35ee73f778c460114bb3511a19b7f7ed37d09ed5eb0b6bcab353e42ee28fc",
+        "paired_sham": "df56ef20893f1e12c82405e6bd37ab7d5e219d83271e6e9d24fd93aaf7211025",
+        "paired_normal": "0337fe4164876e66af6f4f3873b0a10813b09a6a38bbf76e1e2f9f794fb0bb94",
+        "paired_delayed": "b89f2261e78695b61c770d58c656d3a7ace5f0ce60e14f7e24d6515f65834b30"
+      },
+      "levels": {
+        "C__down": 0.0001,
+        "MI__up": 99.97774875391013
+      },
+      "scores": {
+        "roadrunner": {
+          "M": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -0.011496224517160564,
+                  "resolution": 7.679174692265122e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.012804909549407023,
+                  "resolution": 7.64480005415822e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -7.045258601512394e-08,
+                  "resolution": 7.850752342686217e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -1.8768720097539493e-07,
+                  "resolution": 7.5841251309328215e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 0.011496036829959588,
+                  "resolution": 1.5263299823197942e-05,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.012804721862206048,
+                  "resolution": 1.5228925185091042e-05,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -1.1723461496027099e-07,
+                  "resolution": 1.543487747361904e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.001308567797631499,
+                "resolution": 3.075885222004238e-05,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -0.0013086850322464594,
+                "resolution": 1.5323974746423343e-05,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 0.011496154064574549,
+                "resolution": 1.5529927034951336e-05,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 6.624806278554551e-08,
+                  "resolution": 7.788392967846195e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -0.010476739819916342,
+                  "resolution": 7.70614307600329e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.011655785622648518,
+                  "resolution": 7.674968934667507e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -5.5860606279489744e-08,
+                  "resolution": 7.886341032986302e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -1.0690271398661189e-07,
+                  "resolution": 7.788389504830659e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 0.010476632917202355,
+                  "resolution": 1.5494532580833948e-05,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.011655678719934531,
+                  "resolution": 1.5463358439498166e-05,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -5.104210770712214e-08,
+                  "resolution": 1.567473053781696e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.0011789947606244688,
+                "resolution": 3.105584254848776e-05,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -0.001179045802732176,
+                "resolution": 1.53811120106708e-05,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 0.010476683959310062,
+                "resolution": 1.5592484108989593e-05,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 2.2070220706549293e-08,
+                  "resolution": 7.860750126150827e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": -1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 0.12064671222756987,
+              "control_train": 0.19235884429762953,
+              "control_probe": 0.1927274795652083,
+              "control_postprobe": 0.19289194681004043,
+              "ucs_train": 0.0014743302669771917,
+              "ucs_wash": 0.11880502541493662,
+              "cs_train": 0.17847773339597756,
+              "paired_train": 0.001474491801051523,
+              "paired_wash": 0.11248660779055834,
+              "ucs_probe": 0.17971754657925199,
+              "paired_probe": 0.18460303442972004,
+              "paired_postprobe": 0.18970985732018622,
+              "delayed_preprobe": 0.184603222116921,
+              "delayed_probe": 0.18970968416940945,
+              "delayed_sham": 0.18970979107212343
+            }
+          },
+          "X": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 0.007825147168910085,
+                  "resolution": 3.9228384062518616e-06,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.008047957838603959,
+                  "resolution": 3.926938505407844e-06,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 1.7486906553343395e-07,
+                  "resolution": 4.020739598840981e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.8737304204041738e-07,
+                  "resolution": 4.0166238334546815e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -0.007824959795868044,
+                  "resolution": 7.939462239706543e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.008047770465561918,
+                  "resolution": 7.943562338862526e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 1.2503976506983427e-08,
+                  "resolution": 8.037363432295663e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -0.00022279816571736666,
+                "resolution": 1.588714034395537e-05,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 0.00022281066969387364,
+                "resolution": 7.849776911659706e-06,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -0.007824972299844551,
+                "resolution": 7.943578005092843e-06,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 8.873547729937314e-11,
+                  "resolution": 4.019979604418745e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 0.007637698160599976,
+                  "resolution": 3.919322091134073e-06,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.007853378149523402,
+                  "resolution": 3.923363347160318e-06,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 1.7502523258494662e-07,
+                  "resolution": 4.021132243576165e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.7413323342985176e-07,
+                  "resolution": 4.019983085308704e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -0.007637524027366546,
+                  "resolution": 7.939305176442776e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.007853204016289972,
+                  "resolution": 7.94334643246902e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -8.919991550948581e-10,
+                  "resolution": 8.041115328884868e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -0.00021568088092258075,
+                "resolution": 1.588380076717926e-05,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 0.00021567998892342566,
+                "resolution": 7.84268543829439e-06,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -0.007637523135367391,
+                "resolution": 7.940454334710238e-06,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.5022116883756098e-10,
+                  "resolution": 4.020849039695008e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": -1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 0.04496317767653953,
+              "control_train": 0.08914062595994715,
+              "control_probe": 0.0891583865718415,
+              "control_postprobe": 0.08916420319805184,
+              "ucs_train": 3.926058746584856e-05,
+              "ucs_wash": 0.04491208991408412,
+              "cs_train": 0.09735696520509374,
+              "paired_train": 3.926235139470631e-05,
+              "paired_wash": 0.04797197606709517,
+              "ucs_probe": 0.09719744155449807,
+              "paired_probe": 0.09541568952288806,
+              "paired_postprobe": 0.09549949015483634,
+              "delayed_preprobe": 0.09541550214984602,
+              "delayed_probe": 0.0954996641993343,
+              "delayed_sham": 0.09549949006610087
+            }
+          }
+        },
+        "copasi": {
+          "M": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -0.011496224561405949,
+                  "resolution": 7.67917469166281e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.012804909582497165,
+                  "resolution": 7.64480005404938e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -7.046158115309176e-08,
+                  "resolution": 7.85075234227598e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -1.8770395310285792e-07,
+                  "resolution": 7.584125130420521e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 0.011496036857452846,
+                  "resolution": 1.526329982208333e-05,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.012804721878544062,
+                  "resolution": 1.5228925184469902e-05,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -1.1724237194976617e-07,
+                  "resolution": 1.54348774726965e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.0013085677787192662,
+                "resolution": 3.075885221840869e-05,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -0.001308685021091216,
+                "resolution": 1.532397474571219e-05,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 0.011496154099824796,
+                "resolution": 1.552992703393879e-05,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 6.625359358358729e-08,
+                  "resolution": 7.788392967568908e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -0.010476739872413154,
+                  "resolution": 7.706143075186061e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.011655785661597001,
+                  "resolution": 7.67496893422757e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -5.587044704657984e-08,
+                  "resolution": 7.886341032521445e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -1.069134457631904e-07,
+                  "resolution": 7.78838950422812e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 0.010476632958967391,
+                  "resolution": 1.549453257941418e-05,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.011655678748151238,
+                  "resolution": 1.5463358438455692e-05,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -5.1042998716610555e-08,
+                  "resolution": 1.5674730536749566e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.0011789947461851302,
+                "resolution": 3.1055842546163195e-05,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -0.0011790457891838468,
+                "resolution": 1.538111200941363e-05,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 0.010476684001966108,
+                "resolution": 1.5592484107707503e-05,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 2.207146473920396e-08,
+                  "resolution": 7.860750125838478e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": -1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 0.12064671223596786,
+              "control_train": 0.19235884430973338,
+              "control_probe": 0.1927274795722732,
+              "control_postprobe": 0.19289194681585808,
+              "ucs_train": 0.0014743302678125944,
+              "ucs_wash": 0.11880502542293353,
+              "cs_train": 0.1784777333740897,
+              "paired_train": 0.0014744918018859629,
+              "paired_wash": 0.11248660780062332,
+              "ucs_probe": 0.17971754655998595,
+              "paired_probe": 0.18460303440853645,
+              "paired_postprobe": 0.18970985731601947,
+              "delayed_preprobe": 0.18460322211248956,
+              "delayed_probe": 0.18970968414898012,
+              "delayed_sham": 0.1897097910624259
+            }
+          },
+          "X": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 0.007825147170276048,
+                  "resolution": 3.92283840605006e-06,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.008047957837935105,
+                  "resolution": 3.926938505147435e-06,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 1.748717366328867e-07,
+                  "resolution": 4.0207395984359265e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.8738008361607328e-07,
+                  "resolution": 4.016623833130576e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -0.007824959790192432,
+                  "resolution": 7.939462239180636e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.008047770457851489,
+                  "resolution": 7.94356233827801e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 1.2508346983186591e-08,
+                  "resolution": 8.037363431566503e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -0.0002227981593120737,
+                "resolution": 1.5887140342763997e-05,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 0.00022281066765905688,
+                "resolution": 7.849776911197495e-06,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -0.007824972298539415,
+                "resolution": 7.943578004485986e-06,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 8.963672859518823e-11,
+                  "resolution": 4.019979603950671e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 0.007637698166617052,
+                  "resolution": 3.919322091013407e-06,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.007853378151439591,
+                  "resolution": 3.923363346972787e-06,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 1.7503068759638918e-07,
+                  "resolution": 4.021132243212837e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.7413664214760427e-07,
+                  "resolution": 4.019983084890779e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -0.007637524029974904,
+                  "resolution": 7.939305175904187e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.007853204014797444,
+                  "resolution": 7.943346431863566e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -8.940454487849081e-10,
+                  "resolution": 8.041115328103616e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -0.00021568087886798815,
+                "resolution": 1.588380076608981e-05,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 0.00021567998482253936,
+                "resolution": 7.842685437986194e-06,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -0.007637523135929455,
+                "resolution": 7.940454334226244e-06,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.5012088794286171e-10,
+                  "resolution": 4.020849039233456e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": -1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 0.04496317767361736,
+              "control_train": 0.08914062595458805,
+              "control_probe": 0.08915838656611348,
+              "control_postprobe": 0.08916420319202664,
+              "ucs_train": 3.926058751295301e-05,
+              "ucs_wash": 0.04491208991114646,
+              "cs_train": 0.0973569652014672,
+              "paired_train": 3.926235144179033e-05,
+              "paired_wash": 0.04797197606039135,
+              "ucs_probe": 0.09719744154765343,
+              "paired_probe": 0.0954156895183062,
+              "paired_postprobe": 0.09549949014358512,
+              "delayed_preprobe": 0.09541550213822259,
+              "delayed_probe": 0.09549966419059054,
+              "delayed_sham": 0.0954994900539484
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 3.2041503749969706
+    },
+    "C__down--XI__up": {
+      "ucs": "C__down",
+      "cs": "XI__up",
+      "responses": [
+        "M",
+        "X"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "91bccbfe3de37c5f146fcff22e0da0f07f9afb6971a206c2a2910fbf7afde439",
+        "none_delayed": "37e2c3be0924ba595aa14f189834e552d4cad8b1ad5c0e6dcf0700f929d71496",
+        "ucs_sham": "558eda33a0e9be24f134aa1f048bce67889c8cb0566c5ebc2d0088ab70cda807",
+        "ucs_normal": "647eb7bc65dec892c4b7aaa8cb3ce4a1cefe342554ae31d6072c1eb72cf3b750",
+        "ucs_delayed": "a1dd5bdcf6e643b5cc13a619fa644f575546ec2676b223ca0bb6b06fc170092e",
+        "cs_sham": "e3da0a6600335f964587568c29b007c5451c807e6e5328905b0bfddc61f7b0fa",
+        "cs_normal": "420555929760cf60eccaab884f9323f6982335862b7baaad7a04b6c8d10618cc",
+        "cs_delayed": "aca9d74bde726fc8e1faaf39fc4310c6c5b69bba69767d6f4a2a6ab3b9b22f62",
+        "paired_sham": "3dec583f83e2ba7af4f59bcf865b8db53cf17fb88b5b85d5c6751b9a09449126",
+        "paired_normal": "88745173f1014bb77b97fa2c0a45706c1dc1a7a0f216faff946478ce51f8272d",
+        "paired_delayed": "e7faa1bfaef2d64fb2a5bd5c59cfcb4c2b6bd136ae64f79288e8e2e83ef801e2"
+      },
+      "levels": {
+        "C__down": 0.0001,
+        "XI__up": 99.99972666281519
+      },
+      "scores": {
+        "roadrunner": {
+          "M": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -0.0024333170429811923,
+                  "resolution": 7.86043284174871e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.0025495033407861856,
+                  "resolution": 7.849908178330637e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -6.797534363167657e-08,
+                  "resolution": 7.823389751459391e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -7.910131169519552e-08,
+                  "resolution": 7.802547189233066e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 0.002433237941669497,
+                  "resolution": 1.5662980030981776e-05,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.0025494242394744904,
+                  "resolution": 1.5652455367563703e-05,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -1.1125968063518954e-08,
+                  "resolution": 1.5625936940692457e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.00011617517183692971,
+                "resolution": 3.1336277960771804e-05,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -0.00011618629780499323,
+                "resolution": 1.5710341020079346e-05,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 0.0024332490676375607,
+                "resolution": 1.56838225932081e-05,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 7.974464422133565e-09,
+                  "resolution": 7.819146525496054e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -0.002341929837703066,
+                  "resolution": 7.868839275647557e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.0024475366262197984,
+                  "resolution": 7.85913391459608e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -6.080720429957331e-08,
+                  "resolution": 7.837431748675583e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -7.05976282433518e-08,
+                  "resolution": 7.8191449540542e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 0.002341859240074823,
+                  "resolution": 1.5687984229701758e-05,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.002447466028591555,
+                  "resolution": 1.567827886865028e-05,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -9.790423943778492e-09,
+                  "resolution": 1.5656576702729785e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.00010559699809278844,
+                "resolution": 3.1384549892973424e-05,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -0.00010560678851673222,
+                "resolution": 1.572797319024364e-05,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 0.0023418690304987666,
+                "resolution": 1.570627102432314e-05,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 6.9816228631669475e-09,
+                  "resolution": 7.83373454559097e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": -1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 0.12064671222756987,
+              "control_train": 0.19235884429762953,
+              "control_probe": 0.1927274795652083,
+              "control_postprobe": 0.19289194681004043,
+              "ucs_train": 0.0014743302669771917,
+              "ucs_wash": 0.11880502541493662,
+              "cs_train": 0.18971388799152497,
+              "paired_train": 0.0014743302121408256,
+              "paired_wash": 0.11747313024935783,
+              "ucs_probe": 0.18997295278787282,
+              "paired_probe": 0.1900636401801708,
+              "paired_postprobe": 0.19047866712463354,
+              "delayed_preprobe": 0.1900637192814825,
+              "delayed_probe": 0.19047858855254088,
+              "delayed_sham": 0.19047865915016912
+            }
+          },
+          "X": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 0.00042900655306393753,
+                  "resolution": 3.774915593934939e-06,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.00042646187882144915,
+                  "resolution": 3.7745085862121937e-06,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 2.414880197199043e-08,
+                  "resolution": 3.7837690394617813e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 2.3710992697045796e-08,
+                  "resolution": 3.7829978218873717e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -0.0004289828420712405,
+                  "resolution": 7.557913415822311e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.0004264381678287521,
+                  "resolution": 7.557506408099566e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -4.3780927494463384e-10,
+                  "resolution": 7.566766861349153e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 2.5442364332134426e-06,
+                "resolution": 1.5116191041496286e-05,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -2.5446742424883873e-06,
+                "resolution": 7.549424180147133e-06,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -0.00042898240426196554,
+                "resolution": 7.55868463339672e-06,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.9945460560943928e-10,
+                  "resolution": 3.7836327598061378e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 0.0004309182341318829,
+                  "resolution": 3.7751864926047116e-06,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.000428700489765968,
+                  "resolution": 3.774869793965169e-06,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 2.4325288172644122e-08,
+                  "resolution": 3.7841593400260793e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 2.3991215888918838e-08,
+                  "resolution": 3.7836332356413632e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -0.000430894242915994,
+                  "resolution": 7.558819728246075e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.00042867649855007905,
+                  "resolution": 7.558503029606533e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -3.340722837252841e-10,
+                  "resolution": 7.567792575667442e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 2.2174102936312057e-06,
+                "resolution": 1.5117848862237323e-05,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -2.217744365914931e-06,
+                "resolution": 7.550056286569881e-06,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -0.00043089390884371026,
+                "resolution": 7.5593458326307905e-06,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.3424958367203033e-10,
+                  "resolution": 3.784063928176572e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": -1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 0.04496317767653953,
+              "control_train": 0.08914062595994715,
+              "control_probe": 0.0891583865718415,
+              "control_postprobe": 0.08916420319805184,
+              "ucs_train": 3.926058746584856e-05,
+              "ucs_wash": 0.04491208991408412,
+              "cs_train": 0.0895650039439399,
+              "paired_train": 3.940297847213044e-05,
+              "paired_wash": 0.045122751771655055,
+              "ucs_probe": 0.08957594559471556,
+              "paired_probe": 0.08957495740268064,
+              "paired_postprobe": 0.08959081909488074,
+              "delayed_preprobe": 0.08957493369168794,
+              "delayed_probe": 0.08959084288664203,
+              "delayed_sham": 0.08959081889542614
+            }
+          }
+        },
+        "copasi": {
+          "M": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -0.0024333170533068493,
+                  "resolution": 7.860432841824792e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.00254950335177348,
+                  "resolution": 7.849908178663856e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -6.798426274712277e-08,
+                  "resolution": 7.823389751422955e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -7.911084240475041e-08,
+                  "resolution": 7.802547189514109e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 0.0024332379424644446,
+                  "resolution": 1.5662980031338902e-05,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.0025494242409310752,
+                  "resolution": 1.5652455368177965e-05,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -1.1126579657627644e-08,
+                  "resolution": 1.5625936940937067e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.00011617517188697302,
+                "resolution": 3.133627796142571e-05,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -0.00011618629846663064,
+                "resolution": 1.5710341020488646e-05,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 0.002433249069044102,
+                "resolution": 1.568382259324775e-05,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 7.977421140337171e-09,
+                  "resolution": 7.81914652581202e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -0.002341929848476726,
+                  "resolution": 7.868839275664789e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.0024475366365780127,
+                  "resolution": 7.85913391472795e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -6.082130868390045e-08,
+                  "resolution": 7.837431748415648e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -7.060883203124924e-08,
+                  "resolution": 7.819144954086956e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 0.0023418592396446947,
+                  "resolution": 1.5687984229751747e-05,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.0024474660277459814,
+                  "resolution": 1.5678278868814906e-05,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -9.787523347348781e-09,
+                  "resolution": 1.5656576702502604e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.00010559700057793941,
+                "resolution": 3.138454989289534e-05,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -0.00010560678810128676,
+                "resolution": 1.572797319039274e-05,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 0.002341869027168042,
+                "resolution": 1.5706271024080438e-05,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 6.982762423834998e-09,
+                  "resolution": 7.83373454567312e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": -1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 0.12064671223596786,
+              "control_train": 0.19235884430973338,
+              "control_probe": 0.1927274795722732,
+              "control_postprobe": 0.19289194681585808,
+              "ucs_train": 0.0014743302678125944,
+              "ucs_wash": 0.11880502542293353,
+              "cs_train": 0.18971388799408676,
+              "paired_train": 0.0014743302129721508,
+              "paired_wash": 0.11747313025660248,
+              "ucs_probe": 0.18997295279070964,
+              "paired_probe": 0.19006364018243152,
+              "paired_postprobe": 0.19047866713401107,
+              "delayed_preprobe": 0.19006371929327393,
+              "delayed_probe": 0.1904785885477579,
+              "delayed_sham": 0.19047865915658993
+            }
+          },
+          "X": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 0.0004290065435709062,
+                  "resolution": 3.7749155935159576e-06,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.0004264618703464229,
+                  "resolution": 3.774508585795662e-06,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 2.4140182880438843e-08,
+                  "resolution": 3.7837690390293485e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 2.3702832779859406e-08,
+                  "resolution": 3.782997821468431e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -0.0004289828407381263,
+                  "resolution": 7.5579134149843885e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.00042643816751364305,
+                  "resolution": 7.557506407264093e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -4.373501005794367e-10,
+                  "resolution": 7.56676686049778e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 2.544235874382683e-06,
+                "resolution": 1.5116191039809398e-05,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -2.5446732244832626e-06,
+                "resolution": 7.54942417931162e-06,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -0.00042898240338802573,
+                "resolution": 7.5586846325453066e-06,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.9755433400270306e-10,
+                  "resolution": 3.783632759509035e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 0.00043091822453970863,
+                  "resolution": 3.77518649217186e-06,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 0.0004287004808477962,
+                  "resolution": 3.774869793560952e-06,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 2.4319671526606967e-08,
+                  "resolution": 3.784159339641445e-06,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 2.3984099886686927e-08,
+                  "resolution": 3.7836332352399463e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -0.00043089424043982194,
+                  "resolution": 7.558819727411807e-06,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -0.00042867649674790953,
+                  "resolution": 7.558503028800898e-06,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -3.3557163992004035e-10,
+                  "resolution": 7.567792574881391e-06,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 2.2174081202724905e-06,
+                "resolution": 1.5117848860614203e-05,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -2.2177436919124105e-06,
+                "resolution": 7.550056285732812e-06,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -0.000430893904868182,
+                "resolution": 7.5593458318133055e-06,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.3376148799704168e-10,
+                  "resolution": 3.7840639279264516e-06,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": -1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 0.04496317767361736,
+              "control_train": 0.08914062595458805,
+              "control_probe": 0.08915838656611348,
+              "control_postprobe": 0.08916420319202664,
+              "ucs_train": 3.926058751295301e-05,
+              "ucs_wash": 0.04491208991114646,
+              "cs_train": 0.08956500393090185,
+              "paired_train": 3.9402978520086234e-05,
+              "paired_wash": 0.045122751768765394,
+              "ucs_probe": 0.08957594558006475,
+              "paired_probe": 0.08957495738812715,
+              "paired_postprobe": 0.08959081908650304,
+              "delayed_preprobe": 0.08957493368529437,
+              "delayed_probe": 0.0895908428730486,
+              "delayed_sham": 0.08959081888894871
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 2.825573374997475
+    }
+  },
+  "status": "incomplete_or_failed",
+  "no_candidates": false,
+  "started_at": "2026-11-10T05:02:31.293341+00:00",
+  "control_comparison": {
+    "passed": true,
+    "max_scaled_error": 0.018323871251198456,
+    "max_absolute_error": 7.636677748501519e-09,
+    "worst_observable": "X",
+    "worst_time": 284.51,
+    "samples": 30001,
+    "observables": 7,
+    "per_observable_max_scaled_error": {
+      "C": 0.0003150080017793082,
+      "M": 0.009539181425571568,
+      "X": 0.018323871251198456,
+      "MI": 0.0004731688523424533,
+      "XI": 0.0005826434227524264,
+      "V1": 0.00021013792061507603,
+      "V3": 0.009539181425571568
+    }
+  },
+  "branch_archive": {
+    "file": "BIOMD0000000004-branches.jsonl.gz",
+    "sha256": "bfd1177f009bef71c1be3f0624cca43f0b11c8eefd8abd0c06523bc6bb8ca985",
+    "format": "gzip JSON Lines, one complete branch record per line"
+  },
+  "evaluated_cases": 2,
+  "passed_cases": 2,
+  "evaluated_unique_branches": 22,
+  "passed_unique_branches": 22,
+  "finished_at": "2026-11-10T05:02:37.750148+00:00",
+  "worker": {
+    "returncode": 1
+  }
+}

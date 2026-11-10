@@ -1,0 +1,135 @@
+{
+  "network": 9,
+  "biomodel_id": "BIOMD0000000016",
+  "model_sha256": "35ad538383991b45273e2a767c0325d996d188dba10ce959de9635564813f703",
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "jax_solver": "Kvaerno5",
+    "jax_rtol": 1e-10,
+    "jax_atol": 1e-12,
+    "reference_rtol": 1e-12,
+    "reference_atol": 1e-14,
+    "jax_initial_step": 0.0001,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "x64": true
+  },
+  "implementation_sha256": {
+    "jaxkineticmodel/load_sbml/sbml_model.py": "57ddfef282e220affab237ce15e760e8b01aeb4b8e5fd4c39b91696f619477cb",
+    "jaxkineticmodel/load_sbml/jax_kinetic_model.py": "04dabdfc81da14da8a008aa406e723b974213f208442225a1d512d03ab4547b2",
+    "jaxkineticmodel/load_sbml/sympy_converter.py": "8b4bfec0fd8a6ea4dfd72bf6a66af8b50faa9f3975827aac609c460287b9e504",
+    "jaxkineticmodel/load_sbml/export_sbml.py": "54b054ceaef678ae77827ce560e198d70865a34692542c798235af2121114ee9",
+    "jaxkineticmodel/load_sbml/sbml_load_utils.py": "f914d0ee1bf06602d7c9ccac6643c9814ad4f63b9c520acf92e98839e64626ca",
+    "grn_memory/catalog_jax.py": "c2ee2f06f10880232ed6faa1ffa17caebf274306ab0be152ad6d6d703bba49e5",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4",
+    "jax": "0.12.0.1",
+    "jaxlib": "0.12.0.1",
+    "diffrax": "0.7.2",
+    "equinox": "0.13.8",
+    "jaxkineticmodel": "0.0.1"
+  },
+  "fingerprint": "3c5d3edd9ffb1f23d75f4f857874d7888e07f0167142b8eeea6b68d6f2aac90f",
+  "name": "Goldbeter1995_CircClock",
+  "status": "passed",
+  "observables": [
+    "EmptySet",
+    "M",
+    "P0",
+    "P1",
+    "P2",
+    "Pn",
+    "Pt"
+  ],
+  "recorded_at": "2026-11-10T04:46:26.973409+00:00",
+  "independent_states": [
+    "M",
+    "P0",
+    "P1",
+    "P2",
+    "Pn"
+  ],
+  "comparisons": {
+    "jax_roadrunner": {
+      "passed": true,
+      "max_scaled_error": 0.00016559623045683857,
+      "max_absolute_error": 2.344010763266624e-09,
+      "worst_observable": "P2",
+      "worst_time": 0.28,
+      "samples": 5001,
+      "observables": 7,
+      "per_observable_max_scaled_error": {
+        "EmptySet": 0.0,
+        "M": 4.101614490651227e-05,
+        "P0": 6.41359622595536e-05,
+        "P1": 7.46356024270971e-05,
+        "P2": 0.00016559623045683857,
+        "Pn": 6.177438275032182e-05,
+        "Pt": 3.4467843946468625e-05
+      }
+    },
+    "jax_copasi": {
+      "passed": true,
+      "max_scaled_error": 0.0001650912055160044,
+      "max_absolute_error": 2.4374915419400622e-09,
+      "worst_observable": "P2",
+      "worst_time": 0.28,
+      "samples": 5001,
+      "observables": 7,
+      "per_observable_max_scaled_error": {
+        "EmptySet": 0.0,
+        "M": 4.533336519439883e-05,
+        "P0": 6.335466472700314e-05,
+        "P1": 7.466786556868126e-05,
+        "P2": 0.0001650912055160044,
+        "Pn": 6.142480485242875e-05,
+        "Pt": 3.476913881156544e-05
+      }
+    },
+    "roadrunner_copasi": {
+      "passed": true,
+      "max_scaled_error": 1.6965171764723383e-05,
+      "max_absolute_error": 5.322844387478654e-10,
+      "worst_observable": "M",
+      "worst_time": 48.870000000000005,
+      "samples": 5001,
+      "observables": 7,
+      "per_observable_max_scaled_error": {
+        "EmptySet": 0.0,
+        "M": 1.6965171764723383e-05,
+        "P0": 1.1372428019979169e-05,
+        "P1": 1.0973509004618983e-05,
+        "P2": 1.5663082684731887e-05,
+        "Pn": 1.454210346408429e-05,
+        "Pt": 1.1718417957441436e-05
+      }
+    }
+  },
+  "initial_values": {
+    "EmptySet": 0.0,
+    "M": 0.1,
+    "P0": 0.25,
+    "P1": 0.25,
+    "P2": 0.25,
+    "Pn": 0.25,
+    "Pt": 1.0
+  },
+  "final_values": {
+    "EmptySet": 0.0,
+    "M": 1.0415610552165475,
+    "P0": 0.41475364769197554,
+    "P1": 0.30428144820008807,
+    "P2": 0.27868757559523377,
+    "Pn": 0.5102550921429979,
+    "Pt": 1.5079777636302953
+  },
+  "elapsed_seconds": 1.3064431249986228
+}

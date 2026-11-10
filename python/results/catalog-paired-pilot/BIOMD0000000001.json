@@ -1,0 +1,4460 @@
+{
+  "network": 1,
+  "biomodel_id": "BIOMD0000000001",
+  "name": "Edelstein1996 - EPSP ACh event",
+  "configuration": {
+    "windows": {
+      "baseline": [
+        0.0,
+        50.0
+      ],
+      "train": [
+        50.0,
+        100.0
+      ],
+      "wash": [
+        100.0,
+        150.0
+      ],
+      "probe": [
+        150.0,
+        200.0
+      ],
+      "postprobe": [
+        200.0,
+        250.0
+      ],
+      "late": [
+        250.0,
+        300.0
+      ]
+    },
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "reset_interval": 0.1,
+    "include_onset": false,
+    "include_withdrawal": false,
+    "resets_per_training_or_probe": 499,
+    "calibration": "unchanged single-input reference levels from native t=0..50",
+    "summary_statistic": "arithmetic sample mean; not a continuous-time integral",
+    "candidate_selection": "resolved twofold UCS in both engines; no resolved twofold CS in either; three distinct identities",
+    "histories": [
+      "none",
+      "ucs",
+      "cs",
+      "paired"
+    ],
+    "probe_starts": [
+      150.0,
+      200.0
+    ],
+    "integration_settings": {
+      "roadrunner": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "copasi": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      }
+    },
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "timed_drive_encoding": null,
+    "candidate_plan_sha256": "77f33b190f691676c76fa182b8c2dbf9f162e2842c1a440c1c861bf6306a78d6",
+    "negative_response_policy": "retain numerical result but exclude controlled learning interpretation"
+  },
+  "model_sha256": "407fccc883f80e6d120e34d8b0810a206a5cc6535a26d4574611504e683beb08",
+  "reference_fingerprint": "568243d279db9f6eb441e3c97403f9b7027fe560fec4aaca7f4ec246eb0e2c43",
+  "reference_file_sha256": "4a4a5684d4be1978afc1921dc067fb604f3104c5aaa39bfc0846e1f71da3ced1",
+  "implementation_sha256": {
+    "catalog_paired.py": "eedddae2c51ddcad8c11d4ef6de65d97ddb7539c73005d80318c90b26a0d1ccd",
+    "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+    "catalog_repeated.py": "15309e4fe6a5c160a91f98b4e35ba7d63f1e2a1d1b062f16989102491fb07e8e",
+    "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+    "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+    "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+    "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "fingerprint": "d20bdb18c1895d37ca5ee4ad505e12777bdcaa433a7d0337908c02b6ac6b2e36",
+  "targets": {
+    "BLL": "concentration",
+    "IL": "concentration",
+    "AL": "concentration",
+    "A": "concentration",
+    "BL": "concentration",
+    "B": "concentration",
+    "DLL": "concentration",
+    "D": "concentration",
+    "ILL": "concentration",
+    "DL": "concentration",
+    "I": "concentration",
+    "ALL": "concentration"
+  },
+  "excluded_species": {},
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "expected_cases": 197,
+  "expected_response_assessments": 644,
+  "expected_unique_branches": 1096,
+  "cases": {
+    "ALL__up--AL__down": {
+      "ucs": "ALL__up",
+      "cs": "AL__down",
+      "responses": [
+        "IL",
+        "A",
+        "B",
+        "D",
+        "ILL",
+        "DL",
+        "I"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "f109935eee2708e5940110b4f20734749e6b59b856b5ed1686917088e8e081b9",
+        "none_delayed": "8cef55ea0dda5d6899877b703f021d16cb8de181079677d41fb4809d8a3ac0a2",
+        "ucs_sham": "847cb00be2259ba6706801a5ff342cba767bf7aba097f08da236bb621e40c97b",
+        "ucs_normal": "7799b2b44a58b42e7433873a0dfb416ff7237f8440527fb67ab866013544c3e1",
+        "ucs_delayed": "e41351003d657aa3d8d575f310b1fe84be63fcd857f5342ffb03736ed25d44c5",
+        "cs_sham": "c5e5487c4fddace0eae56050bd12f687541575438b644fee905ad4b9e4e4485b",
+        "cs_normal": "843c37fa68af473bcdd8ed6883eb8b8671166c618d0dd21192ab5d0b354248ff",
+        "cs_delayed": "3bd0d65eb968fc94e26396a65458c108429a21278ae9462aa974a19884735e1d",
+        "paired_sham": "46651da6fd0cbb81c933f1dca64da8f9a7b7e4a72f12b917bd7be4b635334cc8",
+        "paired_normal": "08db2f4c7b4554ac14e1982b50206bc82505b77ead62e84df4e60eff770e1a7a",
+        "paired_delayed": "fb85fd836fd582ed28fc8a86b5419e930d0bec158358c76178023d6318a2c3c3"
+      },
+      "levels": {
+        "ALL__up": 0.000766556550106428,
+        "AL__down": 0.0
+      },
+      "scores": {
+        "roadrunner": {
+          "IL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -1.2024434008221226e-26,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.4290176024126508e-20,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.4210935245924045e-38,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -8.099900887491061e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -7.979656547408849e-25,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -1.4290986014215256e-20,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -8.099900887490919e-25,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -1.4290998038649266e-20,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 1.4290188048560515e-20,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.2024434008207014e-26,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -5.282834423946393e-27,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.3291318458162398e-28,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -2.0855756176834035e-22,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -6.851771863483566e-39,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -4.6471376911640644e-27,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -4.7800508757456884e-27,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.0855291463064918e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -4.647137691157213e-27,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 2.0855304754383377e-22,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -2.0855769468152492e-22,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -1.3291318458847575e-28,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -5.925592737738976e-27,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": true
+            },
+            "paper_like_means": {
+              "baseline": 4.0921238387699966e-08,
+              "control_train": -2.6281334618901356e-22,
+              "control_probe": 1.2051268301806087e-26,
+              "control_postprobe": -1.3164401825677882e-28,
+              "ucs_train": 8.601539481682903e-05,
+              "ucs_wash": 4.23004229767531e-07,
+              "cs_train": 5.5791482302328636e-24,
+              "paired_train": 8.601473465487318e-05,
+              "paired_wash": 4.230024247440252e-07,
+              "ucs_probe": 1.69482167044821e-22,
+              "paired_probe": 4.0527494897400933e-26,
+              "paired_postprobe": -7.082498992752091e-37,
+              "delayed_preprobe": 8.50517583646507e-25,
+              "delayed_probe": 6.356967320740792e-28,
+              "delayed_sham": 5.2828344232381434e-27
+            }
+          },
+          "A": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -2.3254264896883016e-19,
+                  "resolution": 2.00000016492811e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.927311984392972e-16,
+                  "resolution": 2.007626746684378e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -2.34649891579309e-19,
+                  "resolution": 2.00000016492811e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 2.9103035628121054e-16,
+                  "resolution": 2.007626209153754e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 2.9126289893017938e-16,
+                  "resolution": 4.007626374081864e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -1.700842158086635e-18,
+                  "resolution": 4.0152529558381317e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.9126500617278985e-16,
+                  "resolution": 4.007626374081864e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -1.6987349154761562e-18,
+                "resolution": 8.015253285694352e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 2.92963741088266e-16,
+                "resolution": 4.007626911612488e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -2.107242610478838e-21,
+                "resolution": 4.00000032985622e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 5.860417674145163e-16,
+                  "resolution": 2.0076225642517527e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -2.4787873262192814e-19,
+                  "resolution": 2.00000017442642e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.8803524777971934e-16,
+                  "resolution": 2.0076231014851835e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -2.4878930337998417e-19,
+                  "resolution": 2.0000001744264197e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 2.6239047826864814e-16,
+                  "resolution": 2.0076225642516878e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 2.6263835700127007e-16,
+                  "resolution": 4.0076227386781075e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -2.5644769511071197e-17,
+                  "resolution": 4.015245665736871e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.6263926757202813e-16,
+                  "resolution": 4.0076227386781075e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -2.564385894031314e-17,
+                "resolution": 8.015246014589711e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 2.8828312651234127e-16,
+                "resolution": 4.0076232759116036e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -9.105707580560298e-22,
+                "resolution": 4.00000034885284e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 5.508594069173617e-16,
+                  "resolution": 2.0076191311203865e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 2.1307078872934178e-10,
+              "control_train": 3.603441423073378e-10,
+              "control_probe": 4.123202752646375e-10,
+              "control_postprobe": 4.360660501881564e-10,
+              "ucs_train": 9.559177839111722e-06,
+              "ucs_wash": 1.907679190733624e-05,
+              "cs_train": 3.6034414213014104e-10,
+              "paired_train": 9.55850878524755e-06,
+              "paired_wash": 1.9075447290572483e-05,
+              "ucs_probe": 1.9066866711091365e-05,
+              "paired_probe": 1.9065522884531054e-05,
+              "paired_postprobe": 1.9056410629674437e-05,
+              "delayed_preprobe": 1.9065522884240024e-05,
+              "delayed_probe": 1.9056410629350786e-05,
+              "delayed_sham": 1.9056410629088395e-05
+            }
+          },
+          "B": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -4.6611884274225246e-15,
+                  "resolution": 2.0032912976411352e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 5.8675841962951836e-12,
+                  "resolution": 1.5453772163283996e-05,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -4.7034231842385185e-15,
+                  "resolution": 2.0032912976383347e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 5.833611371741654e-12,
+                  "resolution": 1.5452697079310846e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 5.838272560169076e-12,
+                  "resolution": 1.5653026209074957e-05,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -3.397282455352979e-14,
+                  "resolution": 3.090646924259484e-05,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 5.838314794925892e-12,
+                  "resolution": 1.565302620907468e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -3.3930589796713796e-14,
+                "resolution": 3.130712750212279e-05,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 5.872245384722606e-12,
+                "resolution": 1.565410129304811e-05,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -4.2234756815993924e-17,
+                "resolution": 4.00658259527947e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.1746992267802625e-11,
+                  "resolution": 1.544539107852656e-05,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -4.968590236508266e-15,
+                  "resolution": 2.003481685915037e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 5.7734927949582016e-12,
+                  "resolution": 1.5446465566793343e-05,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -4.986838714323913e-15,
+                  "resolution": 2.0034816859124373e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 5.259515045707985e-12,
+                  "resolution": 1.544539107839681e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 5.264483635944494e-12,
+                  "resolution": 1.5645739246988314e-05,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -5.139777492502162e-13,
+                  "resolution": 3.0891856645190154e-05,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 5.264501884422309e-12,
+                  "resolution": 1.5645739246988053e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -5.139595007724006e-13,
+                "resolution": 3.12925529823729e-05,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 5.77846138519471e-12,
+                "resolution": 1.5646813735384846e-05,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -1.8248477815646647e-17,
+                "resolution": 4.0069633718274745e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.10415565579558e-11,
+                  "resolution": 1.5438509560054843e-05,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.1081966950311025e-06,
+              "control_train": 7.186411792601137e-06,
+              "control_probe": 8.228244105168912e-06,
+              "control_postprobe": 8.704214790076757e-06,
+              "ucs_train": 0.19056406998545544,
+              "ucs_wash": 0.3815368112072559,
+              "cs_train": 7.186411789037986e-06,
+              "paired_train": 0.19055070196883425,
+              "paired_wash": 0.3815099183069849,
+              "ucs_probe": 0.3813443040850336,
+              "paired_probe": 0.3813174269856879,
+              "paired_postprobe": 0.38113477696903747,
+              "delayed_preprobe": 0.38131742697985427,
+              "delayed_probe": 0.38113477696255,
+              "delayed_sham": 0.3811347769572905
+            }
+          },
+          "D": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 4.66115285203874e-15,
+                  "resolution": 2.0033489312726277e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -5.86362534048257e-12,
+                  "resolution": 2.4025344829048636e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 4.703362197866316e-15,
+                  "resolution": 2.0033489312754284e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -5.8307562337406305e-12,
+                  "resolution": 2.402520140429622e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -5.835417386592669e-12,
+                  "resolution": 4.40586907170225e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 3.2869106741939547e-14,
+                  "resolution": 4.805054623334486e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -5.835459595938497e-12,
+                  "resolution": 4.4058690717050504e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 3.282689739611197e-14,
+                "resolution": 8.811752485882541e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -5.868286493334609e-12,
+                "resolution": 4.4058834141774915e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 4.2209345827576294e-17,
+                "resolution": 4.006697862548056e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.1737731012845254e-11,
+                  "resolution": 2.4755796053652024e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 4.96856143738806e-15,
+                  "resolution": 2.0031585444135002e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -5.769840551519967e-12,
+                  "resolution": 2.4755999048585634e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 4.986769257622238e-15,
+                  "resolution": 2.0031585444160998e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -5.257845808043227e-12,
+                  "resolution": 2.4755796066611797e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -5.262814369480615e-12,
+                  "resolution": 4.47873815107468e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 5.119947434767402e-13,
+                  "resolution": 4.951179511519744e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -5.262832577300849e-12,
+                  "resolution": 4.4787381510772795e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 5.119765356565061e-13,
+                "resolution": 8.957496600349343e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -5.774809112957355e-12,
+                "resolution": 4.4787584492720633e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.820782023417844e-17,
+                "resolution": 4.0063170888296e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.1037121737389466e-11,
+                  "resolution": 2.5443942787161536e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 5.843939635988556e-06,
+              "control_train": 9.414152749958434e-06,
+              "control_probe": 8.372328179238839e-06,
+              "control_postprobe": 7.896361031266528e-06,
+              "ucs_train": 0.00033703574865338317,
+              "ucs_wash": 0.0008123641282329018,
+              "cs_train": 9.414152753519464e-06,
+              "paired_train": 0.00033703128531378183,
+              "paired_wash": 0.0008123440802613112,
+              "ucs_probe": 0.0010063362043303472,
+              "paired_probe": 0.0010063003481586776,
+              "paired_postprobe": 0.001188949007544141,
+              "delayed_preprobe": 0.0010063003539894338,
+              "delayed_probe": 0.0011889490140240262,
+              "delayed_sham": 0.001188949019281872
+            }
+          },
+          "ILL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 8.329285937471724e-38,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.127564069416309e-26,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 3.925961643620546e-216,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 4.857429601997951e-30,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 4.857429518705092e-30,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -2.1270783264561092e-26,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 4.857429601997951e-30,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -2.12707832644778e-26,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 2.1275640694079796e-26,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -8.329285937471724e-38,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 8.093794604021547e-33,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -1.6627319948297647e-39,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -3.4267365029869463e-28,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.0587329009328306e-218,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 7.25325391052088e-33,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 7.253255573252875e-33,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 3.4268090355260516e-28,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 7.25325391052088e-33,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 3.4268090355094243e-28,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -3.426736502970319e-28,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.6627319948297647e-39,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 5.1707044532680744e-33,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": -1,
+              "pretest": false,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.008654731340858e-06,
+              "control_train": 4.193522074216856e-32,
+              "control_probe": -8.194874830844548e-38,
+              "control_postprobe": 1.66091540570027e-39,
+              "ucs_train": 6.069824710526838e-05,
+              "ucs_wash": 9.482723963783984e-08,
+              "cs_train": 2.6084502603261974e-34,
+              "paired_train": 6.069824710464838e-05,
+              "paired_wash": 9.482723965069853e-08,
+              "ucs_probe": -4.489085957104447e-29,
+              "paired_probe": -1.3164422166424494e-31,
+              "paired_postprobe": 2.2302123326032444e-211,
+              "delayed_preprobe": -4.9890738236621966e-30,
+              "delayed_probe": -8.40540693500667e-34,
+              "delayed_sham": -8.093794604021547e-33
+            }
+          },
+          "DL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -1.779803222926916e-23,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.0566358413196441e-19,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -5.129624936066524e-40,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -1.0488959731055968e-22,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -8.709156508129052e-23,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -1.0576847372927496e-19,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.0488959731055968e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -1.0578627176150423e-19,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 1.0568138216419367e-19,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.779803222926916e-23,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.9020959462772291e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.9673338302927107e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -6.688517461336096e-22,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.5780373422645506e-40,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.7489136962381067e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -2.18420134054604e-26,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 6.690266375032334e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.7489136962381084e-25,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 6.692233708862626e-22,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -6.690484795166388e-22,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -1.9673338302927123e-25,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 5.684358802911316e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": true,
+              "long_recall": true,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 6.198527082269031e-08,
+              "control_train": -3.8902850247094266e-19,
+              "control_probe": 1.7837747780714573e-23,
+              "control_postprobe": -1.948548368945235e-25,
+              "ucs_train": 1.8361190410809423e-06,
+              "ucs_wash": 1.7626975862596322e-08,
+              "cs_train": 8.258219310100817e-21,
+              "paired_train": 1.8361106226063378e-06,
+              "paired_wash": 1.762691115268187e-08,
+              "ucs_probe": 6.723477664439908e-22,
+              "paired_probe": 3.744211006862274e-24,
+              "paired_postprobe": 4.2907857254133235e-38,
+              "delayed_preprobe": 1.0863380831742195e-22,
+              "delayed_probe": -1.531822500386933e-26,
+              "delayed_sham": -1.9020959462768e-25
+            }
+          },
+          "I": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 2.670974469739852e-19,
+                  "resolution": 2.0000019176850012e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -3.1998871868194056e-16,
+                  "resolution": 2.0397704128672252e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.6959056934022e-19,
+                  "resolution": 2.0000019176850012e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -3.3351414078369723e-16,
+                  "resolution": 2.0397676143033168e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -3.337812382306712e-16,
+                  "resolution": 4.039769531988318e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -1.3525422101756668e-17,
+                  "resolution": 4.0795380271705423e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -3.3378373135303745e-16,
+                  "resolution": 4.039769531988318e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -1.3527915224122903e-17,
+                "resolution": 8.079541862540545e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -3.2025581612891455e-16,
+                "resolution": 4.0397723305522265e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 2.4931223662348254e-21,
+                "resolution": 4.0000038353700025e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -6.704299658835677e-16,
+                  "resolution": 2.0397718021138342e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 2.8480655670813296e-19,
+                  "resolution": 2.000001906771917e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -3.298820635058708e-16,
+                  "resolution": 2.039774601019205e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.858339150289238e-19,
+                  "resolution": 2.0000019067719172e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -3.0096097055481996e-16,
+                  "resolution": 2.039771802113908e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -3.012457771115281e-16,
+                  "resolution": 4.039773708885825e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.892109295105083e-17,
+                  "resolution": 4.079546403133113e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -3.012468044698489e-16,
+                  "resolution": 4.039773708885825e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 2.892006559273004e-17,
+                "resolution": 8.079550216676947e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -3.3016687006257893e-16,
+                "resolution": 4.039776507791122e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.0273583207908604e-21,
+                "resolution": 4.000003813543834e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -6.315071078913381e-16,
+                  "resolution": 2.0397757466104579e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 2.364076288395927e-08,
+              "control_train": 4.853930484279697e-09,
+              "control_probe": 4.7942125027558834e-09,
+              "control_postprobe": 4.7669297922985495e-09,
+              "ucs_train": 0.0001395874727373914,
+              "ucs_wash": 0.00010034341570621263,
+              "cs_train": 4.853930486120209e-09,
+              "paired_train": 0.00013958332044341514,
+              "paired_wash": 0.00010033641468412652,
+              "ucs_probe": 9.942603216790363e-05,
+              "paired_probe": 9.941903575812556e-05,
+              "paired_postprobe": 9.942950528425031e-05,
+              "delayed_preprobe": 9.941903575845908e-05,
+              "delayed_probe": 9.942950528461978e-05,
+              "delayed_sham": 9.942950528492074e-05
+            }
+          }
+        },
+        "copasi": {
+          "IL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -5.25452946045254e-26,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 3.8185436108313816e-22,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.1315781878557901e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 3.7729874263639957e-22,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 3.7735128793100407e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -4.5556184467385955e-24,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 3.77185584817614e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -4.7213215601286995e-24,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 3.8190690637774266e-22,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.6570311339010442e-25,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 4.683549245056549e-22,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -2.822413562790463e-26,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 4.506896164954722e-22,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 6.05912419238919e-27,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 4.570228068190696e-22,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 4.570510309546975e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 6.3331903235973854e-24,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 4.570167476948772e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 6.298907063777092e-24,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 4.5071784063110015e-22,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 3.428325982029382e-26,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -7.006123862968611e-21,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": -1,
+              "pretest": false,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.092123840666205e-08,
+              "control_train": 1.386067020108083e-26,
+              "control_probe": 3.1042854279724592e-27,
+              "control_postprobe": 6.8616259148575356e-31,
+              "ucs_train": 8.601539481807187e-05,
+              "ucs_wash": 4.230042295923143e-07,
+              "cs_train": -1.275364818019678e-25,
+              "paired_train": 8.601473465514509e-05,
+              "paired_wash": 4.2300242460010026e-07,
+              "ucs_probe": -3.37985300279923e-24,
+              "paired_probe": -1.2349649765008362e-24,
+              "paired_postprobe": -1.8832144273364897e-25,
+              "delayed_preprobe": -3.785337076129004e-22,
+              "delayed_probe": -1.1520439129318929e-23,
+              "delayed_sham": -4.685432459483885e-22
+            }
+          },
+          "A": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -1.6500236967689804e-20,
+                  "resolution": 2.00000016492811e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.574939180806756e-16,
+                  "resolution": 2.007626746684358e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -2.445657708710767e-20,
+                  "resolution": 2.00000016492811e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.5740582665416114e-16,
+                  "resolution": 2.0076262091537372e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 1.5742232689112883e-16,
+                  "resolution": 4.007626374081847e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -8.809142651444724e-20,
+                  "resolution": 4.015252955838095e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.5743028323124825e-16,
+                  "resolution": 4.007626374081847e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -8.013508639502937e-20,
+                "resolution": 8.015253285694315e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 1.5751041831764328e-16,
+                "resolution": 4.007626911612468e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -7.956340119417866e-21,
+                "resolution": 4.00000032985622e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.1051211406805945e-16,
+                  "resolution": 2.0076225642517092e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -2.0886568960905372e-20,
+                  "resolution": 2.00000017442642e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.643514968216464e-16,
+                  "resolution": 2.007623101485167e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.6608390832781112e-20,
+                  "resolution": 2.00000017442642e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.6685532621373012e-16,
+                  "resolution": 2.0076225642516804e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 1.6687621278269102e-16,
+                  "resolution": 4.0076227386781e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.5038293920837118e-18,
+                  "resolution": 4.015245665736848e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.668719346045629e-16,
+                  "resolution": 4.0076227386781e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 2.4995512139555875e-18,
+                "resolution": 8.015246014589688e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 1.643723833906073e-16,
+                "resolution": 4.007623275911587e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 4.278178128124259e-21,
+                "resolution": 4.00000034885284e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.2772382355626684e-16,
+                  "resolution": 2.0076191311203542e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 2.1307078864443254e-10,
+              "control_train": 3.6034414216887667e-10,
+              "control_probe": 4.123202750981157e-10,
+              "control_postprobe": 4.3606605001610806e-10,
+              "ucs_train": 9.559177839122783e-06,
+              "ucs_wash": 1.9076791907349288e-05,
+              "cs_train": 3.603441421559722e-10,
+              "paired_train": 9.558508785261115e-06,
+              "paired_wash": 1.907544729059309e-05,
+              "ucs_probe": 1.9066866710974366e-05,
+              "paired_probe": 1.906552288442206e-05,
+              "paired_postprobe": 1.9056410629428567e-05,
+              "delayed_preprobe": 1.9065522884264656e-05,
+              "delayed_probe": 1.905641062928491e-05,
+              "delayed_sham": 1.9056410629118055e-05
+            }
+          },
+          "B": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -3.2835909826670756e-16,
+                  "resolution": 2.003291297640672e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 3.1578073489413327e-12,
+                  "resolution": 1.5453772163244385e-05,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -4.844181425347344e-16,
+                  "resolution": 2.0032912976404342e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 3.15636405900932e-12,
+                  "resolution": 1.545269707927701e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 3.1566924181075868e-12,
+                  "resolution": 1.5653026209041076e-05,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -1.4432899320127035e-15,
+                  "resolution": 3.09064692425214e-05,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 3.1568484771518548e-12,
+                  "resolution": 1.5653026209041052e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -1.2872308877446767e-15,
+                "resolution": 3.1307127502049504e-05,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 3.1581357080395995e-12,
+                "resolution": 1.5654101293008455e-05,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -1.560590442680268e-16,
+                "resolution": 4.006582595281106e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 6.224298854107246e-12,
+                  "resolution": 1.5445391078439837e-05,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -4.210600780801127e-16,
+                  "resolution": 2.0034816859145724e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 3.295475003994852e-12,
+                  "resolution": 1.5446465566760597e-05,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -3.333481223260354e-16,
+                  "resolution": 2.0034816859143977e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 3.344491350532053e-12,
+                  "resolution": 1.5445391078382242e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 3.344912410610133e-12,
+                  "resolution": 1.5645739246973698e-05,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 4.901634653720066e-14,
+                  "resolution": 3.0891856645142835e-05,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 3.344824698654379e-12,
+                  "resolution": 1.564573924697368e-05,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 4.8928634581446584e-14,
+                "resolution": 3.129255298232573e-05,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 3.2958960640729323e-12,
+                "resolution": 1.5646813735352053e-05,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 8.771195575407731e-17,
+                "resolution": 4.00696337182897e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 6.559031096031731e-12,
+                  "resolution": 1.5438509559990425e-05,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.10819669344377e-06,
+              "control_train": 7.186411789828207e-06,
+              "control_probe": 8.228244101844608e-06,
+              "control_postprobe": 8.704214786641674e-06,
+              "ucs_train": 0.1905640699856839,
+              "ucs_wash": 0.3815368112075394,
+              "cs_train": 7.186411789569105e-06,
+              "paired_train": 0.19055070196910862,
+              "paired_wash": 0.38150991830741265,
+              "ucs_probe": 0.38134430408268855,
+              "paired_probe": 0.38131742698350335,
+              "paired_postprobe": 0.381134776964108,
+              "delayed_preprobe": 0.381317426980347,
+              "delayed_probe": 0.3811347769612282,
+              "delayed_sham": 0.3811347769578837
+            }
+          },
+          "D": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 3.2849801167005727e-16,
+                  "resolution": 2.0033489312706279e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -3.1658282766133805e-12,
+                  "resolution": 2.4025344834054606e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 4.984704191296832e-16,
+                  "resolution": 2.0033489312708608e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -3.151390823644129e-12,
+                  "resolution": 2.402520140952214e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -3.151719321655799e-12,
+                  "resolution": 4.4058690722228416e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.4437452969251474e-14,
+                  "resolution": 4.805054624357674e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -3.1518892940632587e-12,
+                  "resolution": 4.4058690722230746e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 1.4267480561791848e-14,
+                "resolution": 8.811752486899163e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -3.1661567746250506e-12,
+                "resolution": 4.405883414676088e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.6997240745962594e-16,
+                "resolution": 4.0066978625414887e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -6.218293891954718e-12,
+                  "resolution": 2.475579606415617e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 4.2042141523788296e-16,
+                  "resolution": 2.0031585444115014e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -3.2988754956886357e-12,
+                  "resolution": 2.475599905291544e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 3.330330260696568e-16,
+                  "resolution": 2.0031585444116687e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -3.3455332688198114e-12,
+                  "resolution": 2.4755796069901694e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -3.3459536902350493e-12,
+                  "resolution": 4.478738151401671e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -4.6657773131175695e-14,
+                  "resolution": 4.951179512281713e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -3.345866301845881e-12,
+                  "resolution": 4.478738151401838e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -4.657038474200747e-14,
+                "resolution": 8.957496601104883e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -3.2992959171038736e-12,
+                "resolution": 4.478758449703046e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -8.738838916822617e-17,
+                "resolution": 4.00631708882317e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -6.56178670427332e-12,
+                  "resolution": 2.544394279542786e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 5.8439396338625685e-06,
+              "control_train": 9.414152746571786e-06,
+              "control_probe": 8.372328176405546e-06,
+              "control_postprobe": 7.896361028544014e-06,
+              "ucs_train": 0.00033703574865033055,
+              "ucs_wash": 0.0008123641282205884,
+              "cs_train": 9.414152746819611e-06,
+              "paired_train": 0.00033703128531076585,
+              "paired_wash": 0.000812344080295637,
+              "ucs_probe": 0.001006336206930737,
+              "paired_probe": 0.0010063003508048389,
+              "paired_postprobe": 0.001188949012929896,
+              "delayed_preprobe": 0.0010063003539562297,
+              "delayed_probe": 0.0011889490158026566,
+              "delayed_sham": 0.0011889490191481899
+            }
+          },
+          "ILL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.5274500926866036e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -5.053074189999989e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.6283502335704653e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 7.594456886949749e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 6.067006794263145e-25,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.2647531076949737e-24,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 4.9661066533792835e-25,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 1.1546630936065876e-24,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -6.580524282686593e-25,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.1009001408838617e-25,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 8.686269717723304e-28,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 3.051788144244895e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -4.194046788188337e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -3.584244801883623e-27,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -1.932779951617508e-25,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -4.984568095862403e-25,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.2612668365708287e-25,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.8969375035986718e-25,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 5.34889742883456e-25,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -7.245834932433232e-25,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -3.0876305922637313e-25,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -2.0278213802913828e-26,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": true,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.008654729815867e-06,
+              "control_train": -1.0919535058478594e-34,
+              "control_probe": 8.617311253425391e-36,
+              "control_postprobe": 6.913929823952219e-38,
+              "ucs_train": 6.069824710755199e-05,
+              "ucs_wash": 9.48272393043088e-08,
+              "cs_train": 3.698099314561672e-26,
+              "paired_train": 6.069824710760637e-05,
+              "paired_wash": 9.482723930420026e-08,
+              "ucs_probe": -5.065130819078554e-25,
+              "paired_probe": 7.58335950286554e-25,
+              "paired_postprobe": -2.276217178976672e-28,
+              "delayed_preprobe": -1.109738408420885e-27,
+              "delayed_probe": -1.943742438514208e-25,
+              "delayed_sham": -1.0962486896699975e-27
+            }
+          },
+          "DL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -4.0230340799474e-23,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 3.015606733340124e-21,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.595917820235481e-27,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 2.1666054801654655e-21,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 2.206835820964939e-21,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -8.490012531746589e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.166603884247645e-21,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -8.89233189891953e-22,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 3.0558370741395982e-21,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 4.0231936717294237e-23,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 2.9223681914577155e-21,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -1.2182033001428132e-28,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 3.885897640418372e-21,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 9.49290580042863e-29,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 2.8987061382941803e-21,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 2.8987062601145103e-21,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -9.871915021241916e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.8987060433651223e-21,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -9.871917188735797e-22,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 3.8858977622387024e-21,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 2.1674938801856763e-28,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -3.173537116486121e-20,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": -1,
+              "pretest": false,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 6.19852708467485e-08,
+              "control_train": 1.9407467169140554e-23,
+              "control_probe": 4.544665857410828e-24,
+              "control_postprobe": -2.7878273523499482e-27,
+              "ucs_train": 1.8361190410564425e-06,
+              "ucs_wash": 1.7626975819728504e-08,
+              "cs_train": -1.6150624270828013e-22,
+              "paired_train": 1.8361106226003044e-06,
+              "paired_wash": 1.7626911119592143e-08,
+              "ucs_probe": 1.215573304632532e-23,
+              "paired_probe": 9.285941512261089e-24,
+              "paired_postprobe": -1.0067011597688778e-27,
+              "delayed_preprobe": -2.1573195386532042e-21,
+              "delayed_probe": -2.366305986469492e-23,
+              "delayed_sham": -2.9223691981588753e-21
+            }
+          },
+          "I": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.8447782021157623e-20,
+                  "resolution": 2.0000019176850002e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -1.8478870777299816e-16,
+                  "resolution": 2.0397704128672845e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 3.219469662117639e-20,
+                  "resolution": 2.0000019176850002e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -1.8058742435461683e-16,
+                  "resolution": 2.039767614303395e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -1.80605872136638e-16,
+                  "resolution": 4.039769531988395e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 4.20128341838133e-18,
+                  "resolution": 4.0795380271706794e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.80619619051238e-16,
+                  "resolution": 4.039769531988395e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 4.187536503781311e-18,
+                "resolution": 8.07954186254068e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -1.8480715555501932e-16,
+                "resolution": 4.0397723305522847e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.3746914600018767e-20,
+                "resolution": 4.0000038353700004e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -3.5666185716626275e-16,
+                  "resolution": 2.0397718021139422e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 2.3929507940546538e-20,
+                  "resolution": 2.000001906771916e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -1.9157852387818863e-16,
+                  "resolution": 2.0397746010192575e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.900943765708113e-20,
+                  "resolution": 2.000001906771916e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -1.9381469085893999e-16,
+                  "resolution": 2.039771802113975e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -1.9383862036688053e-16,
+                  "resolution": 4.039773708885891e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -2.236166980751353e-18,
+                  "resolution": 4.0795464031332325e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.9383370029659707e-16,
+                  "resolution": 4.039773708885891e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -2.2312469104678875e-18,
+                "resolution": 8.079550216677065e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -1.9160245338612918e-16,
+                "resolution": 4.0397765077911736e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -4.9200702834654086e-21,
+                "resolution": 4.000003813543832e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -3.585592109681124e-16,
+                  "resolution": 2.039775746610549e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 2.3640762864390158e-08,
+              "control_train": 4.853930484085385e-09,
+              "control_probe": 4.794212500993124e-09,
+              "control_postprobe": 4.766929790542207e-09,
+              "ucs_train": 0.0001395874727366123,
+              "ucs_wash": 0.00010034341570273611,
+              "cs_train": 4.853930484096129e-09,
+              "paired_train": 0.00013958332044333783,
+              "paired_wash": 0.00010033641468208894,
+              "ucs_probe": 9.942603216811896e-05,
+              "paired_probe": 9.941903575839724e-05,
+              "paired_postprobe": 9.942950528467764e-05,
+              "delayed_preprobe": 9.941903575857783e-05,
+              "delayed_probe": 9.942950528484048e-05,
+              "delayed_sham": 9.94295052850343e-05
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {
+        "IL": [
+          "cs_direction",
+          "pretest",
+          "delayed_cue_candidate"
+        ],
+        "ILL": [
+          "cs_direction",
+          "pretest",
+          "transfer"
+        ],
+        "DL": [
+          "cs_direction",
+          "pretest",
+          "association",
+          "long_recall"
+        ]
+      },
+      "elapsed_seconds": 7.054172291002033
+    },
+    "ALL__up--AL__up": {
+      "ucs": "ALL__up",
+      "cs": "AL__up",
+      "responses": [
+        "IL",
+        "A",
+        "D",
+        "ILL",
+        "DL"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "bc3d2d4511cb196902a042b2b6527c03181a3a66720fd9f46ad34b2d81780c7c",
+        "none_delayed": "8a55b2aea7d00a9ce48ccd216856a4c0e6bfee0c7eaa4c9c3676ea17c1d282fa",
+        "ucs_sham": "847cb00be2259ba6706801a5ff342cba767bf7aba097f08da236bb621e40c97b",
+        "ucs_normal": "df80612a48b60f2582a10c2f4fc3415ff1346e2af56c56e100bbea6416143f62",
+        "ucs_delayed": "855bcbd253597c0005634f9ab782c2dc806b6ffbc303f91d88f23e16d4dce79c",
+        "cs_sham": "7da7625be53640838f884649252a9a1013f8a0008d0d8c51290a83c14fb9199a",
+        "cs_normal": "95e5de53d96367e61624da13db74d983f27a6ce2a975890c3894a62147208013",
+        "cs_delayed": "f848648016d21d212aeffc2119d00660ec541279fea7646b3abc75195d5002b0",
+        "paired_sham": "02a0516601c33c1450ae5d15e5da032eee3dd73bc85b358b37c54a3ca1134e2b",
+        "paired_normal": "640f887f91ac5f9ba46a1a2bc5c17623940ac30cac5d6cb2b1e7cd9dcd74f285",
+        "paired_delayed": "9c86888391caae0924fdb54cd1daae9de06e97945d145443536c4c1735de6d9e"
+      },
+      "levels": {
+        "ALL__up": 0.000766556550106428,
+        "AL__up": 9.25452309984735e-06
+      },
+      "scores": {
+        "roadrunner": {
+          "IL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.1324366054694434e-07,
+                  "resolution": 2.0000226487321092e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.1324372760241619e-07,
+                  "resolution": 2.0000226487455204e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.132436717126968e-07,
+                  "resolution": 2.0000226487343425e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.1324374135041343e-07,
+                  "resolution": 2.00002264874827e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 8.080346909409982e-14,
+                  "resolution": 4.0000452974803793e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.3747997246598718e-14,
+                  "resolution": 4.0000452974937905e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 6.963771662970798e-14,
+                  "resolution": 4.0000452974826123e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 2.5822447822068804e-15,
+                "resolution": 8.000090594960242e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 6.705547184750111e-14,
+                "resolution": 4.0000452974776296e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.1165752464391837e-14,
+                "resolution": 4.000045297466452e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.0777160802492607e-10,
+                  "resolution": 2.0000000615543215e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.1324365500931678e-07,
+                  "resolution": 2.0000226487310017e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.1324378207975499e-07,
+                  "resolution": 2.000022648756416e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.1324367195375624e-07,
+                  "resolution": 2.0000226487343906e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.1324377586223014e-07,
+                  "resolution": 2.0000226487551723e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 1.2085291336642115e-13,
+                  "resolution": 4.000045297486174e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -6.217524845458304e-15,
+                  "resolution": 4.000045297511588e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.0390847390225837e-13,
+                  "resolution": 4.0000452974895627e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -2.3161964309621073e-14,
+                "resolution": 8.00009059497698e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 1.2707043821187945e-13,
+                "resolution": 4.0000452974874176e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.694443946416277e-14,
+                "resolution": 4.0000452974653926e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.077737494427537e-10,
+                  "resolution": 2.0000000615547497e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 1,
+              "pretest": false,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.0921238387699966e-08,
+              "control_train": -2.6281334618901356e-22,
+              "control_probe": 1.2051268301806087e-26,
+              "control_postprobe": -1.3164401825677882e-28,
+              "ucs_train": 8.601539481682903e-05,
+              "ucs_wash": 4.23004229767531e-07,
+              "cs_train": 1.1324365434552748e-07,
+              "paired_train": 8.612797828486858e-05,
+              "paired_wash": 4.2331019722659e-07,
+              "ucs_probe": 1.1324372760240207e-07,
+              "paired_probe": 1.1324374135041411e-07,
+              "paired_postprobe": 3.077716080249258e-10,
+              "delayed_preprobe": 6.6978847871198e-22,
+              "delayed_probe": 1.1324377586223014e-07,
+              "delayed_sham": -2.6189572554177e-25
+            }
+          },
+          "A": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.1545251610627443e-07,
+                  "resolution": 2.0000232554313312e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.1545251618904178e-07,
+                  "resolution": 2.007649837187557e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.1545251612693793e-07,
+                  "resolution": 2.0001154612932536e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.1545251618253995e-07,
+                  "resolution": 2.0077415055188224e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 7.626552256480923e-17,
+                  "resolution": 4.007764760950154e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -6.5018249031240094e-18,
+                  "resolution": 4.0153913427063795e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 5.560202198463045e-17,
+                  "resolution": 4.007856966812076e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -2.7165325483302792e-17,
+                "resolution": 8.015530059430964e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 8.276734746793324e-17,
+                "resolution": 4.0076730926188886e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 2.0663500580178782e-17,
+                "resolution": 4.0001387167245846e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 2.3065017802958567e-07,
+                  "resolution": 2.0077608491888703e-07,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.1545251610563115e-07,
+                  "resolution": 2.000023264929641e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.15452516160717e-07,
+                  "resolution": 2.007646191988358e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.1545251612524156e-07,
+                  "resolution": 2.0001154198313013e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.1545251616263129e-07,
+                  "resolution": 2.0077378096564966e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 5.700014829856657e-17,
+                  "resolution": 4.007761074586138e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.9142944607947188e-18,
+                  "resolution": 4.015384001644855e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 3.7389728357699326e-17,
+                  "resolution": 4.007853229487798e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -1.7696125480072525e-17,
+                "resolution": 8.015522686405797e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 5.508585383777185e-17,
+                "resolution": 4.007669456917999e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 1.9610419940867243e-17,
+                "resolution": 4.0001386847609424e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 2.3065017802197932e-07,
+                  "resolution": 2.0077573680580676e-07,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 1,
+              "pretest": false,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 2.1307078872934178e-10,
+              "control_train": 3.603441423073378e-10,
+              "control_probe": 4.123202752646375e-10,
+              "control_postprobe": 4.360660501881564e-10,
+              "ucs_train": 9.559177839111722e-06,
+              "ucs_wash": 1.907679190733624e-05,
+              "cs_train": 1.1581286025629765e-07,
+              "paired_train": 9.673961301339556e-06,
+              "paired_wash": 1.9306097468530904e-05,
+              "ucs_probe": 1.9182319226987675e-05,
+              "paired_probe": 1.941149005514776e-05,
+              "paired_postprobe": 1.9517448061190285e-05,
+              "delayed_preprobe": 1.929603753896522e-05,
+              "delayed_probe": 1.940225039932333e-05,
+              "delayed_sham": 1.92867978831607e-05
+            }
+          },
+          "D": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 7.730749658607633e-07,
+                  "resolution": 2.0035035462648677e-07,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 7.730748851884645e-07,
+                  "resolution": 2.4026890990546264e-07,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 7.730749655672952e-07,
+                  "resolution": 2.0059668950851103e-07,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": 7.73074915240814e-07,
+                  "resolution": 2.405138105417951e-07,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -5.06199493129425e-14,
+                  "resolution": 4.4086416516828185e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 3.0052349497822206e-14,
+                  "resolution": 4.807827204472578e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -5.0326481195839094e-14,
+                  "resolution": 4.411105000503061e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 3.0345817614925615e-14,
+                "resolution": 8.817297645822555e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -8.067229881076471e-14,
+                "resolution": 4.406192645319494e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -2.934681171034084e-16,
+                "resolution": 4.009470441349978e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.4471668674354063e-06,
+                  "resolution": 2.479753852069336e-07,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 3.0606294098149993e-06,
+                  "resolution": 3.6823229047783114e-07,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 7.730749657858077e-07,
+                  "resolution": 2.0033131594056635e-07,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 7.73074962760311e-07,
+                  "resolution": 2.4757545210050836e-07,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 7.730749581066341e-07,
+                  "resolution": 2.0067979703805216e-07,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": 7.730749645661582e-07,
+                  "resolution": 2.479219033688762e-07,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -1.219649517015045e-15,
+                  "resolution": 4.4825321930944256e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.805847138491856e-15,
+                  "resolution": 4.954973554693846e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 6.45952407773813e-15,
+                  "resolution": 4.4860170040692835e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 9.485020733245031e-15,
+                "resolution": 8.965084684480031e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -3.0254966555069013e-15,
+                "resolution": 4.479067680410747e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -7.679173594753175e-15,
+                "resolution": 4.0101111297861854e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.4471670156670936e-06,
+                  "resolution": 2.5495306399456797e-07,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 3.0606295333840145e-06,
+                  "resolution": 3.7891401567900607e-07,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 5.843939635988556e-06,
+              "control_train": 9.414152749958434e-06,
+              "control_probe": 8.372328179238839e-06,
+              "control_postprobe": 7.896361031266528e-06,
+              "ucs_train": 0.00033703574865338317,
+              "ucs_wash": 0.0008123641282329018,
+              "cs_train": 1.018722771579689e-05,
+              "paired_train": 0.0003378043602788517,
+              "paired_wash": 0.0008157912473136319,
+              "ucs_probe": 0.001007109285079161,
+              "paired_probe": 0.0010132318010024981,
+              "paired_postprobe": 0.0012011082136070574,
+              "delayed_preprobe": 0.0010124587260872573,
+              "delayed_probe": 0.0011984341217041881,
+              "delayed_sham": 0.001197661046739622
+            }
+          },
+          "ILL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 8.024431524300123e-34,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.1275175298644995e-26,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.0832498342437739e-33,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 2.2432802883158796e-27,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 2.243279485872727e-27,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -1.9031895010329115e-26,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.243281371565714e-27,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -1.9031893124636127e-26,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 2.127517449620184e-26,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -1.8856929866737862e-33,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -2.3921147442758405e-31,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -6.684590810874867e-34,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -3.430058056202972e-28,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -4.4876896213472465e-111,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -2.1069458739221783e-31,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -2.100261283111303e-31,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 3.4279511103290495e-28,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -2.1069458739221783e-31,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 3.4279444257382387e-28,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -3.430051371612161e-28,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 6.684590810874867e-34,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -3.4636612992044004e-32,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": -1,
+              "pretest": false,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.008654731340858e-06,
+              "control_train": 4.193522074216856e-32,
+              "control_probe": -8.194874830844548e-38,
+              "control_postprobe": 1.66091540570027e-39,
+              "ucs_train": 6.069824710526838e-05,
+              "ucs_wash": 9.482723963783984e-08,
+              "cs_train": -1.0777578334275037e-33,
+              "paired_train": 6.069824710874269e-05,
+              "paired_wash": 9.482723956788102e-08,
+              "ucs_probe": -4.53562550891402e-29,
+              "paired_probe": -1.6373228013363026e-28,
+              "paired_postprobe": 4.1578666678543974e-76,
+              "delayed_preprobe": -2.40701256844951e-27,
+              "delayed_probe": 2.851688703536623e-32,
+              "delayed_sham": 2.3921147442758405e-31
+            }
+          },
+          "DL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.4441355168950438e-09,
+                  "resolution": 2.0000002888271033e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.4441344944431434e-09,
+                  "resolution": 2.000000288826899e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.4441353775443756e-09,
+                  "resolution": 2.0000002888270753e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.4441342883387475e-09,
+                  "resolution": 2.0000002888268577e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -1.2285562963188828e-15,
+                  "resolution": 4.000000577653961e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -2.0610439603352553e-16,
+                  "resolution": 4.0000005776537567e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.0892056282272181e-15,
+                  "resolution": 4.000000577653933e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -6.675372794186097e-17,
+                "resolution": 8.000001155307935e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -1.0224519002853572e-15,
+                "resolution": 4.0000005776540023e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -1.3935066809166458e-16,
+                "resolution": 4.0000005776541786e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.1032125861827331e-11,
+                  "resolution": 2.000000002206425e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.4441356007087866e-09,
+                  "resolution": 2.00000028882712e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.4441336770820558e-09,
+                  "resolution": 2.0000002888267354e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.4441353845678428e-09,
+                  "resolution": 2.0000002888270769e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.4441337669885382e-09,
+                  "resolution": 2.0000002888267534e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -1.8337202483638552e-15,
+                  "resolution": 4.000000577653873e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 8.990648242747231e-17,
+                  "resolution": 4.000000577653489e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.6175793044839233e-15,
+                  "resolution": 4.00000057765383e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 3.060474263074044e-16,
+                "resolution": 8.000001155307685e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -1.9236267307913275e-15,
+                "resolution": 4.000000577653855e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -2.161409438799321e-16,
+                "resolution": 4.000000577654197e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.103213222915651e-11,
+                  "resolution": 2.0000000022064265e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": true
+            },
+            "paper_like_means": {
+              "baseline": 6.198527082269031e-08,
+              "control_train": -3.8902850247094266e-19,
+              "control_probe": 1.7837747780714573e-23,
+              "control_postprobe": -1.948548368945235e-25,
+              "ucs_train": 1.8361190410809423e-06,
+              "ucs_wash": 1.7626975862596322e-08,
+              "cs_train": 1.4441356021744405e-09,
+              "paired_train": 1.837554758438892e-06,
+              "paired_wash": 1.7637943296158946e-08,
+              "ucs_probe": 1.4441344943381522e-09,
+              "paired_probe": 1.4441342883371092e-09,
+              "paired_postprobe": 1.1032125861812616e-11,
+              "delayed_preprobe": -1.6382026385865534e-21,
+              "delayed_probe": 1.4441337669885236e-09,
+              "delayed_sham": -1.4714178144470003e-23
+            }
+          }
+        },
+        "copasi": {
+          "IL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.1324363935005645e-07,
+                  "resolution": 2.0000226487278698e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.1324363732260094e-07,
+                  "resolution": 2.0000226487274643e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.1324363874799729e-07,
+                  "resolution": 2.0000226487277496e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.1324363669145894e-07,
+                  "resolution": 2.0000226487273383e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -2.6585975053460357e-15,
+                  "resolution": 4.000045297455208e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -6.311419985573883e-16,
+                  "resolution": 4.0000452974548026e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -2.0565383497811364e-15,
+                  "resolution": 4.0000452974550874e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -2.9082842992488947e-17,
+                "resolution": 8.000090594910423e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -2.0274555067886475e-15,
+                "resolution": 4.000045297455334e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -6.020591555648994e-16,
+                "resolution": 4.0000452974556195e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.077712836387585e-10,
+                  "resolution": 2.0000000615542566e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.1324363964491951e-07,
+                  "resolution": 2.0000226487279288e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.1324363706789817e-07,
+                  "resolution": 2.0000226487274135e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.1324363845988358e-07,
+                  "resolution": 2.000022648727692e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.132436364599662e-07,
+                  "resolution": 2.0000226487272917e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -3.184953307759858e-15,
+                  "resolution": 4.000045297455221e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -6.079319755468669e-16,
+                  "resolution": 4.000045297454705e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.999917387755054e-15,
+                  "resolution": 4.0000452974549837e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 5.771039444579368e-16,
+                "resolution": 8.000090594910326e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -2.5770213322129907e-15,
+                "resolution": 4.0000452974553426e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -1.1850359200048037e-15,
+                "resolution": 4.000045297455621e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.0777267476799847e-10,
+                  "resolution": 2.0000000615545348e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 1,
+              "pretest": false,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.092123840666205e-08,
+              "control_train": 1.386067020108083e-26,
+              "control_probe": 3.1042854279724592e-27,
+              "control_postprobe": 6.8616259148575356e-31,
+              "ucs_train": 8.601539481807187e-05,
+              "ucs_wash": 4.230042295923143e-07,
+              "cs_train": 1.1324363957768814e-07,
+              "paired_train": 8.612797829537105e-05,
+              "paired_wash": 4.233101969459395e-07,
+              "ucs_probe": 1.1324363732260056e-07,
+              "paired_probe": 1.1324363669145894e-07,
+              "paired_postprobe": 3.077712836387585e-10,
+              "delayed_preprobe": 1.4857632029582346e-25,
+              "delayed_probe": 1.132436364599662e-07,
+              "delayed_sham": 1.4815702655412064e-26
+            }
+          },
+          "A": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.1545251611946341e-07,
+                  "resolution": 2.000023255431334e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.1545251612010685e-07,
+                  "resolution": 2.0076498371875508e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.1545251611867711e-07,
+                  "resolution": 2.0001154612932512e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.1545251612059474e-07,
+                  "resolution": 2.007741505518844e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 1.1313306844881366e-18,
+                  "resolution": 4.0077647609501777e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 4.87890977618477e-19,
+                  "resolution": 4.015391342706395e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.9176296530245326e-18,
+                  "resolution": 4.007856966812095e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 1.274189946154873e-18,
+                "resolution": 8.01553005943098e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 6.434397068696596e-19,
+                "resolution": 4.0076730926188844e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -7.86298968536396e-19,
+                "resolution": 4.000138716724585e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 2.3065017802836933e-07,
+                  "resolution": 2.0077608491889052e-07,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.1545251611936401e-07,
+                  "resolution": 2.000023264929644e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.1545251611967656e-07,
+                  "resolution": 2.0076461919883583e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.1545251611896672e-07,
+                  "resolution": 2.0001154198312997e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.1545251611981208e-07,
+                  "resolution": 2.0077378096565236e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 4.480649711598278e-19,
+                  "resolution": 4.0077610745861676e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.3552527156068805e-19,
+                  "resolution": 4.015384001644882e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 8.453653511393934e-19,
+                  "resolution": 4.007853229487823e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 5.328256515402537e-19,
+                "resolution": 8.015522686405826e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 3.1253969959913974e-19,
+                "resolution": 4.007669456918002e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -3.9730037997956564e-19,
+                "resolution": 4.0001386847609435e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 2.306501780299177e-07,
+                  "resolution": 2.0077573680581041e-07,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 1,
+              "pretest": false,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 2.1307078864443254e-10,
+              "control_train": 3.6034414216887667e-10,
+              "control_probe": 4.123202750981157e-10,
+              "control_postprobe": 4.3606605001610806e-10,
+              "ucs_train": 9.559177839122783e-06,
+              "ucs_wash": 1.9076791907349288e-05,
+              "cs_train": 1.15812860261525e-07,
+              "paired_train": 9.67396130137507e-06,
+              "paired_wash": 1.9306097468612247e-05,
+              "ucs_probe": 1.918231922693698e-05,
+              "paired_probe": 1.9411490055170137e-05,
+              "paired_postprobe": 1.9517448061277794e-05,
+              "delayed_preprobe": 1.9296037539049542e-05,
+              "delayed_probe": 1.9402250399369237e-05,
+              "delayed_sham": 1.9286797883249425e-05
+            }
+          },
+          "D": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 7.730749658120776e-07,
+                  "resolution": 2.0035035462637248e-07,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 7.730749555874463e-07,
+                  "resolution": 2.4026890990297437e-07,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 7.730749642173246e-07,
+                  "resolution": 2.0059668950936098e-07,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": 7.7307496324148e-07,
+                  "resolution": 2.405138105402235e-07,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -2.5705976111839793e-15,
+                  "resolution": 4.40864165166596e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 7.654033656878667e-15,
+                  "resolution": 4.807827204431979e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -9.758446356750508e-16,
+                  "resolution": 4.411105000495845e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 9.248786632387596e-15,
+                "resolution": 8.817297645789313e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": -1.0224631268062646e-14,
+                "resolution": 4.4061926452934685e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -1.5947529755089285e-15,
+                "resolution": 4.0094704413573345e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.44716706362656e-06,
+                  "resolution": 2.479753852047937e-07,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 3.06062958200582e-06,
+                  "resolution": 3.6823229047490544e-07,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 7.730749657363867e-07,
+                  "resolution": 2.003313159404565e-07,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 7.73074965934855e-07,
+                  "resolution": 2.475754520944506e-07,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 7.730749620444903e-07,
+                  "resolution": 2.0067979703873627e-07,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": 7.730749702976845e-07,
+                  "resolution": 2.479219033629271e-07,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 4.561297831952825e-15,
+                  "resolution": 4.482532193033836e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 4.36282954208167e-15,
+                  "resolution": 4.954973554573777e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 8.253194270580258e-15,
+                  "resolution": 4.4860170040166335e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": 8.054725980709103e-15,
+                "resolution": 8.965084684365704e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 1.9846828987115511e-16,
+                "resolution": 4.479067680349071e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": -3.691896438627433e-15,
+                "resolution": 4.0101111297919277e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 3.447167020497431e-06,
+                  "resolution": 2.5495306398984475e-07,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 3.060629535348589e-06,
+                  "resolution": 3.789140156713083e-07,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 5.8439396338625685e-06,
+              "control_train": 9.414152746571786e-06,
+              "control_probe": 8.372328176405546e-06,
+              "control_postprobe": 7.896361028544014e-06,
+              "ucs_train": 0.00033703574865033055,
+              "ucs_wash": 0.0008123641282205884,
+              "cs_train": 1.018722771240349e-05,
+              "paired_train": 0.0003378043602764943,
+              "paired_wash": 0.0008157912473056917,
+              "ucs_probe": 0.0010071092850521526,
+              "paired_probe": 0.0010132318009872096,
+              "paired_postprobe": 0.001201108213651655,
+              "delayed_preprobe": 0.001012458726023968,
+              "delayed_probe": 0.001198434121558326,
+              "delayed_sham": 0.0011976610465880284
+            }
+          },
+          "ILL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.134669934995068e-26,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.1905575467554817e-24,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 5.246285452993375e-24,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -9.977081402209019e-24,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -9.98842810155897e-24,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -1.2167638948964501e-23,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -1.5223366855202394e-23,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -1.7402577702607924e-23,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 2.179210847405531e-24,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 5.234938753643424e-24,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -2.6854373338749415e-28,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -1.5029952871193414e-27,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 2.422827212199933e-23,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 2.1670711765275792e-23,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": -4.941114626448674e-22,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -4.941099596495803e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": -5.183397347668667e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": -5.1578217441014315e-22,
+                  "resolution": 4e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -5.400119495274296e-22,
+                "resolution": 8e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 2.4229775117286448e-23,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 2.167221476056291e-23,
+                "resolution": 4e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -2.879242615766808e-29,
+                  "resolution": 2e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": -1,
+              "pretest": false,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.008654729815867e-06,
+              "control_train": -1.0919535058478594e-34,
+              "control_probe": 8.617311253425391e-36,
+              "control_postprobe": 6.913929823952219e-38,
+              "ucs_train": 6.069824710755199e-05,
+              "ucs_wash": 9.48272393043088e-08,
+              "cs_train": -3.772557190948301e-25,
+              "paired_train": 6.069824710682957e-05,
+              "paired_wash": 9.482723930022846e-08,
+              "ucs_probe": 2.189351883847625e-24,
+              "paired_probe": -9.977083432417843e-24,
+              "paired_postprobe": -2.6858277135159404e-28,
+              "delayed_preprobe": -2.0302088233600395e-30,
+              "delayed_probe": -4.941114626839053e-22,
+              "delayed_sham": -3.903796409989046e-32
+            }
+          },
+          "DL": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.4441357284592228e-09,
+                  "resolution": 2.0000002888271457e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.4441357806543015e-09,
+                  "resolution": 2.000000288827156e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.4441357568683164e-09,
+                  "resolution": 2.0000002888271512e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.4441357886130764e-09,
+                  "resolution": 2.0000002888271576e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 6.015385353320434e-17,
+                  "resolution": 4.000000577654303e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 7.958774918918013e-18,
+                  "resolution": 4.0000005776543136e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 3.174475984723597e-17,
+                  "resolution": 4.000000577654309e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -2.045031876705036e-17,
+                "resolution": 8.00000115530861e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 5.2195078614286325e-17,
+                "resolution": 4.0000005776543014e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 2.840909368596837e-17,
+                "resolution": 4.0000005776542966e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.1032113414022823e-11,
+                  "resolution": 2.0000000022064225e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 1.444135723863654e-09,
+                  "resolution": 2.0000002888271446e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.4441357836272628e-09,
+                  "resolution": 2.0000002888271568e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 1.4441357603167112e-09,
+                  "resolution": 2.000000288827152e-07,
+                  "resolved_direction": 0
+                },
+                "paired": {
+                  "value": 1.4441357940508697e-09,
+                  "resolution": 2.000000288827159e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 7.018721578495979e-17,
+                  "resolution": 4.0000005776543035e-07,
+                  "resolved_direction": 0
+                },
+                "ucs": {
+                  "value": 1.042360696611531e-17,
+                  "resolution": 4.0000005776543157e-07,
+                  "resolved_direction": 0
+                },
+                "cs": {
+                  "value": 3.3734158567292294e-17,
+                  "resolution": 4.000000577654311e-07,
+                  "resolved_direction": 0
+                }
+              },
+              "factorial_interaction": {
+                "value": -2.6029450251552186e-17,
+                "resolution": 8.000001155308612e-07,
+                "resolved_direction": 0
+              },
+              "ucs_history_effect": {
+                "value": 5.976360881884448e-17,
+                "resolution": 4.0000005776543014e-07,
+                "resolved_direction": 0
+              },
+              "cs_history_effect": {
+                "value": 3.645305721766749e-17,
+                "resolution": 4.0000005776542966e-07,
+                "resolved_direction": 0
+              },
+              "negative_response_values": false,
+              "category": "unresolved_cue_effect",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 1.1032139229272004e-11,
+                  "resolution": 2.0000000022064276e-07,
+                  "resolved_direction": 0
+                },
+                "half_retention_contrast": {
+                  "value": 0.0,
+                  "resolution": 0.0,
+                  "resolved_direction": 0
+                },
+                "category": "unresolved_cue_effect"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": false,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": true
+            },
+            "paper_like_means": {
+              "baseline": 6.19852708467485e-08,
+              "control_train": 1.9407467169140554e-23,
+              "control_probe": 4.544665857410828e-24,
+              "control_postprobe": -2.7878273523499482e-27,
+              "ucs_train": 1.8361190410564425e-06,
+              "ucs_wash": 1.7626975819728504e-08,
+              "cs_train": 1.4441357245288849e-09,
+              "paired_train": 1.8375547582923365e-06,
+              "paired_wash": 1.763794325446767e-08,
+              "ucs_probe": 1.444135780651298e-09,
+              "paired_probe": 1.4441357886131932e-09,
+              "paired_postprobe": 1.1032113414060565e-11,
+              "delayed_preprobe": 1.1688769831266148e-22,
+              "delayed_probe": 1.4441357940509076e-09,
+              "delayed_sham": 3.7742041430444134e-23
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 8.54942524999933
+    }
+  },
+  "status": "incomplete_or_failed",
+  "no_candidates": false,
+  "started_at": "2026-11-10T05:02:31.298851+00:00",
+  "control_comparison": {
+    "passed": true,
+    "max_scaled_error": 1.0278550839176853e-07,
+    "max_absolute_error": 1.0285964076740383e-14,
+    "worst_observable": "DL",
+    "worst_time": 20.36,
+    "samples": 30001,
+    "observables": 20,
+    "per_observable_max_scaled_error": {
+      "BLL": 6.794464211922523e-10,
+      "IL": 1.0263458227812413e-07,
+      "AL": 3.453359552480226e-10,
+      "A": 2.1309309030634534e-11,
+      "BL": 7.627407276005567e-09,
+      "B": 3.5713606079888864e-08,
+      "DLL": 6.364082506968361e-08,
+      "D": 7.516742592169109e-08,
+      "ILL": 5.526717139337042e-08,
+      "DL": 1.0278550839176853e-07,
+      "I": 5.959790405579082e-08,
+      "ALL": 2.7365642914589797e-08,
+      "kf_0": 0.0,
+      "kf_3": 0.0,
+      "kf_7": 0.0,
+      "kf_12": 0.0,
+      "kf_1": 0.0,
+      "kf_4": 0.0,
+      "kf_8": 0.0,
+      "kf_13": 0.0
+    }
+  },
+  "branch_archive": {
+    "file": "BIOMD0000000001-branches.jsonl.gz",
+    "sha256": "b3a8915d874b37e7aef1710f1deaf85db03967f06f162277dd095c5ae65ab7f2",
+    "format": "gzip JSON Lines, one complete branch record per line"
+  },
+  "evaluated_cases": 2,
+  "passed_cases": 2,
+  "evaluated_unique_branches": 22,
+  "passed_unique_branches": 22,
+  "finished_at": "2026-11-10T05:02:47.419218+00:00",
+  "worker": {
+    "returncode": 1
+  }
+}

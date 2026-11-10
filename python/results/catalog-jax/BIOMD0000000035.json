@@ -1,0 +1,157 @@
+{
+  "network": 32,
+  "biomodel_id": "BIOMD0000000035",
+  "model_sha256": "3303169fdd9a672fa25c26586822c9a1b91ac461744d1926d317f493e6981237",
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "jax_solver": "Kvaerno5",
+    "jax_rtol": 1e-10,
+    "jax_atol": 1e-12,
+    "reference_rtol": 1e-12,
+    "reference_atol": 1e-14,
+    "jax_initial_step": 0.0001,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "x64": true
+  },
+  "implementation_sha256": {
+    "jaxkineticmodel/load_sbml/sbml_model.py": "57ddfef282e220affab237ce15e760e8b01aeb4b8e5fd4c39b91696f619477cb",
+    "jaxkineticmodel/load_sbml/jax_kinetic_model.py": "04dabdfc81da14da8a008aa406e723b974213f208442225a1d512d03ab4547b2",
+    "jaxkineticmodel/load_sbml/sympy_converter.py": "8b4bfec0fd8a6ea4dfd72bf6a66af8b50faa9f3975827aac609c460287b9e504",
+    "jaxkineticmodel/load_sbml/export_sbml.py": "54b054ceaef678ae77827ce560e198d70865a34692542c798235af2121114ee9",
+    "jaxkineticmodel/load_sbml/sbml_load_utils.py": "f914d0ee1bf06602d7c9ccac6643c9814ad4f63b9c520acf92e98839e64626ca",
+    "grn_memory/catalog_jax.py": "c2ee2f06f10880232ed6faa1ffa17caebf274306ab0be152ad6d6d703bba49e5",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4",
+    "jax": "0.12.0.1",
+    "jaxlib": "0.12.0.1",
+    "diffrax": "0.7.2",
+    "equinox": "0.13.8",
+    "jaxkineticmodel": "0.0.1"
+  },
+  "fingerprint": "258bfd3334844cd5824971c1211ac322ea529012d9e78f2f3b4d4d2c7e023391",
+  "name": "Vilar2002_Oscillator",
+  "status": "passed",
+  "observables": [
+    "EmptySet",
+    "A",
+    "C",
+    "DA",
+    "DAp",
+    "DR",
+    "DRp",
+    "MA",
+    "MR",
+    "R"
+  ],
+  "recorded_at": "2026-11-10T04:47:02.706878+00:00",
+  "independent_states": [
+    "A",
+    "C",
+    "DA",
+    "DAp",
+    "DR",
+    "DRp",
+    "MA",
+    "MR",
+    "R"
+  ],
+  "comparisons": {
+    "jax_roadrunner": {
+      "passed": true,
+      "max_scaled_error": 0.00039208437447985024,
+      "max_absolute_error": 3.709008069563424e-07,
+      "worst_observable": "DAp",
+      "worst_time": 0.02,
+      "samples": 5001,
+      "observables": 10,
+      "per_observable_max_scaled_error": {
+        "EmptySet": 0.0,
+        "A": 0.00021991736785669487,
+        "C": 1.1636885533918458e-05,
+        "DA": 6.477145790978478e-05,
+        "DAp": 0.00039208437447985024,
+        "DR": 4.3255126762394e-05,
+        "DRp": 0.00027907546384559317,
+        "MA": 5.938118459962365e-05,
+        "MR": 0.00010553100057172884,
+        "R": 0.00015108169559646168
+      }
+    },
+    "jax_copasi": {
+      "passed": true,
+      "max_scaled_error": 0.00039169982617785764,
+      "max_absolute_error": 2.1379196368798148e-07,
+      "worst_observable": "DAp",
+      "worst_time": 0.02,
+      "samples": 5001,
+      "observables": 10,
+      "per_observable_max_scaled_error": {
+        "EmptySet": 0.0,
+        "A": 0.00010431347456599664,
+        "C": 1.520205948475321e-05,
+        "DA": 1.845981757911712e-05,
+        "DAp": 0.00039169982617785764,
+        "DR": 1.2314730446490409e-05,
+        "DRp": 0.00027743206853452564,
+        "MA": 1.6923728104115205e-05,
+        "MR": 0.00010465351205179458,
+        "R": 4.926179372180362e-05
+      }
+    },
+    "roadrunner_copasi": {
+      "passed": true,
+      "max_scaled_error": 0.00015660841791298935,
+      "max_absolute_error": 2.6553635734671843e-07,
+      "worst_observable": "A",
+      "worst_time": 32.72,
+      "samples": 5001,
+      "observables": 10,
+      "per_observable_max_scaled_error": {
+        "EmptySet": 0.0,
+        "A": 0.00015660841791298935,
+        "C": 6.472920793044855e-06,
+        "DA": 4.631164034776575e-05,
+        "DAp": 0.00011354520409104726,
+        "DR": 3.097667112208422e-05,
+        "DRp": 0.00012865970061255648,
+        "MA": 4.245745650987921e-05,
+        "MR": 3.029091014626558e-05,
+        "R": 0.00010844057878178
+      }
+    }
+  },
+  "initial_values": {
+    "EmptySet": 0.0,
+    "A": 0.0,
+    "C": 0.0,
+    "DA": 1.0,
+    "DAp": 0.0,
+    "DR": 1.0,
+    "DRp": 0.0,
+    "MA": 0.0,
+    "MR": 0.0,
+    "R": 0.0
+  },
+  "final_values": {
+    "EmptySet": 0.0,
+    "A": 1.4792769250317372,
+    "C": 296.9525020099356,
+    "DA": 0.9714482562665683,
+    "DAp": 0.028551743733428028,
+    "DR": 0.9854710787531583,
+    "DRp": 0.01452892124684997,
+    "MA": 6.244615410938152,
+    "MR": 0.9665682093709971,
+    "R": 104.85875325003394
+  },
+  "elapsed_seconds": 3.2954288330001873
+}

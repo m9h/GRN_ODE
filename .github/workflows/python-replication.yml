@@ -1,0 +1,223 @@
+name: Python replication
+permissions:
+  contents: read
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  catalog-breaking-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-breaking-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_catalog_breaking.py tests/test_protocol_retries.py
+      - run: uv run --locked --extra delay python -m grn_memory.catalog_breaking --network 14 --network 18 --workers 2 --output results/catalog-breaking-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-breaking-smoke-validation
+          path: python/results/catalog-breaking-ci/
+  catalog-repeated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-repeated-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_catalog_repeated.py tests/test_timed_drives.py
+      - run: uv run --locked --extra delay python -m grn_memory.catalog_repeated --workers 2 --output results/catalog-repeated-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-repeated-validation
+          path: python/results/catalog-repeated-ci/
+  catalog-paired-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-paired-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_catalog_paired.py
+      - run: uv run --locked --extra delay python -m grn_memory.catalog_paired --network 14 --network 16 --network 19 --workers 2 --output results/catalog-paired-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-paired-smoke-validation
+          path: python/results/catalog-paired-ci/
+  catalog-jax:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-jax-mpl
+      JAX_PLATFORMS: cpu
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - run: uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q tests/test_catalog_jax.py
+      - run: uv run --locked --extra jaxkineticmodel python -m grn_memory.catalog_jax --workers 2 --expect-unsupported 1 --expect-unsupported 6 --expect-unsupported 14 --output results/catalog-jax-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-jax-validation
+          path: python/results/catalog-jax-ci/
+  catalog-memory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-memory-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_native_protocols.py tests/test_delay_protocols.py tests/test_catalog_memory.py
+      - run: uv run --locked --extra delay python -m grn_memory.catalog_memory --workers 2 --output results/catalog-memory-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-memory-validation
+          path: python/results/catalog-memory-ci/
+  catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_native_kinetics.py tests/test_delay_kinetics.py
+      - run: uv run --locked --extra delay python -m grn_memory.catalog_validation --workers 2 --output results/catalog-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-kinetics-validation
+          path: python/results/catalog-ci/
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      # RoadRunner's Linux wheel links libpython; use setup-python's shared build.
+      - run: uv sync --python python --locked --extra test
+      - run: uv run --locked python -m pytest -q
+      - run: uv run --locked python -m grn_memory.suite --no-traces
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: replication-results
+          path: |
+            python/results/report.json
+            python/results/*.png
+  jaxkineticmodel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-jkm-mpl
+      JAX_PLATFORMS: cpu
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - run: uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+      - run: uv run --locked --extra jaxkineticmodel python -m grn_memory.suite --engine all --output results/jaxkineticmodel --no-traces
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jaxkineticmodel-replication
+          path: python/results/jaxkineticmodel/

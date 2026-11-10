@@ -1,0 +1,154 @@
+{
+  "network": 26,
+  "biomodel_id": "BIOMD0000000664",
+  "model_sha256": "382a22cca6d338f7f614406343cd86189d30370ec98ee49df22310b32566b538",
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "jax_solver": "Kvaerno5",
+    "jax_rtol": 1e-10,
+    "jax_atol": 1e-12,
+    "reference_rtol": 1e-12,
+    "reference_atol": 1e-14,
+    "jax_initial_step": 0.0001,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "x64": true
+  },
+  "implementation_sha256": {
+    "jaxkineticmodel/load_sbml/sbml_model.py": "57ddfef282e220affab237ce15e760e8b01aeb4b8e5fd4c39b91696f619477cb",
+    "jaxkineticmodel/load_sbml/jax_kinetic_model.py": "04dabdfc81da14da8a008aa406e723b974213f208442225a1d512d03ab4547b2",
+    "jaxkineticmodel/load_sbml/sympy_converter.py": "8b4bfec0fd8a6ea4dfd72bf6a66af8b50faa9f3975827aac609c460287b9e504",
+    "jaxkineticmodel/load_sbml/export_sbml.py": "54b054ceaef678ae77827ce560e198d70865a34692542c798235af2121114ee9",
+    "jaxkineticmodel/load_sbml/sbml_load_utils.py": "f914d0ee1bf06602d7c9ccac6643c9814ad4f63b9c520acf92e98839e64626ca",
+    "grn_memory/catalog_jax.py": "c2ee2f06f10880232ed6faa1ffa17caebf274306ab0be152ad6d6d703bba49e5",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4",
+    "jax": "0.12.0.1",
+    "jaxlib": "0.12.0.1",
+    "diffrax": "0.7.2",
+    "equinox": "0.13.8",
+    "jaxkineticmodel": "0.0.1"
+  },
+  "fingerprint": "9a82b0fa4b8e4ba98e2f7a6dcf094868ebbb3e5b17f7bd8ffa6996209cdbf14e",
+  "name": "Muller2008 - Simplified MAPK activation Dynamics (Model B)",
+  "status": "passed",
+  "observables": [
+    "FGFR",
+    "MSH",
+    "B_Raf",
+    "MAPK",
+    "C_Raf_inactive",
+    "g2_0",
+    "C_Raf",
+    "g1_0",
+    "g1",
+    "g2"
+  ],
+  "recorded_at": "2026-11-10T04:46:54.137419+00:00",
+  "independent_states": [
+    "FGFR",
+    "MSH",
+    "B_Raf",
+    "MAPK",
+    "C_Raf_inactive",
+    "C_Raf"
+  ],
+  "comparisons": {
+    "jax_roadrunner": {
+      "passed": true,
+      "max_scaled_error": 0.0011877003302413311,
+      "max_absolute_error": 5.16657947535748e-08,
+      "worst_observable": "FGFR",
+      "worst_time": 5.0,
+      "samples": 5001,
+      "observables": 10,
+      "per_observable_max_scaled_error": {
+        "FGFR": 0.0011877003302413311,
+        "MSH": 1.8933832342326816e-05,
+        "B_Raf": 0.00031060507971126047,
+        "MAPK": 0.00016033572073271337,
+        "C_Raf_inactive": 9.16543056291004e-05,
+        "g2_0": 0.0,
+        "C_Raf": 0.0007300108041760743,
+        "g1_0": 0.0,
+        "g1": 0.0,
+        "g2": 0.0
+      }
+    },
+    "jax_copasi": {
+      "passed": true,
+      "max_scaled_error": 0.001188177313494328,
+      "max_absolute_error": 5.166115224497503e-08,
+      "worst_observable": "FGFR",
+      "worst_time": 5.0,
+      "samples": 5001,
+      "observables": 10,
+      "per_observable_max_scaled_error": {
+        "FGFR": 0.001188177313494328,
+        "MSH": 1.8650010981393992e-05,
+        "B_Raf": 0.00031087218990799223,
+        "MAPK": 0.00016289497630844751,
+        "C_Raf_inactive": 9.15223675908675e-05,
+        "g2_0": 0.0,
+        "C_Raf": 0.0007286812005163126,
+        "g1_0": 0.0,
+        "g1": 0.0,
+        "g2": 0.0
+      }
+    },
+    "roadrunner_copasi": {
+      "passed": true,
+      "max_scaled_error": 4.521325155995653e-06,
+      "max_absolute_error": 6.257527829234277e-11,
+      "worst_observable": "FGFR",
+      "worst_time": 37.42,
+      "samples": 5001,
+      "observables": 10,
+      "per_observable_max_scaled_error": {
+        "FGFR": 4.521325155995653e-06,
+        "MSH": 2.9363662321488295e-07,
+        "B_Raf": 4.6079379080908314e-07,
+        "MAPK": 2.5592555839409555e-06,
+        "C_Raf_inactive": 3.707360295648551e-06,
+        "g2_0": 0.0,
+        "C_Raf": 3.980224850197842e-06,
+        "g1_0": 0.0,
+        "g1": 0.0,
+        "g2": 0.0
+      }
+    }
+  },
+  "initial_values": {
+    "FGFR": 0.0,
+    "MSH": 0.0,
+    "B_Raf": 0.0,
+    "MAPK": 0.0,
+    "C_Raf_inactive": 0.0,
+    "g2_0": 1.0,
+    "C_Raf": 0.0,
+    "g1_0": 0.0,
+    "g1": 0.0,
+    "g2": 1.0
+  },
+  "final_values": {
+    "FGFR": 0.0009638764545478086,
+    "MSH": 0.039736813990671506,
+    "B_Raf": 0.031896548576375854,
+    "MAPK": 0.014201450830373505,
+    "C_Raf_inactive": 8.595168501537367,
+    "g2_0": 0.0,
+    "C_Raf": 0.03257599774680653,
+    "g1_0": 0.0,
+    "g1": 0.0,
+    "g2": 0.0
+  },
+  "elapsed_seconds": 1.5882367919984972
+}

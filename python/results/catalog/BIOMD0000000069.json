@@ -1,0 +1,145 @@
+{
+  "network": 8,
+  "biomodel_id": "BIOMD0000000069",
+  "name": "Fuss2006_MitoticActivation",
+  "sha256": "ac4f36293662123205a8d5f9f1346982d9e020abd095d9df5765ea7641ef4713",
+  "species": [
+    "srci",
+    "srco",
+    "srca",
+    "srcc",
+    "Cbp_P_CSK",
+    "CSK_cytoplasm",
+    "PTP",
+    "PTP_pY789",
+    "Cbp",
+    "Cbp_P"
+  ],
+  "observables": [
+    "srci",
+    "srco",
+    "srca",
+    "srcc",
+    "Cbp_P_CSK",
+    "CSK_cytoplasm",
+    "PTP",
+    "PTP_pY789",
+    "Cbp",
+    "Cbp_P",
+    "src_activity",
+    "ptp_activity"
+  ],
+  "observable_types": {
+    "srci": "concentration",
+    "srco": "concentration",
+    "srca": "concentration",
+    "srcc": "concentration",
+    "Cbp_P_CSK": "concentration",
+    "CSK_cytoplasm": "concentration",
+    "PTP": "concentration",
+    "PTP_pY789": "concentration",
+    "Cbp": "concentration",
+    "Cbp_P": "concentration",
+    "src_activity": "parameter",
+    "ptp_activity": "parameter"
+  },
+  "reaction_count": 7,
+  "rules": [
+    {
+      "target": "src_activity",
+      "type": "assignment",
+      "formula": "rho_srco * srco + rho_srca * srca + src_background + rho_srcc * srcc"
+    },
+    {
+      "target": "ptp_activity",
+      "type": "assignment",
+      "formula": "PTP_background + Kser * PTP_pY789"
+    }
+  ],
+  "events": [],
+  "delay_expressions": [],
+  "initial_assignment_count": 0,
+  "existing_reset_protocol": {
+    "supported": false,
+    "reason": "Only fixed global parameters are supported"
+  },
+  "status": "passed",
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "recorded_at": "2026-11-09T04:36:40.910708+00:00",
+  "implementation_sha256": {
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0"
+  },
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "solver_rtol": 1e-10,
+    "solver_atol": 1e-12,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "native_sbml_unchanged": true
+  },
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "comparison": {
+    "passed": true,
+    "max_scaled_error": 0.01286887043857526,
+    "max_absolute_error": 6.966662435825555e-08,
+    "worst_observable": "srcc",
+    "worst_time": 19.57,
+    "samples": 5001,
+    "observables": 12,
+    "per_observable_max_scaled_error": {
+      "srci": 0.0019972386748085954,
+      "srco": 0.006751323042970583,
+      "srca": 0.012084167637269456,
+      "srcc": 0.01286887043857526,
+      "Cbp_P_CSK": 0.010171160060825394,
+      "CSK_cytoplasm": 0.001165699227927651,
+      "PTP": 0.005272106856020851,
+      "PTP_pY789": 0.004992030889671119,
+      "Cbp": 0.011296158821492088,
+      "Cbp_P": 0.012189300982626368,
+      "src_activity": 0.012145108031403824,
+      "ptp_activity": 0.004992030889671119
+    }
+  },
+  "initial_values": {
+    "srci": 1.0,
+    "srco": 0.0,
+    "srca": 0.0,
+    "srcc": 0.0,
+    "Cbp_P_CSK": 0.0,
+    "CSK_cytoplasm": 1.0,
+    "PTP": 1.0,
+    "PTP_pY789": 0.0,
+    "Cbp": 1.0,
+    "Cbp_P": 0.0,
+    "src_activity": 0.0001,
+    "ptp_activity": 0.0
+  },
+  "final_values": {
+    "srci": 0.3642007808423988,
+    "srco": 0.21113005817322567,
+    "srca": 0.26293372500949347,
+    "srcc": 0.1617354359748825,
+    "Cbp_P_CSK": 0.6763689507267043,
+    "CSK_cytoplasm": 0.32363104927329406,
+    "PTP": 0.24292355209770633,
+    "PTP_pY789": 0.7570764479022946,
+    "Cbp": 2.3065046123906094e-08,
+    "Cbp_P": 0.32363102620825024,
+    "src_activity": 0.42476916098437595,
+    "ptp_activity": 0.7570764479022946
+  },
+  "elapsed_seconds": 0.5478660000371747
+}
