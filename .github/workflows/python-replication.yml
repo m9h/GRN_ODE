@@ -6,6 +6,58 @@ on:
   pull_request:
   workflow_dispatch:
 jobs:
+  catalog-repeated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-repeated-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_catalog_repeated.py tests/test_timed_drives.py
+      - run: uv run --locked --extra delay python -m grn_memory.catalog_repeated --workers 2 --output results/catalog-repeated-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-repeated-validation
+          path: python/results/catalog-repeated-ci/
+  catalog-paired-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-paired-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_catalog_paired.py
+      - run: uv run --locked --extra delay python -m grn_memory.catalog_paired --network 14 --network 16 --network 19 --workers 2 --output results/catalog-paired-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-paired-smoke-validation
+          path: python/results/catalog-paired-ci/
   catalog-jax:
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -112,7 +164,9 @@ jobs:
         if: always()
         with:
           name: replication-results
-          path: python/results/
+          path: |
+            python/results/report.json
+            python/results/*.png
   jaxkineticmodel:
     runs-on: ubuntu-latest
     timeout-minutes: 20

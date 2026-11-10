@@ -22,9 +22,11 @@ files are included. The [catalog memory screen](CATALOG_MEMORY.md) adds 538
 single-input stimulation cases across all 35, with complete-state interventions,
 untreated controls and extended relaxation. The [JAX catalog audit](CATALOG_JAX.md)
 validates 32 original baselines and explicitly identifies three unsupported
-models. Association and repeated stimulation across the full catalog remain
-active work; the five-model suite above remains the broader collection of
-memory demonstrations.
+models. The [repeated-stimulation screen](CATALOG_REPEATED.md) also passes all
+538 cases across all 35, with matched isolated-pulse controls. The
+[paired-learning screen](CATALOG_PAIRED.md) passes its initial pilots and is
+running 4,208 stimulus pairs with sham, UCS-only and CS-only controls. Full
+paired-learning results and catalog-wide breaking interventions remain pending.
 
 ## Run it
 
@@ -206,9 +208,11 @@ Several original implementation details need care:
 - The MATLAB consolidation branch watches a later relaxation without delivering
   another cue. This implementation delivers a delayed cue and includes a matched
   sham, in line with the paper's verbal definition.
-- Tolerances are tighter than the historical code. Both adapters support only
-  the validated autonomous, fixed-compartment reaction-model subset; event-driven
-  or nonautonomous SBML requires additional restart semantics and is rejected.
+- Tolerances are tighter than the historical code. The five-model demonstration
+  adapters support the validated autonomous, fixed-compartment subset. The
+  separate catalog adapters preserve native clocks, rules and events, with a
+  history-preserving solver for the delay model; they do not restart a partial
+  state between phases.
 
 **Conservation matters.** In a closed three-species MAPK model,
 $M+M_p+M_{pp}$ is conserved between inputs. A concentration reset can add or remove

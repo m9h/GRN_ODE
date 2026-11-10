@@ -24,9 +24,12 @@ The extension to all 35 models now includes independently compared
 [538-case single-input retention screen](python/CATALOG_MEMORY.md).
 The [JAX catalog audit](python/CATALOG_JAX.md) independently validates 32 original
 baselines and explicitly identifies three unsupported models.
-Paired learning and repeated-stimulation coverage across the catalog remain in
-progress. The retention screen preserves native events, rule variables and delay
-history, and distinguishes unresolved numerical labels from memory evidence.
+The [repeated-stimulation screen](python/CATALOG_REPEATED.md) now also passes
+all 538 cases across all 35, including matched isolated-pulse controls.
+The [paired-learning screen](python/CATALOG_PAIRED.md) is running after successful
+pilots; catalog-wide breaking interventions remain pending. These catalog
+protocols preserve native events, rule variables and delay history and separate
+unresolved or physically invalid responses from interpretable effects.
 
 ![Associative recall with a sham-probe control](python/results/associative_recall.png)
 
