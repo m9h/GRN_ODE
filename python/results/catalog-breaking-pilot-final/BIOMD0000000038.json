@@ -1,0 +1,273 @@
+{
+  "network": 35,
+  "biomodel_id": "BIOMD0000000038",
+  "name": "Rohwer2000_Phosphotransferase_System",
+  "configuration": {
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "prefix": [
+      {
+        "pulse": 1,
+        "start": 50.0,
+        "stop": 100.0,
+        "rest_stop": 160.0
+      },
+      {
+        "pulse": 2,
+        "start": 160.0,
+        "stop": 220.0,
+        "rest_stop": 290.0
+      },
+      {
+        "pulse": 3,
+        "start": 290.0,
+        "stop": 360.0,
+        "rest_stop": 440.0
+      },
+      {
+        "pulse": 4,
+        "start": 440.0,
+        "stop": 520.0,
+        "rest_stop": 610.0
+      },
+      {
+        "pulse": 5,
+        "start": 610.0,
+        "stop": 700.0,
+        "rest_stop": 800.0
+      },
+      {
+        "pulse": 6,
+        "start": 800.0,
+        "stop": 900.0,
+        "rest_stop": 1010.0
+      }
+    ],
+    "trials": {
+      "prefix": [
+        0.0,
+        1010.0
+      ],
+      "intervention_1": [
+        1010.0,
+        1110.0
+      ],
+      "pre_1": [
+        1110.0,
+        1210.0
+      ],
+      "cue_1": [
+        1210.0,
+        1310.0
+      ],
+      "post_1": [
+        1310.0,
+        1410.0
+      ],
+      "intervention_2": [
+        1410.0,
+        1510.0
+      ],
+      "pre_2": [
+        1510.0,
+        1610.0
+      ],
+      "cue_2": [
+        1610.0,
+        1710.0
+      ],
+      "post_2": [
+        1710.0,
+        1810.0
+      ],
+      "intervention_3": [
+        1810.0,
+        1910.0
+      ],
+      "pre_3": [
+        1910.0,
+        2010.0
+      ],
+      "cue_3": [
+        2010.0,
+        2110.0
+      ],
+      "post_3": [
+        2110.0,
+        2210.0
+      ]
+    },
+    "reset_interval": 0.1,
+    "prefix_endpoint_resets": true,
+    "later_endpoint_resets": false,
+    "later_resets_per_exposure": 999,
+    "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+    "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+    "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+    "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+    "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+    "integration_settings": {
+      "roadrunner": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "copasi": {
+        "rtol": 1e-08,
+        "atol": 1e-10
+      }
+    },
+    "case_integration_overrides": {
+      "HPrPIIA__down": {
+        "copasi": {
+          "rtol": 1e-07,
+          "atol": 1e-09
+        }
+      }
+    },
+    "integration_error_fallbacks": {
+      "copasi": {
+        "rtol": 1e-07,
+        "atol": 1e-09
+      }
+    },
+    "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+    "timed_drive_encoding": null,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "candidate_plan_sha256": "d92309caa26f0fb37235b1220027f1cee41f8df2463e4f023dddbef4ae828b0e",
+    "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+    "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+  },
+  "model_sha256": "33708cec1fad44db6958c3ac6255397ad79b45564a296d29732fd934608d787b",
+  "reference_fingerprint": "224fe05ea25d19425b299a0c7e9c8baac62c1ab9b463ea82dd642a605a1931c8",
+  "reference_file_sha256": "ef9f6bfdad9309b102176fce020e326df05b4ac3548f44ce84e0cc25b38c81bb",
+  "implementation_sha256": {
+    "catalog_breaking.py": "047123f30579edf580f6383dd7d5d47593fead4a6065642df3097fa1ba66e51b",
+    "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+    "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+    "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+    "catalog_repeated.py": "15309e4fe6a5c160a91f98b4e35ba7d63f1e2a1d1b062f16989102491fb07e8e",
+    "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+    "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+    "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+    "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+    "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "fingerprint": "6c73e26f23362badde8e5b3b5fa0d4c58f744dd20e67c65539f4589030e48f1f",
+  "targets": {
+    "EI": "concentration",
+    "PyrPI": "concentration",
+    "EIP": "concentration",
+    "HPr": "concentration",
+    "EIPHPr": "concentration",
+    "HPrP": "concentration",
+    "EIIA": "concentration",
+    "HPrPIIA": "concentration",
+    "EIIAP": "concentration",
+    "EIICB": "concentration",
+    "EIIAPIICB": "concentration",
+    "EIICBP": "concentration",
+    "EIICBPGlc": "concentration"
+  },
+  "excluded_species": {
+    "PEP": "boundary species",
+    "Pyr": "boundary species",
+    "GlcP": "boundary species",
+    "Glc": "boundary species"
+  },
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "expected_cases": 260,
+  "expected_initial_response_assessments": 990,
+  "cases": {
+    "EIIAP__up--EIIAPIICB__down": {
+      "record_id": "399579bbc1f6e1787a039fa9df776bffe8e61703bf3d7b3ff62c70df12681f3c",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 22,
+      "controlled_categories": {
+        "history_effect_changed_without_half_restoration": 1,
+        "no_resolved_history_effect_at_rechallenge": 21
+      },
+      "raw_disagreeing_response_trials": 0
+    }
+  },
+  "status": "incomplete_or_failed",
+  "no_candidates": false,
+  "started_at": "2026-11-10T05:36:25.351609+00:00",
+  "control_comparison": {
+    "passed": true,
+    "max_scaled_error": 0.00019063523023637652,
+    "max_absolute_error": 4.1425462171673644e-08,
+    "worst_observable": "HPr",
+    "worst_time": 0.07,
+    "samples": 221001,
+    "observables": 17,
+    "per_observable_max_scaled_error": {
+      "EI": 7.705806203875813e-07,
+      "PyrPI": 1.6279200027775028e-06,
+      "EIP": 1.288714738530874e-05,
+      "HPr": 0.00019063523023637652,
+      "EIPHPr": 4.057647800936555e-05,
+      "HPrP": 6.953620415157522e-05,
+      "EIIA": 0.0001627590405340026,
+      "HPrPIIA": 9.79068494922359e-05,
+      "EIIAP": 0.0001186258042678709,
+      "EIICB": 0.0001102033791377983,
+      "EIIAPIICB": 1.4680801052160739e-05,
+      "EIICBP": 1.576902748374729e-05,
+      "EIICBPGlc": 2.462324635823147e-05,
+      "PEP": 0.0,
+      "Pyr": 0.0,
+      "GlcP": 0.0,
+      "Glc": 5.6842850432303686e-12
+    }
+  },
+  "evidence_archives": {
+    "branches": [
+      {
+        "file": "evidence/BIOMD0000000038-branches-00000.jsonl.gz",
+        "records": 100,
+        "bytes": 577910,
+        "sha256": "d6cd7f1ac0d58aa6711b658c6429f857c7534b5fd26521cf0661cb5cbb9afb41"
+      },
+      {
+        "file": "evidence/BIOMD0000000038-branches-00001.jsonl.gz",
+        "records": 1,
+        "bytes": 7010,
+        "sha256": "9f2cbc073a2775fe5cdf22f3909fe52d52d09c6134dc13aad5811ce14694bca7"
+      }
+    ],
+    "cases": [
+      {
+        "file": "evidence/BIOMD0000000038-cases-00000.jsonl.gz",
+        "records": 1,
+        "bytes": 11316,
+        "sha256": "61d54a459c25cdc8f2ef80f88754651b3d22122b4d53e231dcc982925cee6a5d"
+      }
+    ]
+  },
+  "evaluated_cases": 1,
+  "passed_cases": 1,
+  "evaluated_unique_branches": 101,
+  "solver_retry_branches": 1,
+  "finished_at": "2026-11-10T05:40:50.105105+00:00",
+  "worker": {
+    "returncode": 1
+  }
+}

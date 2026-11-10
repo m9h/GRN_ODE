@@ -25,8 +25,9 @@ validates 32 original baselines and explicitly identifies three unsupported
 models. The [repeated-stimulation screen](CATALOG_REPEATED.md) also passes all
 538 cases across all 35, with matched isolated-pulse controls. The
 [paired-learning screen](CATALOG_PAIRED.md) passes its initial pilots and is
-running 4,208 stimulus pairs with sham, UCS-only and CS-only controls. Full
-paired-learning results and catalog-wide breaking interventions remain pending.
+running 4,208 stimulus pairs with sham, UCS-only and CS-only controls. The
+[three-trial breaking screen](CATALOG_BREAKING.md) is also running after a
+successful 119-branch pilot. Full paired-learning and breaking results remain pending.
 
 ## Run it
 

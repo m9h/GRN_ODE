@@ -27,7 +27,8 @@ baselines and explicitly identifies three unsupported models.
 The [repeated-stimulation screen](python/CATALOG_REPEATED.md) now also passes
 all 538 cases across all 35, including matched isolated-pulse controls.
 The [paired-learning screen](python/CATALOG_PAIRED.md) is running after successful
-pilots; catalog-wide breaking interventions remain pending. These catalog
+pilots. The [three-trial breaking screen](python/CATALOG_BREAKING.md) is also
+running after a successful 119-branch pilot; full-catalog breaking results remain pending. These catalog
 protocols preserve native events, rule variables and delay history and separate
 unresolved or physically invalid responses from interpretable effects.
 

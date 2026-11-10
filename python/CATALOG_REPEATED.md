@@ -177,7 +177,8 @@ incomplete and their commands exit nonzero unless the entire model is covered.
 The full repeated-input run evaluates 3,228 stimulated/control branches in
 addition to 35 untreated controls, before delay refinements.
 
-Breaking acquired responses remains a further catalog stage. The
+[Breaking acquired responses](CATALOG_BREAKING.md) is running after a successful
+119-branch pilot. The
 [paired-learning, transfer and delayed-cue screen](CATALOG_PAIRED.md) is running.
 None of these operational screens alone
 establishes clinical drug resistance or the original study's memory prevalence.

@@ -6,6 +6,32 @@ on:
   pull_request:
   workflow_dispatch:
 jobs:
+  catalog-breaking-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-breaking-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_catalog_breaking.py tests/test_protocol_retries.py
+      - run: uv run --locked --extra delay python -m grn_memory.catalog_breaking --network 14 --network 18 --workers 2 --output results/catalog-breaking-ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-breaking-smoke-validation
+          path: python/results/catalog-breaking-ci/
   catalog-repeated:
     runs-on: ubuntu-latest
     timeout-minutes: 90
