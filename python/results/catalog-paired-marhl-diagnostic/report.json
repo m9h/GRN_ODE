@@ -1,0 +1,1711 @@
+{
+  "purpose": "Diagnose full-horizon trajectory disagreement without changing the acceptance test",
+  "model": "Marhl2000_CaOscillations",
+  "network": 30,
+  "biomodel_id": "BIOMD0000000039",
+  "recorded_at": "2026-11-10T06:37:22.413938+00:00",
+  "model_sha256": "6b221222be03747b11454cc4f2a6218697d9c6367d3578a170c7cc5c34ad3b12",
+  "reference_file_sha256": "0b49b55a67ccdf08381be90de179e5c2c84e349af018a4451cb73f469de32bef",
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "implementation_sha256": {
+    "scripts/diagnose_marhl_paired.py": "9156b263fd7710fcffccfa43ae49f4a44af2082dd4cb2dd73f4f51ec7b1182e2",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/catalog_paired.py": "8d3de8af6ac9a10c3c0a253b4daac72c0a3339c5b195bb7044325fa33acbf663",
+    "grn_memory/simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0"
+  },
+  "configuration": {
+    "duration": 300.0,
+    "sample_count": 30001,
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "requests": [
+      [
+        1e-12,
+        1e-14
+      ],
+      [
+        1e-13,
+        1e-15
+      ],
+      [
+        3e-14,
+        3e-16
+      ]
+    ],
+    "comparison_atol": 1e-07,
+    "comparison_rtol": 2e-05
+  },
+  "branches": [
+    {
+      "specification": {
+        "training": [
+          "CaER__down",
+          "CaM__up"
+        ],
+        "probe": "CaER__down",
+        "probe_start": 150.0
+      },
+      "branch_id": "d0e2345138b33a16e86f80a3bdbbdae0ee5b590087440f3d36662d18827932b7",
+      "runs": {
+        "roadrunner_1e-12": {
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "minimum": {
+            "Ca_cyt": 0.03304498160242139,
+            "CaER": 0.007043374348350291,
+            "CaM": 0.1164696749700139,
+            "CaPr": 72.39844448292547,
+            "Pr": 0.27317023059459794
+          },
+          "maximum": {
+            "Ca_cyt": 44.97244666688678,
+            "CaER": 45.19465656067417,
+            "CaM": 60.4914227158859,
+            "CaPr": 119.72682976970471,
+            "Pr": 47.60155551739828
+          }
+        },
+        "roadrunner_1e-13": {
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "minimum": {
+            "Ca_cyt": 0.03304498160168994,
+            "CaER": 0.007043374348320371,
+            "CaM": 0.11545695496563776,
+            "CaPr": 72.39844448243977,
+            "Pr": 0.2731702305943942
+          },
+          "maximum": {
+            "Ca_cyt": 44.97244666702592,
+            "CaER": 45.1946565608121,
+            "CaM": 60.49142271588602,
+            "CaPr": 119.72682976931462,
+            "Pr": 47.60155551748927
+          }
+        },
+        "roadrunner_3e-14": {
+          "rtol": 3e-14,
+          "atol": 3e-16,
+          "minimum": {
+            "Ca_cyt": 0.03304498160162258,
+            "CaER": 0.007043374348649683,
+            "CaM": 0.11346289690642462,
+            "CaPr": 72.39844448235816,
+            "Pr": 0.2731702305943566
+          },
+          "maximum": {
+            "Ca_cyt": 44.972446667036266,
+            "CaER": 45.19465656082171,
+            "CaM": 60.49142271588566,
+            "CaPr": 119.72682976924116,
+            "Pr": 47.60155551747754
+          }
+        },
+        "copasi_1e-12": {
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "minimum": {
+            "Ca_cyt": 0.03304498160160596,
+            "CaER": 0.007043374348703134,
+            "CaM": 0.11658567851945503,
+            "CaPr": 72.39844448251498,
+            "Pr": 0.27317023059465645
+          },
+          "maximum": {
+            "Ca_cyt": 44.97244666697395,
+            "CaER": 45.194656560758226,
+            "CaM": 60.49142271588563,
+            "CaPr": 119.7268297694077,
+            "Pr": 47.60155551747796
+          }
+        },
+        "copasi_1e-13": {
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "minimum": {
+            "Ca_cyt": 0.03304498160163292,
+            "CaER": 0.007043374348704607,
+            "CaM": 0.11418865630026609,
+            "CaPr": 72.39844448244388,
+            "Pr": 0.2731702305947854
+          },
+          "maximum": {
+            "Ca_cyt": 44.97244666703319,
+            "CaER": 45.19465656081857,
+            "CaM": 60.491422715885655,
+            "CaPr": 119.72682976939912,
+            "Pr": 47.60155551754587
+          }
+        },
+        "copasi_3e-14": {
+          "rtol": 3e-14,
+          "atol": 3e-16,
+          "minimum": {
+            "Ca_cyt": 0.03304498160162253,
+            "CaER": 0.007043374348702764,
+            "CaM": 0.11434732489074047,
+            "CaPr": 72.3984444823921,
+            "Pr": 0.2731702305946441
+          },
+          "maximum": {
+            "Ca_cyt": 44.97244666704059,
+            "CaER": 45.19465656082604,
+            "CaM": 60.49142271588568,
+            "CaPr": 119.72682976933831,
+            "Pr": 47.60155551753799
+          }
+        }
+      },
+      "comparisons": {
+        "1e-12": {
+          "full": {
+            "passed": false,
+            "max_scaled_error": 43211.07023486634,
+            "max_absolute_error": 1.3084641267265908,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 285.31,
+            "samples": 30001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 43211.07023486634,
+              "CaER": 17509.412297217696,
+              "CaM": 32986.996135379806,
+              "CaPr": 755.0271802234607,
+              "Pr": 1888.9741305080277
+            }
+          },
+          "through_normal_recall_end": {
+            "passed": true,
+            "max_scaled_error": 0.018631922259861267,
+            "max_absolute_error": 1.3993358466413142e-07,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 38.79,
+            "samples": 25001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 0.018631922259861267,
+              "CaER": 0.006119774046161496,
+              "CaM": 0.005161989547970521,
+              "CaPr": 1.3218406593905184e-05,
+              "Pr": 3.1015498573223194e-05
+            }
+          },
+          "first_outside_tolerance": 267.35,
+          "windows": {
+            "50.0": {
+              "passed": true,
+              "max_scaled_error": 0.018631922259861267,
+              "max_absolute_error": 1.3993358466413142e-07,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 38.79,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.018631922259861267,
+                "CaER": 0.0025762644319882576,
+                "CaM": 0.005161989547970521,
+                "CaPr": 1.3218406593905184e-05,
+                "Pr": 3.1015498573223194e-05
+              }
+            },
+            "100.0": {
+              "passed": true,
+              "max_scaled_error": 0.004751585547915566,
+              "max_absolute_error": 3.692569838786852e-08,
+              "worst_observable": "CaER",
+              "worst_time": 50.160000000000004,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0030242996122370955,
+                "CaER": 0.004751585547915566,
+                "CaM": 3.083310113062961e-05,
+                "CaPr": 6.943243351933457e-06,
+                "Pr": 1.641601840402009e-05
+              }
+            },
+            "150.0": {
+              "passed": true,
+              "max_scaled_error": 0.0004123269907383726,
+              "max_absolute_error": 5.595891394705177e-08,
+              "worst_observable": "CaER",
+              "worst_time": 100.04,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.00030898936493038633,
+                "CaER": 0.0004123269907383726,
+                "CaM": 6.575166192060391e-05,
+                "CaPr": 1.2494811379583955e-06,
+                "Pr": 1.1940176394648216e-05
+              }
+            },
+            "200.0": {
+              "passed": true,
+              "max_scaled_error": 0.006119774046161496,
+              "max_absolute_error": 5.8571323791056784e-08,
+              "worst_observable": "CaER",
+              "worst_time": 150.20001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.00022114385381292803,
+                "CaER": 0.006119774046161496,
+                "CaM": 5.264007851761239e-07,
+                "CaPr": 1.4747533181885954e-07,
+                "Pr": 3.589190854192467e-07
+              }
+            },
+            "250.0": {
+              "passed": true,
+              "max_scaled_error": 0.000481929480316875,
+              "max_absolute_error": 4.353301941151244e-09,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 208.17000000000002,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.000481929480316875,
+                "CaER": 6.459730895161099e-05,
+                "CaM": 1.6145125988049653e-05,
+                "CaPr": 7.57589150124472e-07,
+                "Pr": 8.065482416839458e-07
+              }
+            },
+            "300.0": {
+              "passed": false,
+              "max_scaled_error": 43211.07023486634,
+              "max_absolute_error": 1.3084641267265908,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 285.31,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 43211.07023486634,
+                "CaER": 17509.412297217696,
+                "CaM": 32986.996135379806,
+                "CaPr": 755.0271802234607,
+                "Pr": 1888.9741305080277
+              }
+            }
+          }
+        },
+        "1e-13": {
+          "full": {
+            "passed": false,
+            "max_scaled_error": 43542.23760940096,
+            "max_absolute_error": 1.137425844220516,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 289.61,
+            "samples": 30001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 43542.23760940096,
+              "CaER": 16992.64893003352,
+              "CaM": 33990.61531193712,
+              "CaPr": 657.1723980843898,
+              "Pr": 1643.5284673690621
+            }
+          },
+          "through_normal_recall_end": {
+            "passed": true,
+            "max_scaled_error": 0.0024358625152997226,
+            "max_absolute_error": 8.049367039575372e-08,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 38.79,
+            "samples": 25001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 0.0024358625152997226,
+              "CaER": 0.0022540767044474104,
+              "CaM": 0.0006745235846378996,
+              "CaPr": 1.7315600258547526e-06,
+              "Pr": 4.064815621718057e-06
+            }
+          },
+          "first_outside_tolerance": 269.85,
+          "windows": {
+            "50.0": {
+              "passed": true,
+              "max_scaled_error": 0.0024358625152997226,
+              "max_absolute_error": 1.829435380962252e-08,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 38.79,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0024358625152997226,
+                "CaER": 0.00033676952839058416,
+                "CaM": 0.0006745235846378996,
+                "CaPr": 1.7315600258547526e-06,
+                "Pr": 4.064815621718057e-06
+              }
+            },
+            "100.0": {
+              "passed": true,
+              "max_scaled_error": 0.0005145153578314268,
+              "max_absolute_error": 3.997779995934536e-09,
+              "worst_observable": "CaER",
+              "worst_time": 50.160000000000004,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.00032742737407708813,
+                "CaER": 0.0005145153578314268,
+                "CaM": 6.204991925747097e-06,
+                "CaPr": 7.04177358917014e-07,
+                "Pr": 1.6634853234923447e-06
+              }
+            },
+            "150.0": {
+              "passed": true,
+              "max_scaled_error": 8.87688918185699e-05,
+              "max_absolute_error": 1.3163599987819907e-08,
+              "worst_observable": "CaER",
+              "worst_time": 100.04,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 6.652311458000438e-05,
+                "CaER": 8.87688918185699e-05,
+                "CaM": 1.443990877511292e-05,
+                "CaPr": 1.879954061720981e-07,
+                "Pr": 2.2490694118896958e-06
+              }
+            },
+            "200.0": {
+              "passed": true,
+              "max_scaled_error": 0.0022540767044474104,
+              "max_absolute_error": 8.049367039575372e-08,
+              "worst_observable": "CaER",
+              "worst_time": 150.10001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 9.560574683469098e-05,
+                "CaER": 0.0022540767044474104,
+                "CaM": 1.1552811148840498e-06,
+                "CaPr": 4.443718837269447e-08,
+                "Pr": 1.448272719794261e-06
+              }
+            },
+            "250.0": {
+              "passed": true,
+              "max_scaled_error": 6.883285039208925e-05,
+              "max_absolute_error": 6.375071581743441e-10,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 208.18,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 6.883285039208925e-05,
+                "CaER": 9.355583148405643e-06,
+                "CaM": 2.682263584763574e-06,
+                "CaPr": 6.727262226232751e-08,
+                "Pr": 1.656004186247048e-07
+              }
+            },
+            "300.0": {
+              "passed": false,
+              "max_scaled_error": 43542.23760940096,
+              "max_absolute_error": 1.137425844220516,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 289.61,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 43542.23760940096,
+                "CaER": 16992.64893003352,
+                "CaM": 33990.61531193712,
+                "CaPr": 657.1723980843898,
+                "Pr": 1643.5284673690621
+              }
+            }
+          }
+        },
+        "3e-14": {
+          "full": {
+            "passed": false,
+            "max_scaled_error": 43699.15095159964,
+            "max_absolute_error": 1.296752836923119,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 289.01,
+            "samples": 30001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 43699.15095159964,
+              "CaER": 17156.21562020168,
+              "CaM": 33502.54374958512,
+              "CaPr": 747.9590938352815,
+              "Pr": 1872.8013216297438
+            }
+          },
+          "through_normal_recall_end": {
+            "passed": true,
+            "max_scaled_error": 0.0098851910590257,
+            "max_absolute_error": 1.4800676240156463e-07,
+            "worst_observable": "CaER",
+            "worst_time": 150.20001,
+            "samples": 25001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 0.00040696294669816975,
+              "CaER": 0.0098851910590257,
+              "CaM": 0.00011301920964920466,
+              "CaPr": 2.8293166452773616e-07,
+              "Pr": 9.349797290925411e-07
+            }
+          },
+          "first_outside_tolerance": 272.42,
+          "windows": {
+            "50.0": {
+              "passed": true,
+              "max_scaled_error": 0.00040696294669816975,
+              "max_absolute_error": 3.056463193651382e-09,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 38.79,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.00040696294669816975,
+                "CaER": 5.616130407388202e-05,
+                "CaM": 0.00011301920964920466,
+                "CaPr": 2.8293166452773616e-07,
+                "Pr": 6.501434391974523e-07
+              }
+            },
+            "100.0": {
+              "passed": true,
+              "max_scaled_error": 0.00024364857993237164,
+              "max_absolute_error": 1.0190055466097192e-09,
+              "worst_observable": "CaER",
+              "worst_time": 98.80001000000001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 8.345889728738328e-05,
+                "CaER": 0.00024364857993237164,
+                "CaM": 4.4796838618357076e-07,
+                "CaPr": 2.0173634107194313e-07,
+                "Pr": 4.922862469378636e-07
+              }
+            },
+            "150.0": {
+              "passed": true,
+              "max_scaled_error": 3.142347846351357e-05,
+              "max_absolute_error": 3.721709163073683e-09,
+              "worst_observable": "CaER",
+              "worst_time": 100.04,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 2.3541725114983727e-05,
+                "CaER": 3.142347846351357e-05,
+                "CaM": 4.082556508306695e-06,
+                "CaPr": 4.084742331829461e-08,
+                "Pr": 9.349797290925411e-07
+              }
+            },
+            "200.0": {
+              "passed": true,
+              "max_scaled_error": 0.0098851910590257,
+              "max_absolute_error": 1.4800676240156463e-07,
+              "worst_observable": "CaER",
+              "worst_time": 150.20001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0003569868639098001,
+                "CaER": 0.0098851910590257,
+                "CaM": 1.450871655919198e-07,
+                "CaPr": 4.689464829641215e-08,
+                "Pr": 4.7354926878827067e-07
+              }
+            },
+            "250.0": {
+              "passed": true,
+              "max_scaled_error": 1.9791437104560836e-05,
+              "max_absolute_error": 1.8330176265735076e-10,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 208.18,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 1.9791437104560836e-05,
+                "CaER": 2.723040414389414e-06,
+                "CaM": 8.250923227252121e-07,
+                "CaPr": 2.943536161643877e-08,
+                "Pr": 1.0730034278348925e-07
+              }
+            },
+            "300.0": {
+              "passed": false,
+              "max_scaled_error": 43699.15095159964,
+              "max_absolute_error": 1.296752836923119,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 289.01,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 43699.15095159964,
+                "CaER": 17156.21562020168,
+                "CaM": 33502.54374958512,
+                "CaPr": 747.9590938352815,
+                "Pr": 1872.8013216297438
+              }
+            }
+          }
+        },
+        "roadrunner_refinement": {
+          "passed": false,
+          "max_scaled_error": 43398.505464288006,
+          "max_absolute_error": 0.7554000432407832,
+          "worst_observable": "Ca_cyt",
+          "worst_time": 289.6,
+          "samples": 30001,
+          "observables": 5,
+          "per_observable_max_scaled_error": {
+            "Ca_cyt": 43398.505464288006,
+            "CaER": 17587.735185472837,
+            "CaM": 34167.728577367,
+            "CaPr": 437.04053994339057,
+            "Pr": 1100.089775067437
+          }
+        },
+        "copasi_refinement": {
+          "passed": false,
+          "max_scaled_error": 43636.026186895484,
+          "max_absolute_error": 1.0707939445769483,
+          "worst_observable": "Ca_cyt",
+          "worst_time": 291.36,
+          "samples": 30001,
+          "observables": 5,
+          "per_observable_max_scaled_error": {
+            "Ca_cyt": 43636.026186895484,
+            "CaER": 16996.684847717344,
+            "CaM": 33600.01101034519,
+            "CaPr": 618.690326257015,
+            "Pr": 1550.114290784344
+          }
+        }
+      }
+    },
+    {
+      "specification": {
+        "training": [
+          "Ca_cyt__up"
+        ],
+        "probe": "CaER__down",
+        "probe_start": 150.0
+      },
+      "branch_id": "7b2974bb7882dd2ae95c01d1bd2aa49030959f6a4ee804d6b51ee7a4494f5527",
+      "runs": {
+        "roadrunner_1e-12": {
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "minimum": {
+            "Ca_cyt": 0.0331089642151883,
+            "CaER": 0.007043377643894647,
+            "CaM": 0.12285308746091828,
+            "CaPr": 72.45390322825972,
+            "Pr": 0.23382873893113315
+          },
+          "maximum": {
+            "Ca_cyt": 51.219611331159605,
+            "CaER": 51.47184093624013,
+            "CaM": 4.277193035122331,
+            "CaPr": 119.76617126107827,
+            "Pr": 47.54609677177432
+          }
+        },
+        "roadrunner_1e-13": {
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "minimum": {
+            "Ca_cyt": 0.033108964214603825,
+            "CaER": 0.007043377643521213,
+            "CaM": 0.12289482464196165,
+            "CaPr": 72.45390322803578,
+            "Pr": 0.2338287389311381
+          },
+          "maximum": {
+            "Ca_cyt": 51.219611331159605,
+            "CaER": 51.47184093624014,
+            "CaM": 4.277193035160873,
+            "CaPr": 119.76617126108081,
+            "Pr": 47.54609677199866
+          }
+        },
+        "roadrunner_3e-14": {
+          "rtol": 3e-14,
+          "atol": 3e-16,
+          "minimum": {
+            "Ca_cyt": 0.03310896421454272,
+            "CaER": 0.0070433776437016805,
+            "CaM": 0.12288550695238712,
+            "CaPr": 72.45390322794547,
+            "Pr": 0.23382873893110873
+          },
+          "maximum": {
+            "Ca_cyt": 51.219611331159605,
+            "CaER": 51.47184093624013,
+            "CaM": 4.277193035193672,
+            "CaPr": 119.7661712610658,
+            "Pr": 47.5460967720521
+          }
+        },
+        "copasi_1e-12": {
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "minimum": {
+            "Ca_cyt": 0.03310896421449275,
+            "CaER": 0.00704337764403063,
+            "CaM": 0.12287708768197005,
+            "CaPr": 72.45390322801785,
+            "Pr": 0.233828738931113
+          },
+          "maximum": {
+            "Ca_cyt": 51.2196113311596,
+            "CaER": 51.471840936240085,
+            "CaM": 4.277193035134148,
+            "CaPr": 119.76617126106784,
+            "Pr": 47.546096771970525
+          }
+        },
+        "copasi_1e-13": {
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "minimum": {
+            "Ca_cyt": 0.03310896421451921,
+            "CaER": 0.007043377644027495,
+            "CaM": 0.12287330762223321,
+            "CaPr": 72.45390322794856,
+            "Pr": 0.23382873893111886
+          },
+          "maximum": {
+            "Ca_cyt": 51.219611331159605,
+            "CaER": 51.47184093624015,
+            "CaM": 4.277193035155778,
+            "CaPr": 119.76617126107101,
+            "Pr": 47.5460967720498
+          }
+        },
+        "copasi_3e-14": {
+          "rtol": 3e-14,
+          "atol": 3e-16,
+          "minimum": {
+            "Ca_cyt": 0.033108964214523924,
+            "CaER": 0.007043377644034386,
+            "CaM": 0.12287016807446809,
+            "CaPr": 72.45390322794039,
+            "Pr": 0.23382873893112469
+          },
+          "maximum": {
+            "Ca_cyt": 51.21961133115996,
+            "CaER": 51.47184093624033,
+            "CaM": 4.277193035160831,
+            "CaPr": 119.76617126107405,
+            "Pr": 47.54609677206271
+          }
+        }
+      },
+      "comparisons": {
+        "1e-12": {
+          "full": {
+            "passed": false,
+            "max_scaled_error": 132.77479012634603,
+            "max_absolute_error": 0.0008081935536523588,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 299.64,
+            "samples": 30001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 132.77479012634603,
+              "CaER": 23.29937772139233,
+              "CaM": 24.199992668292346,
+              "CaPr": 0.46402311592207635,
+              "Pr": 1.227312798497413
+            }
+          },
+          "through_normal_recall_end": {
+            "passed": true,
+            "max_scaled_error": 0.02297632177896232,
+            "max_absolute_error": 9.581968285488074e-07,
+            "worst_observable": "CaER",
+            "worst_time": 150.10001,
+            "samples": 25001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 0.018336249100483037,
+              "CaER": 0.02297632177896232,
+              "CaM": 0.0050802938556266525,
+              "CaPr": 1.3001852874782272e-05,
+              "Pr": 3.0507515500542143e-05
+            }
+          },
+          "first_outside_tolerance": 290.28000000000003,
+          "windows": {
+            "50.0": {
+              "passed": true,
+              "max_scaled_error": 0.018336249100483037,
+              "max_absolute_error": 1.377129538737698e-07,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 38.79,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.018336249100483037,
+                "CaER": 0.0025353137743965542,
+                "CaM": 0.0050802938556266525,
+                "CaPr": 1.3001852874782272e-05,
+                "Pr": 3.0507515500542143e-05
+              }
+            },
+            "100.0": {
+              "passed": true,
+              "max_scaled_error": 0.0007019770621207217,
+              "max_absolute_error": 7.394104528657408e-08,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 50.09,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0007019770621207217,
+                "CaER": 0.0005336360694850361,
+                "CaM": 3.0231442688535713e-05,
+                "CaPr": 6.8339965307054624e-06,
+                "Pr": 1.615718718274153e-05
+              }
+            },
+            "150.0": {
+              "passed": true,
+              "max_scaled_error": 4.35445660718354e-09,
+              "max_absolute_error": 1.043076736095827e-11,
+              "worst_observable": "CaPr",
+              "worst_time": 100.0,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 4.854892034383453e-11,
+                "CaER": 4.140946041969751e-11,
+                "CaM": 9.146112828412813e-12,
+                "CaPr": 4.35445660718354e-09,
+                "Pr": 4.2302402840230025e-09
+              }
+            },
+            "200.0": {
+              "passed": true,
+              "max_scaled_error": 0.02297632177896232,
+              "max_absolute_error": 9.581968285488074e-07,
+              "worst_observable": "CaER",
+              "worst_time": 150.10001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0009740228117022652,
+                "CaER": 0.02297632177896232,
+                "CaM": 1.9600616176375317e-06,
+                "CaPr": 3.2818977994696565e-08,
+                "Pr": 8.443908988526187e-07
+              }
+            },
+            "250.0": {
+              "passed": true,
+              "max_scaled_error": 0.0004831741429167953,
+              "max_absolute_error": 3.822992089563826e-09,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 208.12,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0004831741429167953,
+                "CaER": 5.990244982700115e-05,
+                "CaM": 1.4407959564277437e-05,
+                "CaPr": 6.098069882798003e-07,
+                "Pr": 8.8342922578556e-07
+              }
+            },
+            "300.0": {
+              "passed": false,
+              "max_scaled_error": 132.77479012634603,
+              "max_absolute_error": 0.0008081935536523588,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 299.64,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 132.77479012634603,
+                "CaER": 23.29937772139233,
+                "CaM": 24.199992668292346,
+                "CaPr": 0.46402311592207635,
+                "Pr": 1.227312798497413
+              }
+            }
+          }
+        },
+        "1e-13": {
+          "full": {
+            "passed": false,
+            "max_scaled_error": 212.6084650172898,
+            "max_absolute_error": 0.0011472587676574775,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 300.0,
+            "samples": 30001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 212.6084650172898,
+              "CaER": 27.491836936580384,
+              "CaM": 28.82962932034052,
+              "CaPr": 0.557900505004493,
+              "Pr": 1.4756045966272349
+            }
+          },
+          "through_normal_recall_end": {
+            "passed": true,
+            "max_scaled_error": 0.023167876854269957,
+            "max_absolute_error": 9.661854107889667e-07,
+            "worst_observable": "CaER",
+            "worst_time": 150.10001,
+            "samples": 25001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 0.0024376405167253223,
+              "CaER": 0.023167876854269957,
+              "CaM": 0.0006749661815289783,
+              "CaPr": 1.733510579903267e-06,
+              "Pr": 4.069739224644596e-06
+            }
+          },
+          "first_outside_tolerance": 289.83,
+          "windows": {
+            "50.0": {
+              "passed": true,
+              "max_scaled_error": 0.0024376405167253223,
+              "max_absolute_error": 1.8307707350118108e-08,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 38.79,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0024376405167253223,
+                "CaER": 0.00033701608506562136,
+                "CaM": 0.0006749661815289783,
+                "CaPr": 1.733510579903267e-06,
+                "Pr": 4.069739224644596e-06
+              }
+            },
+            "100.0": {
+              "passed": true,
+              "max_scaled_error": 0.0009542428250198552,
+              "max_absolute_error": 1.1919802744841945e-07,
+              "worst_observable": "CaER",
+              "worst_time": 50.100010000000005,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.00012107375827591752,
+                "CaER": 0.0009542428250198552,
+                "CaM": 6.053879093446899e-06,
+                "CaPr": 7.204038860792518e-07,
+                "Pr": 1.700842509658864e-06
+              }
+            },
+            "150.0": {
+              "passed": true,
+              "max_scaled_error": 4.093426510840025e-09,
+              "max_absolute_error": 9.805489753489383e-12,
+              "worst_observable": "CaPr",
+              "worst_time": 100.0,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 2.0806680147357644e-11,
+                "CaER": 1.3803153473232498e-11,
+                "CaM": 9.146112828412811e-12,
+                "CaPr": 4.093426510840025e-09,
+                "Pr": 4.044295656153775e-09
+              }
+            },
+            "200.0": {
+              "passed": true,
+              "max_scaled_error": 0.023167876854269957,
+              "max_absolute_error": 9.661854107889667e-07,
+              "worst_observable": "CaER",
+              "worst_time": 150.10001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.000982143337068697,
+                "CaER": 0.023167876854269957,
+                "CaM": 1.38599256775228e-06,
+                "CaPr": 3.511233007772397e-08,
+                "Pr": 7.455819937135774e-07
+              }
+            },
+            "250.0": {
+              "passed": true,
+              "max_scaled_error": 8.778769365661825e-05,
+              "max_absolute_error": 6.945977126804337e-10,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 208.12,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 8.778769365661825e-05,
+                "CaER": 1.0587215279754823e-05,
+                "CaM": 2.6664618584928242e-06,
+                "CaPr": 1.386388076445035e-07,
+                "Pr": 1.7347128008982347e-07
+              }
+            },
+            "300.0": {
+              "passed": false,
+              "max_scaled_error": 212.6084650172898,
+              "max_absolute_error": 0.0011472587676574775,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 300.0,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 212.6084650172898,
+                "CaER": 27.491836936580384,
+                "CaM": 28.82962932034052,
+                "CaPr": 0.557900505004493,
+                "Pr": 1.4756045966272349
+              }
+            }
+          }
+        },
+        "3e-14": {
+          "full": {
+            "passed": false,
+            "max_scaled_error": 39.02875881686189,
+            "max_absolute_error": 0.00021071307869241496,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 299.76,
+            "samples": 30001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 39.02875881686189,
+              "CaER": 6.89015410450784,
+              "CaM": 5.997113466791653,
+              "CaPr": 0.1166223445308487,
+              "Pr": 0.30845832613731616
+            }
+          },
+          "through_normal_recall_end": {
+            "passed": true,
+            "max_scaled_error": 0.004749470095089514,
+            "max_absolute_error": 1.1286540058108585e-07,
+            "worst_observable": "CaER",
+            "worst_time": 150.20001,
+            "samples": 25001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 0.00042151515088909263,
+              "CaER": 0.004749470095089514,
+              "CaM": 0.00011699851847705467,
+              "CaPr": 2.928110941244029e-07,
+              "Pr": 2.355845568520515e-06
+            }
+          },
+          "first_outside_tolerance": 293.1,
+          "windows": {
+            "50.0": {
+              "passed": true,
+              "max_scaled_error": 0.00042151515088909263,
+              "max_absolute_error": 3.165756379264195e-09,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 38.79,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.00042151515088909263,
+                "CaER": 5.8146704588399515e-05,
+                "CaM": 0.00011699851847705467,
+                "CaPr": 2.928110941244029e-07,
+                "Pr": 6.749893066835055e-07
+              }
+            },
+            "100.0": {
+              "passed": true,
+              "max_scaled_error": 7.180776850947135e-05,
+              "max_absolute_error": 6.880591030267169e-08,
+              "worst_observable": "CaER",
+              "worst_time": 50.100010000000005,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 6.87141317530396e-05,
+                "CaER": 7.180776850947135e-05,
+                "CaM": 4.654031267744165e-07,
+                "CaPr": 2.092093055543325e-07,
+                "Pr": 5.094659713149456e-07
+              }
+            },
+            "150.0": {
+              "passed": true,
+              "max_scaled_error": 3.4467837721712883e-09,
+              "max_absolute_error": 8.256506589532364e-12,
+              "worst_observable": "CaPr",
+              "worst_time": 100.0,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 4.161336029471528e-11,
+                "CaER": 4.140946041969748e-11,
+                "CaM": 1.8292225656825626e-11,
+                "CaPr": 3.4467837721712883e-09,
+                "Pr": 3.3411925320237805e-09
+              }
+            },
+            "200.0": {
+              "passed": true,
+              "max_scaled_error": 0.004749470095089514,
+              "max_absolute_error": 1.1286540058108585e-07,
+              "worst_observable": "CaER",
+              "worst_time": 150.20001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.00018011701363969193,
+                "CaER": 0.004749470095089514,
+                "CaM": 1.923880583854028e-06,
+                "CaPr": 2.096923938032819e-08,
+                "Pr": 2.355845568520515e-06
+              }
+            },
+            "250.0": {
+              "passed": true,
+              "max_scaled_error": 3.342700698069405e-05,
+              "max_absolute_error": 2.64482657996723e-10,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 208.12,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 3.342700698069405e-05,
+                "CaER": 4.583074550738712e-06,
+                "CaM": 1.4983334020928875e-06,
+                "CaPr": 4.159314973251304e-08,
+                "Pr": 1.1421227479928019e-07
+              }
+            },
+            "300.0": {
+              "passed": false,
+              "max_scaled_error": 39.02875881686189,
+              "max_absolute_error": 0.00021071307869241496,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 299.76,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 39.02875881686189,
+                "CaER": 6.89015410450784,
+                "CaM": 5.997113466791653,
+                "CaPr": 0.1166223445308487,
+                "Pr": 0.30845832613731616
+              }
+            }
+          }
+        },
+        "roadrunner_refinement": {
+          "passed": false,
+          "max_scaled_error": 219.90342124039827,
+          "max_absolute_error": 0.0011867970495025304,
+          "worst_observable": "Ca_cyt",
+          "worst_time": 300.0,
+          "samples": 30001,
+          "observables": 5,
+          "per_observable_max_scaled_error": {
+            "Ca_cyt": 219.90342124039827,
+            "CaER": 26.591824552687147,
+            "CaM": 27.873916820335545,
+            "CaPr": 0.5395419035819327,
+            "Pr": 1.427045488050655
+          }
+        },
+        "copasi_refinement": {
+          "passed": false,
+          "max_scaled_error": 18.35789740727159,
+          "max_absolute_error": 9.906386542535284e-05,
+          "worst_observable": "Ca_cyt",
+          "worst_time": 299.96,
+          "samples": 30001,
+          "observables": 5,
+          "per_observable_max_scaled_error": {
+            "Ca_cyt": 18.35789740727159,
+            "CaER": 2.591718814553959,
+            "CaM": 2.104389764893294,
+            "CaPr": 0.04192537162175441,
+            "Pr": 0.11088751930316475
+          }
+        }
+      }
+    },
+    {
+      "specification": {
+        "training": [
+          "CaER__down",
+          "Ca_cyt__up"
+        ],
+        "probe": "CaER__down",
+        "probe_start": 150.0
+      },
+      "branch_id": "d4e0182a177ec6c293ec29ffafcb6e902f448a9ce738a0e1c11ed60c8ca07ada",
+      "runs": {
+        "roadrunner_1e-12": {
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "minimum": {
+            "Ca_cyt": 0.03287354266462458,
+            "CaER": 0.007043365520934976,
+            "CaM": 0.11733920549837513,
+            "CaPr": 71.9451121154305,
+            "Pr": 1.1550303030857805
+          },
+          "maximum": {
+            "Ca_cyt": 49.183221156754165,
+            "CaER": 10.267016334786875,
+            "CaM": 4.375499671933587,
+            "CaPr": 118.84496969712815,
+            "Pr": 48.05488788481226
+          }
+        },
+        "roadrunner_1e-13": {
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "minimum": {
+            "Ca_cyt": 0.032873542663755924,
+            "CaER": 0.0070433655208270995,
+            "CaM": 0.1172101409706577,
+            "CaPr": 71.94511211511444,
+            "Pr": 1.155030303083597
+          },
+          "maximum": {
+            "Ca_cyt": 49.18322113636809,
+            "CaER": 10.267016334788405,
+            "CaM": 4.375499671930317,
+            "CaPr": 118.8449696970007,
+            "Pr": 48.0548878849906
+          }
+        },
+        "roadrunner_3e-14": {
+          "rtol": 3e-14,
+          "atol": 3e-16,
+          "minimum": {
+            "Ca_cyt": 0.03287354266369219,
+            "CaER": 0.0070433655208883665,
+            "CaM": 0.11680088000750376,
+            "CaPr": 71.94511211503912,
+            "Pr": 1.1550303030830968
+          },
+          "maximum": {
+            "Ca_cyt": 49.18322119182818,
+            "CaER": 10.267016334788385,
+            "CaM": 4.375499671965061,
+            "CaPr": 118.84496969694517,
+            "Pr": 48.05488788499053
+          }
+        },
+        "copasi_1e-12": {
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "minimum": {
+            "Ca_cyt": 0.032873542663626715,
+            "CaER": 0.007043365521066516,
+            "CaM": 0.11476854280455903,
+            "CaPr": 71.9451121150682,
+            "Pr": 1.1550303030850526
+          },
+          "maximum": {
+            "Ca_cyt": 49.183220795323535,
+            "CaER": 10.267016334796837,
+            "CaM": 4.375499671939726,
+            "CaPr": 118.84496969693176,
+            "Pr": 48.0548878849378
+          }
+        },
+        "copasi_1e-13": {
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "minimum": {
+            "Ca_cyt": 0.03287354266365339,
+            "CaER": 0.00704336552107139,
+            "CaM": 0.11827559479088429,
+            "CaPr": 71.94511211502595,
+            "Pr": 1.1550303030837816
+          },
+          "maximum": {
+            "Ca_cyt": 49.18322079031169,
+            "CaER": 10.267016334788067,
+            "CaM": 4.3754996719402,
+            "CaPr": 118.84496969697852,
+            "Pr": 48.054887885031235
+          }
+        },
+        "copasi_3e-14": {
+          "rtol": 3e-14,
+          "atol": 3e-16,
+          "minimum": {
+            "Ca_cyt": 0.03287354266364702,
+            "CaER": 0.007043365521066862,
+            "CaM": 0.11877312720145226,
+            "CaPr": 71.94511211499746,
+            "Pr": 1.1550303030834386
+          },
+          "maximum": {
+            "Ca_cyt": 49.18322078699925,
+            "CaER": 10.267016334787664,
+            "CaM": 4.375499671933588,
+            "CaPr": 118.84496969695182,
+            "Pr": 48.05488788503604
+          }
+        }
+      },
+      "comparisons": {
+        "1e-12": {
+          "full": {
+            "passed": false,
+            "max_scaled_error": 43088.239052037796,
+            "max_absolute_error": 0.6402998304352039,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 298.62,
+            "samples": 30001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 43088.239052037796,
+              "CaER": 17173.36556530239,
+              "CaM": 33691.8026332757,
+              "CaPr": 369.69337394753063,
+              "Pr": 940.4666422866339
+            }
+          },
+          "through_normal_recall_end": {
+            "passed": true,
+            "max_scaled_error": 0.018631922259861267,
+            "max_absolute_error": 3.842751681304435e-07,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 38.79,
+            "samples": 25001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 0.018631922259861267,
+              "CaER": 0.009217329409382587,
+              "CaM": 0.005161989547970521,
+              "CaPr": 1.3218406593905184e-05,
+              "Pr": 3.1015498573223194e-05
+            }
+          },
+          "first_outside_tolerance": 280.25,
+          "windows": {
+            "50.0": {
+              "passed": true,
+              "max_scaled_error": 0.018631922259861267,
+              "max_absolute_error": 1.3993358466413142e-07,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 38.79,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.018631922259861267,
+                "CaER": 0.0025762644319882576,
+                "CaM": 0.005161989547970521,
+                "CaPr": 1.3218406593905184e-05,
+                "Pr": 3.1015498573223194e-05
+              }
+            },
+            "100.0": {
+              "passed": true,
+              "max_scaled_error": 0.009217329409382587,
+              "max_absolute_error": 3.842751681304435e-07,
+              "worst_observable": "CaER",
+              "worst_time": 89.20001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0007135754412861949,
+                "CaER": 0.009217329409382587,
+                "CaM": 3.083310113062961e-05,
+                "CaPr": 6.943243351933457e-06,
+                "Pr": 1.641601840402009e-05
+              }
+            },
+            "150.0": {
+              "passed": true,
+              "max_scaled_error": 3.4138466034012875e-07,
+              "max_absolute_error": 2.0529000721580815e-10,
+              "worst_observable": "Pr",
+              "worst_time": 101.51,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 4.0279020389134367e-08,
+                "CaER": 4.1144183816897265e-08,
+                "CaM": 1.5162613597423045e-07,
+                "CaPr": 8.637102880712791e-08,
+                "Pr": 3.4138466034012875e-07
+              }
+            },
+            "200.0": {
+              "passed": true,
+              "max_scaled_error": 0.001985341414981231,
+              "max_absolute_error": 1.5016819787661007e-08,
+              "worst_observable": "CaER",
+              "worst_time": 150.10001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 7.602400697468418e-05,
+                "CaER": 0.001985341414981231,
+                "CaM": 1.3731139974745433e-06,
+                "CaPr": 1.178046718193717e-07,
+                "Pr": 2.997876918945886e-07
+              }
+            },
+            "250.0": {
+              "passed": true,
+              "max_scaled_error": 0.0005249564676453642,
+              "max_absolute_error": 4.6148252441646775e-09,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 208.24,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0005249564676453642,
+                "CaER": 6.762926540110004e-05,
+                "CaM": 1.638132457423769e-05,
+                "CaPr": 7.590000416110641e-07,
+                "Pr": 8.920165702389573e-07
+              }
+            },
+            "300.0": {
+              "passed": false,
+              "max_scaled_error": 43088.239052037796,
+              "max_absolute_error": 0.6402998304352039,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 298.62,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 43088.239052037796,
+                "CaER": 17173.36556530239,
+                "CaM": 33691.8026332757,
+                "CaPr": 369.69337394753063,
+                "Pr": 940.4666422866339
+              }
+            }
+          }
+        },
+        "1e-13": {
+          "full": {
+            "passed": false,
+            "max_scaled_error": 38408.03980671099,
+            "max_absolute_error": 0.8997922297450529,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 299.39,
+            "samples": 30001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 38408.03980671099,
+              "CaER": 13632.064899742674,
+              "CaM": 1263.1748772439416,
+              "CaPr": 517.378922587376,
+              "Pr": 1325.055562432463
+            }
+          },
+          "through_normal_recall_end": {
+            "passed": true,
+            "max_scaled_error": 0.008622926504759678,
+            "max_absolute_error": 3.5949420862380066e-07,
+            "worst_observable": "CaER",
+            "worst_time": 86.40001000000001,
+            "samples": 25001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 0.0024358625152997226,
+              "CaER": 0.008622926504759678,
+              "CaM": 0.0006745235846378996,
+              "CaPr": 1.7315600258547526e-06,
+              "Pr": 4.064815621718057e-06
+            }
+          },
+          "first_outside_tolerance": 283.44,
+          "windows": {
+            "50.0": {
+              "passed": true,
+              "max_scaled_error": 0.0024358625152997226,
+              "max_absolute_error": 1.829435380962252e-08,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 38.79,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0024358625152997226,
+                "CaER": 0.00033676952839058416,
+                "CaM": 0.0006745235846378996,
+                "CaPr": 1.7315600258547526e-06,
+                "Pr": 4.064815621718057e-06
+              }
+            },
+            "100.0": {
+              "passed": true,
+              "max_scaled_error": 0.008622926504759678,
+              "max_absolute_error": 3.5949420862380066e-07,
+              "worst_observable": "CaER",
+              "worst_time": 86.40001000000001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0003654271290144328,
+                "CaER": 0.008622926504759678,
+                "CaM": 6.204991925747097e-06,
+                "CaPr": 7.04177358917014e-07,
+                "Pr": 1.6863771589100243e-06
+              }
+            },
+            "150.0": {
+              "passed": true,
+              "max_scaled_error": 2.6011711027465902e-08,
+              "max_absolute_error": 2.290789780090563e-11,
+              "worst_observable": "Pr",
+              "worst_time": 102.92,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 3.4814125749052443e-09,
+                "CaER": 3.5902524460188315e-09,
+                "CaM": 1.7920272079080182e-08,
+                "CaPr": 9.638085312142524e-09,
+                "Pr": 2.6011711027465902e-08
+              }
+            },
+            "200.0": {
+              "passed": true,
+              "max_scaled_error": 0.001414563754759544,
+              "max_absolute_error": 1.070053379237379e-08,
+              "worst_observable": "CaER",
+              "worst_time": 150.10001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 5.417241913397201e-05,
+                "CaER": 0.001414563754759544,
+                "CaM": 3.293717940605067e-07,
+                "CaPr": 3.948936359857828e-08,
+                "Pr": 3.10931155872641e-07
+              }
+            },
+            "250.0": {
+              "passed": true,
+              "max_scaled_error": 8.105676738241468e-05,
+              "max_absolute_error": 7.125596779289367e-10,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 208.24,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 8.105676738241468e-05,
+                "CaER": 1.079067158134973e-05,
+                "CaM": 2.5228815763280365e-06,
+                "CaPr": 1.4309324515260846e-07,
+                "Pr": 1.641166601260685e-07
+              }
+            },
+            "300.0": {
+              "passed": false,
+              "max_scaled_error": 38408.03980671099,
+              "max_absolute_error": 0.8997922297450529,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 299.39,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 38408.03980671099,
+                "CaER": 13632.064899742674,
+                "CaM": 1263.1748772439416,
+                "CaPr": 517.378922587376,
+                "Pr": 1325.055562432463
+              }
+            }
+          }
+        },
+        "3e-14": {
+          "full": {
+            "passed": false,
+            "max_scaled_error": 13604.013821354545,
+            "max_absolute_error": 0.07278799907617964,
+            "worst_observable": "Ca_cyt",
+            "worst_time": 300.0,
+            "samples": 30001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 13604.013821354545,
+              "CaER": 1615.8435912454147,
+              "CaM": 3414.8480609059984,
+              "CaPr": 41.531710415937646,
+              "Pr": 108.96691659515646
+            }
+          },
+          "through_normal_recall_end": {
+            "passed": true,
+            "max_scaled_error": 0.010224507669132948,
+            "max_absolute_error": 4.2626495400099884e-07,
+            "worst_observable": "CaER",
+            "worst_time": 99.80001000000001,
+            "samples": 25001,
+            "observables": 5,
+            "per_observable_max_scaled_error": {
+              "Ca_cyt": 0.0004332998263330325,
+              "CaER": 0.010224507669132948,
+              "CaM": 0.00011301920964920466,
+              "CaPr": 2.8293166452773616e-07,
+              "Pr": 6.971157467603868e-07
+            }
+          },
+          "first_outside_tolerance": 283.95,
+          "windows": {
+            "50.0": {
+              "passed": true,
+              "max_scaled_error": 0.00040696294669816975,
+              "max_absolute_error": 3.056463193651382e-09,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 38.79,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.00040696294669816975,
+                "CaER": 5.616130407388202e-05,
+                "CaM": 0.00011301920964920466,
+                "CaPr": 2.8293166452773616e-07,
+                "Pr": 6.501434391974523e-07
+              }
+            },
+            "100.0": {
+              "passed": true,
+              "max_scaled_error": 0.010224507669132948,
+              "max_absolute_error": 4.2626495400099884e-07,
+              "worst_observable": "CaER",
+              "worst_time": 99.80001000000001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.0004332998263330325,
+                "CaER": 0.010224507669132948,
+                "CaM": 1.4831985764458004e-06,
+                "CaPr": 2.0173634107194313e-07,
+                "Pr": 6.971157467603868e-07
+              }
+            },
+            "150.0": {
+              "passed": true,
+              "max_scaled_error": 1.460007406249006e-08,
+              "max_absolute_error": 6.622258297284134e-12,
+              "worst_observable": "Pr",
+              "worst_time": 103.05,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 2.16716729933289e-09,
+                "CaER": 2.1800925653316897e-09,
+                "CaM": 5.2729739624190964e-09,
+                "CaPr": 2.7862050470127548e-09,
+                "Pr": 1.460007406249006e-08
+              }
+            },
+            "200.0": {
+              "passed": true,
+              "max_scaled_error": 0.004594763584642108,
+              "max_absolute_error": 3.475733301172568e-08,
+              "worst_observable": "CaER",
+              "worst_time": 150.10001,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 0.00017596213843942124,
+                "CaER": 0.004594763584642108,
+                "CaM": 5.790394115762423e-06,
+                "CaPr": 1.5777542964580928e-08,
+                "Pr": 4.876665082247056e-07
+              }
+            },
+            "250.0": {
+              "passed": true,
+              "max_scaled_error": 6.165029566185297e-05,
+              "max_absolute_error": 5.419598658740199e-10,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 208.24,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 6.165029566185297e-05,
+                "CaER": 8.287128002856184e-06,
+                "CaM": 2.4436985573517602e-06,
+                "CaPr": 9.327406195216185e-08,
+                "Pr": 1.6648970205126644e-07
+              }
+            },
+            "300.0": {
+              "passed": false,
+              "max_scaled_error": 13604.013821354545,
+              "max_absolute_error": 0.07278799907617964,
+              "worst_observable": "Ca_cyt",
+              "worst_time": 300.0,
+              "samples": 5001,
+              "observables": 5,
+              "per_observable_max_scaled_error": {
+                "Ca_cyt": 13604.013821354545,
+                "CaER": 1615.8435912454147,
+                "CaM": 3414.8480609059984,
+                "CaPr": 41.531710415937646,
+                "Pr": 108.96691659515646
+              }
+            }
+          }
+        },
+        "roadrunner_refinement": {
+          "passed": false,
+          "max_scaled_error": 38882.925865104386,
+          "max_absolute_error": 0.8477555965858414,
+          "worst_observable": "Ca_cyt",
+          "worst_time": 299.25,
+          "samples": 30001,
+          "observables": 5,
+          "per_observable_max_scaled_error": {
+            "Ca_cyt": 38882.925865104386,
+            "CaER": 12507.30043831853,
+            "CaM": 3931.8554918765863,
+            "CaPr": 487.7498305546892,
+            "Pr": 1248.4251716172328
+          }
+        },
+        "copasi_refinement": {
+          "passed": false,
+          "max_scaled_error": 2133.1854426113723,
+          "max_absolute_error": 0.012094754061155621,
+          "worst_observable": "Ca_cyt",
+          "worst_time": 299.32,
+          "samples": 30001,
+          "observables": 5,
+          "per_observable_max_scaled_error": {
+            "Ca_cyt": 2133.1854426113723,
+            "CaER": 339.8090891568469,
+            "CaM": 529.1062503712941,
+            "CaPr": 6.222096909408753,
+            "Pr": 16.354430287522185
+          }
+        }
+      }
+    }
+  ],
+  "all_full_horizon_comparisons_passed": false,
+  "all_comparisons_through_normal_recall_passed": true,
+  "interpretation": "Late pointwise convergence is not established. Agreement through time 250 supports only the earlier normal-cue and normal-recall windows of these branches. This diagnostic does not establish chaos or validate the 250..300 trajectories. It does not shorten the catalog protocol or change its failed status."
+}

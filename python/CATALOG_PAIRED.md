@@ -165,6 +165,36 @@ case, including its shared untreated arm; this is selected-case evidence, not
 full-catalog completion. The original running catalog is kept at its original
 source revision while the recovery is validated separately.
 
+### Late divergence in the Marhl calcium model
+
+The first full screen also found **three completed, disagreeing branches in two
+Marhl cases** (network 30, BioModel 39). They involve `CaER__down` cues following
+`CaM__up` or `Ca_cyt__up` training. These are not partial-output failures and
+are not eligible for the solver retry above.
+
+The [reproducible diagnostic](scripts/diagnose_marhl_paired.py) compares both
+engines at three integration requests: `1e-12/1e-14`, `1e-13/1e-15`, and
+`3e-14/3e-16`. All nine comparisons pass through time **250**, the end of normal
+recall; none passes across the entire **0–300** horizon. At the default request,
+the first disagreement beyond tolerance appears after time 269. Refining each
+engine also changes its late trajectory. These observations establish a late
+numerical convergence problem, not a diagnosis of chaos.
+
+The [diagnostic report](results/catalog-paired-marhl-diagnostic/report.json)
+records the full-horizon failures, window comparisons, refinement comparisons,
+source hashes and settings. Its
+[plot](results/catalog-paired-marhl-diagnostic/late-divergence.png) shows the
+timing of the divergence. Normal-cue and normal-recall scores do not use the
+250–300 tail of these normal-probe branches; delayed-probe scores use separate
+branches. The original two cases nevertheless remain **mismatches under the
+full-horizon validation gate**. Agreement of their controlled categories does
+not validate the divergent tail, and the protocol has not been shortened to
+obtain a pass.
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/diagnose_marhl_paired.py
+```
+
 ```bash
 uv sync --locked --extra test --extra delay
 MPLBACKEND=Agg uv run --locked --extra test --extra delay python -m pytest -q tests/test_catalog_paired.py
