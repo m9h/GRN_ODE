@@ -1,0 +1,130 @@
+{
+  "network": 25,
+  "biomodel_id": "BIOMD0000000539",
+  "model_sha256": "ea0689f4ed3342219eaf79d7f9c1058a5f51a0cec417d47fd22e9b7aa6ab1518",
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "jax_solver": "Kvaerno5",
+    "jax_rtol": 1e-10,
+    "jax_atol": 1e-12,
+    "reference_rtol": 1e-12,
+    "reference_atol": 1e-14,
+    "jax_initial_step": 0.0001,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "x64": true
+  },
+  "implementation_sha256": {
+    "jaxkineticmodel/load_sbml/sbml_model.py": "57ddfef282e220affab237ce15e760e8b01aeb4b8e5fd4c39b91696f619477cb",
+    "jaxkineticmodel/load_sbml/jax_kinetic_model.py": "04dabdfc81da14da8a008aa406e723b974213f208442225a1d512d03ab4547b2",
+    "jaxkineticmodel/load_sbml/sympy_converter.py": "8b4bfec0fd8a6ea4dfd72bf6a66af8b50faa9f3975827aac609c460287b9e504",
+    "jaxkineticmodel/load_sbml/export_sbml.py": "54b054ceaef678ae77827ce560e198d70865a34692542c798235af2121114ee9",
+    "jaxkineticmodel/load_sbml/sbml_load_utils.py": "f914d0ee1bf06602d7c9ccac6643c9814ad4f63b9c520acf92e98839e64626ca",
+    "grn_memory/catalog_jax.py": "c2ee2f06f10880232ed6faa1ffa17caebf274306ab0be152ad6d6d703bba49e5",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4",
+    "jax": "0.12.0.1",
+    "jaxlib": "0.12.0.1",
+    "diffrax": "0.7.2",
+    "equinox": "0.13.8",
+    "jaxkineticmodel": "0.0.1"
+  },
+  "fingerprint": "0189069a9e203d7a5eeb35428717a215744b7efccf73fe65450e5eb1b479dbac",
+  "name": "Fran\u00e7ois2005 - Mixed Feedback Loop (two-gene network)",
+  "status": "passed",
+  "observables": [
+    "A",
+    "AgB",
+    "gB",
+    "rB",
+    "B",
+    "AB"
+  ],
+  "recorded_at": "2026-11-10T04:46:52.532414+00:00",
+  "independent_states": [
+    "A",
+    "AgB",
+    "gB",
+    "rB",
+    "B",
+    "AB"
+  ],
+  "comparisons": {
+    "jax_roadrunner": {
+      "passed": true,
+      "max_scaled_error": 3.78247052823999e-05,
+      "max_absolute_error": 1.785338099580258e-08,
+      "worst_observable": "A",
+      "worst_time": 23.07,
+      "samples": 5001,
+      "observables": 6,
+      "per_observable_max_scaled_error": {
+        "A": 3.78247052823999e-05,
+        "AgB": 6.44027733463157e-07,
+        "gB": 1.378416770282418e-06,
+        "rB": 6.081948672560729e-07,
+        "B": 2.9022593262844085e-05,
+        "AB": 2.1851933096709757e-05
+      }
+    },
+    "jax_copasi": {
+      "passed": true,
+      "max_scaled_error": 3.626892513888836e-05,
+      "max_absolute_error": 1.0730913047041213e-08,
+      "worst_observable": "B",
+      "worst_time": 23.07,
+      "samples": 5001,
+      "observables": 6,
+      "per_observable_max_scaled_error": {
+        "A": 2.8231060817745826e-05,
+        "AgB": 5.790030567571985e-07,
+        "gB": 1.284477730696808e-06,
+        "rB": 7.55404810621642e-07,
+        "B": 3.626892513888836e-05,
+        "AB": 2.111904621245614e-05
+      }
+    },
+    "roadrunner_copasi": {
+      "passed": true,
+      "max_scaled_error": 9.810347262754501e-06,
+      "max_absolute_error": 1.6495960153406486e-08,
+      "worst_observable": "A",
+      "worst_time": 23.04,
+      "samples": 5001,
+      "observables": 6,
+      "per_observable_max_scaled_error": {
+        "A": 9.810347262754501e-06,
+        "AgB": 3.4427532328628463e-07,
+        "gB": 7.292885036731189e-07,
+        "rB": 5.380804794238786e-07,
+        "B": 8.092798600246157e-06,
+        "AB": 1.3017562833534953e-06
+      }
+    }
+  },
+  "initial_values": {
+    "A": 40.0,
+    "AgB": 0.0,
+    "gB": 1.0,
+    "rB": 0.0,
+    "B": 0.0,
+    "AB": 0.0
+  },
+  "final_values": {
+    "A": 0.030974370689422662,
+    "AgB": 0.2905425259745829,
+    "gB": 0.7094574740254233,
+    "rB": 76.28518812161235,
+    "B": 3228.87000339969,
+    "AB": 3958.8785589337986
+  },
+  "elapsed_seconds": 1.981819374999759
+}

@@ -20,9 +20,11 @@ baseline comparisons for every model: 34 through RoadRunner/COPASI and the
 delayed Scheper clock through two delay-preserving solvers. All 35 source SBML
 files are included. The [catalog memory screen](CATALOG_MEMORY.md) adds 538
 single-input stimulation cases across all 35, with complete-state interventions,
-untreated controls and extended relaxation. Association, repeated stimulation
-and JAX coverage across the full catalog remain active work; the five-model
-suite above remains the broader collection of memory demonstrations.
+untreated controls and extended relaxation. The [JAX catalog audit](CATALOG_JAX.md)
+validates 32 original baselines and explicitly identifies three unsupported
+models. Association and repeated stimulation across the full catalog remain
+active work; the five-model suite above remains the broader collection of
+memory demonstrations.
 
 ## Run it
 

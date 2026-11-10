@@ -1,0 +1,144 @@
+{
+  "network": 7,
+  "biomodel_id": "BIOMD0000000010",
+  "model_sha256": "906964e07ffd570ad94a03c1222e230b54b913cd536b008392bfb6155930a966",
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "jax_solver": "Kvaerno5",
+    "jax_rtol": 1e-10,
+    "jax_atol": 1e-12,
+    "reference_rtol": 1e-12,
+    "reference_atol": 1e-14,
+    "jax_initial_step": 0.0001,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "x64": true
+  },
+  "implementation_sha256": {
+    "jaxkineticmodel/load_sbml/sbml_model.py": "57ddfef282e220affab237ce15e760e8b01aeb4b8e5fd4c39b91696f619477cb",
+    "jaxkineticmodel/load_sbml/jax_kinetic_model.py": "04dabdfc81da14da8a008aa406e723b974213f208442225a1d512d03ab4547b2",
+    "jaxkineticmodel/load_sbml/sympy_converter.py": "8b4bfec0fd8a6ea4dfd72bf6a66af8b50faa9f3975827aac609c460287b9e504",
+    "jaxkineticmodel/load_sbml/export_sbml.py": "54b054ceaef678ae77827ce560e198d70865a34692542c798235af2121114ee9",
+    "jaxkineticmodel/load_sbml/sbml_load_utils.py": "f914d0ee1bf06602d7c9ccac6643c9814ad4f63b9c520acf92e98839e64626ca",
+    "grn_memory/catalog_jax.py": "c2ee2f06f10880232ed6faa1ffa17caebf274306ab0be152ad6d6d703bba49e5",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4",
+    "jax": "0.12.0.1",
+    "jaxlib": "0.12.0.1",
+    "diffrax": "0.7.2",
+    "equinox": "0.13.8",
+    "jaxkineticmodel": "0.0.1"
+  },
+  "fingerprint": "974b90724423c1c83478200bc5b9159cc30669c7ff30ef4bde56fa5cb4161f3f",
+  "name": "Kholodenko2000 - Ultrasensitivity and negative feedback bring oscillations in MAPK cascade",
+  "status": "passed",
+  "observables": [
+    "MKKK",
+    "MKKK_P",
+    "MKK",
+    "MKK_P",
+    "MKK_PP",
+    "MAPK",
+    "MAPK_P",
+    "MAPK_PP"
+  ],
+  "recorded_at": "2026-11-10T04:46:24.635531+00:00",
+  "independent_states": [
+    "MKKK",
+    "MKKK_P",
+    "MKK",
+    "MKK_P",
+    "MKK_PP",
+    "MAPK",
+    "MAPK_P",
+    "MAPK_PP"
+  ],
+  "comparisons": {
+    "jax_roadrunner": {
+      "passed": true,
+      "max_scaled_error": 7.622483812597516e-05,
+      "max_absolute_error": 1.8304362470189517e-08,
+      "worst_observable": "MKKK_P",
+      "worst_time": 2.16,
+      "samples": 5001,
+      "observables": 8,
+      "per_observable_max_scaled_error": {
+        "MKKK": 1.0400738056811514e-05,
+        "MKKK_P": 7.622483812597516e-05,
+        "MKK": 6.996871092788643e-07,
+        "MKK_P": 1.875230961485684e-05,
+        "MKK_PP": 1.062815789587327e-05,
+        "MAPK": 4.561136139478731e-07,
+        "MAPK_P": 1.761547680200118e-05,
+        "MAPK_PP": 9.41042997796729e-06
+      }
+    },
+    "jax_copasi": {
+      "passed": true,
+      "max_scaled_error": 7.694138846393244e-05,
+      "max_absolute_error": 1.8474551666258776e-08,
+      "worst_observable": "MKKK_P",
+      "worst_time": 2.16,
+      "samples": 5001,
+      "observables": 8,
+      "per_observable_max_scaled_error": {
+        "MKKK": 1.0497441411048888e-05,
+        "MKKK_P": 7.694138846393244e-05,
+        "MKK": 6.931016039576069e-07,
+        "MKK_P": 1.8724208915382527e-05,
+        "MKK_PP": 1.1519866389092497e-05,
+        "MAPK": 4.542959022884216e-07,
+        "MAPK_P": 1.7615088325092266e-05,
+        "MAPK_PP": 9.449856479805186e-06
+      }
+    },
+    "roadrunner_copasi": {
+      "passed": true,
+      "max_scaled_error": 1.3051048776340586e-06,
+      "max_absolute_error": 6.956781817279989e-10,
+      "worst_observable": "MKK_PP",
+      "worst_time": 38.93,
+      "samples": 5001,
+      "observables": 8,
+      "per_observable_max_scaled_error": {
+        "MKKK": 5.860008841836597e-07,
+        "MKKK_P": 1.0991705278868188e-06,
+        "MKK": 7.051701105135358e-08,
+        "MKK_P": 2.2757610599766758e-07,
+        "MKK_PP": 1.3051048776340586e-06,
+        "MAPK": 3.854781912686675e-08,
+        "MAPK_P": 7.08319234463963e-07,
+        "MAPK_PP": 5.89397741637891e-07
+      }
+    }
+  },
+  "initial_values": {
+    "MKKK": 90.0,
+    "MKKK_P": 10.0,
+    "MKK": 280.0,
+    "MKK_P": 10.0,
+    "MKK_PP": 10.0,
+    "MAPK": 280.0,
+    "MAPK_P": 10.0,
+    "MAPK_PP": 10.0
+  },
+  "final_values": {
+    "MKKK": 42.65949350549971,
+    "MKKK_P": 57.34050649450026,
+    "MKK": 259.10534113591643,
+    "MKK_P": 23.96590656298672,
+    "MKK_PP": 16.928752301096686,
+    "MAPK": 278.5508837312909,
+    "MAPK_P": 14.169755028519857,
+    "MAPK_PP": 7.279361240189098
+  },
+  "elapsed_seconds": 1.3925937500025611
+}

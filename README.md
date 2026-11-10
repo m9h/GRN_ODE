@@ -22,6 +22,8 @@ definitions; it is not a reproduction of the full 35-model survey.
 The extension to all 35 models now includes independently compared
 [baseline kinetics](python/CATALOG_VALIDATION.md) and a
 [538-case single-input retention screen](python/CATALOG_MEMORY.md).
+The [JAX catalog audit](python/CATALOG_JAX.md) independently validates 32 original
+baselines and explicitly identifies three unsupported models.
 Paired learning and repeated-stimulation coverage across the catalog remain in
 progress. The retention screen preserves native events, rule variables and delay
 history, and distinguishes unresolved numerical labels from memory evidence.

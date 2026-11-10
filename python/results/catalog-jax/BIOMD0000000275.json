@@ -1,0 +1,146 @@
+{
+  "network": 27,
+  "biomodel_id": "BIOMD0000000275",
+  "model_sha256": "600e2c173146c24f77c738c9117aa684a0acf9aeedea227126efaf033f641e70",
+  "configuration": {
+    "duration": 50.0,
+    "dt": 0.01,
+    "jax_solver": "Kvaerno5",
+    "jax_rtol": 1e-10,
+    "jax_atol": 1e-12,
+    "reference_rtol": 1e-12,
+    "reference_atol": 1e-14,
+    "jax_initial_step": 0.0001,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "x64": true
+  },
+  "implementation_sha256": {
+    "jaxkineticmodel/load_sbml/sbml_model.py": "57ddfef282e220affab237ce15e760e8b01aeb4b8e5fd4c39b91696f619477cb",
+    "jaxkineticmodel/load_sbml/jax_kinetic_model.py": "04dabdfc81da14da8a008aa406e723b974213f208442225a1d512d03ab4547b2",
+    "jaxkineticmodel/load_sbml/sympy_converter.py": "8b4bfec0fd8a6ea4dfd72bf6a66af8b50faa9f3975827aac609c460287b9e504",
+    "jaxkineticmodel/load_sbml/export_sbml.py": "54b054ceaef678ae77827ce560e198d70865a34692542c798235af2121114ee9",
+    "jaxkineticmodel/load_sbml/sbml_load_utils.py": "f914d0ee1bf06602d7c9ccac6643c9814ad4f63b9c520acf92e98839e64626ca",
+    "grn_memory/catalog_jax.py": "c2ee2f06f10880232ed6faa1ffa17caebf274306ab0be152ad6d6d703bba49e5",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4",
+    "jax": "0.12.0.1",
+    "jaxlib": "0.12.0.1",
+    "diffrax": "0.7.2",
+    "equinox": "0.13.8",
+    "jaxkineticmodel": "0.0.1"
+  },
+  "fingerprint": "484415b10ec4ac316a0687b49f9ca4fb5c052dec970c6d35226e6d827f7de45a",
+  "name": "Goldbeter2007_Somitogenesis_Switch",
+  "status": "passed",
+  "observables": [
+    "RA",
+    "M_C",
+    "C",
+    "F",
+    "M_F",
+    "vs1",
+    "rho",
+    "alpha2",
+    "alpha1"
+  ],
+  "recorded_at": "2026-11-10T04:46:55.579485+00:00",
+  "independent_states": [
+    "RA",
+    "M_C",
+    "C",
+    "F"
+  ],
+  "comparisons": {
+    "jax_roadrunner": {
+      "passed": true,
+      "max_scaled_error": 0.0003125299564415058,
+      "max_absolute_error": 1.2552973771562392e-08,
+      "worst_observable": "F",
+      "worst_time": 0.09,
+      "samples": 5001,
+      "observables": 9,
+      "per_observable_max_scaled_error": {
+        "RA": 2.4933845642662045e-05,
+        "M_C": 3.0243316322511013e-05,
+        "C": 2.5112191216213002e-05,
+        "F": 0.0003125299564415058,
+        "M_F": 0.0,
+        "vs1": 0.0,
+        "rho": 0.00014478910869050363,
+        "alpha2": 0.00015889725619373595,
+        "alpha1": 2.0696341055764925e-05
+      }
+    },
+    "jax_copasi": {
+      "passed": true,
+      "max_scaled_error": 0.0003114252069032825,
+      "max_absolute_error": 1.2600061438661214e-08,
+      "worst_observable": "F",
+      "worst_time": 0.09,
+      "samples": 5001,
+      "observables": 9,
+      "per_observable_max_scaled_error": {
+        "RA": 2.50462025101558e-05,
+        "M_C": 3.4556255689134815e-05,
+        "C": 2.5207574015552516e-05,
+        "F": 0.0003114252069032825,
+        "M_F": 0.0,
+        "vs1": 0.0,
+        "rho": 0.00014422556787328892,
+        "alpha2": 0.00015833557571143253,
+        "alpha1": 2.0789603261463682e-05
+      }
+    },
+    "roadrunner_copasi": {
+      "passed": true,
+      "max_scaled_error": 9.753119830055251e-06,
+      "max_absolute_error": 1.4450414198563521e-09,
+      "worst_observable": "rho",
+      "worst_time": 10.89,
+      "samples": 5001,
+      "observables": 9,
+      "per_observable_max_scaled_error": {
+        "RA": 4.969949194556393e-06,
+        "M_C": 5.9036885345657325e-06,
+        "C": 5.011234472069662e-06,
+        "F": 7.741216682014797e-06,
+        "M_F": 0.0,
+        "vs1": 0.0,
+        "rho": 9.753119830055251e-06,
+        "alpha2": 6.10706207102802e-06,
+        "alpha1": 3.5825318002505877e-06
+      }
+    }
+  },
+  "initial_values": {
+    "RA": 0.1,
+    "M_C": 0.1,
+    "C": 0.1,
+    "F": 1.0,
+    "M_F": 1.5,
+    "vs1": 4.97,
+    "rho": 5.5,
+    "alpha2": 0.5,
+    "alpha1": 0.09090909090909091
+  },
+  "final_values": {
+    "RA": 0.19887343701064614,
+    "M_C": 6.998458177451806,
+    "C": 24.990810014000193,
+    "F": 0.754196359587929,
+    "M_F": 1.5,
+    "vs1": 4.97,
+    "rho": 2.5918077534904733,
+    "alpha2": 0.429938390571677,
+    "alpha1": 0.16588359610880268
+  },
+  "elapsed_seconds": 1.4333458750006685
+}

@@ -2,7 +2,7 @@
 
 The optional backend uses the [modernized Jaxkineticmodel fork](https://github.com/m9h/jaxkineticmodel/tree/modern-jax-validation)
 on JAX/JAXlib 0.12.0.1, Diffrax 0.7.2 and Equinox 0.13.8. Its source is pinned to
-commit `2a5b4c255d2d250cdcd36d5abc2f7f992d3a24e6`. JAX dependencies are installed
+commit `0c16f6ea145862ea0a3d9b1ef4368745e18028a5`. JAX dependencies are installed
 through the `jaxkineticmodel` optional extra, with exact versions recorded in
 the shared lockfile. The ordinary RoadRunner/COPASI workflow does not import JAX.
 
@@ -26,7 +26,8 @@ models as the reference adapters. This does not implement SBML events.
 **44 full Jaxkineticmodel-versus-RoadRunner trajectory comparisons**, plus the
 44 RoadRunner-versus-COPASI reference comparisons. All 88 pass. All reported
 Boolean classifications agree across the three engines. The unchanged analytic
-reset tests also pass for the JAX adapter; the local suite has **28 passing tests**.
+reset tests also pass for the JAX adapter. These results have been rerun with
+the updated importer revision pinned above.
 
 Each comparison includes every species and time sample, not just the final
 response. Each engine calibrates its own baseline and intervention levels.
@@ -47,8 +48,10 @@ tolerance-normalized error among the JAX/reference traces; values <= 1 pass.
 
 The [scientific interpretations and confounds](RESULTS.md) still apply. In
 particular, accumulating material and continuing dynamics do not by themselves
-establish learning. No broader SBML coverage, GPU speedup, full 35-network
-replication or RNM transition-graph reconstruction is claimed.
+establish learning. The separate [catalog JAX audit](CATALOG_JAX.md) now validates
+32 original baselines and explicitly rejects the three unsupported models.
+That baseline coverage does not extend these memory protocols to the entire
+catalog or establish GPU speedup or RNM transition-graph reconstruction.
 
 ## Why the dependency update includes loader fixes
 
