@@ -154,6 +154,17 @@ original encoding in each engine. The original source hash and encoded hash
 are recorded. Delay controls receive the independent JiTCDDE step and jump-width
 refinement used by the other catalog protocols.
 
+The full screen exposed a partial COPASI trajectory for François's two-gene
+network (25, BioModel 539), in `A__up--gB__up` after UCS-only training followed
+by the normal cue. Its request at `rtol=1e-12`, `atol=1e-14` stopped at 18,462
+of 30,001 samples. Network 25 now permits one retry at `1e-11/1e-13` after a
+solver exception. Both attempts and their settings are recorded. A completed
+trajectory that disagrees with RoadRunner is not retried, and the acceptance
+threshold above is unchanged. An [isolated rerun](results/catalog-paired-recovery/BIOMD0000000539.json) passes all 12 branches of this
+case, including its shared untreated arm; this is selected-case evidence, not
+full-catalog completion. The original running catalog is kept at its original
+source revision while the recovery is validated separately.
+
 ```bash
 uv sync --locked --extra test --extra delay
 MPLBACKEND=Agg uv run --locked --extra test --extra delay python -m pytest -q tests/test_catalog_paired.py

@@ -6,6 +6,50 @@ on:
   pull_request:
   workflow_dispatch:
 jobs:
+  catalog-paired-solver-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-catalog-recovery-mpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test
+      - name: Check the previously failing François case
+        run: |
+          # The catalog command returns 1 for an intentionally partial selection.
+          # Explicitly validate its single case instead of treating that code as success.
+          uv run --locked python -m grn_memory.catalog_paired --network 25 --case A__up--gB__up --workers 1 --output results/catalog-paired-recovery-ci || test "$?" -eq 1
+          uv run --locked python - <<'PY'
+          import gzip
+          import json
+          from pathlib import Path
+          root = Path("results/catalog-paired-recovery-ci")
+          report = json.loads((root / "BIOMD0000000539.json").read_text())
+          assert set(report["cases"]) == {"A__up--gB__up"}
+          assert report["passed_cases"] == report["evaluated_cases"] == 1
+          assert report["cases"]["A__up--gB__up"]["status"] == "passed"
+          assert report["control_comparison"]["passed"]
+          with gzip.open(root / "BIOMD0000000539-branches.jsonl.gz", "rt") as stream:
+              branches = [json.loads(line) for line in stream]
+          assert len(branches) == 12 and all(branch["passed"] for branch in branches)
+          print("François regression: 1 selected case, all 12 branches passed; full coverage not claimed.")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-paired-solver-regression
+          path: python/results/catalog-paired-recovery-ci/
   catalog-breaking-smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 45

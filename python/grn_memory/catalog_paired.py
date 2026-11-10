@@ -21,6 +21,7 @@ from .catalog_runner import context, fingerprint, implementation_hashes, run_cat
 from .catalog_validation import ROOT, PACKAGES, comparison
 from .native_protocols import ResetTrain, sample_times
 from .paired_scores import response_score, classification_key
+from .protocol_retries import integrate_engines
 from .timed_drives import encode_yoon_drives, yoon_trajectory
 
 
@@ -108,6 +109,7 @@ def run_model(entry, args):
     specs = {branch_id(spec): spec for plan in plans.values() for spec in case_branches(plan).values()}
     specs[branch_id(branch_spec())] = branch_spec()
     integration = deepcopy(reference["configuration"]["integration_settings"])
+    fallbacks = {"copasi": {"rtol": 1e-11, "atol": 1e-13}} if entry["network"] == 25 else {}
     encoding = None
     if entry["network"] == 26:
         integration = {e: {"rtol": 1e-12, "atol": 1e-18} for e in engines}
@@ -124,11 +126,13 @@ def run_model(entry, args):
               "candidate_selection": "resolved twofold UCS in both engines; no resolved twofold CS in either; three distinct identities",
               "histories": ["none", "ucs", "cs", "paired"], "probe_starts": [150.,200.],
               "integration_settings": integration, "comparison_rtol": 2e-5, "comparison_atol": 1e-7,
+              "integration_error_fallbacks": fallbacks,
+              "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
               "timed_drive_encoding": encoding, "candidate_plan_sha256": fingerprint(plans),
               "negative_response_policy": "retain numerical result but exclude controlled learning interpretation"}
     files = ["catalog_paired.py", "paired_scores.py", "catalog_repeated.py", "catalog_runner.py",
              "catalog_memory.py", "catalog_validation.py", "native_protocols.py", "delay_protocols.py",
-             "scheper_delay.py", "simulation.py", "analysis.py", "timed_drives.py"]
+             "scheper_delay.py", "simulation.py", "analysis.py", "timed_drives.py", "protocol_retries.py"]
     metadata = {"configuration": config, "model_sha256": reference["model_sha256"],
                 "reference_fingerprint": reference["fingerprint"],
                 "reference_file_sha256": hashlib.sha256((ROOT/"results/catalog-memory"/f'{entry["biomodel_id"]}.json').read_bytes()).hexdigest(),
@@ -170,7 +174,7 @@ def run_model(entry, args):
         record = {"branch_id": key, "fingerprint": signature, "specification": spec,
                   "reset_trains": [asdict(t) for t in trains], "sample_count": len(times), "passed": False}
         try:
-            traces = {e:trajectory(path, times, trains, e, **integration[e]) for e in engines}
+            traces = integrate_engines(trajectory, path, times, trains, engines, integration, fallbacks, record)
             record["comparison"] = comparison(*traces.values())
             record["windows"] = {e:summarize(trace, WINDOWS) for e,trace in traces.items()}
             record["passed"] = record["comparison"]["passed"]

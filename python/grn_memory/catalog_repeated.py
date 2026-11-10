@@ -19,6 +19,7 @@ from .catalog_memory import write_json
 from .catalog_runner import context, fingerprint, implementation_hashes, run_catalog
 from .catalog_validation import PACKAGES, comparison
 from .native_protocols import ResetTrain, sample_times
+from .protocol_retries import integrate_engines
 from .timed_drives import encode_yoon_drives, yoon_trajectory
 
 
@@ -152,6 +153,7 @@ def run_model(entry, args):
     engines = reference["engines"]
     integration = deepcopy(reference["configuration"]["integration_settings"])
     case_overrides = {}
+    fallbacks = {"copasi": {"rtol": 1e-7, "atol": 1e-9}} if entry["network"] == 35 else {}
     encoding = None
     if entry["network"] == 26:
         integration = {engine: {"rtol": 1e-12, "atol": 1e-18} for engine in engines}
@@ -172,10 +174,13 @@ def run_model(entry, args):
               "calibration": "complete untreated trajectory, t=0..1010; strictly positive minimum",
               "integration_settings": integration, "comparison_rtol": 2e-5, "comparison_atol": 1e-7,
               "case_integration_overrides": case_overrides, "timed_drive_encoding": encoding,
+              "integration_error_fallbacks": fallbacks,
+              "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
               "controls": "untreated, and each later pulse in isolation at identical time/duration",
               "input_scale_up": 100., "input_scale_down": .01}
     files = ["catalog_repeated.py", "catalog_runner.py", "catalog_memory.py", "catalog_validation.py",
-             "native_protocols.py", "delay_protocols.py", "scheper_delay.py", "simulation.py", "analysis.py", "timed_drives.py"]
+             "native_protocols.py", "delay_protocols.py", "scheper_delay.py", "simulation.py", "analysis.py", "timed_drives.py",
+             "protocol_retries.py"]
     metadata = {"configuration": config, "model_sha256": reference["model_sha256"],
                 "reference_fingerprint": reference["fingerprint"], "implementation_sha256": implementation_hashes(files),
                 "versions": {p: version(p) for p in PACKAGES}}
@@ -195,7 +200,8 @@ def run_model(entry, args):
             report = saved
     report["status"] = "running"
     write_json(destination, report)
-    control = {e: trajectory(path, all_times, [], e, **integration[e]) for e in engines}
+    report["control_solver"] = {}
+    control = integrate_engines(trajectory, path, all_times, [], engines, integration, fallbacks, report["control_solver"])
     report["control_comparison"] = comparison(*control.values())
     report["control_windows"] = {e: summarize(t, intervals) for e,t in control.items()}
     if encoding:
@@ -221,11 +227,13 @@ def run_model(entry, args):
     if args.limit_cases:
         keys = keys[:args.limit_cases]
 
-    def run_branch(trains, times, relevant, settings):
-        traces = {e: trajectory(path, times, trains, e, **settings[e]) for e in engines}
-        record = {"comparison": comparison(*traces.values()), "sample_count": len(times),
-                  "reset_trains": [asdict(t) for t in trains],
-                  "windows": {e: summarize(t, relevant) for e,t in traces.items()}}
+    def run_branch(trains, times, relevant, settings, record):
+        # The caller attaches this record before integration, preserving failed
+        # attempts even when the exception prevents scoring the case.
+        record.update({"sample_count": len(times), "reset_trains": [asdict(t) for t in trains], "passed": False})
+        traces = integrate_engines(trajectory, path, times, trains, engines, settings, fallbacks, record)
+        record.update({"comparison": comparison(*traces.values()),
+                       "windows": {e: summarize(t, relevant) for e,t in traces.items()}})
         record["passed"] = record["comparison"]["passed"]
         if "jitcdde" in engines:
             refined = trajectory(path, times, trains, "jitcdde", step=.0005, jump_width=5e-10)
@@ -244,13 +252,15 @@ def run_model(entry, args):
         case = {"input": symbol, "direction": direction, "level": level, "status": "failed",
                 "zero_level": level == 0, "branches": {}, "integration_settings": settings}
         try:
-            case["branches"]["repeated"] = run_branch(trains_for(schedule, {symbol: level}), all_times, intervals, settings)
+            case["branches"]["repeated"] = {}
+            run_branch(trains_for(schedule, {symbol: level}), all_times, intervals, settings, case["branches"]["repeated"])
             for pulse in schedule[1:]:
                 k = pulse["pulse"]
                 needed = {f"rest_{k-1}": intervals[f"rest_{k-1}"], f"on_{k}": intervals[f"on_{k}"],
                           f"rest_{k}": intervals[f"rest_{k}"]}
                 times = all_times[all_times <= pulse["rest_stop"]]
-                case["branches"][f"naive_{k}"] = run_branch(trains_for([pulse], {symbol: level}), times, needed, settings)
+                case["branches"][f"naive_{k}"] = {}
+                run_branch(trains_for([pulse], {symbol: level}), times, needed, settings, case["branches"][f"naive_{k}"])
             case["scores"] = {e: response_scores(case["branches"]["repeated"]["windows"][e],
                 {str(k): case["branches"][f"naive_{k}"]["windows"][e] for k in range(2,7)},
                 report["control_windows"][e], targets, symbol, level) for e in engines}

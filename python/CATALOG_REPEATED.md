@@ -2,12 +2,24 @@
 
 This stage extends the single-input [retention screen](CATALOG_MEMORY.md) to
 six repeated pulses, following `Find_DrugRes_Sensitize_SLURM1.m` and `multiDrug.m`.
-The clean full-catalog verification passes **all 538 input cases across all 35
+The clean macOS full-catalog verification passes **all 538 input cases across all 35
 models**. Every controlled pulse classification agrees between engines. The
 [aggregate report](results/catalog-repeated/report.json) links the complete
 per-model evidence. An initial 535/538 attempt identified three numerical
 failures; the documented adjustments below resolved them without changing the
 trajectory acceptance tolerance.
+
+The first [Linux run](https://github.com/m9h/GRN_ODE/actions/runs/42760315960)
+completed 537/538 cases. COPASI stopped early during Rohwer's `EIICBP__down`
+repeated history (44,812 of 101,001 requested samples). This is a solver failure,
+not a completed comparison mismatch. The bounded retry described below addresses
+this platform-specific failure; Linux recovery remains under validation.
+The [failure extract](results/catalog-repeated-recovery/linux-initial-failure.json)
+records the original artifact and report hash. The recovery code passes all
+[26 Rohwer cases locally](results/catalog-repeated-recovery/report.json), with
+156 stimulated/control branches and unchanged controlled classifications.
+None needed a retry on macOS, so this local check does not establish that the
+Linux failure is resolved.
 
 Every independently writable state is tested up and down. For each case, the
 continuous six-pulse history is compared with five additional histories that
@@ -133,6 +145,14 @@ tighter RoadRunner integration than COPASI. Its `HPrPIIA__down` case uses COPASI
 `rtol=1e-7`, `atol=1e-9`, because the ordinary request returned a partial
 trajectory in an isolated-pulse control. Every branch records its settings and
 must pass the unchanged full-trajectory comparison.
+
+Rohwer now also permits one COPASI retry at `rtol=1e-7`, `atol=1e-9` when a
+native trajectory raises an exception, including incomplete output. A completed
+trajectory that fails the independent comparison is never retried. Requests,
+errors and the settings actually used are retained in `solver_attempts` and
+`integration_settings_used`, even if the retry fails. The existing
+`HPrPIIA__down` request already uses these settings and is not attempted twice.
+The published 538-case macOS reference predates this retry and remains intact.
 
 The Yoon signaling model (network 26, BioModel 664) needs `atol=1e-18` in both
 engines to resolve small residuals that affect late responses; `rtol=1e-12`
