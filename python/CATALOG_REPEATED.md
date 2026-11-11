@@ -49,6 +49,12 @@ As in the repeated-input MATLAB script, calibration uses the complete untreated
 stimulation is one hundredth of its smallest strictly positive sampled value.
 This avoids treating negative numerical tails as meaningful negative clamp
 concentrations. Raw minima and zero clamp levels are retained in the report.
+An additional model-specific limitation is that Goldbeter's `M` and `X` are
+active fractions: their 100× upward resets exceed the original 0–1 domain.
+The [domain diagnostic](CATALOG_BREAKING.md#a-domain-limit-exposed-by-the-goldbeter-model)
+applies even to numerically passing repeated histories. These cases remain
+visible as mathematical extrapolations; their numerical pass is not a claim
+of biological admissibility.
 Zero-level cases are computed and flagged, although the MATLAB classification
 skips them. A zero stimulus cannot demonstrate the absence of learning capacity.
 

@@ -129,6 +129,41 @@ a mean at most the preceding rest divided by 1.5 receives the converse label.
 This includes the original zero-equality artifact. Raw differences are audited
 separately from the controlled validation gate.
 
+## A domain limit exposed by the Goldbeter model
+
+Network 3 (BioModel 3) is the reduced Goldbeter mitotic oscillator.
+[The original paper](https://doi.org/10.1073/pnas.88.20.9107), page 9108,
+defines `M` and `X` as active fractions, with biological range 0–1. The
+unchanged 100× calibration gives `M__up = 70.9307444` and
+`X__up = 64.1636971`. Six of this model's eight initial breaking cases include
+one of these resets. They therefore extrapolate the equations beyond their
+original biological interpretation, even when integration passes. The
+single-input and repeated screens likewise have two such cases out of six.
+
+The activation terms contain denominators `0.005 + 1 - M` and
+`0.005 + 1 - X`, which vanish at 1.005. In the first full breaking run,
+`M__up--X__up` and `X__up--M__up` each have failed branches. The
+[diagnostic script](scripts/diagnose_goldbeter_breaking.py) preserves the exact
+reset schedules and compares both engines at three relative/absolute requests:
+`1e-10/1e-12`, `1e-12/1e-14`, and `1e-13/1e-15`.
+**All 24 integrations stop before the required endpoint**, in narrow regions
+near time 1156.5317 or 1356.5317. COPASI's exposed final state approaches the
+`M` activation denominator to within approximately `5e-9` of zero.
+
+The [report](results/catalog-breaking-goldbeter-diagnostic/report.json) records
+requests, reset counters, stopping times, exposed states, domain violations,
+source hashes and versions. RoadRunner's state after an exception is not
+assumed synchronized with its final internal CVODE step. These results establish
+failed numerical convergence outside the biological domain; they do not prove
+finite-time blow-up or nonexistence of a mathematical continuation.
+The original amplitudes and XML remain unchanged, and these cases are not
+counted as validated. Clipping fractions or adding inactive species would
+define a different intervention or model, suitable for a separate comparison.
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/diagnose_goldbeter_breaking.py
+```
+
 ## Validation, checkpoints and evidence
 
 The default output grid is 0.01 native time units. Samples coinciding with any

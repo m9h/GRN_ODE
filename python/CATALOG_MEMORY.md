@@ -14,6 +14,12 @@ Association, delayed cue recall, repeated stimulation and breaking acquired
 responses remain subsequent catalog-wide stages. This screen alone does not
 reproduce the original study's eight-category memory prevalence.
 
+Numerical agreement does not certify that an intervention remains inside a
+model's biological domain. For example, `M__up` and `X__up` in Goldbeter's
+reduced oscillator set active fractions above 1. Those two cases remain in the
+538-case mathematical screen, but require the [domain qualification](CATALOG_BREAKING.md#a-domain-limit-exposed-by-the-goldbeter-model)
+before biological interpretation. The published numerical results are unchanged.
+
 The 538 trajectories yield **4,680 input/direction/response assessments**.
 Of these, **1,051** meet the matched-retention criterion and **1,721** have an
 unresolved training effect at the declared numerical resolution. There are

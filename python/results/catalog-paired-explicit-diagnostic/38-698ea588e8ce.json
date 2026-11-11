@@ -1,0 +1,90 @@
+{
+  "purpose": "Compare individually scheduled resets with the compact counter encoding.\n\nDiagnostic only: every reset keeps its original time and assignment. The\noriginal model and production adapters are unchanged. Completed mismatches\nremain mismatches under the existing full-trajectory comparison.\n",
+  "model_id": "BIOMD0000000038",
+  "branch_id": "698ea588e8ce617393a9d712c09db85d171278dff6e9291ce785e1e3f71924df",
+  "source_fingerprint": "4270163cff729586153a23493e7ca413620747eae14ebd3a5c3554a357aeef5b",
+  "source_report_sha256": "14e3eaff74908c2e17a4c09009ccd96468c351ac909a459fd34874cb6d0c3160",
+  "original_model_sha256": "33708cec1fad44db6958c3ac6255397ad79b45564a296d29732fd934608d787b",
+  "explicit_encoding_sha256": "96bf66090ba77d01ff58885f6aa42dce2f9dc2da31b5dedf66d880a87d68af30",
+  "reset_counts": [
+    499,
+    499
+  ],
+  "reset_trains": [
+    {
+      "start": 50.0,
+      "stop": 100.0,
+      "values": {
+        "EIICBP": 500.0,
+        "HPrP": 0.25
+      },
+      "interval": 0.1,
+      "include_start": false,
+      "include_stop": false
+    },
+    {
+      "start": 150.0,
+      "stop": 200.0,
+      "values": {
+        "HPrP": 0.25
+      },
+      "interval": 0.1,
+      "include_start": false,
+      "include_stop": false
+    }
+  ],
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "runs": [
+    {
+      "engine": "roadrunner",
+      "settings": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "comparison_to_compact_roadrunner": {
+        "passed": true,
+        "max_scaled_error": 0.008165089207259519,
+        "max_absolute_error": 2.0968304454527242e-05,
+        "worst_observable": "EIICBP",
+        "worst_time": 93.80001000000001,
+        "samples": 30001,
+        "observables": 17,
+        "per_observable_max_scaled_error": {
+          "EI": 6.8352534848019325e-06,
+          "PyrPI": 5.177952689450938e-06,
+          "EIP": 1.821595329866039e-06,
+          "HPr": 0.00010640506456656276,
+          "EIPHPr": 5.9490276818135635e-05,
+          "HPrP": 0.004962209385540162,
+          "EIIA": 0.004192494696661832,
+          "HPrPIIA": 0.0009708667039071657,
+          "EIIAP": 6.129189189668834e-06,
+          "EIICB": 4.6654206723113165e-07,
+          "EIIAPIICB": 0.0004412108039111402,
+          "EIICBP": 0.008165089207259519,
+          "EIICBPGlc": 0.0026187948985272906,
+          "PEP": 0.0,
+          "Pyr": 0.0,
+          "GlcP": 0.0,
+          "Glc": 0.0
+        }
+      },
+      "seconds": 5.853808042003948
+    },
+    {
+      "engine": "copasi",
+      "settings": {
+        "rtol": 1e-08,
+        "atol": 1e-10
+      },
+      "error": "ValueError: Unexpected output shape (16872, 20)",
+      "seconds": 16.6665956249999
+    }
+  ]
+}

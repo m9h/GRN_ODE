@@ -186,6 +186,51 @@ full-catalog validation. The same selected case also passes the
 [Linux solver-regression job](https://github.com/m9h/GRN_ODE/actions/runs/42766999555).
 The original full report is retained at its recorded source revision.
 
+A subsequent [complete François rerun](results/catalog-paired-francois-full-recovery/report.json)
+passes **44/44 cases and 275/275 distinct branches**, with a largest normalized
+trajectory discrepancy of **0.51135** (acceptance limit 1). Exactly one branch
+uses the declared COPASI fallback: its initial attempt again stops at 18,462
+samples, and the retry completes all 30,001 samples with normalized discrepancy
+0.000688. The failed attempt remains in the branch archive. The
+[recovery audit](results/catalog-paired-francois-full-recovery/audit.json)
+rebuilds all 44 candidate plans, verifies source and evidence hashes, and
+recomputes every score. This is complete coverage of network 25; the original
+35-model report above remains unchanged, and the other three models' failures
+remain unresolved.
+
+To audit this complete model separately:
+
+```bash
+python scripts/audit_paired_catalog.py --network 25 \
+  --input results/catalog-paired-francois-full-recovery \
+  --source-revision 4108edeca8b2d6d5e454167454a8826319ff6046
+```
+
+### Reset-encoding diagnostic for Vilar and Rohwer
+
+The [explicit-reset diagnostic](scripts/diagnose_explicit_resets.py) replaces
+each compact self-rescheduling event with individually timed events, preserving
+every scheduled assignment and checking every final reset count. On three
+selected failed branches, the explicit and compact RoadRunner trajectories agree
+at all 30,001 sampled times (largest normalized discrepancy 0.00817).
+COPASI still returns incomplete output on the selected
+[Vilar branch](results/catalog-paired-explicit-diagnostic/35-223eba38bdcf.json)
+and [first Rohwer branch](results/catalog-paired-explicit-diagnostic/38-698ea588e8ce.json).
+The [second Rohwer branch](results/catalog-paired-explicit-diagnostic/38-d4ace2879cde.json)
+completes but fails comparison, with normalized discrepancy 11.45248.
+This alternative representation therefore does not resolve those failures and
+is not used by the production screen. Original results and acceptance thresholds
+remain unchanged.
+
+For example, reproduce the Vilar diagnostic with:
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/diagnose_explicit_resets.py \
+  --model 35 \
+  --branch 223eba38bdcf2bb1ec64ac048b179d978cf09281f6fa0f0afd0501d2ae4705a3 \
+  --output results/catalog-paired-explicit-diagnostic/35-223eba38bdcf.json
+```
+
 ### Late divergence in the Marhl calcium model
 
 The first full screen also found **three completed, disagreeing branches in two

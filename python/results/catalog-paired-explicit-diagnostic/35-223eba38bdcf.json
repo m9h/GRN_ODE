@@ -1,0 +1,72 @@
+{
+  "purpose": "Compare individually scheduled resets with the compact counter encoding.\n\nDiagnostic only: every reset keeps its original time and assignment. The\noriginal model and production adapters are unchanged. Completed mismatches\nremain mismatches under the existing full-trajectory comparison.\n",
+  "model_id": "BIOMD0000000035",
+  "branch_id": "223eba38bdcf2bb1ec64ac048b179d978cf09281f6fa0f0afd0501d2ae4705a3",
+  "source_fingerprint": "3e6c889893dbf23f3fcfd5d8216b6d43d4578cb332cb0c1b22419ab3da197e02",
+  "source_report_sha256": "6b8232a34f4f3a4a3e2425a45fc7eb016f856b7d277fc9818b0d8953f39e4337",
+  "original_model_sha256": "3303169fdd9a672fa25c26586822c9a1b91ac461744d1926d317f493e6981237",
+  "explicit_encoding_sha256": "28f7a04d661f327dd86d39345325abe94d78086e962cd1ce3cdf4899504a2cc0",
+  "reset_counts": [
+    499
+  ],
+  "reset_trains": [
+    {
+      "start": 50.0,
+      "stop": 100.0,
+      "values": {
+        "DA": 100.0,
+        "DR": 100.0
+      },
+      "interval": 0.1,
+      "include_start": false,
+      "include_stop": false
+    }
+  ],
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "runs": [
+    {
+      "engine": "roadrunner",
+      "settings": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "comparison_to_compact_roadrunner": {
+        "passed": true,
+        "max_scaled_error": 0.0,
+        "max_absolute_error": 0.0,
+        "worst_observable": "EmptySet",
+        "worst_time": 0.0,
+        "samples": 30001,
+        "observables": 10,
+        "per_observable_max_scaled_error": {
+          "EmptySet": 0.0,
+          "A": 0.0,
+          "C": 0.0,
+          "DA": 0.0,
+          "DAp": 0.0,
+          "DR": 0.0,
+          "DRp": 0.0,
+          "MA": 0.0,
+          "MR": 0.0,
+          "R": 0.0
+        }
+      },
+      "seconds": 1.0246344170009252
+    },
+    {
+      "engine": "copasi",
+      "settings": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "error": "ValueError: Unexpected output shape (6362, 12)",
+      "seconds": 3.5163437079972937
+    }
+  ]
+}

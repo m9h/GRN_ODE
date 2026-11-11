@@ -20,6 +20,14 @@ window. It does not establish a steady state for every model. Native events
 and time-dependent inputs remain active. “Baseline” means that we add no
 experimental stimulation to the original encoding.
 
+The later intervention screens need additional semantic checks. In particular,
+Goldbeter's reduced oscillator uses active fractions, whereas its explicit
+inactive-species counterpart exposes separate molecular pools. Identical
+100× numerical perturbations need not represent the same biological operation.
+See the [Goldbeter domain diagnostic](CATALOG_BREAKING.md#a-domain-limit-exposed-by-the-goldbeter-model)
+for an example where both native solvers fail after a perturbation beyond the
+original fraction bounds. Baseline validation alone cannot certify such forcing.
+
 We observe all species as concentrations, including fixed and assignment-rule
 species, plus every additional rule or event target: **380 named observables
 across the catalog**. Comparing only reaction species would miss dynamical

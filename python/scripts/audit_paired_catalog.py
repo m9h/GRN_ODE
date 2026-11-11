@@ -33,8 +33,13 @@ def source_digest(revision, name):
     return hashlib.sha256(content).hexdigest()
 
 
-def audit(directory, revision):
-    catalog = json.loads((ROOT/"models/catalog.json").read_text())["models"]
+def audit(directory, revision, networks=None):
+    full_catalog = json.loads((ROOT/"models/catalog.json").read_text())["models"]
+    inventory = {m["network"] for m in full_catalog}
+    selected = inventory if networks is None else set(networks)
+    if not selected or not selected <= inventory:
+        raise ValueError("Select one or more network numbers from the catalog")
+    catalog = [m for m in full_catalog if m["network"] in selected]
     summary = json.loads((directory/"report.json").read_text())
     assert {m["network"] for m in summary["models"]} == {m["network"] for m in catalog}
     assert {p.stem for p in directory.glob("BIOMD*.json")} == {m["biomodel_id"] for m in catalog}
@@ -120,12 +125,15 @@ def audit(directory, revision):
         models.append({"network": entry["network"], "biomodel_id": mid,
             "cases": len(plans), "passed_cases": passed_cases, "branches": len(branches),
             "report_sha256": digest(path), "branch_archive_sha256": digest(archive)})
-    assert totals["models"] == summary["model_count"] == 35
+    assert totals["models"] == summary["model_count"] == len(catalog)
     assert totals["passed_models"] == summary["passed_models"]
     assert totals["cases"] == summary["expected_cases"]
     assert totals["passed_cases"] == summary["passed_cases"]
     return {"purpose": __doc__, "source_revision": revision,
-        "complete_catalog_coverage": True,
+        "audit_script_sha256": digest(Path(__file__)),
+        "selected_networks": sorted(selected),
+        "complete_selected_coverage": True,
+        "complete_catalog_coverage": selected == inventory,
         "all_numerical_validations_passed": totals["passed_models"] == totals["models"],
         "aggregate_sha256": digest(directory/"report.json"), "totals": dict(totals),
         "models": models, "failed_cases": failures}
@@ -136,8 +144,10 @@ if __name__ == "__main__":
     parser.add_argument("--input", type=Path, default=ROOT/"results/catalog-paired")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--source-revision", required=True)
+    parser.add_argument("--network", type=int, action="append",
+                        help="Audit an explicitly selected complete model; default is all 35")
     args = parser.parse_args()
-    result = audit(args.input, args.source_revision)
+    result = audit(args.input, args.source_revision, args.network)
     output = args.output or args.input/"audit.json"
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, indent=2, allow_nan=False)+"\n")

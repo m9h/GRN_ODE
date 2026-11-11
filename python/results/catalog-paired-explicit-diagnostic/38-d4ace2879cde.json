@@ -1,0 +1,106 @@
+{
+  "purpose": "Compare individually scheduled resets with the compact counter encoding.\n\nDiagnostic only: every reset keeps its original time and assignment. The\noriginal model and production adapters are unchanged. Completed mismatches\nremain mismatches under the existing full-trajectory comparison.\n",
+  "model_id": "BIOMD0000000038",
+  "branch_id": "d4ace2879cdea75e43b77bc82f97ecb73cab9ff6ba258b3e85f6838b0f44c593",
+  "source_fingerprint": "4270163cff729586153a23493e7ca413620747eae14ebd3a5c3554a357aeef5b",
+  "source_report_sha256": "14e3eaff74908c2e17a4c09009ccd96468c351ac909a459fd34874cb6d0c3160",
+  "original_model_sha256": "33708cec1fad44db6958c3ac6255397ad79b45564a296d29732fd934608d787b",
+  "explicit_encoding_sha256": "c43e64a9109182966e53cbc3981160d9dd1601d283312e8c03bc0b6c4ea6ca2a",
+  "reset_counts": [
+    499
+  ],
+  "reset_trains": [
+    {
+      "start": 50.0,
+      "stop": 100.0,
+      "values": {
+        "EIPHPr": 0.0,
+        "HPrP": 2978.1974008365014
+      },
+      "interval": 0.1,
+      "include_start": false,
+      "include_stop": false
+    }
+  ],
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "runs": [
+    {
+      "engine": "roadrunner",
+      "settings": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "comparison_to_compact_roadrunner": {
+        "passed": true,
+        "max_scaled_error": 0.0,
+        "max_absolute_error": 0.0,
+        "worst_observable": "EI",
+        "worst_time": 0.0,
+        "samples": 30001,
+        "observables": 17,
+        "per_observable_max_scaled_error": {
+          "EI": 0.0,
+          "PyrPI": 0.0,
+          "EIP": 0.0,
+          "HPr": 0.0,
+          "EIPHPr": 0.0,
+          "HPrP": 0.0,
+          "EIIA": 0.0,
+          "HPrPIIA": 0.0,
+          "EIIAP": 0.0,
+          "EIICB": 0.0,
+          "EIIAPIICB": 0.0,
+          "EIICBP": 0.0,
+          "EIICBPGlc": 0.0,
+          "PEP": 0.0,
+          "Pyr": 0.0,
+          "GlcP": 0.0,
+          "Glc": 0.0
+        }
+      },
+      "seconds": 0.8255604159930954
+    },
+    {
+      "engine": "copasi",
+      "settings": {
+        "rtol": 1e-08,
+        "atol": 1e-10
+      },
+      "comparison_to_compact_roadrunner": {
+        "passed": false,
+        "max_scaled_error": 11.452476287675232,
+        "max_absolute_error": 0.008718837773812993,
+        "worst_observable": "HPrP",
+        "worst_time": 163.72,
+        "samples": 30001,
+        "observables": 17,
+        "per_observable_max_scaled_error": {
+          "EI": 0.00044058932662411097,
+          "PyrPI": 0.001976973889181908,
+          "EIP": 0.004871377945584526,
+          "HPr": 0.07511797137433338,
+          "EIPHPr": 0.0013413149955719714,
+          "HPrP": 11.452476287675232,
+          "EIIA": 9.79516549126679,
+          "HPrPIIA": 3.4224584662513005,
+          "EIIAP": 1.2759083224736931,
+          "EIICB": 0.004289803221672929,
+          "EIIAPIICB": 1.7806623132143555,
+          "EIICBP": 0.12391642928971636,
+          "EIICBPGlc": 1.4794234373573427,
+          "PEP": 0.0,
+          "Pyr": 0.0,
+          "GlcP": 0.0,
+          "Glc": 5.6842850432303686e-12
+        }
+      },
+      "seconds": 2.368698582999059
+    }
+  ]
+}

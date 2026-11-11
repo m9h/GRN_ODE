@@ -1,0 +1,1844 @@
+{
+  "purpose": "Locate native-solver failures under the original Goldbeter interventions.\n\nM and X are active fractions in Goldbeter (1991). The catalog's 100x forcing\ncan take them outside [0, 1]. This diagnostic preserves that protocol and\nrecords solver stopping states; it does not clip states or promote a failure.\n",
+  "model_sha256": "a633872e4c602922e85ac487ef52ac8bd8ead762ec7c0f86f9e93032a84c90f5",
+  "reference_sha256": "63a1a6f6cd98884cd42e8541c90cc83eac818b42da94efcd966baff97fa38fb6",
+  "script_sha256": "14fd2515d0cc26851aae4009506ed64541ca5fdf7d2d6e60e22d207b744cdc24",
+  "source_paper": "https://doi.org/10.1073/pnas.88.20.9107",
+  "source_location": "Goldbeter 1991, page 9108, equations 1-2 and following paragraph",
+  "biological_domains": {
+    "M": [
+      0.0,
+      1.0
+    ],
+    "X": [
+      0.0,
+      1.0
+    ]
+  },
+  "domain_scope": "Original active fractions; values outside these bounds are mathematical extrapolations",
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "samples": 141001,
+  "branches": [
+    {
+      "ucs": "X__up",
+      "breaker": "M__up",
+      "history": true,
+      "cue": false,
+      "reset_trains": [
+        {
+          "start": 50.0,
+          "stop": 100.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 160.0,
+          "stop": 220.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 290.0,
+          "stop": 360.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 440.0,
+          "stop": 520.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 610.0,
+          "stop": 700.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 800.0,
+          "stop": 900.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 1010.0,
+          "stop": 1110.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": false,
+          "include_stop": false
+        }
+      ],
+      "out_of_domain_resets": [
+        {
+          "start": 50.0,
+          "stop": 100.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 160.0,
+          "stop": 220.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 290.0,
+          "stop": 360.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 440.0,
+          "stop": 520.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 610.0,
+          "stop": 700.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 800.0,
+          "stop": 900.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 1010.0,
+          "stop": 1110.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        }
+      ],
+      "encoded_sha256": "746e4747e38a250e27d4ebac3fc896cebbcfe572143e42deffe152741be74a8c",
+      "runs": [
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-10,
+          "atol": 1e-12,
+          "seconds": 0.5626792079929146,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1156.5317294927745,
+            "state": {
+              "C": 2.3030326699722023e-07,
+              "M": 1.0070869164659217,
+              "X": 8684.300805780475
+            },
+            "activation_denominators": {
+              "M": -0.002086916465921851,
+              "X": -8683.295805780475
+            },
+            "deactivation_denominators": {
+              "M": 1.0120869164659216,
+              "X": 8684.305805780474
+            },
+            "cyclin_denominators": {
+              "V1": 0.500000230303267,
+              "degradation": 0.020000230303267
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.3448228641799176e-11,
+            "M": -1.4925848767669159,
+            "X": 0.5070877842405541
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-10,
+          "atol": 1e-12,
+          "seconds": 8.054639458001475,
+          "completed": false,
+          "output_rows": 115655,
+          "terminal": {
+            "time": 1156.531634619371,
+            "state": {
+              "C": 2.303032403385622e-07,
+              "M": 1.00500000462898,
+              "X": 8684.301810995605
+            },
+            "activation_denominators": {
+              "M": -4.628980088128287e-09,
+              "X": -8683.296810995605
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289799,
+              "X": 8684.306810995604
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032404,
+              "degradation": 0.02000023030324034
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1156.531634619371,
+            "state": {
+              "C": 2.303032403385622e-07,
+              "M": 1.00500000462898,
+              "X": 8684.301810995605
+            },
+            "activation_denominators": {
+              "M": -4.628980088128287e-09,
+              "X": -8683.296810995605
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289799,
+              "X": 8684.306810995604
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032404,
+              "degradation": 0.02000023030324034
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 501.0,
+            "grn_protocol_1_count": 601.0,
+            "grn_protocol_2_count": 701.0,
+            "grn_protocol_3_count": 801.0,
+            "grn_protocol_4_count": 901.0,
+            "grn_protocol_5_count": 1001.0,
+            "grn_protocol_6_count": 1000.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 501,
+            "grn_protocol_1_count": 601,
+            "grn_protocol_2_count": 701,
+            "grn_protocol_3_count": 801,
+            "grn_protocol_4_count": 901,
+            "grn_protocol_5_count": 1001,
+            "grn_protocol_6_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:42<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        },
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "seconds": 0.7678888329974143,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1156.531729215816,
+            "state": {
+              "C": 2.3030325093448653e-07,
+              "M": 1.0070867780586241,
+              "X": 8684.301411468914
+            },
+            "activation_denominators": {
+              "M": -0.002086778058624228,
+              "X": -8683.296411468915
+            },
+            "deactivation_denominators": {
+              "M": 1.012086778058624,
+              "X": 8684.306411468913
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032509,
+              "degradation": 0.020000230303250936
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.3448211294564416e-11,
+            "M": -1.4925848755342515,
+            "X": 0.5070876458331164
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "seconds": 4.335571167001035,
+          "completed": false,
+          "output_rows": 115655,
+          "terminal": {
+            "time": 1156.53171934724,
+            "state": {
+              "C": 2.303032324278046e-07,
+              "M": 1.005000004628964,
+              "X": 8684.302109294198
+            },
+            "activation_denominators": {
+              "M": -4.628964100916733e-09,
+              "X": -8683.297109294199
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289639,
+              "X": 8684.307109294197
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032324,
+              "degradation": 0.02000023030323243
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1156.53171934724,
+            "state": {
+              "C": 2.303032324278046e-07,
+              "M": 1.005000004628964,
+              "X": 8684.302109294198
+            },
+            "activation_denominators": {
+              "M": -4.628964100916733e-09,
+              "X": -8683.297109294199
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289639,
+              "X": 8684.307109294197
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032324,
+              "degradation": 0.02000023030323243
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 501.0,
+            "grn_protocol_1_count": 601.0,
+            "grn_protocol_2_count": 701.0,
+            "grn_protocol_3_count": 801.0,
+            "grn_protocol_4_count": 901.0,
+            "grn_protocol_5_count": 1001.0,
+            "grn_protocol_6_count": 1000.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 501,
+            "grn_protocol_1_count": 601,
+            "grn_protocol_2_count": 701,
+            "grn_protocol_3_count": 801,
+            "grn_protocol_4_count": 901,
+            "grn_protocol_5_count": 1001,
+            "grn_protocol_6_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:51<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        },
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "seconds": 0.8859212909956113,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1156.5319041575365,
+            "state": {
+              "C": 2.3030325093534368e-07,
+              "M": 1.0070867753447117,
+              "X": 8684.301411436594
+            },
+            "activation_denominators": {
+              "M": -0.0020867753447118,
+              "X": -8683.296411436595
+            },
+            "deactivation_denominators": {
+              "M": 1.0120867753447116,
+              "X": 8684.306411436593
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032509,
+              "degradation": 0.020000230303250936
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.344821823345832e-11,
+            "M": -1.4925848755100743,
+            "X": 0.5070876431192024
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "seconds": 1.9822093749971827,
+          "completed": false,
+          "output_rows": 115655,
+          "terminal": {
+            "time": 1156.5317212401349,
+            "state": {
+              "C": 2.3030322784345627e-07,
+              "M": 1.0050000046289846,
+              "X": 8684.302282158531
+            },
+            "activation_denominators": {
+              "M": -4.628984751064991e-09,
+              "X": -8683.297282158532
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289845,
+              "X": 8684.30728215853
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032278,
+              "degradation": 0.020000230303227843
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1156.5317212401349,
+            "state": {
+              "C": 2.3030322784345627e-07,
+              "M": 1.0050000046289846,
+              "X": 8684.302282158531
+            },
+            "activation_denominators": {
+              "M": -4.628984751064991e-09,
+              "X": -8683.297282158532
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289845,
+              "X": 8684.30728215853
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032278,
+              "degradation": 0.020000230303227843
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 501.0,
+            "grn_protocol_1_count": 601.0,
+            "grn_protocol_2_count": 701.0,
+            "grn_protocol_3_count": 801.0,
+            "grn_protocol_4_count": 901.0,
+            "grn_protocol_5_count": 1001.0,
+            "grn_protocol_6_count": 1000.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 501,
+            "grn_protocol_1_count": 601,
+            "grn_protocol_2_count": 701,
+            "grn_protocol_3_count": 801,
+            "grn_protocol_4_count": 901,
+            "grn_protocol_5_count": 1001,
+            "grn_protocol_6_count": 1000
+          },
+          "native_messages": "0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/interpro/IPR006670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:56<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        }
+      ]
+    },
+    {
+      "ucs": "X__up",
+      "breaker": "M__up",
+      "history": true,
+      "cue": true,
+      "reset_trains": [
+        {
+          "start": 50.0,
+          "stop": 100.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 160.0,
+          "stop": 220.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 290.0,
+          "stop": 360.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 440.0,
+          "stop": 520.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 610.0,
+          "stop": 700.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 800.0,
+          "stop": 900.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 1010.0,
+          "stop": 1110.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": false,
+          "include_stop": false
+        },
+        {
+          "start": 1210.0,
+          "stop": 1310.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": false,
+          "include_stop": false
+        }
+      ],
+      "out_of_domain_resets": [
+        {
+          "start": 50.0,
+          "stop": 100.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 160.0,
+          "stop": 220.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 290.0,
+          "stop": 360.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 440.0,
+          "stop": 520.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 610.0,
+          "stop": 700.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 800.0,
+          "stop": 900.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 1010.0,
+          "stop": 1110.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        },
+        {
+          "start": 1210.0,
+          "stop": 1310.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        }
+      ],
+      "encoded_sha256": "5a3d373d1b4f627c5f41bea1cf28cdbdf2e5a71e069ef299ccb0c562afdeb6b7",
+      "runs": [
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-10,
+          "atol": 1e-12,
+          "seconds": 0.634424666997802,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1156.5317294927745,
+            "state": {
+              "C": 2.3030326699722023e-07,
+              "M": 1.0070869164659217,
+              "X": 8684.300805780475
+            },
+            "activation_denominators": {
+              "M": -0.002086916465921851,
+              "X": -8683.295805780475
+            },
+            "deactivation_denominators": {
+              "M": 1.0120869164659216,
+              "X": 8684.305805780474
+            },
+            "cyclin_denominators": {
+              "V1": 0.500000230303267,
+              "degradation": 0.020000230303267
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.3448228641799176e-11,
+            "M": -1.4925848767669159,
+            "X": 0.5070877842405541
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-10,
+          "atol": 1e-12,
+          "seconds": 8.491974791999382,
+          "completed": false,
+          "output_rows": 115655,
+          "terminal": {
+            "time": 1156.5316351646193,
+            "state": {
+              "C": 2.3030324032898529e-07,
+              "M": 1.00500000462898,
+              "X": 8684.301811361338
+            },
+            "activation_denominators": {
+              "M": -4.628980088128287e-09,
+              "X": -8683.296811361339
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289799,
+              "X": 8684.306811361337
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032404,
+              "degradation": 0.02000023030324033
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1156.5316351646193,
+            "state": {
+              "C": 2.3030324032898529e-07,
+              "M": 1.00500000462898,
+              "X": 8684.301811361338
+            },
+            "activation_denominators": {
+              "M": -4.628980088128287e-09,
+              "X": -8683.296811361339
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289799,
+              "X": 8684.306811361337
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032404,
+              "degradation": 0.02000023030324033
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 501.0,
+            "grn_protocol_1_count": 601.0,
+            "grn_protocol_2_count": 701.0,
+            "grn_protocol_3_count": 801.0,
+            "grn_protocol_4_count": 901.0,
+            "grn_protocol_5_count": 1001.0,
+            "grn_protocol_6_count": 1000.0,
+            "grn_protocol_7_count": 1.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 501,
+            "grn_protocol_1_count": 601,
+            "grn_protocol_2_count": 701,
+            "grn_protocol_3_count": 801,
+            "grn_protocol_4_count": 901,
+            "grn_protocol_5_count": 1001,
+            "grn_protocol_6_count": 1000,
+            "grn_protocol_7_count": 1000
+          },
+          "native_messages": "0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/interpro/IPR006670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:13:59<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        },
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "seconds": 0.758405540997046,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1156.531729215816,
+            "state": {
+              "C": 2.3030325093448653e-07,
+              "M": 1.0070867780586241,
+              "X": 8684.301411468914
+            },
+            "activation_denominators": {
+              "M": -0.002086778058624228,
+              "X": -8683.296411468915
+            },
+            "deactivation_denominators": {
+              "M": 1.012086778058624,
+              "X": 8684.306411468913
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032509,
+              "degradation": 0.020000230303250936
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.3448211294564416e-11,
+            "M": -1.4925848755342515,
+            "X": 0.5070876458331164
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "seconds": 4.663340082996001,
+          "completed": false,
+          "output_rows": 115655,
+          "terminal": {
+            "time": 1156.5317189163081,
+            "state": {
+              "C": 2.303032324337552e-07,
+              "M": 1.0050000046289784,
+              "X": 8684.30210906984
+            },
+            "activation_denominators": {
+              "M": -4.628978533816053e-09,
+              "X": -8683.297109069841
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289783,
+              "X": 8684.30710906984
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032325,
+              "degradation": 0.020000230303232433
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1156.5317189163081,
+            "state": {
+              "C": 2.303032324337552e-07,
+              "M": 1.0050000046289784,
+              "X": 8684.30210906984
+            },
+            "activation_denominators": {
+              "M": -4.628978533816053e-09,
+              "X": -8683.297109069841
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289783,
+              "X": 8684.30710906984
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032325,
+              "degradation": 0.020000230303232433
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 501.0,
+            "grn_protocol_1_count": 601.0,
+            "grn_protocol_2_count": 701.0,
+            "grn_protocol_3_count": 801.0,
+            "grn_protocol_4_count": 901.0,
+            "grn_protocol_5_count": 1001.0,
+            "grn_protocol_6_count": 1000.0,
+            "grn_protocol_7_count": 1.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 501,
+            "grn_protocol_1_count": 601,
+            "grn_protocol_2_count": 701,
+            "grn_protocol_3_count": 801,
+            "grn_protocol_4_count": 901,
+            "grn_protocol_5_count": 1001,
+            "grn_protocol_6_count": 1000,
+            "grn_protocol_7_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:08<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        },
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "seconds": 0.9002472089996445,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1156.5319041575365,
+            "state": {
+              "C": 2.3030325093534368e-07,
+              "M": 1.0070867753447117,
+              "X": 8684.301411436594
+            },
+            "activation_denominators": {
+              "M": -0.0020867753447118,
+              "X": -8683.296411436595
+            },
+            "deactivation_denominators": {
+              "M": 1.0120867753447116,
+              "X": 8684.306411436593
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032509,
+              "degradation": 0.020000230303250936
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.344821823345832e-11,
+            "M": -1.4925848755100743,
+            "X": 0.5070876431192024
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "seconds": 2.0563129170041066,
+          "completed": false,
+          "output_rows": 115655,
+          "terminal": {
+            "time": 1156.5317211400766,
+            "state": {
+              "C": 2.303032278448297e-07,
+              "M": 1.005000004628982,
+              "X": 8684.302282106744
+            },
+            "activation_denominators": {
+              "M": -4.6289820865297315e-09,
+              "X": -8683.297282106745
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289819,
+              "X": 8684.307282106744
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032278,
+              "degradation": 0.020000230303227846
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1156.5317211400766,
+            "state": {
+              "C": 2.303032278448297e-07,
+              "M": 1.005000004628982,
+              "X": 8684.302282106744
+            },
+            "activation_denominators": {
+              "M": -4.6289820865297315e-09,
+              "X": -8683.297282106745
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046289819,
+              "X": 8684.307282106744
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002303032278,
+              "degradation": 0.020000230303227846
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 501.0,
+            "grn_protocol_1_count": 601.0,
+            "grn_protocol_2_count": 701.0,
+            "grn_protocol_3_count": 801.0,
+            "grn_protocol_4_count": 901.0,
+            "grn_protocol_5_count": 1001.0,
+            "grn_protocol_6_count": 1000.0,
+            "grn_protocol_7_count": 1.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 501,
+            "grn_protocol_1_count": 601,
+            "grn_protocol_2_count": 701,
+            "grn_protocol_3_count": 801,
+            "grn_protocol_4_count": 901,
+            "grn_protocol_5_count": 1001,
+            "grn_protocol_6_count": 1000,
+            "grn_protocol_7_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:14<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        }
+      ]
+    },
+    {
+      "ucs": "M__up",
+      "breaker": "X__up",
+      "history": false,
+      "cue": true,
+      "reset_trains": [
+        {
+          "start": 1010.0,
+          "stop": 1110.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": false,
+          "include_stop": false
+        },
+        {
+          "start": 1210.0,
+          "stop": 1310.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": false,
+          "include_stop": false
+        }
+      ],
+      "out_of_domain_resets": [
+        {
+          "start": 1010.0,
+          "stop": 1110.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 1210.0,
+          "stop": 1310.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        }
+      ],
+      "encoded_sha256": "2df530b92443bad33e21d8aa9224051c6ece7a9b15244dbb5a19cc534078a86f",
+      "runs": [
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-10,
+          "atol": 1e-12,
+          "seconds": 0.39991454100527335,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1356.5317291736926,
+            "state": {
+              "C": 2.3017219113817467e-07,
+              "M": 1.0070868753920883,
+              "X": 8689.246186796101
+            },
+            "activation_denominators": {
+              "M": -0.0020868753920884053,
+              "X": -8688.241186796102
+            },
+            "deactivation_denominators": {
+              "M": 1.0120868753920882,
+              "X": 8689.2511867961
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002301721911,
+              "degradation": 0.020000230172191137
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.3432917972400205e-11,
+            "M": -1.492584879071757,
+            "X": 0.5070877426727755
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-10,
+          "atol": 1e-12,
+          "seconds": 6.449650249996921,
+          "completed": false,
+          "output_rows": 135655,
+          "terminal": {
+            "time": 1356.5317195317875,
+            "state": {
+              "C": 2.3017216324875416e-07,
+              "M": 1.0050000046235703,
+              "X": 8689.247239620492
+            },
+            "activation_denominators": {
+              "M": -4.623570415418499e-09,
+              "X": -8688.242239620493
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046235702,
+              "X": 8689.252239620491
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002301721632,
+              "degradation": 0.02000023017216325
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1356.5317195317875,
+            "state": {
+              "C": 2.3017216324875416e-07,
+              "M": 1.0050000046235703,
+              "X": 8689.247239620492
+            },
+            "activation_denominators": {
+              "M": -4.623570415418499e-09,
+              "X": -8688.242239620493
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046235702,
+              "X": 8689.252239620491
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002301721632,
+              "degradation": 0.02000023017216325
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 1000.0,
+            "grn_protocol_1_count": 1000.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 1000,
+            "grn_protocol_1_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:16<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        },
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "seconds": 0.4696823330014013,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1356.53172912293,
+            "state": {
+              "C": 2.3017217496853863e-07,
+              "M": 1.0070867353446635,
+              "X": 8689.246797210217
+            },
+            "activation_denominators": {
+              "M": -0.002086735344663637,
+              "X": -8688.241797210218
+            },
+            "deactivation_denominators": {
+              "M": 1.0120867353446634,
+              "X": 8689.251797210216
+            },
+            "cyclin_denominators": {
+              "V1": 0.500000230172175,
+              "degradation": 0.02000023017217497
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.3432921441847157e-11,
+            "M": -1.4925848778246014,
+            "X": 0.5070876026252091
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "seconds": 3.308366333003505,
+          "completed": false,
+          "output_rows": 135655,
+          "terminal": {
+            "time": 1356.531719402267,
+            "state": {
+              "C": 2.3017215646228225e-07,
+              "M": 1.005000004626331,
+              "X": 8689.247495814021
+            },
+            "activation_denominators": {
+              "M": -4.6263310959915316e-09,
+              "X": -8688.242495814022
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046263309,
+              "X": 8689.25249581402
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002301721564,
+              "degradation": 0.020000230172156463
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1356.531719402267,
+            "state": {
+              "C": 2.3017215646228225e-07,
+              "M": 1.005000004626331,
+              "X": 8689.247495814021
+            },
+            "activation_denominators": {
+              "M": -4.6263310959915316e-09,
+              "X": -8688.242495814022
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046263309,
+              "X": 8689.25249581402
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002301721564,
+              "degradation": 0.020000230172156463
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 1000.0,
+            "grn_protocol_1_count": 1000.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 1000,
+            "grn_protocol_1_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:23<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        },
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "seconds": 0.47468641700106673,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1356.531702425413,
+            "state": {
+              "C": 2.301721749688978e-07,
+              "M": 1.0070867331820545,
+              "X": 8689.246797196658
+            },
+            "activation_denominators": {
+              "M": -0.0020867331820546564,
+              "X": -8688.241797196659
+            },
+            "deactivation_denominators": {
+              "M": 1.0120867331820544,
+              "X": 8689.251797196657
+            },
+            "cyclin_denominators": {
+              "V1": 0.500000230172175,
+              "degradation": 0.02000023017217497
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.3432921441847157e-11,
+            "M": -1.4925848778053372,
+            "X": 0.5070876004625989
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "seconds": 1.2041987919947132,
+          "completed": false,
+          "output_rows": 135655,
+          "terminal": {
+            "time": 1356.5317302537392,
+            "state": {
+              "C": 2.301721517829782e-07,
+              "M": 1.0050000046263434,
+              "X": 8689.247672460848
+            },
+            "activation_denominators": {
+              "M": -4.626343530489407e-09,
+              "X": -8688.242672460849
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046263433,
+              "X": 8689.252672460847
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002301721518,
+              "degradation": 0.020000230172151783
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1356.5317302537392,
+            "state": {
+              "C": 2.301721517829782e-07,
+              "M": 1.0050000046263434,
+              "X": 8689.247672460848
+            },
+            "activation_denominators": {
+              "M": -4.626343530489407e-09,
+              "X": -8688.242672460849
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000046263433,
+              "X": 8689.252672460847
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002301721518,
+              "degradation": 0.020000230172151783
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 1000.0,
+            "grn_protocol_1_count": 1000.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 1000,
+            "grn_protocol_1_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:27<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        }
+      ]
+    },
+    {
+      "ucs": "M__up",
+      "breaker": "X__up",
+      "history": true,
+      "cue": true,
+      "reset_trains": [
+        {
+          "start": 50.0,
+          "stop": 100.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 160.0,
+          "stop": 220.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 290.0,
+          "stop": 360.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 440.0,
+          "stop": 520.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 610.0,
+          "stop": 700.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 800.0,
+          "stop": 900.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": true,
+          "include_stop": true
+        },
+        {
+          "start": 1010.0,
+          "stop": 1110.0,
+          "values": {
+            "X": 64.16369714711135
+          },
+          "interval": 0.1,
+          "include_start": false,
+          "include_stop": false
+        },
+        {
+          "start": 1210.0,
+          "stop": 1310.0,
+          "values": {
+            "M": 70.93074439647434
+          },
+          "interval": 0.1,
+          "include_start": false,
+          "include_stop": false
+        }
+      ],
+      "out_of_domain_resets": [
+        {
+          "start": 50.0,
+          "stop": 100.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        },
+        {
+          "start": 160.0,
+          "stop": 220.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        },
+        {
+          "start": 290.0,
+          "stop": 360.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        },
+        {
+          "start": 440.0,
+          "stop": 520.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        },
+        {
+          "start": 610.0,
+          "stop": 700.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        },
+        {
+          "start": 800.0,
+          "stop": 900.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        },
+        {
+          "start": 1010.0,
+          "stop": 1110.0,
+          "values": {
+            "X": 64.16369714711135
+          }
+        },
+        {
+          "start": 1210.0,
+          "stop": 1310.0,
+          "values": {
+            "M": 70.93074439647434
+          }
+        }
+      ],
+      "encoded_sha256": "12168308cdb7f18ec78df2430f5578d41b8fe576a924d05a98c248b55ac122e3",
+      "runs": [
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-10,
+          "atol": 1e-12,
+          "seconds": 0.7414513749972684,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1356.5317236479777,
+            "state": {
+              "C": 2.2753547650977202e-07,
+              "M": 1.0070860669290094,
+              "X": 8789.937302289069
+            },
+            "activation_denominators": {
+              "M": -0.002086066929009478,
+              "X": -8788.93230228907
+            },
+            "deactivation_denominators": {
+              "M": 1.0120860669290093,
+              "X": 8789.942302289068
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002275354765,
+              "degradation": 0.02000022753547651
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.312690234289704e-11,
+            "M": -1.4925849256090578,
+            "X": 0.5070869242735437
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-10,
+          "atol": 1e-12,
+          "seconds": 8.57568770799844,
+          "completed": false,
+          "output_rows": 135655,
+          "terminal": {
+            "time": 1356.5317140031427,
+            "state": {
+              "C": 2.2753544907949523e-07,
+              "M": 1.0050000045705807,
+              "X": 8789.938361918186
+            },
+            "activation_denominators": {
+              "M": -4.5705808027207695e-09,
+              "X": -8788.933361918187
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000045705806,
+              "X": 8789.943361918185
+            },
+            "cyclin_denominators": {
+              "V1": 0.500000227535449,
+              "degradation": 0.02000022753544908
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1356.5317140031427,
+            "state": {
+              "C": 2.2753544907949523e-07,
+              "M": 1.0050000045705807,
+              "X": 8789.938361918186
+            },
+            "activation_denominators": {
+              "M": -4.5705808027207695e-09,
+              "X": -8788.933361918187
+            },
+            "deactivation_denominators": {
+              "M": 1.0100000045705806,
+              "X": 8789.943361918185
+            },
+            "cyclin_denominators": {
+              "V1": 0.500000227535449,
+              "degradation": 0.02000022753544908
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 501.0,
+            "grn_protocol_1_count": 601.0,
+            "grn_protocol_2_count": 701.0,
+            "grn_protocol_3_count": 801.0,
+            "grn_protocol_4_count": 901.0,
+            "grn_protocol_5_count": 1001.0,
+            "grn_protocol_6_count": 1000.0,
+            "grn_protocol_7_count": 1000.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 501,
+            "grn_protocol_1_count": 601,
+            "grn_protocol_2_count": 701,
+            "grn_protocol_3_count": 801,
+            "grn_protocol_4_count": 901,
+            "grn_protocol_5_count": 1001,
+            "grn_protocol_6_count": 1000,
+            "grn_protocol_7_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:29<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        },
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "seconds": 3.3961301669987733,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1356.5317235147302,
+            "state": {
+              "C": 2.2753546059641668e-07,
+              "M": 1.0070858886990186,
+              "X": 8789.937917032003
+            },
+            "activation_denominators": {
+              "M": -0.002085888699018712,
+              "X": -8788.932917032003
+            },
+            "deactivation_denominators": {
+              "M": 1.0120858886990185,
+              "X": 8789.942917032002
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002275354606,
+              "degradation": 0.0200002275354606
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.3126891934556184e-11,
+            "M": -1.4925849240247957,
+            "X": 0.5070867460433919
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-12,
+          "atol": 1e-14,
+          "seconds": 4.820022749998316,
+          "completed": false,
+          "output_rows": 135655,
+          "terminal": {
+            "time": 1356.5317139556425,
+            "state": {
+              "C": 2.2753544260202718e-07,
+              "M": 1.0050000045733851,
+              "X": 8789.938612147986
+            },
+            "activation_denominators": {
+              "M": -4.573385226080973e-09,
+              "X": -8788.933612147986
+            },
+            "deactivation_denominators": {
+              "M": 1.010000004573385,
+              "X": 8789.943612147985
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002275354426,
+              "degradation": 0.020000227535442602
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1356.5317139556425,
+            "state": {
+              "C": 2.2753544260202718e-07,
+              "M": 1.0050000045733851,
+              "X": 8789.938612147986
+            },
+            "activation_denominators": {
+              "M": -4.573385226080973e-09,
+              "X": -8788.933612147986
+            },
+            "deactivation_denominators": {
+              "M": 1.010000004573385,
+              "X": 8789.943612147985
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002275354426,
+              "degradation": 0.020000227535442602
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 501.0,
+            "grn_protocol_1_count": 601.0,
+            "grn_protocol_2_count": 701.0,
+            "grn_protocol_3_count": 801.0,
+            "grn_protocol_4_count": 901.0,
+            "grn_protocol_5_count": 1001.0,
+            "grn_protocol_6_count": 1000.0,
+            "grn_protocol_7_count": 1000.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 501,
+            "grn_protocol_1_count": 601,
+            "grn_protocol_2_count": 701,
+            "grn_protocol_3_count": 801,
+            "grn_protocol_4_count": 901,
+            "grn_protocol_5_count": 1001,
+            "grn_protocol_6_count": 1000,
+            "grn_protocol_7_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:41<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        },
+        {
+          "engine": "roadrunner",
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "seconds": 3.1302964580027037,
+          "completed": false,
+          "error": "CVODE Error: CV_TOO_MUCH_WORK: The solver took mxstep (100000) internal steps but could not reach tout.; In virtual double rr::CVODEIntegrator::integrate(double, double)",
+          "terminal": {
+            "time": 1356.53173500322,
+            "state": {
+              "C": 2.2753546059620662e-07,
+              "M": 1.0070858857235796,
+              "X": 8789.937917040117
+            },
+            "activation_denominators": {
+              "M": -0.0020858857235797057,
+              "X": -8788.932917040118
+            },
+            "deactivation_denominators": {
+              "M": 1.0120858857235795,
+              "X": 8789.942917040116
+            },
+            "cyclin_denominators": {
+              "V1": 0.5000002275354606,
+              "degradation": 0.020000227535460595
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "terminal_state_caveat": "Exposed model state after return; on failure RoadRunner need not copy the final internal CVODE state back to the model. The exposed time and state must not be treated as a synchronized accepted solution point.",
+          "terminal_rates": {
+            "C": -1.3126895404003136e-11,
+            "M": -1.4925849239983413,
+            "X": 0.5070867430679511
+          }
+        },
+        {
+          "engine": "copasi",
+          "rtol": 1e-13,
+          "atol": 1e-15,
+          "seconds": 1.9687158750020899,
+          "completed": false,
+          "output_rows": 135655,
+          "terminal": {
+            "time": 1356.5317208108995,
+            "state": {
+              "C": 2.275354380621927e-07,
+              "M": 1.0050000045733491,
+              "X": 8789.938787524306
+            },
+            "activation_denominators": {
+              "M": -4.573349254854975e-09,
+              "X": -8788.933787524307
+            },
+            "deactivation_denominators": {
+              "M": 1.010000004573349,
+              "X": 8789.943787524306
+            },
+            "cyclin_denominators": {
+              "V1": 0.500000227535438,
+              "degradation": 0.020000227535438064
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "last_output": {
+            "time": 1356.5317208108995,
+            "state": {
+              "C": 2.275354380621927e-07,
+              "M": 1.0050000045733491,
+              "X": 8789.938787524306
+            },
+            "activation_denominators": {
+              "M": -4.573349254854975e-09,
+              "X": -8788.933787524307
+            },
+            "deactivation_denominators": {
+              "M": 1.010000004573349,
+              "X": 8789.943787524306
+            },
+            "cyclin_denominators": {
+              "V1": 0.500000227535438,
+              "degradation": 0.020000227535438064
+            },
+            "fractions_outside_unit_interval": [
+              "M",
+              "X"
+            ]
+          },
+          "reset_counters": {
+            "grn_protocol_0_count": 501.0,
+            "grn_protocol_1_count": 601.0,
+            "grn_protocol_2_count": 701.0,
+            "grn_protocol_3_count": 801.0,
+            "grn_protocol_4_count": 901.0,
+            "grn_protocol_5_count": 1001.0,
+            "grn_protocol_6_count": 1000.0,
+            "grn_protocol_7_count": 1000.0
+          },
+          "expected_final_counters": {
+            "grn_protocol_0_count": 501,
+            "grn_protocol_1_count": 601,
+            "grn_protocol_2_count": 701,
+            "grn_protocol_3_count": 801,
+            "grn_protocol_4_count": 901,
+            "grn_protocol_5_count": 1001,
+            "grn_protocol_6_count": 1000,
+            "grn_protocol_7_count": 1000
+          },
+          "native_messages": "06670' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/Q4KLA0' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P24033' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/uniprot/P35567' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_7165.1' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0005680' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006412' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0008054' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006470' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/3.1.3.16' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045737' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0045736' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/ec-code/2.7.10.2' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0006468' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/MODEL6614271263' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/biomodels.db/BIOMD0000000003' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/pubmed/1833774' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/reactome/REACT_152' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/kegg.pathway/hsa04110' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/go/GO:0000278' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/mamo/MAMO_0000046' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu.\n>WARNING 2026-11-10T22:14:49<\n  CAnnotation (4): The MIRIAM resource 'http://identifiers.org/taxonomy/8292' is unknown to COPASI. Please try to update the list of resources by running Update MIRIAM from the tools menu."
+        }
+      ]
+    }
+  ]
+}
