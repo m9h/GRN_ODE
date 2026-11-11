@@ -1,0 +1,613 @@
+{
+  "network": 23,
+  "biomodel_id": "BIOMD0000000209",
+  "name": "Chickarmane2008 - Stem cell lineage determination",
+  "configuration": {
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "prefix": [
+      {
+        "pulse": 1,
+        "start": 50.0,
+        "stop": 100.0,
+        "rest_stop": 160.0
+      },
+      {
+        "pulse": 2,
+        "start": 160.0,
+        "stop": 220.0,
+        "rest_stop": 290.0
+      },
+      {
+        "pulse": 3,
+        "start": 290.0,
+        "stop": 360.0,
+        "rest_stop": 440.0
+      },
+      {
+        "pulse": 4,
+        "start": 440.0,
+        "stop": 520.0,
+        "rest_stop": 610.0
+      },
+      {
+        "pulse": 5,
+        "start": 610.0,
+        "stop": 700.0,
+        "rest_stop": 800.0
+      },
+      {
+        "pulse": 6,
+        "start": 800.0,
+        "stop": 900.0,
+        "rest_stop": 1010.0
+      }
+    ],
+    "trials": {
+      "prefix": [
+        0.0,
+        1010.0
+      ],
+      "intervention_1": [
+        1010.0,
+        1110.0
+      ],
+      "pre_1": [
+        1110.0,
+        1210.0
+      ],
+      "cue_1": [
+        1210.0,
+        1310.0
+      ],
+      "post_1": [
+        1310.0,
+        1410.0
+      ],
+      "intervention_2": [
+        1410.0,
+        1510.0
+      ],
+      "pre_2": [
+        1510.0,
+        1610.0
+      ],
+      "cue_2": [
+        1610.0,
+        1710.0
+      ],
+      "post_2": [
+        1710.0,
+        1810.0
+      ],
+      "intervention_3": [
+        1810.0,
+        1910.0
+      ],
+      "pre_3": [
+        1910.0,
+        2010.0
+      ],
+      "cue_3": [
+        2010.0,
+        2110.0
+      ],
+      "post_3": [
+        2110.0,
+        2210.0
+      ]
+    },
+    "reset_interval": 0.1,
+    "prefix_endpoint_resets": true,
+    "later_endpoint_resets": false,
+    "later_resets_per_exposure": 999,
+    "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+    "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+    "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+    "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+    "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+    "integration_settings": {
+      "roadrunner": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "copasi": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      }
+    },
+    "case_integration_overrides": {},
+    "integration_error_fallbacks": {},
+    "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+    "timed_drive_encoding": null,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "candidate_plan_sha256": "a7a4e90798ba74de7a750c3ecbcf371a1dd33258885c6563b9ed9d1ac0456af9",
+    "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+    "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+  },
+  "model_sha256": "a688c8883b5d3913348766830d109a9a83b378e03735eb9f59139484463bfb72",
+  "reference_fingerprint": "bcd4f5943d38c5243718b6b3feb7efd4042be4089f4e089f1723404c13090914",
+  "reference_file_sha256": "7f24e77a7f41e73cf71b43a2a7c235244b2e7533fbac1dc4b0c2769fe30bbbe8",
+  "implementation_sha256": {
+    "catalog_breaking.py": "047123f30579edf580f6383dd7d5d47593fead4a6065642df3097fa1ba66e51b",
+    "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+    "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+    "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+    "catalog_repeated.py": "15309e4fe6a5c160a91f98b4e35ba7d63f1e2a1d1b062f16989102491fb07e8e",
+    "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+    "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+    "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+    "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+    "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "fingerprint": "a899bb11b9e5f001d4208ff9e49cf79bd521f5bcdee230835333a42c4e885e6d",
+  "targets": {
+    "OCT4": "concentration",
+    "SOX2": "concentration",
+    "NANOG": "concentration",
+    "GATA6": "concentration",
+    "CDX2": "concentration",
+    "GCNF": "concentration",
+    "OCT4_SOX2": "concentration",
+    "Protein": "concentration"
+  },
+  "excluded_species": {
+    "OCT4_Gene": "boundary species",
+    "NANOG_Gene": "boundary species",
+    "SOX2_Gene": "boundary species",
+    "GATA6_Gene": "boundary species",
+    "CDX2_Gene": "boundary species",
+    "GCNF_Gene": "boundary species",
+    "targetGene": "boundary species",
+    "degradation": "boundary species",
+    "p53": "boundary species",
+    "A": "boundary species",
+    "SG": "boundary species",
+    "SN": "boundary species"
+  },
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "expected_cases": 32,
+  "expected_initial_response_assessments": 40,
+  "cases": {
+    "GATA6__up--CDX2__down": {
+      "record_id": "603a422b1ec4d2e2c8c99de5ecd08550fc025f2e94f2a833ca474a1c5f021b3d",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GATA6__up--CDX2__up": {
+      "record_id": "d8d0245722fb869b001213fc8f8c22b60564eebef706dfebc500de97838531f2",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GATA6__up--GCNF__down": {
+      "record_id": "2b8c3d5787bd315feed1dd6ab7e68df8b53e9b99f1b06b24d1a60c6f46785c6c",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GATA6__up--GCNF__up": {
+      "record_id": "93a6e4cad8b2589c17ac87aa2629d1bcf5d7ed193d76be5e0414fd2ca3c47203",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GATA6__up--OCT4_SOX2__down": {
+      "record_id": "c3a6284ed0bffb0e43f46d9090f8125fd07b62c8aa2a72dbba143b3797786204",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GATA6__up--OCT4_SOX2__up": {
+      "record_id": "c517f4c58a9ec599b26e393c549e3b8f1c96944db2424a908170c5e2a8d33c6c",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GATA6__up--OCT4__down": {
+      "record_id": "3a03083ed67c80473c4dabf6af0e72b372561e35dcdd0600c676013003b91803",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GATA6__up--OCT4__up": {
+      "record_id": "53835b44e9759ed83235253731fb6cf3662316ac89319527e7296fe5f5f2f733",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GATA6__up--SOX2__down": {
+      "record_id": "2409f23fee2514f9d05826f3e427f93972a16f043d811909298aa3704530f007",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GATA6__up--SOX2__up": {
+      "record_id": "e8f940f19f8732c7144a62c826ca3abd068a94828873f99f0c12276e88682402",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--CDX2__down": {
+      "record_id": "cfc1080f08b87cde2afa62eeb2895fbe26185e4808959e6550c742e7c43c597a",
+      "status": "passed",
+      "initial_response_assessments": 2,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 2,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 2
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--CDX2__up": {
+      "record_id": "02ca2b0931f97ac0a2419e841c1b3bb215c70c94308b94fa41796f45fab336de",
+      "status": "passed",
+      "initial_response_assessments": 2,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 2,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 2
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--GATA6__down": {
+      "record_id": "029677eed68f3ea817c0c83605b9a4552261a63ad396f266a21333b1ee24033c",
+      "status": "passed",
+      "initial_response_assessments": 2,
+      "evaluated_trials": 10,
+      "evaluated_response_trials": 11,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 11
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--GATA6__up": {
+      "record_id": "992bedb44fcd45b033e55aefbfc3caa0d7c3cd187cef029096f65f35cb152eb3",
+      "status": "passed",
+      "initial_response_assessments": 2,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 2,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 2
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--NANOG__down": {
+      "record_id": "377fbf86bd718dd7ee3af467bfb3c5635a09fe40e802a4e4fa12b3641bc761ea",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--NANOG__up": {
+      "record_id": "0c38f11dd2602fba2926b0eda493715d5dba1650acdb97b9db2c6829135a63ad",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--OCT4_SOX2__down": {
+      "record_id": "e541f310e287c19680bc1c95c9d9cf5cdcaaeb6a0505fbd3ba97eb2d9f5bbb16",
+      "status": "passed",
+      "initial_response_assessments": 2,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 2,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 2
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--OCT4_SOX2__up": {
+      "record_id": "1015f1513f7159e5dd669363d2627a2ad9b57d1282d49b6a22f937cba2d55add",
+      "status": "passed",
+      "initial_response_assessments": 2,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 2,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 2
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--OCT4__down": {
+      "record_id": "8df1e72e4cb11b36f8fcec2817770e694c2483b22d6f842f469bc1758ee10f7e",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--OCT4__up": {
+      "record_id": "b119d5de3cdeff269401a9a96d46398735cb550a9eae5a0d97a6d3bc52d6c8c6",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 10,
+      "evaluated_response_trials": 10,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 10
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--SOX2__down": {
+      "record_id": "1479598fbafa4cdbc19dc7559091552eddd89f29e4ef508ebce170c7262379c5",
+      "status": "passed",
+      "initial_response_assessments": 2,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 2,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 2
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "GCNF__up--SOX2__up": {
+      "record_id": "b226afe63a5c19fb23ee4afd6dfd887302ddff6210206aba9d204baa69f4f7ec",
+      "status": "passed",
+      "initial_response_assessments": 2,
+      "evaluated_trials": 10,
+      "evaluated_response_trials": 11,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 11
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--GATA6__down": {
+      "record_id": "a2be05b5d15cb581ee53af24261ee3924248b942ba08681ddee41db10c1bb055",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--GATA6__up": {
+      "record_id": "ed3499d70722bbfb998863c9927f686e624a99b9fa2245a2d908bebf86dea9b3",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--GCNF__down": {
+      "record_id": "8bc25c37a740566e3067257881323062b14ca90b161d2826f1f67fdff88f2728",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--GCNF__up": {
+      "record_id": "868733ad985d65ec18b64395edce24c890aa17a86d722ac1349a4cfb7e98ba10",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--NANOG__down": {
+      "record_id": "908ee4450c5ea7e8fa05609259d392b6f9d11d299a8e5f62287cec0afc76c9e6",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--NANOG__up": {
+      "record_id": "9ddf3bdefc1fae963c5919a2c4617d5f57a06a838ee850a8e2ec6fda9a43316b",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--OCT4_SOX2__down": {
+      "record_id": "638df9fc1155463ef6ea6e68d8aedfaf964be6f82e4897b610f072cf7815f87c",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--OCT4_SOX2__up": {
+      "record_id": "e2bb6ae7e2d58c1045f36899e38686f2967f2ad249ef12d7ea9f65018ab3fcf7",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--SOX2__down": {
+      "record_id": "c7e02c23d24ecdd3a3ac23cdac1e527816e9063109efca12ab51542bae4bf62f",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "OCT4__up--SOX2__up": {
+      "record_id": "ae0780fb8cdd346662b71a3a2681dea27caa771933d9902e838dcf6e25d96884",
+      "status": "passed",
+      "initial_response_assessments": 1,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 1,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 1
+      },
+      "raw_disagreeing_response_trials": 0
+    }
+  },
+  "status": "passed",
+  "no_candidates": false,
+  "started_at": "2026-11-11T18:02:56.231148+00:00",
+  "control_comparison": {
+    "passed": true,
+    "max_scaled_error": 1.5775335302561424e-06,
+    "max_absolute_error": 1.0856293641836601e-10,
+    "worst_observable": "OCT4",
+    "worst_time": 19.71,
+    "samples": 221001,
+    "observables": 20,
+    "per_observable_max_scaled_error": {
+      "OCT4_Gene": 0.0,
+      "NANOG_Gene": 0.0,
+      "SOX2_Gene": 0.0,
+      "GATA6_Gene": 0.0,
+      "CDX2_Gene": 0.0,
+      "GCNF_Gene": 0.0,
+      "targetGene": 0.0,
+      "degradation": 0.0,
+      "p53": 0.0,
+      "A": 0.0,
+      "SG": 0.0,
+      "SN": 0.0,
+      "OCT4": 1.5775335302561424e-06,
+      "SOX2": 9.680904282414827e-08,
+      "NANOG": 7.330428587306505e-07,
+      "GATA6": 9.259323848554333e-07,
+      "CDX2": 1.3652194153690979e-06,
+      "GCNF": 8.677959201417835e-07,
+      "OCT4_SOX2": 0.0,
+      "Protein": 0.0
+    }
+  },
+  "evidence_archives": {
+    "branches": [
+      {
+        "file": "evidence/BIOMD0000000209-branches-00000.jsonl.gz",
+        "records": 100,
+        "bytes": 273573,
+        "sha256": "1a8e8a8e1bd681eb7de98ad5644fa3d5c50b41af3bb2352c0e969c3717b3bc0d"
+      },
+      {
+        "file": "evidence/BIOMD0000000209-branches-00001.jsonl.gz",
+        "records": 100,
+        "bytes": 261970,
+        "sha256": "d7f4c15f46eb27646068f6ecfdb78f5ca5dd91cc8ff9e3cd57f2302e6e132b2b"
+      },
+      {
+        "file": "evidence/BIOMD0000000209-branches-00002.jsonl.gz",
+        "records": 37,
+        "bytes": 105442,
+        "sha256": "ba999385778ba867ffd34628827d1c8c5ca4bd9eab3b336fb7aa153ee72ba7f4"
+      }
+    ],
+    "cases": [
+      {
+        "file": "evidence/BIOMD0000000209-cases-00000.jsonl.gz",
+        "records": 32,
+        "bytes": 32708,
+        "sha256": "cd3c63bd067efe5ef60bf4fa76d99a2356717bbafa00b1b6968317026b17e24b"
+      }
+    ]
+  },
+  "evaluated_cases": 32,
+  "passed_cases": 32,
+  "evaluated_unique_branches": 237,
+  "solver_retry_branches": 0,
+  "finished_at": "2026-11-11T18:31:51.030310+00:00",
+  "worker": {
+    "returncode": 0
+  }
+}

@@ -15,6 +15,59 @@ Networks 6, 14, 17 and 33 have no eligible initial combinations under the
 specified rule; they still receive independently compared untreated controls.
 Zero eligible combinations do not establish an absence of learning capacity.
 
+## Audited completed models from the original run
+
+The [original-run snapshot](results/catalog-breaking-original-completed/audit.json)
+contains the first **13 terminal model reports** from source revision
+`70a3afad61357e94873ff62a7300c099b4c7ae3e`, copied on 11 November 2026 while
+the other workers continued. Eleven models pass their numerical checks.
+Across these reports, **349 of 354 initial cases pass**, with 1,853 conditional
+trials and 7,711 distinct branches within their respective models. There are
+four incomplete integrations and eight completed trajectory mismatches.
+
+| Network | Model | Passing / initial cases | Branches | Result |
+|---|---|---:|---:|---|
+| 3 | Goldbeter 1991, reduced mitotic oscillator | 6 / 8 | 41 | Four incomplete branches leave two conditional decisions unresolved. |
+| 4 | Goldbeter 1991, explicit inactive pools | 51 / 54 | 1,327 | Eight completed mismatches; separate refinement recovery continues. |
+| 6 | Tyson 1991, two-variable cell cycle | 0 / 0 | 1 | No eligible cases; untreated control passes. |
+| 9 | Goldbeter 1995, circadian clock | 66 / 66 | 1,657 | Passes. |
+| 13 | Rohwer 2001, sucrose metabolism | 78 / 78 | 2,304 | Passes. |
+| 14 | Scheper 1999, delayed circadian clock | 0 / 0 | 1 | No eligible cases; untreated control and delay refinements pass. |
+| 16 | Markevich 2004, ordered MAPK phosphorylation | 8 / 8 | 85 | Passes. |
+| 17 | Cao 2008, toggle switch | 0 / 0 | 1 | No eligible cases; untreated control passes. |
+| 18 | Markevich 2004, random MAPK phosphorylation | 40 / 40 | 703 | Passes. |
+| 19 | Markevich 2004, ordered MAPK with two kinases | 14 / 14 | 137 | Passes. |
+| 21 | Chickarmane 2006, reversible stem-cell switch | 24 / 24 | 542 | Passes. |
+| 22 | Chickarmane 2006, irreversible stem-cell switch | 30 / 30 | 675 | Passes. |
+| 23 | Chickarmane 2008, stem-cell lineage determination | 32 / 32 | 237 | Passes. |
+
+The [full-model auditor](scripts/audit_breaking_catalog.py) uses the same branch
+and conditional-search checks as the partition audit. It verifies every
+declared producer source file against Git, verifies model and calibration
+hashes, recomputes all scores, and requires all initial candidates. It reports
+initial-case coverage, conditional-search coverage and numerical validation
+separately. In particular, attempting all eight initial cases in network 3 does
+not settle the continuation choices after its failed integrations. Its
+biological domain limitation is discussed below; its failures are preserved.
+Network 4's original results are likewise retained independently of recovery.
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/audit_breaking_catalog.py \
+  --input results/catalog-breaking-original-completed \
+  --source-revision 70a3afad61357e94873ff62a7300c099b4c7ae3e \
+  --network 3 --network 4 --network 6 --network 9 --network 13 --network 14 \
+  --network 16 --network 17 --network 18 --network 19 --network 21 \
+  --network 22 --network 23 \
+  --output results/catalog-breaking-original-completed/audit.json
+```
+
+Without `--network`, the auditor requires all 35 models. A selected passing
+subset cannot establish catalog completion. The producer revision must be in
+local Git history, and this command checks saved evidence rather than rerunning
+integrations. Nine further tests exercise complete and failed models, the
+delay-model control, partial and running reports, missing controls, changed
+producer sources, and the distinction between selected and catalog coverage.
+
 ## Restartable computation in complete-case partitions
 
 The [shard runner](scripts/run_breaking_shard.py) divides the sorted initial-case
