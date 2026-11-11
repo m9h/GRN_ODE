@@ -287,6 +287,15 @@ RoadRunner settings and their tenfold refinement. Every confirmation requires
 all five full-trajectory comparisons. The difficult branch `698ea588e8ce…` is
 also exercised by CI, with an explicit assertion on that gate.
 
+The [complete Newton diagnostic](results/catalog-paired-jax-rohwer-newton/audit.json)
+now records **35 confirmed branches, 20 with an incomplete integration, and 22
+completed mismatches**. Thirteen branches pass both this configuration and the
+complete Kvaerno3 diagnostic; ten pass only Kvaerno3, 22 only Newton, and 32
+neither. The integration tolerances also differ between these runs, so this
+comparison does not isolate the effect of the root solver. No configuration
+validates all 77 branches, and these outcomes do not recover complete cases.
+The Newton evidence is tied to source `3d88e0d56287e0f70276678c72e301ce3eeb31e2`.
+
 ```bash
 python scripts/diagnose_jax_paired.py --model 38 \
   --branch d4ace2879cdea75e43b77bc82f97ecb73cab9ff6ba258b3e85f6838b0f44c593 \
@@ -440,6 +449,18 @@ branches. The original two cases nevertheless remain **mismatches under the
 full-horizon validation gate**. Agreement of their controlled categories does
 not validate the divergent tail, and the protocol has not been shortened to
 obtain a pass.
+
+The later [Radau diagnostic](results/catalog-paired-scipy-marhl/report.json)
+also evaluates all three originally mismatched branches. All **15 requested
+integrations complete**, but none of the three branches passes the five
+cross-engine/refinement comparisons. Radau's own tenfold refinement disagrees
+on every branch, as do the two tighter RoadRunner requests. The largest
+discrepancies occur near times 285–300, reinforcing the unresolved late
+numerical convergence issue rather than establishing a reliable replacement
+trajectory. The [case audit](results/catalog-paired-scipy-marhl-case-audit/report.json)
+retains **zero recovered cases**; the two complete cases would require 18
+branches, and completing only these three failed-branch diagnostics does not
+validate their controls or their full case scores.
 
 ```bash
 MPLBACKEND=Agg uv run --locked python scripts/diagnose_marhl_paired.py

@@ -15,6 +15,54 @@ Networks 6, 14, 17 and 33 have no eligible initial combinations under the
 specified rule; they still receive independently compared untreated controls.
 Zero eligible combinations do not establish an absence of learning capacity.
 
+## Restartable computation in complete-case partitions
+
+The [shard runner](scripts/run_breaking_shard.py) divides the sorted initial-case
+inventory into disjoint contiguous ranges. It invokes the existing worker for
+each range: every selected case keeps its full conditional second/third-trial
+search, all eight control arms, every original observation and the original
+comparison thresholds. Tests verify that all **7,324 initial cases** appear
+exactly once for partition counts 1, 4 and 7.
+
+For example, the first of four partitions of network 19 contains three of its
+14 cases. All three pass and match their entries in the locally completed
+full-model report. Resuming reuses 36 unchanged atomic checkpoints without new
+integration. An intentionally timed-out worker cannot promote a stale report;
+a subsequent resume again reuses those checkpoints.
+
+```bash
+MPLBACKEND=Agg uv run --locked --extra delay python scripts/run_breaking_shard.py \
+  --network 19 --shard-index 0 --shard-count 4 --timeout 18000 \
+  --resume --output results/breaking-network-19-shard-0
+```
+
+Keep the entire output directory, including **`.evidence/`**, when resuming.
+The runner uses a process lock to prevent concurrent writes to the same output.
+It records the case selection and its hash, source revision, subprocess outcome,
+and whether only the selected range or the entire model has passed. For a model
+with no candidates, partition zero still validates its untreated trajectory;
+the other empty partitions do not claim model validation.
+
+The existing GitHub workflow also accepts `breaking_networks`, a JSON array of
+catalog network numbers. This dispatch creates four partitions per selected
+network, runs at most eight jobs concurrently, and gives each worker five hours
+before preserving its checkpoints. Ordinary validation jobs are skipped for
+this explicit computation dispatch. Artifact uploads include hidden checkpoints
+and retain them for seven days, so download them before expiration.
+
+```bash
+gh workflow run 410775433 --repo m9h/GRN_ODE --ref kinetics-newton-reference \
+  -f breaking_networks='[26,27,28,29,30,31,32,33,34,35]'
+```
+
+To continue an unfinished batch, repeat the dispatch with the same networks and
+`-f breaking_resume_run=PREVIOUS_RUN_ID`. The workflow restores each matching
+artifact before running with `--resume`. Keep artifacts from different
+partitions in separate directories: shared branch identifiers alone do not
+justify overwriting independently computed evidence. A successful partition
+is not a complete-model result; complete coverage and numerical validation must
+be audited across every partition before reporting a model as finished.
+
 ## Source protocol and documented discrepancies
 
 The operational source is

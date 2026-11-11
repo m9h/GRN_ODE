@@ -1,0 +1,1215 @@
+{
+  "branch_id": "772e993790b85b8a2bf8f1cd2b3484e559e01b077b2afd2f347b2eea06683e1d",
+  "fingerprint": "fb0f1f2a0eceb991022f6c7325c1f4e56c66d4eb8c1786c4ec0167b2f566cc7c",
+  "status": "failed",
+  "specification": {
+    "training": [
+      "EIICBP__up",
+      "PyrPI__up"
+    ],
+    "probe": "PyrPI__up",
+    "probe_start": 150.0
+  },
+  "reset_trains": [
+    {
+      "start": 50.0,
+      "stop": 100.0,
+      "values": {
+        "EIICBP": 500.0,
+        "PyrPI": 304.875438177607
+      },
+      "interval": 0.1,
+      "include_start": false,
+      "include_stop": false
+    },
+    {
+      "start": 150.0,
+      "stop": 200.0,
+      "values": {
+        "PyrPI": 304.875438177607
+      },
+      "interval": 0.1,
+      "include_start": false,
+      "include_stop": false
+    }
+  ],
+  "original_outcome": {
+    "passed": false,
+    "error": "ValueError: Unexpected output shape (15122, 20)"
+  },
+  "integrations": {
+    "jax": {
+      "request": {
+        "rtol": 1e-07,
+        "atol": 1e-09
+      },
+      "model_sha256": "33708cec1fad44db6958c3ac6255397ad79b45564a296d29732fd934608d787b",
+      "solver": "Kvaerno5",
+      "rtol": 1e-07,
+      "atol": 1e-09,
+      "root_finder": "Newton",
+      "root_find_max_steps": 20,
+      "x64": true,
+      "initial_step": 0.0001,
+      "maximum_steps_per_interval": 300000,
+      "absolute_time_preserved": true,
+      "expected_resets": 998,
+      "performed_resets": 1,
+      "expected_train_reset_counts": [
+        499,
+        499
+      ],
+      "train_reset_counts": [
+        1,
+        0
+      ],
+      "completed_segments": 1,
+      "expected_segments": 999,
+      "completed": false,
+      "sample_count": 30001,
+      "last_interval": [
+        50.1,
+        50.2
+      ],
+      "error": "RuntimeError: JAX integration failed on [50.1, 50.2]: INTERNAL: CpuCallback error calling callback: Traceback (most recent call last):\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 829, in _wrapped_callback\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 232, in _callback\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 102, in pure_callback_impl\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 72, in __call__\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/equinox/_errors.py\", line 88, in raises\n_EquinoxRuntimeError: The maximum number of solver steps was reached. Try increasing `max_steps`.\n\n\n--------------------\nAn error occurred during the runtime of your JAX program! Unfortunately you do not appear to be using `equinox.filter_jit` (perhaps you are using `jax.jit` instead?) and so further information about the error cannot be displayed. (Probably you are seeing a very large but uninformative error message right now.) Please wrap your program with `equinox.filter_jit`.\n--------------------\n",
+      "seconds": 34.57972870799131
+    },
+    "roadrunner": {
+      "request": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "completed": true,
+      "samples": 30001,
+      "observables": 17,
+      "seconds": 0.9978718329948606
+    },
+    "jax_refined": {
+      "request": {
+        "rtol": 1e-08,
+        "atol": 1e-10
+      },
+      "model_sha256": "33708cec1fad44db6958c3ac6255397ad79b45564a296d29732fd934608d787b",
+      "solver": "Kvaerno5",
+      "rtol": 1e-08,
+      "atol": 1e-10,
+      "root_finder": "Newton",
+      "root_find_max_steps": 20,
+      "x64": true,
+      "initial_step": 0.0001,
+      "maximum_steps_per_interval": 300000,
+      "absolute_time_preserved": true,
+      "expected_resets": 998,
+      "performed_resets": 1,
+      "expected_train_reset_counts": [
+        499,
+        499
+      ],
+      "train_reset_counts": [
+        1,
+        0
+      ],
+      "completed_segments": 1,
+      "expected_segments": 999,
+      "completed": false,
+      "sample_count": 30001,
+      "last_interval": [
+        50.1,
+        50.2
+      ],
+      "error": "RuntimeError: JAX integration failed on [50.1, 50.2]: INTERNAL: CpuCallback error calling callback: Traceback (most recent call last):\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 829, in _wrapped_callback\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 232, in _callback\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 102, in pure_callback_impl\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 72, in __call__\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/equinox/_errors.py\", line 88, in raises\n_EquinoxRuntimeError: The maximum number of solver steps was reached. Try increasing `max_steps`.\n\n\n--------------------\nAn error occurred during the runtime of your JAX program! Unfortunately you do not appear to be using `equinox.filter_jit` (perhaps you are using `jax.jit` instead?) and so further information about the error cannot be displayed. (Probably you are seeing a very large but uninformative error message right now.) Please wrap your program with `equinox.filter_jit`.\n--------------------\n",
+      "seconds": 38.54657987499377
+    },
+    "roadrunner_refined": {
+      "request": {
+        "rtol": 1e-13,
+        "atol": 1e-15
+      },
+      "completed": true,
+      "samples": 30001,
+      "observables": 17,
+      "seconds": 1.3092157500068424
+    }
+  },
+  "comparisons": {
+    "roadrunner_vs_roadrunner_refined": {
+      "passed": true,
+      "max_scaled_error": 0.024743975045166598,
+      "max_absolute_error": 6.751178241870548e-05,
+      "worst_observable": "EIICBP",
+      "worst_time": 81.90001000000001,
+      "samples": 30001,
+      "observables": 17,
+      "per_observable_max_scaled_error": {
+        "EI": 0.00014575394181193436,
+        "PyrPI": 0.00015427318596118088,
+        "EIP": 0.0002643983647147291,
+        "HPr": 0.00036395842215462896,
+        "EIPHPr": 0.001104789276953289,
+        "HPrP": 0.0004828052068399754,
+        "EIIA": 0.005215093854730376,
+        "HPrPIIA": 0.0013564691709795687,
+        "EIIAP": 0.0002444447861264436,
+        "EIICB": 0.004492329359343479,
+        "EIIAPIICB": 0.000917965843244919,
+        "EIICBP": 0.024743975045166598,
+        "EIICBPGlc": 0.00812353278114478,
+        "PEP": 0.0,
+        "Pyr": 0.0,
+        "GlcP": 0.0,
+        "Glc": 0.0
+      }
+    }
+  },
+  "windows": {
+    "roadrunner": {
+      "baseline": {
+        "EI": {
+          "mean": 0.26982023393918175,
+          "minimum": 0.26927419798596236,
+          "maximum": 3.0
+        },
+        "PyrPI": {
+          "mean": 3.0481447528253334,
+          "minimum": 0.0,
+          "maximum": 3.04875438177607
+        },
+        "EIP": {
+          "mean": 1.1902253636091624,
+          "minimum": 1.1900634061282351,
+          "maximum": 2.0
+        },
+        "HPr": {
+          "mean": 1.2808707532795722,
+          "minimum": 1.2761269274217868,
+          "maximum": 25.0
+        },
+        "EIPHPr": {
+          "mean": 0.4918096496263274,
+          "minimum": 0.0,
+          "maximum": 0.491908014899298
+        },
+        "HPrP": {
+          "mean": 29.781017804732464,
+          "minimum": 25.0,
+          "maximum": 29.78197400836501
+        },
+        "EIIA": {
+          "mean": 0.6453521303607541,
+          "minimum": 0.6414812007831889,
+          "maximum": 20.0
+        },
+        "HPrPIIA": {
+          "mean": 18.44630179236143,
+          "minimum": 0.0,
+          "maximum": 18.44999135230461
+        },
+        "EIIAP": {
+          "mean": 15.43659642495632,
+          "minimum": 15.435683440547985,
+          "maximum": 20.0
+        },
+        "EIICB": {
+          "mean": 1.4135296695987638,
+          "minimum": 1.4128123755272817,
+          "maximum": 5.0
+        },
+        "EIIAPIICB": {
+          "mean": 5.471749652321621,
+          "minimum": 0.0,
+          "maximum": 5.472844002254866
+        },
+        "EIICBP": {
+          "mean": 0.1205118628046182,
+          "minimum": 0.11953596485149064,
+          "maximum": 5.0
+        },
+        "EIICBPGlc": {
+          "mean": 2.994208815274995,
+          "minimum": 0.0,
+          "maximum": 2.9948076570406013
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "train": {
+        "EI": {
+          "mean": 26.591915925729445,
+          "minimum": 0.2692741979859627,
+          "maximum": 26.677138011817263
+        },
+        "PyrPI": {
+          "mean": 303.9122856637197,
+          "minimum": 3.048754381776063,
+          "maximum": 304.87553985625584
+        },
+        "EIP": {
+          "mean": 123.81010135947592,
+          "minimum": 1.1900634086823954,
+          "maximum": 124.19759962524847
+        },
+        "HPr": {
+          "mean": 0.18856840641982345,
+          "minimum": 0.18572038493970774,
+          "maximum": 1.2761269274221283
+        },
+        "EIPHPr": {
+          "mean": 18.55974548712415,
+          "minimum": 0.49190801155558406,
+          "maximum": 18.91072466901984
+        },
+        "HPrP": {
+          "mean": 16.826062382494133,
+          "minimum": 16.69313440599134,
+          "maximum": 29.781974008362106
+        },
+        "EIIA": {
+          "mean": 1.0056727563435124,
+          "minimum": 0.6041284614025862,
+          "maximum": 1.0457182456046725
+        },
+        "HPrPIIA": {
+          "mean": 14.425623723961703,
+          "minimum": 13.256077783272215,
+          "maximum": 18.449991052659975
+        },
+        "EIIAP": {
+          "mean": 0.03659403933407549,
+          "minimum": 0.00037096603894300314,
+          "maximum": 15.435683744302061
+        },
+        "EIICB": {
+          "mean": 124555.2970782119,
+          "minimum": 1.4128123755275006,
+          "maximum": 249182.58530258684
+        },
+        "EIIAPIICB": {
+          "mean": 24.532109480360184,
+          "minimum": 5.472844002254753,
+          "maximum": 26.081111358446783
+        },
+        "EIICBP": {
+          "mean": 14.107387288727328,
+          "minimum": 0.11953596517724427,
+          "maximum": 136.47421102108072
+        },
+        "EIICBPGlc": {
+          "mean": 55.369233299925455,
+          "minimum": 2.9948076570404987,
+          "maximum": 378.824652548989
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "wash": {
+        "EI": {
+          "mean": 26.67712811833178,
+          "minimum": 26.677128118331765,
+          "maximum": 26.677128118331773
+        },
+        "PyrPI": {
+          "mean": 304.8754325184547,
+          "minimum": 304.8754325184548,
+          "maximum": 304.8754325184548
+        },
+        "EIP": {
+          "mean": 124.19756314227764,
+          "minimum": 124.19756314227764,
+          "maximum": 124.19756314227769
+        },
+        "HPr": {
+          "mean": 0.18629928170499396,
+          "minimum": 0.1862992817049939,
+          "maximum": 0.18629928170499446
+        },
+        "EIPHPr": {
+          "mean": 18.575666478170753,
+          "minimum": 18.575666478170756,
+          "maximum": 18.575666478170778
+        },
+        "HPrP": {
+          "mean": 16.695286075231824,
+          "minimum": 16.695286075231813,
+          "maximum": 16.695286075231827
+        },
+        "EIIA": {
+          "mean": 1.045282275766432,
+          "minimum": 1.0452822757664313,
+          "maximum": 1.0452822757664322
+        },
+        "HPrPIIA": {
+          "mean": 14.542748164890721,
+          "minimum": 14.542748164890709,
+          "maximum": 14.542748164890725
+        },
+        "EIIAP": {
+          "mean": 0.00038924403711415226,
+          "minimum": 0.0003892440371141522,
+          "maximum": 0.00038924403711415297
+        },
+        "EIICB": {
+          "mean": 249182.58530258684,
+          "minimum": 249182.5853025868,
+          "maximum": 249182.5853025868
+        },
+        "EIIAPIICB": {
+          "mean": 24.411580315303645,
+          "minimum": 24.41158031530365,
+          "maximum": 24.411580315303667
+        },
+        "EIICBP": {
+          "mean": 0.5730783397850052,
+          "minimum": 0.5730783397850022,
+          "maximum": 0.5730783397850053
+        },
+        "EIICBPGlc": {
+          "mean": 27.32308387044693,
+          "minimum": 27.323083870445952,
+          "maximum": 27.323083870446936
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "probe": {
+        "EI": {
+          "mean": 26.677128611790177,
+          "minimum": 26.677128118331765,
+          "maximum": 26.67712861329832
+        },
+        "PyrPI": {
+          "mean": 304.87543816036924,
+          "minimum": 304.8754325184548,
+          "maximum": 304.87543817760746
+        },
+        "EIP": {
+          "mean": 124.19756544515533,
+          "minimum": 124.19756314227766,
+          "maximum": 124.19756545220748
+        },
+        "HPr": {
+          "mean": 0.18629927954925904,
+          "minimum": 0.18629927954268283,
+          "maximum": 0.18629928170499394
+        },
+        "EIPHPr": {
+          "mean": 18.575666640799323,
+          "minimum": 18.575666478170756,
+          "maximum": 18.575666641300803
+        },
+        "HPrP": {
+          "mean": 16.695285919034852,
+          "minimum": 16.695285918552536,
+          "maximum": 16.695286075231827
+        },
+        "EIIA": {
+          "mean": 1.0452822852383055,
+          "minimum": 1.045282275766432,
+          "maximum": 1.0452822852678048
+        },
+        "HPrPIIA": {
+          "mean": 14.542748160614869,
+          "minimum": 14.542748160465399,
+          "maximum": 14.542748164890723
+        },
+        "EIIAP": {
+          "mean": 0.00038924403700765835,
+          "minimum": 0.00038924403700733775,
+          "maximum": 0.0003892440371141522
+        },
+        "EIICB": {
+          "mean": 249182.58530259557,
+          "minimum": 249182.5853025868,
+          "maximum": 249182.58530259566
+        },
+        "EIIAPIICB": {
+          "mean": 24.411580310107745,
+          "minimum": 24.411580310090816,
+          "maximum": 24.41158031530365
+        },
+        "EIICBP": {
+          "mean": 0.5730783396289121,
+          "minimum": 0.573078339628402,
+          "maximum": 0.5730783397850052
+        },
+        "EIICBPGlc": {
+          "mean": 27.323083866536866,
+          "minimum": 27.323083866523973,
+          "maximum": 27.323083870446936
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "postprobe": {
+        "EI": {
+          "mean": 26.677128613297917,
+          "minimum": 26.677128613297914,
+          "maximum": 26.67712861329792
+        },
+        "PyrPI": {
+          "mean": 304.875438177607,
+          "minimum": 304.875438177607,
+          "maximum": 304.875438177607
+        },
+        "EIP": {
+          "mean": 124.19756545220686,
+          "minimum": 124.19756545220689,
+          "maximum": 124.19756545220692
+        },
+        "HPr": {
+          "mean": 0.1862992795426854,
+          "minimum": 0.18629927954268538,
+          "maximum": 0.1862992795426854
+        },
+        "EIPHPr": {
+          "mean": 18.57566664130059,
+          "minimum": 18.575666641300593,
+          "maximum": 18.575666641300597
+        },
+        "HPrP": {
+          "mean": 16.695285918552635,
+          "minimum": 16.69528591855264,
+          "maximum": 16.695285918552642
+        },
+        "EIIA": {
+          "mean": 1.045282285267795,
+          "minimum": 1.0452822852677948,
+          "maximum": 1.045282285267795
+        },
+        "HPrPIIA": {
+          "mean": 14.542748160602274,
+          "minimum": 14.542748160602276,
+          "maximum": 14.542748160602276
+        },
+        "EIIAP": {
+          "mean": 0.00038924403700733813,
+          "minimum": 0.00038924403700733813,
+          "maximum": 0.0003892440370073382
+        },
+        "EIICB": {
+          "mean": 249182.5853025956,
+          "minimum": 249182.58530259566,
+          "maximum": 249182.58530259566
+        },
+        "EIIAPIICB": {
+          "mean": 24.411580310090816,
+          "minimum": 24.411580310090823,
+          "maximum": 24.411580310090823
+        },
+        "EIICBP": {
+          "mean": 0.5730783396284059,
+          "minimum": 0.5730783396284057,
+          "maximum": 0.5730783396284059
+        },
+        "EIICBPGlc": {
+          "mean": 27.32308386652411,
+          "minimum": 27.323083866524108,
+          "maximum": 27.323083866524115
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "late": {
+        "EI": {
+          "mean": 26.677128613297917,
+          "minimum": 26.677128613297917,
+          "maximum": 26.67712861329792
+        },
+        "PyrPI": {
+          "mean": 304.875438177607,
+          "minimum": 304.875438177607,
+          "maximum": 304.875438177607
+        },
+        "EIP": {
+          "mean": 124.19756545220686,
+          "minimum": 124.1975654522069,
+          "maximum": 124.1975654522069
+        },
+        "HPr": {
+          "mean": 0.1862992795426854,
+          "minimum": 0.18629927954268538,
+          "maximum": 0.18629927954268538
+        },
+        "EIPHPr": {
+          "mean": 18.57566664130059,
+          "minimum": 18.575666641300593,
+          "maximum": 18.575666641300593
+        },
+        "HPrP": {
+          "mean": 16.69528591855263,
+          "minimum": 16.695285918552635,
+          "maximum": 16.69528591855264
+        },
+        "EIIA": {
+          "mean": 1.045282285267795,
+          "minimum": 1.0452822852677948,
+          "maximum": 1.045282285267795
+        },
+        "HPrPIIA": {
+          "mean": 14.542748160602274,
+          "minimum": 14.542748160602276,
+          "maximum": 14.542748160602276
+        },
+        "EIIAP": {
+          "mean": 0.00038924403700733813,
+          "minimum": 0.00038924403700733813,
+          "maximum": 0.00038924403700733813
+        },
+        "EIICB": {
+          "mean": 249182.5853025956,
+          "minimum": 249182.58530259566,
+          "maximum": 249182.58530259566
+        },
+        "EIIAPIICB": {
+          "mean": 24.411580310090816,
+          "minimum": 24.411580310090823,
+          "maximum": 24.411580310090823
+        },
+        "EIICBP": {
+          "mean": 0.5730783396284059,
+          "minimum": 0.5730783396284058,
+          "maximum": 0.5730783396284059
+        },
+        "EIICBPGlc": {
+          "mean": 27.32308386652411,
+          "minimum": 27.32308386652411,
+          "maximum": 27.32308386652411
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      }
+    },
+    "roadrunner_refined": {
+      "baseline": {
+        "EI": {
+          "mean": 0.26982023393918064,
+          "minimum": 0.2692741979859606,
+          "maximum": 3.0
+        },
+        "PyrPI": {
+          "mean": 3.048144752825319,
+          "minimum": 0.0,
+          "maximum": 3.048754381776051
+        },
+        "EIP": {
+          "mean": 1.1902253636091573,
+          "minimum": 1.1900634061283306,
+          "maximum": 2.0
+        },
+        "HPr": {
+          "mean": 1.2808707532795744,
+          "minimum": 1.2761269274221065,
+          "maximum": 25.0
+        },
+        "EIPHPr": {
+          "mean": 0.4918096496263279,
+          "minimum": 0.0,
+          "maximum": 0.4919080148991659
+        },
+        "HPrP": {
+          "mean": 29.781017804732695,
+          "minimum": 25.0,
+          "maximum": 29.781974008362592
+        },
+        "EIIA": {
+          "mean": 0.645352130360745,
+          "minimum": 0.6414812007833126,
+          "maximum": 20.0
+        },
+        "HPrPIIA": {
+          "mean": 18.446301792361304,
+          "minimum": 0.0,
+          "maximum": 18.449991352292663
+        },
+        "EIIAP": {
+          "mean": 15.436596424956187,
+          "minimum": 15.435683440559854,
+          "maximum": 20.0
+        },
+        "EIICB": {
+          "mean": 1.4135296695987694,
+          "minimum": 1.4128123755274855,
+          "maximum": 5.0
+        },
+        "EIIAPIICB": {
+          "mean": 5.471749652321594,
+          "minimum": 0.0,
+          "maximum": 5.47284400225474
+        },
+        "EIICBP": {
+          "mean": 0.12051186280461763,
+          "minimum": 0.11953596485150293,
+          "maximum": 5.0
+        },
+        "EIICBPGlc": {
+          "mean": 2.9942088152749813,
+          "minimum": 0.0,
+          "maximum": 2.994807657040493
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "train": {
+        "EI": {
+          "mean": 26.591915925728628,
+          "minimum": 0.26927419798596147,
+          "maximum": 26.6771380118169
+        },
+        "PyrPI": {
+          "mean": 303.91228566371706,
+          "minimum": 3.048754381776049,
+          "maximum": 304.875539856252
+        },
+        "EIP": {
+          "mean": 123.81010135931609,
+          "minimum": 1.19006340868239,
+          "maximum": 124.19759962524707
+        },
+        "HPr": {
+          "mean": 0.1885684064200954,
+          "minimum": 0.18572038498726334,
+          "maximum": 1.2761269274221305
+        },
+        "EIPHPr": {
+          "mean": 18.55974548726413,
+          "minimum": 0.49190801155558433,
+          "maximum": 18.910724687101208
+        },
+        "HPrP": {
+          "mean": 16.82606238270953,
+          "minimum": 16.693134405987482,
+          "maximum": 29.78197400836234
+        },
+        "EIIA": {
+          "mean": 1.0056727564197414,
+          "minimum": 0.6041284484914667,
+          "maximum": 1.045718245605077
+        },
+        "HPrPIIA": {
+          "mean": 14.425623723576857,
+          "minimum": 13.256077796162735,
+          "maximum": 18.44999105265985
+        },
+        "EIIAP": {
+          "mean": 0.0365940393449897,
+          "minimum": 0.0003709660383592688,
+          "maximum": 15.43568374430193
+        },
+        "EIICB": {
+          "mean": 124555.29707865657,
+          "minimum": 1.412812375527506,
+          "maximum": 249182.58530389663
+        },
+        "EIIAPIICB": {
+          "mean": 24.53210948067833,
+          "minimum": 5.472844002254727,
+          "maximum": 26.08111138636736
+        },
+        "EIICBP": {
+          "mean": 14.10738721440345,
+          "minimum": 0.11953596517724371,
+          "maximum": 136.47421685301478
+        },
+        "EIICBPGlc": {
+          "mean": 55.36923336681132,
+          "minimum": 2.994807657040485,
+          "maximum": 378.8246583749947
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "wash": {
+        "EI": {
+          "mean": 26.677128118331442,
+          "minimum": 26.677128118331446,
+          "maximum": 26.67712811833145
+        },
+        "PyrPI": {
+          "mean": 304.87543251845096,
+          "minimum": 304.87543251845096,
+          "maximum": 304.87543251845096
+        },
+        "EIP": {
+          "mean": 124.19756314227591,
+          "minimum": 124.19756314227591,
+          "maximum": 124.19756314227592
+        },
+        "HPr": {
+          "mean": 0.18629928170470872,
+          "minimum": 0.18629928170470872,
+          "maximum": 0.18629928170470877
+        },
+        "EIPHPr": {
+          "mean": 18.5756664781315,
+          "minimum": 18.575666478131502,
+          "maximum": 18.575666478131506
+        },
+        "HPrP": {
+          "mean": 16.695286075194698,
+          "minimum": 16.69528607519469,
+          "maximum": 16.695286075194694
+        },
+        "EIIA": {
+          "mean": 1.0452822757695606,
+          "minimum": 1.0452822757695601,
+          "maximum": 1.0452822757695608
+        },
+        "HPrPIIA": {
+          "mean": 14.542748164901907,
+          "minimum": 14.542748164901905,
+          "maximum": 14.542748164901909
+        },
+        "EIIAP": {
+          "mean": 0.00038924403711240854,
+          "minimum": 0.00038924403711240843,
+          "maximum": 0.00038924403711240854
+        },
+        "EIICB": {
+          "mean": 249182.5853038966,
+          "minimum": 249182.58530389663,
+          "maximum": 249182.58530389663
+        },
+        "EIIAPIICB": {
+          "mean": 24.41158031532314,
+          "minimum": 24.411580315323146,
+          "maximum": 24.41158031532315
+        },
+        "EIICBP": {
+          "mean": 0.5730783397856342,
+          "minimum": 0.5730783397856342,
+          "maximum": 0.5730783397856344
+        },
+        "EIICBPGlc": {
+          "mean": 27.32308387053084,
+          "minimum": 27.32308387053084,
+          "maximum": 27.323083870530848
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "probe": {
+        "EI": {
+          "mean": 26.677128611790177,
+          "minimum": 26.677128118331446,
+          "maximum": 26.67712861329795
+        },
+        "PyrPI": {
+          "mean": 304.87543816036913,
+          "minimum": 304.87543251845096,
+          "maximum": 304.8754381776072
+        },
+        "EIP": {
+          "mean": 124.19756544515525,
+          "minimum": 124.19756314227591,
+          "maximum": 124.1975654522069
+        },
+        "HPr": {
+          "mean": 0.18629927954897213,
+          "minimum": 0.1862992795423981,
+          "maximum": 0.18629928170470875
+        },
+        "EIPHPr": {
+          "mean": 18.575666640760158,
+          "minimum": 18.575666478131502,
+          "maximum": 18.57566664126153
+        },
+        "HPrP": {
+          "mean": 16.695285918997598,
+          "minimum": 16.695285918515374,
+          "maximum": 16.695286075194694
+        },
+        "EIIA": {
+          "mean": 1.0452822852414423,
+          "minimum": 1.0452822757695606,
+          "maximum": 1.0452822852709316
+        },
+        "HPrPIIA": {
+          "mean": 14.54274816062606,
+          "minimum": 14.542748160476451,
+          "maximum": 14.542748164901907
+        },
+        "EIIAP": {
+          "mean": 0.0003892440370059144,
+          "minimum": 0.00038924403700559365,
+          "maximum": 0.0003892440371124085
+        },
+        "EIICB": {
+          "mean": 249182.58530390557,
+          "minimum": 249182.58530389663,
+          "maximum": 249182.58530390565
+        },
+        "EIIAPIICB": {
+          "mean": 24.411580310127253,
+          "minimum": 24.411580310110295,
+          "maximum": 24.411580315323146
+        },
+        "EIICBP": {
+          "mean": 0.5730783396295414,
+          "minimum": 0.5730783396290343,
+          "maximum": 0.5730783397856343
+        },
+        "EIICBPGlc": {
+          "mean": 27.323083866620784,
+          "minimum": 27.323083866608012,
+          "maximum": 27.323083870530844
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "postprobe": {
+        "EI": {
+          "mean": 26.67712861329793,
+          "minimum": 26.67712861329793,
+          "maximum": 26.67712861329794
+        },
+        "PyrPI": {
+          "mean": 304.87543817760707,
+          "minimum": 304.87543817760707,
+          "maximum": 304.87543817760707
+        },
+        "EIP": {
+          "mean": 124.19756545220672,
+          "minimum": 124.19756545220673,
+          "maximum": 124.19756545220673
+        },
+        "HPr": {
+          "mean": 0.18629927954239853,
+          "minimum": 0.1862992795423985,
+          "maximum": 0.18629927954239853
+        },
+        "EIPHPr": {
+          "mean": 18.575666641261428,
+          "minimum": 18.57566664126143,
+          "maximum": 18.57566664126143
+        },
+        "HPrP": {
+          "mean": 16.695285918515378,
+          "minimum": 16.69528591851538,
+          "maximum": 16.69528591851538
+        },
+        "EIIA": {
+          "mean": 1.0452822852709305,
+          "minimum": 1.0452822852709303,
+          "maximum": 1.0452822852709307
+        },
+        "HPrPIIA": {
+          "mean": 14.542748160613447,
+          "minimum": 14.542748160613447,
+          "maximum": 14.54274816061345
+        },
+        "EIIAP": {
+          "mean": 0.00038924403700559375,
+          "minimum": 0.00038924403700559375,
+          "maximum": 0.0003892440370055938
+        },
+        "EIICB": {
+          "mean": 249182.58530390557,
+          "minimum": 249182.58530390565,
+          "maximum": 249182.58530390565
+        },
+        "EIIAPIICB": {
+          "mean": 24.411580310110306,
+          "minimum": 24.4115803101103,
+          "maximum": 24.411580310110303
+        },
+        "EIICBP": {
+          "mean": 0.5730783396290344,
+          "minimum": 0.5730783396290344,
+          "maximum": 0.5730783396290344
+        },
+        "EIICBPGlc": {
+          "mean": 27.323083866608016,
+          "minimum": 27.323083866608012,
+          "maximum": 27.323083866608016
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      },
+      "late": {
+        "EI": {
+          "mean": 26.67712861329793,
+          "minimum": 26.677128613297935,
+          "maximum": 26.677128613297935
+        },
+        "PyrPI": {
+          "mean": 304.87543817760707,
+          "minimum": 304.87543817760707,
+          "maximum": 304.87543817760707
+        },
+        "EIP": {
+          "mean": 124.19756545220672,
+          "minimum": 124.19756545220673,
+          "maximum": 124.19756545220673
+        },
+        "HPr": {
+          "mean": 0.18629927954239853,
+          "minimum": 0.18629927954239853,
+          "maximum": 0.18629927954239853
+        },
+        "EIPHPr": {
+          "mean": 18.575666641261428,
+          "minimum": 18.57566664126143,
+          "maximum": 18.57566664126143
+        },
+        "HPrP": {
+          "mean": 16.695285918515378,
+          "minimum": 16.69528591851538,
+          "maximum": 16.69528591851538
+        },
+        "EIIA": {
+          "mean": 1.0452822852709305,
+          "minimum": 1.0452822852709303,
+          "maximum": 1.0452822852709303
+        },
+        "HPrPIIA": {
+          "mean": 14.542748160613446,
+          "minimum": 14.542748160613447,
+          "maximum": 14.542748160613447
+        },
+        "EIIAP": {
+          "mean": 0.00038924403700559375,
+          "minimum": 0.0003892440370055938,
+          "maximum": 0.0003892440370055938
+        },
+        "EIICB": {
+          "mean": 249182.58530390557,
+          "minimum": 249182.58530390565,
+          "maximum": 249182.58530390565
+        },
+        "EIIAPIICB": {
+          "mean": 24.411580310110306,
+          "minimum": 24.411580310110303,
+          "maximum": 24.411580310110303
+        },
+        "EIICBP": {
+          "mean": 0.5730783396290344,
+          "minimum": 0.5730783396290344,
+          "maximum": 0.5730783396290344
+        },
+        "EIICBPGlc": {
+          "mean": 27.323083866608016,
+          "minimum": 27.323083866608012,
+          "maximum": 27.323083866608016
+        },
+        "PEP": {
+          "mean": 2800.0,
+          "minimum": 2800.0,
+          "maximum": 2800.0
+        },
+        "Pyr": {
+          "mean": 900.0,
+          "minimum": 900.0,
+          "maximum": 900.0
+        },
+        "GlcP": {
+          "mean": 50.0,
+          "minimum": 50.0,
+          "maximum": 50.0
+        },
+        "Glc": {
+          "mean": 500.0,
+          "minimum": 500.0,
+          "maximum": 500.0
+        }
+      }
+    }
+  },
+  "seconds": 75.45240799999738
+}

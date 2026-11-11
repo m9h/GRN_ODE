@@ -5,8 +5,71 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      breaking_networks:
+        description: 'JSON array of network numbers for four-way complete-case computation; blank runs ordinary validation'
+        required: false
+        default: ''
+        type: string
+      breaking_resume_run:
+        description: 'Previous shard workflow run ID whose checkpoints should be resumed'
+        required: false
+        default: ''
+        type: string
 jobs:
+  catalog-breaking-shards:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.breaking_networks != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        network: ${{ fromJSON(inputs.breaking_networks || '[33]') }}
+        shard: [0, 1, 2, 3]
+    defaults:
+      run:
+        working-directory: python
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/grn-breaking-shard-mpl
+      SHARD_NETWORK: ${{ matrix.network }}
+      SHARD_INDEX: ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+      - run: uv sync --python python --locked --extra test --extra delay
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_breaking_shards.py
+      - name: Restore previous atomic checkpoints
+        if: ${{ inputs.breaking_resume_run != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: breaking-network-${{ matrix.network }}-shard-${{ matrix.shard }}
+          path: python/results/catalog-breaking-shard
+          run-id: ${{ inputs.breaking_resume_run }}
+          github-token: ${{ github.token }}
+      - name: Compute complete cases for up to five hours
+        run: uv run --locked --extra delay python scripts/run_breaking_shard.py --network "$SHARD_NETWORK" --shard-index "$SHARD_INDEX" --shard-count 4 --timeout 18000 --resume --output results/catalog-breaking-shard
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: breaking-network-${{ matrix.network }}-shard-${{ matrix.shard }}
+          path: python/results/catalog-breaking-shard/
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
   catalog-paired-solver-regression:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -51,6 +114,7 @@ jobs:
           name: catalog-paired-solver-regression
           path: python/results/catalog-paired-recovery-ci/
   catalog-breaking-smoke:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     defaults:
@@ -98,6 +162,7 @@ jobs:
             python/results/catalog-breaking-ci/
             python/results/catalog-breaking-refinement-ci/
   catalog-repeated:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     defaults:
@@ -124,6 +189,7 @@ jobs:
           name: catalog-repeated-validation
           path: python/results/catalog-repeated-ci/
   catalog-paired-smoke:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -150,6 +216,7 @@ jobs:
           name: catalog-paired-smoke-validation
           path: python/results/catalog-paired-ci/
   catalog-jax:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     defaults:
@@ -227,6 +294,7 @@ jobs:
             python/results/catalog-paired-scipy-ci/
             python/results/catalog-paired-scipy-case-audit-ci/
   catalog-memory:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     defaults:
@@ -253,6 +321,7 @@ jobs:
           name: catalog-memory-validation
           path: python/results/catalog-memory-ci/
   catalog:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -279,6 +348,7 @@ jobs:
           name: catalog-kinetics-validation
           path: python/results/catalog-ci/
   reproduce:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -308,6 +378,7 @@ jobs:
             python/results/report.json
             python/results/*.png
   jaxkineticmodel:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
