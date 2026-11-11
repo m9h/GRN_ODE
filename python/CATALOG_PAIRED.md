@@ -213,7 +213,7 @@ independent state and absolute time between exact external resets. It supports
 autonomous reaction models with fixed positive-volume compartments and derived
 assignment-rule observables. Native events, delays, rate/algebraic rules,
 initial assignments and conversion factors are explicitly unsupported here.
-These restrictions do not change the native catalog's coverage. Seventeen adapter
+These restrictions do not change the native catalog's coverage. Eighteen adapter
 tests include analytic solutions, amount/concentration conversion, simultaneous
 resets, source-cache invalidation and comparisons with both native engines.
 
@@ -238,6 +238,28 @@ The adapter exposes Kvaerno3, Kvaerno4 and Kvaerno5 as explicit settings, with
 analytic and two-engine reset checks for each. It does not retry failed
 trajectories automatically. Add `--solver Kvaerno3` to reproduce this comparison
 in a separate output directory.
+
+Implicit stages also expose `--root-finder Newton --root-find-max-steps 20` as
+an explicit alternative to the default cached-chord method with ten iterations.
+These options change how each implicit stage is solved; they do not change the
+SBML equations, reset schedule or trajectory acceptance threshold. The compile
+cache and evidence fingerprints include the chosen method and iteration limit.
+The Newton configuration has its own analytic and native-engine reset check.
+Complete failed-branch diagnostics remain separate from the original screen;
+a branch confirmation does not establish agreement on every case-level score.
+
+To check all 77 originally failed Rohwer branches with the Newton configuration:
+
+```bash
+python scripts/diagnose_jax_paired.py --model 38 \
+  --root-finder Newton --root-find-max-steps 20 \
+  --output results/catalog-paired-jax-rohwer-newton
+```
+
+This requests JAX tolerances `1e-7/1e-9` and `1e-8/1e-10`, plus the original
+RoadRunner settings and their tenfold refinement. Every confirmation requires
+all five full-trajectory comparisons. The difficult branch `698ea588e8ce…` is
+also exercised by CI, with an explicit assertion on that gate.
 
 ```bash
 python scripts/diagnose_jax_paired.py --model 38 \

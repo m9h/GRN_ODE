@@ -170,13 +170,30 @@ jobs:
           enable-cache: true
           cache-dependency-glob: python/uv.lock
       - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
-      - run: uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q tests/test_catalog_jax.py
+      - run: uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q tests/test_catalog_jax.py tests/test_jax_protocols.py
       - run: uv run --locked --extra jaxkineticmodel python -m grn_memory.catalog_jax --workers 2 --expect-unsupported 1 --expect-unsupported 6 --expect-unsupported 14 --output results/catalog-jax-ci
+      - name: Check the difficult Rohwer reset branch with Newton implicit solves
+        run: |
+          uv run --locked --extra jaxkineticmodel python scripts/diagnose_jax_paired.py --model 38 --root-finder Newton --root-find-max-steps 20 --branch 698ea588e8ce617393a9d712c09db85d171278dff6e9291ce785e1e3f71924df --output results/catalog-paired-jax-newton-ci
+          uv run --locked python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path("results/catalog-paired-jax-newton-ci")
+          report = json.loads((root / "report.json").read_text())
+          assert report["status"] == "completed"
+          assert report["confirmed_branches"] == report["expected_branches"] == 1
+          branch = json.loads((root / report["branches"][0]["file"]).read_text())
+          assert len(branch["comparisons"]) == 5
+          assert all(c["passed"] and c["samples"] == 30001 for c in branch["comparisons"].values())
+          print("Rohwer: both JAX and RoadRunner requests and all five comparisons pass.")
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: catalog-jax-validation
-          path: python/results/catalog-jax-ci/
+          path: |
+            python/results/catalog-jax-ci/
+            python/results/catalog-paired-jax-newton-ci/
   catalog-memory:
     runs-on: ubuntu-latest
     timeout-minutes: 30

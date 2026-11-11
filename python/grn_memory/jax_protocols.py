@@ -53,7 +53,7 @@ def supported_model(path):
 
 
 @lru_cache(maxsize=8)
-def _compiled(path, sha256, rtol, atol, solver):
+def _compiled(path, sha256, rtol, atol, solver, root_finder, root_find_max_steps):
     import diffrax
     import jax
     import jax.numpy as jnp
@@ -70,7 +70,11 @@ def _compiled(path, sha256, rtol, atol, solver):
     if model.species_names != list(targets) or len(model.y0) != len(targets) or not targets:
         raise ValueError("JAX independent state inventory differs from SBML")
     ode.dt0 = 1e-4
-    ode._change_solver(getattr(diffrax, solver)(), rtol=rtol, atol=atol)
+    solver_options = {"root_find_max_steps": root_find_max_steps}
+    if root_finder == "Newton":
+        import optimistix
+        solver_options["root_finder"] = diffrax.with_stepsize_controller_tols(optimistix.Newton)()
+    ode._change_solver(getattr(diffrax, solver)(**solver_options), rtol=rtol, atol=atol)
     solve = jax.jit(lambda times, state: ode(times, state, model.parameters))
     factors = np.array([model.compartments[model.model.getSpecies(s).getCompartment()]
                         if s in model.amount_species else 1. for s in model.species_names])
@@ -80,7 +84,8 @@ def _compiled(path, sha256, rtol, atol, solver):
 
 
 def jax_protocol_trajectory(path, times, trains, *, rtol=1e-10, atol=1e-12,
-                            solver="Kvaerno5", evidence=None):
+                            solver="Kvaerno5", root_finder="VeryChord",
+                            root_find_max_steps=10, evidence=None):
     """Integrate all requested observables; never return an incomplete trajectory.
 
 The optional evidence dictionary records reset and segment counts, including
@@ -97,6 +102,10 @@ cache key, so replacing an XML file cannot reuse a stale compiled model.
         raise ValueError("Positive finite solver tolerances are required")
     if solver not in ("Kvaerno3", "Kvaerno4", "Kvaerno5"):
         raise ValueError("Choose Kvaerno3, Kvaerno4 or Kvaerno5")
+    if root_finder not in ("VeryChord", "Newton"):
+        raise ValueError("Choose VeryChord or Newton for implicit stage solves")
+    if type(root_find_max_steps) is not int or root_find_max_steps < 1:
+        raise ValueError("A positive integer implicit iteration limit is required")
     if any(t.stop > times[-1] for t in trains):
         raise ValueError("Reset train extends beyond the simulation window")
     supported_model(path)
@@ -121,13 +130,15 @@ cache key, so replacing an XML file cannot reuse a stale compiled model.
         if np.any(distance <= 1e-10):
             raise ValueError("Sample just before or after resets, not at an ambiguous reset instant")
     source_hash = hashlib.sha256(path.read_bytes()).hexdigest()
-    model, ode, solve, factors, observables, asarray = _compiled(str(path), source_hash, rtol, atol, solver)
+    model, ode, solve, factors, observables, asarray = _compiled(
+        str(path), source_hash, rtol, atol, solver, root_finder, root_find_max_steps)
     indices = {s: i for i, s in enumerate(model.species_names)}
     state = np.asarray(model.y0).copy()
     states = np.full((len(times), len(state)), np.nan)
     edges = np.r_[0., resets, times[-1]]
     evidence = {} if evidence is None else evidence
     evidence.update(model_sha256=source_hash, solver=solver, rtol=rtol, atol=atol,
+        root_finder=root_finder, root_find_max_steps=root_find_max_steps,
         x64=True, initial_step=1e-4, maximum_steps_per_interval=ode.max_steps,
         absolute_time_preserved=True, expected_resets=len(resets), performed_resets=0,
         expected_train_reset_counts=[len(t.indices()) if t.values else 0 for t in trains],

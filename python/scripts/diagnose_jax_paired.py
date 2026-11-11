@@ -67,6 +67,7 @@ def diagnose(args):
     sources.update({"grn_memory/"+name: digest(ROOT/"grn_memory"/name)
                     for name in ("jax_protocols.py", "catalog_repeated.py")})
     metadata = {"model_id": mid, "model_sha256": info["sha256"], "jax_solver": args.solver,
+        "jax_root_finder": args.root_finder, "jax_root_find_max_steps": args.root_find_max_steps,
         "source_report_sha256": digest(source), "source_fingerprint": original["fingerprint"],
         "source_archive_sha256": digest(archive), "script_sha256": digest(Path(__file__)),
         "implementation_sha256": sources, "integration_requests": requests,
@@ -102,7 +103,8 @@ def diagnose(args):
             began = time.monotonic()
             try:
                 if label.startswith("jax"):
-                    trace = jax_protocol_trajectory(path, grid, trains, **request, solver=args.solver, evidence=evidence)
+                    trace = jax_protocol_trajectory(path, grid, trains, **request, solver=args.solver,
+                        root_finder=args.root_finder, root_find_max_steps=args.root_find_max_steps, evidence=evidence)
                 else:
                     trace = protocol_trajectory(path, grid, trains, "roadrunner", **request)
                 trajectories[label] = trace
@@ -143,5 +145,7 @@ if __name__ == "__main__":
     parser.add_argument("--rtol", type=float)
     parser.add_argument("--atol", type=float)
     parser.add_argument("--solver", choices=("Kvaerno3", "Kvaerno4", "Kvaerno5"), default="Kvaerno5")
+    parser.add_argument("--root-finder", choices=("VeryChord", "Newton"), default="VeryChord")
+    parser.add_argument("--root-find-max-steps", type=int, default=10)
     parser.add_argument("--resume", action="store_true")
     diagnose(parser.parse_args())

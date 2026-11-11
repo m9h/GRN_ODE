@@ -23,8 +23,11 @@ def autonomous_decay(tmp_path):
     return path
 
 
-@pytest.mark.parametrize("solver", ["Kvaerno3", "Kvaerno4", "Kvaerno5"])
-def test_resets_carry_unforced_states_amounts_and_derived_observables(tmp_path, solver):
+@pytest.mark.parametrize("solver,root_finder", [
+    ("Kvaerno3", "VeryChord"), ("Kvaerno4", "VeryChord"),
+    ("Kvaerno5", "VeryChord"), ("Kvaerno5", "Newton"),
+])
+def test_resets_carry_unforced_states_amounts_and_derived_observables(tmp_path, solver, root_finder):
     pytest.importorskip("jaxkineticmodel")
     path = autonomous_decay(tmp_path)
     original = path.read_bytes()
@@ -32,7 +35,8 @@ def test_resets_carry_unforced_states_amounts_and_derived_observables(tmp_path, 
     trains = [ResetTrain(.4, 1.6, {"A": 4.}, interval=.4),
               ResetTrain(.4, 1.2, {"B": 4.}, interval=.4, include_start=True, include_stop=True)]
     evidence = {}
-    trace = jax_protocol_trajectory(path, times, trains, solver=solver, evidence=evidence)
+    trace = jax_protocol_trajectory(path, times, trains, solver=solver,
+        root_finder=root_finder, root_find_max_steps=20 if root_finder == "Newton" else 10, evidence=evidence)
     for species, onset in (("A", .8), ("B", .4)):
         last = np.where(times > 1.2, 1.2, np.where(times > .8, .8,
                         np.where(times > onset, onset, 0.)))
@@ -44,6 +48,7 @@ def test_resets_carry_unforced_states_amounts_and_derived_observables(tmp_path, 
     assert evidence["train_reset_counts"] == [2, 3]
     assert evidence["completed_segments"] == 4 and evidence["completed"]
     assert evidence["absolute_time_preserved"]
+    assert evidence["root_finder"] == root_finder
     for engine in ("roadrunner", "copasi"):
         reference = protocol_trajectory(path, times, trains, engine)
         assert comparison(reference, trace)["passed"]
