@@ -23,11 +23,13 @@ single-input stimulation cases across all 35, with complete-state interventions,
 untreated controls and extended relaxation. The [JAX catalog audit](CATALOG_JAX.md)
 validates 32 original baselines and explicitly identifies three unsupported
 models. The [repeated-stimulation screen](CATALOG_REPEATED.md) also passes all
-538 cases across all 35, with matched isolated-pulse controls. The
-[paired-learning screen](CATALOG_PAIRED.md) passes its initial pilots and is
-running 4,208 stimulus pairs with sham, UCS-only and CS-only controls. The
-[three-trial breaking screen](CATALOG_BREAKING.md) is also running after a
-successful 119-branch pilot. Full paired-learning and breaking results remain pending.
+538 cases across all 35 on macOS and Linux, with matched isolated-pulse controls.
+The [paired-learning screen](CATALOG_PAIRED.md) has evaluated all 4,208 stimulus
+pairs with sham, UCS-only and CS-only controls: 4,166 pass and 42 remain failed
+or numerically unresolved. Complete attempted coverage and original evidence
+are audited separately from validation success. The
+[three-trial breaking screen](CATALOG_BREAKING.md) is running after a successful
+119-branch pilot; its full-catalog results remain pending.
 
 ## Run it
 

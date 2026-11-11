@@ -12,14 +12,19 @@ trajectory acceptance tolerance.
 The first [Linux run](https://github.com/m9h/GRN_ODE/actions/runs/42760315960)
 completed 537/538 cases. COPASI stopped early during Rohwer's `EIICBP__down`
 repeated history (44,812 of 101,001 requested samples). This is a solver failure,
-not a completed comparison mismatch. The bounded retry described below addresses
-this platform-specific failure; Linux recovery remains under validation.
+not a completed comparison mismatch. The bounded retry described below resolves
+this platform-specific failure in the [completed Linux rerun](https://github.com/m9h/GRN_ODE/actions/runs/42766999555):
+**35/35 models and 538/538 cases pass**. Exactly one branch needs the declared
+retry. Its normalized discrepancy is 0.05069; the largest comparison discrepancy
+across the Linux run is 0.49412 (acceptance limit 1).
+The [Linux evidence manifest](results/catalog-repeated-recovery/linux-validation.json)
+records all 35 report hashes, the artifact identity and the complete retry record.
 The [failure extract](results/catalog-repeated-recovery/linux-initial-failure.json)
 records the original artifact and report hash. The recovery code passes all
 [26 Rohwer cases locally](results/catalog-repeated-recovery/report.json), with
 156 stimulated/control branches and unchanged controlled classifications.
-None needed a retry on macOS, so this local check does not establish that the
-Linux failure is resolved.
+None needed a retry on macOS; the separate Linux artifact establishes recovery
+on the platform that exhibited the failure.
 
 Every independently writable state is tested up and down. For each case, the
 continuous six-pulse history is compared with five additional histories that
@@ -199,6 +204,7 @@ addition to 35 untreated controls, before delay refinements.
 
 [Breaking acquired responses](CATALOG_BREAKING.md) is running after a successful
 119-branch pilot. The
-[paired-learning, transfer and delayed-cue screen](CATALOG_PAIRED.md) is running.
+[paired-learning, transfer and delayed-cue screen](CATALOG_PAIRED.md) has evaluated
+all 4,208 cases; 4,166 pass and 42 remain failed or numerically unresolved.
 None of these operational screens alone
 establishes clinical drug resistance or the original study's memory prevalence.

@@ -1,0 +1,3224 @@
+{
+  "network": 18,
+  "biomodel_id": "BIOMD0000000029",
+  "name": "Markevich2004_MAPK_phosphoRandomMM",
+  "configuration": {
+    "windows": {
+      "baseline": [
+        0.0,
+        50.0
+      ],
+      "train": [
+        50.0,
+        100.0
+      ],
+      "wash": [
+        100.0,
+        150.0
+      ],
+      "probe": [
+        150.0,
+        200.0
+      ],
+      "postprobe": [
+        200.0,
+        250.0
+      ],
+      "late": [
+        250.0,
+        300.0
+      ]
+    },
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "reset_interval": 0.1,
+    "include_onset": false,
+    "include_withdrawal": false,
+    "resets_per_training_or_probe": 499,
+    "calibration": "unchanged single-input reference levels from native t=0..50",
+    "summary_statistic": "arithmetic sample mean; not a continuous-time integral",
+    "candidate_selection": "resolved twofold UCS in both engines; no resolved twofold CS in either; three distinct identities",
+    "histories": [
+      "none",
+      "ucs",
+      "cs",
+      "paired"
+    ],
+    "probe_starts": [
+      150.0,
+      200.0
+    ],
+    "integration_settings": {
+      "roadrunner": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "copasi": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      }
+    },
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "timed_drive_encoding": null,
+    "candidate_plan_sha256": "5f483b9b06014729afec31f0edc8cb722c294113fe81cd8b252707ad23411973",
+    "negative_response_policy": "retain numerical result but exclude controlled learning interpretation"
+  },
+  "model_sha256": "c1eb117678b7d423b8e1d2fd7f493c865fb66559980256f3544938f5a431b530",
+  "reference_fingerprint": "ac67de39c4afc1e4d598766a3e4eb898473b4b5bbdac80522c9ee3b3243fc57d",
+  "reference_file_sha256": "923970497579f416bc7c709da4e84854cfb5906a26d0d177fce82b0f7da95415",
+  "implementation_sha256": {
+    "catalog_paired.py": "eedddae2c51ddcad8c11d4ef6de65d97ddb7539c73005d80318c90b26a0d1ccd",
+    "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+    "catalog_repeated.py": "15309e4fe6a5c160a91f98b4e35ba7d63f1e2a1d1b062f16989102491fb07e8e",
+    "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+    "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+    "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+    "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "fingerprint": "73f61c3be686f120e1ca27d505073a8612f646bc6db5973b9ecb5660b0679887",
+  "targets": {
+    "M": "concentration",
+    "MpY": "concentration",
+    "MpT": "concentration",
+    "Mpp": "concentration"
+  },
+  "excluded_species": {
+    "MEK": "constant",
+    "MKP3": "constant"
+  },
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "expected_cases": 8,
+  "expected_response_assessments": 8,
+  "expected_unique_branches": 63,
+  "cases": {
+    "MpT__up--M__down": {
+      "ucs": "MpT__up",
+      "cs": "M__down",
+      "responses": [
+        "Mpp"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "b975f1dc306b6fb8e627de6c8fb90ce5b6c50b4f5b1828c112d07be21991d726",
+        "none_delayed": "2c51ff191dbeaa60c2db1306b388cf629e4cc91da3e23c3d3dd793bb027b8cce",
+        "ucs_sham": "1c115789e674e33d066492b745e6a6fc9b5ddcf46396d6633646ea42556caca1",
+        "ucs_normal": "96f5e6e83b12706bd816c34c10b852f0dd29eaf7c8a6c7ad40ef0af8b53ed3ff",
+        "ucs_delayed": "1ba4b968315442b9aa57cfc95d72fcbd14d9651d499ded0ff916c7cb31ea685d",
+        "cs_sham": "aab4e7191c39646dea357b0ca949953939418b76940de332df2ee4d7b7aa13b3",
+        "cs_normal": "20a1cceb31f9e7981e503804405d5394303a99c6b0d34074117bb37b05470cef",
+        "cs_delayed": "32abf64810acad91de80b8e7135642a0de5631915960132f05850ffe5fb21495",
+        "paired_sham": "12ab71e495093a6dcd6798f9e8f637f406a5e562c7c3d2ca9604e95a7c8a777f",
+        "paired_normal": "50bcd93f537a86b4b513b793313321f4491c2b1c32eaf19d18e916c3db2454ab",
+        "paired_delayed": "bbe069df41f879827eecd1e045ed3ee4ace9ef5f2bbee70cb8dae1e9eeea4aac"
+      },
+      "levels": {
+        "MpT__up": 3763.588360643243,
+        "M__down": 4.797780623613452
+      },
+      "scores": {
+        "roadrunner": {
+          "Mpp": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 12.253106765638258,
+                  "resolution": 0.002511970093073913,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 294.59811194067333,
+                  "resolution": 0.09090936761369589,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -4.159389464030955,
+                  "resolution": 0.0004472572413863241,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": 162.1657525962337,
+                  "resolution": 0.1887493096473344,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 149.91264583059544,
+                  "resolution": 0.19126127974040832,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -132.43235934443965,
+                  "resolution": 0.27965867726103033,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 166.32514206026465,
+                  "resolution": 0.18919656688872075,
+                  "resolved_direction": 1
+                }
+              },
+              "factorial_interaction": {
+                "value": -116.01986311477043,
+                "resolution": 0.2826179045954905,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 282.34500517503506,
+                "resolution": 0.0934213377067698,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -16.412496229669213,
+                "resolution": 0.002959227334460237,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 303.357949132087,
+                  "resolution": 0.21632330803368438,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 222.27507283397017,
+                  "resolution": 0.31069796285735163,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 13.339069714664888,
+                  "resolution": 0.00305506962482533,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 199.92432990031193,
+                  "resolution": 0.10716491295030707,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -4.268509322651819,
+                  "resolution": 0.00037725996684049505,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": 75.03173266210888,
+                  "resolution": 0.21175678370428483,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 61.69266294744399,
+                  "resolution": 0.21481185332911015,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -124.89259723820305,
+                  "resolution": 0.3189216966545919,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 79.3002419847607,
+                  "resolution": 0.21213404367112532,
+                  "resolved_direction": 1
+                }
+              },
+              "factorial_interaction": {
+                "value": -107.28501820088634,
+                "resolution": 0.3223540262462577,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 186.58526018564703,
+                "resolution": 0.1102199825751324,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -17.607579037316707,
+                "resolution": 0.0034323295916658253,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 132.43673017511082,
+                  "resolution": 0.22521410133172376,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 94.92086384405638,
+                  "resolution": 0.3310924931838662,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": true,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.43324425616161,
+              "control_train": 21.67073855097067,
+              "control_probe": 56.66769894402868,
+              "control_postprobe": 69.7022057633008,
+              "ucs_train": 540.3199782741569,
+              "ucs_wash": 1464.930389554603,
+              "cs_train": 29.935293035527785,
+              "paired_train": 1237.5869713679558,
+              "paired_wash": 3414.0694820919616,
+              "ucs_probe": 2420.0282463127337,
+              "paired_probe": 4799.810617481477,
+              "paired_postprobe": 5559.756675408153,
+              "delayed_preprobe": 4637.644864885243,
+              "delayed_probe": 5331.4304589381745,
+              "delayed_sham": 5256.398726276066
+            }
+          }
+        },
+        "copasi": {
+          "Mpp": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 12.253106769045601,
+                  "resolution": 0.0025119700931542322,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 294.59811182636076,
+                  "resolution": 0.09090936755425053,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -4.159389463619419,
+                  "resolution": 0.0004472572412952616,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": 162.16575259267393,
+                  "resolution": 0.18874930964709857,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 149.91264582362834,
+                  "resolution": 0.1912612797402528,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -132.43235923368684,
+                  "resolution": 0.2796586772013491,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 166.32514205629334,
+                  "resolution": 0.18919656688839384,
+                  "resolved_direction": 1
+                }
+              },
+              "factorial_interaction": {
+                "value": -116.01986300102182,
+                "resolution": 0.2826179045357986,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 282.3450050573152,
+                "resolution": 0.09342133764740476,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -16.41249623266502,
+                "resolution": 0.0029592273344494937,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 303.35794910782533,
+                  "resolution": 0.216323308033053,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 222.27507281148837,
+                  "resolution": 0.3106979628566023,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 13.339069718381722,
+                  "resolution": 0.003055069624915095,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 199.92432984043035,
+                  "resolution": 0.10716491289291463,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -4.268509322078152,
+                  "resolution": 0.00037725996676440997,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": 75.03173264041106,
+                  "resolution": 0.2117567837037047,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 61.69266292202934,
+                  "resolution": 0.2148118533286198,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -124.89259720001928,
+                  "resolution": 0.31892169659661934,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 79.30024196248921,
+                  "resolution": 0.21213404367046912,
+                  "resolved_direction": 1
+                }
+              },
+              "factorial_interaction": {
+                "value": -107.28501815955941,
+                "resolution": 0.32235402618829884,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 186.58526012204862,
+                "resolution": 0.11021998251782973,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -17.607579040459875,
+                "resolution": 0.0034323295916795053,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 132.4367301303264,
+                  "resolution": 0.22521410133054165,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 94.92086381012086,
+                  "resolution": 0.331092493182394,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": true,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.433244256148692,
+              "control_train": 21.670738551035488,
+              "control_probe": 56.667698944333,
+              "control_postprobe": 69.70220576368651,
+              "ucs_train": 540.319977727793,
+              "ucs_wash": 1464.9303879832523,
+              "cs_train": 29.935293036773505,
+              "paired_train": 1237.5869713690458,
+              "paired_wash": 3414.069482087761,
+              "ucs_probe": 2420.028244769443,
+              "paired_probe": 4799.810617473801,
+              "paired_postprobe": 5559.756675380237,
+              "delayed_preprobe": 4637.644864881127,
+              "delayed_probe": 5331.430458912822,
+              "delayed_sham": 5256.398726272411
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 2.2422044160011865
+    },
+    "MpT__up--M__up": {
+      "ucs": "MpT__up",
+      "cs": "M__up",
+      "responses": [
+        "Mpp"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "62d7f86530136123f589e8f93693d3d4e25c3f44d57006afc41a51a3e03603e9",
+        "none_delayed": "57cb7b24b784acd5c32f9a4eb2a5ec13f5c1e07233f914abd79e629241bf8aa3",
+        "ucs_sham": "1c115789e674e33d066492b745e6a6fc9b5ddcf46396d6633646ea42556caca1",
+        "ucs_normal": "2fc05cf8fbdedb9d4f5b70e99d95aaf5adc27935e4cf0c52387c34f4815973d8",
+        "ucs_delayed": "39c0cb7ce787b95b3664ac1b220bb4cc04ff0b5669a953e34a6e63bba4ec14dd",
+        "cs_sham": "215b80974b446e474f267abee4ff5942e209018cc37bc5f53dfd415d04c1c917",
+        "cs_normal": "5a9d94b062ef0dc74bfe4645894a0dcdc632afa7cc2319d85b7a07c7e020c74e",
+        "cs_delayed": "5f16f903ae40b45c4df612fab083affc0e27b233b9b9d3c353e633885b1d0f7a",
+        "paired_sham": "eb938a961b32d8171e11a9a38c803f094519686960f1b032026b4275ab1084c5",
+        "paired_normal": "ff0e02b614f1f3b1583757145e19575c5809faf3bf70bc17975ab16ef648ead1",
+        "paired_delayed": "284b0d37d9b82501904e67e4a4b8be136f29b0b7a6c1c8858c0304197345e16f"
+      },
+      "levels": {
+        "MpT__up": 3763.588360643243,
+        "M__up": 80000.0
+      },
+      "scores": {
+        "roadrunner": {
+          "Mpp": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -7.43017714457843,
+                  "resolution": 0.002118304414869579,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -290.5894960094263,
+                  "resolution": 0.0792056154546939,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.004197113694813126,
+                  "resolution": 0.0005357246507225222,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -0.04864090943814858,
+                  "resolution": 0.0016915757578356981,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 7.381536235140281,
+                  "resolution": 0.003809880172705277,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 290.5408550999881,
+                  "resolution": 0.0808971912125296,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.04444379574333546,
+                  "resolution": 0.0022273004085582204,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 283.1148750691045,
+                "resolution": 0.0835512202781217,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -283.1593188648479,
+                "resolution": 0.08132391986956349,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 7.425980030883617,
+                "resolution": 0.0026540290655921012,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -0.18246577465554026,
+                  "resolution": 0.0021874955867297752,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 0.15814531993646597,
+                  "resolution": 0.003033283465647624,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -6.10489473612008,
+                  "resolution": 0.0026661903358096307,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -204.20244352164718,
+                  "resolution": 0.09908237748186789,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.0099049260400772,
+                  "resolution": 0.0005850911156014271,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -0.08577252015224701,
+                  "resolution": 0.0021894294518198408,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 6.019122215967833,
+                  "resolution": 0.0048556197876294714,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 204.11667100149492,
+                  "resolution": 0.10127180693368773,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.07586759411216981,
+                  "resolution": 0.002774520567421268,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 198.02168119141493,
+                "resolution": 0.10452308838509879,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -198.0975487855271,
+                "resolution": 0.10174856781767752,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 6.094989810080003,
+                "resolution": 0.0032512814514110574,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -0.29407959388599636,
+                  "resolution": 0.0026913368578636255,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 0.25119333380987285,
+                  "resolution": 0.0037860515837735455,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.43324425616161,
+              "control_train": 21.67073855097067,
+              "control_probe": 56.66769894402868,
+              "control_postprobe": 69.7022057633008,
+              "ucs_train": 540.3199782741569,
+              "ucs_wash": 1464.930389554603,
+              "cs_train": 12.03418506560332,
+              "paired_train": 17.92312874761099,
+              "paired_wash": 30.033368485764452,
+              "ucs_probe": 1834.840638362634,
+              "paired_probe": 42.26007349117338,
+              "paired_postprobe": 54.5911567809166,
+              "delayed_preprobe": 42.30871440061153,
+              "delayed_probe": 54.68785003541989,
+              "delayed_sham": 54.77362255557214
+            }
+          }
+        },
+        "copasi": {
+          "Mpp": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -7.430177155221315,
+                  "resolution": 0.002118304414668894,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -290.5894961065851,
+                  "resolution": 0.07920561539559161,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.004197120861102022,
+                  "resolution": 0.0005357246501546532,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -0.048640935275081176,
+                  "resolution": 0.001691575756883305,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 7.381536219946234,
+                  "resolution": 0.003809880171552199,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 290.54085517131,
+                  "resolution": 0.08089719115247491,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.044443814413979155,
+                  "resolution": 0.0022273004070379582,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 283.1148751369498,
+                "resolution": 0.08355122021729847,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -283.1593189513638,
+                "resolution": 0.0813239198102605,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 7.425980034360213,
+                "resolution": 0.002654029064823547,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -0.18246582676573553,
+                  "resolution": 0.0021874955852629295,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 0.15814535912819494,
+                  "resolution": 0.003033283463704582,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -6.104894748140872,
+                  "resolution": 0.002666190335584643,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -204.2024435985927,
+                  "resolution": 0.09908237742413417,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.009904933929856696,
+                  "resolution": 0.0005850911150321024,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -0.08577254961084435,
+                  "resolution": 0.002189429450806027,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 6.019122198530027,
+                  "resolution": 0.004855619786390671,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 204.11667104898186,
+                  "resolution": 0.10127180687494021,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.07586761568098765,
+                  "resolution": 0.0027745205658381298,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 198.02168123477085,
+                "resolution": 0.10452308832555696,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -198.09754885045183,
+                "resolution": 0.10174856775971883,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 6.094989814211015,
+                "resolution": 0.0032512814506167457,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -0.29407965319467166,
+                  "resolution": 0.0026913368562707547,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 0.2511933783892495,
+                  "resolution": 0.003786051581673768,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.433244256148692,
+              "control_train": 21.670738551035488,
+              "control_probe": 56.667698944333,
+              "control_postprobe": 69.70220576368651,
+              "ucs_train": 540.319977727793,
+              "ucs_wash": 1464.9303879832523,
+              "cs_train": 12.03418506034495,
+              "paired_train": 17.92312874281831,
+              "paired_wash": 30.033368474898936,
+              "ucs_probe": 1834.8406368364972,
+              "paired_probe": 42.260073454445084,
+              "paired_postprobe": 54.591156718190355,
+              "delayed_preprobe": 42.308714389720166,
+              "delayed_probe": 54.687849995345246,
+              "delayed_sham": 54.77362254495609
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 1.9312121250004566
+    },
+    "MpT__up--MpY__down": {
+      "ucs": "MpT__up",
+      "cs": "MpY__down",
+      "responses": [
+        "Mpp"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "f74bbe33cab2f2722ece40d8363784906a96b4296d7736d595f08292a3cd2e43",
+        "none_delayed": "792d2fc2792a9e58378eadc2c67ceb01410eb315038168108aa677f57a134ca5",
+        "ucs_sham": "1c115789e674e33d066492b745e6a6fc9b5ddcf46396d6633646ea42556caca1",
+        "ucs_normal": "86b11ad008ebb09a65610709fe8797120045d8307ea857fc3eb41464033f8158",
+        "ucs_delayed": "2b93cbce04b1f75bb6f5bf2bc6016ce99cced415d7f66a87b75121d860897519",
+        "cs_sham": "511920b0857dc7dda010a2c3bede26159dfcfdb4bd871a94e88e5a0a1f2dca3f",
+        "cs_normal": "c321212e563e096066fbd72c0c704033be9cb26c7ce149310a167cd83a01bd59",
+        "cs_delayed": "a04865779a6a227d102bac03d9024827fee4b7ccb635c055577ae3fccebce251",
+        "paired_sham": "264d907963a0fca0e74d3358a01043aea5ae661aa09368cd4bf7e24a9d4e72a0",
+        "paired_normal": "c07606baa62ead481d90d8051fb6867ff43cac29b73d7daab2f57e5debe689e6",
+        "paired_delayed": "e9ae2b2bb7727b9afe191fcc7d60e601f3a65aed1b3e46c59abdd402f5b66be4"
+      },
+      "levels": {
+        "MpT__up": 3763.588360643243,
+        "MpY__down": 0.0
+      },
+      "scores": {
+        "roadrunner": {
+          "Mpp": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -9.960464808702966,
+                  "resolution": 0.002067698661587088,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 189.1185454057636,
+                  "resolution": 0.0887997762829977,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -11.069996037158615,
+                  "resolution": 0.0005849066395822331,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": 174.02964809098057,
+                  "resolution": 0.11814952745838764,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 183.99011289968354,
+                  "resolution": 0.12021722611997472,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -15.088897314783026,
+                  "resolution": 0.20694930374138534,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 185.09964412813918,
+                  "resolution": 0.11873443409796987,
+                  "resolved_direction": 1
+                }
+              },
+              "factorial_interaction": {
+                "value": -13.979366086327376,
+                "resolution": 0.20960190904255466,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 199.07901021446656,
+                "resolution": 0.09086747494458479,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -1.1095312284556496,
+                "resolution": 0.002652605301169321,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 659.473855978833,
+                  "resolution": 0.15159014863939582,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 572.4590319333427,
+                  "resolution": 0.21066491236858964,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -8.722345648435883,
+                  "resolution": 0.0026138413175633146,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 207.40421687556136,
+                  "resolution": 0.10731451068981207,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -10.995687236431786,
+                  "resolution": 0.0005515368130195818,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": 292.9431265741987,
+                  "resolution": 0.14425953405130315,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 301.66547222263455,
+                  "resolution": 0.14687337536886644,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 85.53890969863733,
+                  "resolution": 0.2515740447411152,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 303.93881381063045,
+                  "resolution": 0.1448110708643227,
+                  "resolved_direction": 1
+                }
+              },
+              "factorial_interaction": {
+                "value": 87.81225128663323,
+                "resolution": 0.2547394228716981,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": 216.12656252399725,
+                "resolution": 0.10992835200737537,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -2.273341587995903,
+                "resolution": 0.003165378130582896,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "joint_exposure_candidate",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 864.9668534552338,
+                  "resolution": 0.17050342892182974,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 718.4952901681345,
+                  "resolution": 0.2426331959474813,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": true,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.43324425616161,
+              "control_train": 21.67073855097067,
+              "control_probe": 56.66769894402868,
+              "control_postprobe": 69.7022057633008,
+              "ucs_train": 540.3199782741569,
+              "ucs_wash": 1464.930389554603,
+              "cs_train": 15.558915986660075,
+              "paired_train": 670.0414669611448,
+              "paired_wash": 1945.2841602101437,
+              "ucs_probe": 2314.548679777824,
+              "paired_probe": 3040.748010505181,
+              "paired_postprobe": 4119.485643974312,
+              "delayed_preprobe": 2866.7183624142003,
+              "delayed_probe": 3752.9549145696774,
+              "delayed_sham": 3460.0117879954787
+            }
+          }
+        },
+        "copasi": {
+          "Mpp": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -9.960464808740696,
+                  "resolution": 0.002067698661598506,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 189.11854546447967,
+                  "resolution": 0.0887997762270129,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -11.069996037138255,
+                  "resolution": 0.0005849066395772853,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": 174.02964808602565,
+                  "resolution": 0.11814952745886415,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 183.99011289476636,
+                  "resolution": 0.12021722612046265,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -15.088897378454021,
+                  "resolution": 0.20694930368587705,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 185.0996441231639,
+                  "resolution": 0.11873443409844144,
+                  "resolved_direction": 1
+                }
+              },
+              "factorial_interaction": {
+                "value": -13.979366150056462,
+                "resolution": 0.20960190898705283,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 199.07901027322038,
+                "resolution": 0.09086747488861141,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -1.1095312283975591,
+                "resolution": 0.0026526053011757915,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 659.4738559636958,
+                  "resolution": 0.1515901486399311,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 572.459031920683,
+                  "resolution": 0.21066491236936313,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -8.722345648452226,
+                  "resolution": 0.0026138413175784162,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 207.40421689178083,
+                  "resolution": 0.10731451063394165,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -10.995687236306743,
+                  "resolution": 0.0005515368130111881,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": 292.9431265746571,
+                  "resolution": 0.1442595340521503,
+                  "resolved_direction": 1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 301.6654722231093,
+                  "resolution": 0.14687337536972872,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 85.53890968287624,
+                  "resolution": 0.25157404468609196,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 303.93881381096384,
+                  "resolution": 0.14481107086516148,
+                  "resolved_direction": 1
+                }
+              },
+              "factorial_interaction": {
+                "value": 87.81225127073075,
+                "resolution": 0.25473942281668155,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": 216.12656254023307,
+                "resolution": 0.10992835195152006,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -2.2733415878545173,
+                "resolution": 0.0031653781305896046,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "joint_exposure_candidate",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": 864.9668534474031,
+                  "resolution": 0.1705034289226229,
+                  "resolved_direction": 1
+                },
+                "half_retention_contrast": {
+                  "value": 718.4952901600745,
+                  "resolution": 0.24263319594869806,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": true,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.433244256148692,
+              "control_train": 21.670738551035488,
+              "control_probe": 56.667698944333,
+              "control_postprobe": 69.70220576368651,
+              "ucs_train": 540.319977727793,
+              "ucs_wash": 1464.9303879832523,
+              "cs_train": 15.558915986707348,
+              "paired_train": 670.0414669641214,
+              "paired_wash": 1945.284160212858,
+              "ucs_probe": 2314.548678407562,
+              "paired_probe": 3040.748010514616,
+              "paired_postprobe": 4119.485643980124,
+              "delayed_preprobe": 2866.7183624285904,
+              "delayed_probe": 3752.9549145910855,
+              "delayed_sham": 3460.0117880164285
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 2.0423799160016642
+    },
+    "MpT__up--MpY__up": {
+      "ucs": "MpT__up",
+      "cs": "MpY__up",
+      "responses": [
+        "Mpp"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "83f9cd41455c7ca55db6812ddb7fd4f487ae6cfa76f94a50c7235b45f52c0018",
+        "none_delayed": "97fb486fcff0eca17db1d99de5ff3c39a9396359155d6a9c859597e72bf33fa8",
+        "ucs_sham": "1c115789e674e33d066492b745e6a6fc9b5ddcf46396d6633646ea42556caca1",
+        "ucs_normal": "d32da420a7b491974c3048b679dec0d0d6143187a0326b0511887ecb5fde60fe",
+        "ucs_delayed": "bac372868337e149c9e888e8e9c9cd5cae50adbbeb747620a7c0e757a0b53953",
+        "cs_sham": "d5e5a9b8c2f85777b08f0dd12198d72884a49a0f377849b01498fbb1c8ab07c3",
+        "cs_normal": "66d408a956450ede91977fa681a2d8e515d27c9d61283594e2a60f42b9a7fffe",
+        "cs_delayed": "a7705ea44d50c2f19905a34c49bdd84a9d228106ebb4c60eb2b0e584bbc640c2",
+        "paired_sham": "ae23f34ea16681ef282337b34546137dbbed4c6562a2b7d673b80d918a96e10e",
+        "paired_normal": "cd527d4097d8e53a1fd15c2e9be52cf33e685879463f3b87a3c89655d5270c5a",
+        "paired_delayed": "0a396ef254daf9bfcdb5474a54aba4dc67db20314105ff2c5ec7eef69e66a7d2"
+      },
+      "levels": {
+        "MpT__up": 3763.588360643243,
+        "MpY__up": 27070.72946282549
+      },
+      "scores": {
+        "roadrunner": {
+          "Mpp": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 22.548854850601195,
+                  "resolution": 0.0027178850547731714,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -248.60772391183923,
+                  "resolution": 0.08004525089664563,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 0.11208542151189249,
+                  "resolution": 0.006152133548019011,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": -0.4764142061335974,
+                  "resolution": 0.012638014696862149,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -23.025269056734793,
+                  "resolution": 0.015355899751635321,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 248.13130970570563,
+                  "resolution": 0.09268326559350779,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.5884996276454899,
+                  "resolution": 0.01879014824488116,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 270.5680791347949,
+                "resolution": 0.10155328419629997,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -271.1565787624404,
+                "resolution": 0.0827631359514188,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": -22.436769429089303,
+                "resolution": 0.008870018602792181,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.628403399879062,
+                  "resolution": 0.017020088172080117,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 1.3901962968122632,
+                  "resolution": 0.02333909552051119,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 23.891546834765037,
+                  "resolution": 0.003266119167227333,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -169.6514905439626,
+                  "resolution": 0.09977339654142159,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 0.24069461175679407,
+                  "resolution": 0.008213086637285342,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": -0.7001994965633571,
+                  "resolution": 0.01703865225014643,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -24.591746331328395,
+                  "resolution": 0.020304771417373763,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 168.95129104739925,
+                  "resolution": 0.11681204879156801,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.9408941083201512,
+                  "resolution": 0.02525173888743177,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 192.6021432704075,
+                "resolution": 0.12829125459608068,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -193.54303737872766,
+                "resolution": 0.10303951570864892,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": -23.650852223008243,
+                "resolution": 0.011479205804512674,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -2.1896597062445835,
+                  "resolution": 0.021169179314234114,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 1.839559957962905,
+                  "resolution": 0.029688505439307327,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": true,
+              "long_recall": true,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.43324425616161,
+              "control_train": 21.67073855097067,
+              "control_probe": 56.66769894402868,
+              "control_postprobe": 69.7022057633008,
+              "ucs_train": 540.3199782741569,
+              "ucs_wash": 1464.930389554603,
+              "cs_train": 41.73838338717821,
+              "paired_train": 75.7361483167009,
+              "paired_wash": 199.43975821554196,
+              "ucs_probe": 1876.8224104602211,
+              "paired_probe": 315.7071603184869,
+              "paired_postprobe": 424.68300260206337,
+              "delayed_preprobe": 316.1835745246205,
+              "delayed_probe": 425.6112065053791,
+              "delayed_sham": 426.31140600194243
+            }
+          }
+        },
+        "copasi": {
+          "Mpp": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 22.54885486265195,
+                  "resolution": 0.002717885055026359,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -248.60772389439535,
+                  "resolution": 0.08004525083983541,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 0.11208543628114853,
+                  "resolution": 0.006152133548878008,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": -0.47641412445528886,
+                  "resolution": 0.012638014700548705,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -23.02526898710724,
+                  "resolution": 0.015355899755575064,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 248.13130976994006,
+                  "resolution": 0.0926832655403841,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.5884995607364374,
+                  "resolution": 0.01879014824942671,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 270.56807919631086,
+                "resolution": 0.10155328414428848,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -271.1565787570473,
+                "resolution": 0.08276313589486176,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": -22.4367694263708,
+                "resolution": 0.008870018603904366,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.6284032287162518,
+                  "resolution": 0.01702008817754074,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 1.3901961664886073,
+                  "resolution": 0.023339095527815094,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 23.891546847522832,
+                  "resolution": 0.003266119167497917,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -169.65149049217462,
+                  "resolution": 0.09977339648626254,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": 0.24069462309759615,
+                  "resolution": 0.008213086638043647,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": -0.7001993418620032,
+                  "resolution": 0.017038652255277828,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -24.591746189384835,
+                  "resolution": 0.020304771422775744,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 168.9512911503126,
+                  "resolution": 0.11681204874154036,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.9408939649595993,
+                  "resolution": 0.025251738893321475,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 192.60214337473786,
+                "resolution": 0.12829125454708193,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -193.54303733969743,
+                "resolution": 0.10303951565376046,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": -23.650852224425236,
+                "resolution": 0.011479205805541565,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -2.1896593949404632,
+                  "resolution": 0.02116917932246566,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 1.8395597240094617,
+                  "resolution": 0.029688505450104576,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": true,
+              "long_recall": true,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 4.433244256148692,
+              "control_train": 21.670738551035488,
+              "control_probe": 56.667698944333,
+              "control_postprobe": 69.70220576368651,
+              "ucs_train": 540.319977727793,
+              "ucs_wash": 1464.9303879832523,
+              "cs_train": 41.738383393021024,
+              "paired_train": 75.73614833210662,
+              "paired_wash": 199.43975826754533,
+              "ucs_probe": 1876.822409048687,
+              "paired_probe": 315.7071604514899,
+              "paired_postprobe": 424.68300282416044,
+              "delayed_preprobe": 316.1835745759452,
+              "delayed_probe": 425.6112067110147,
+              "delayed_sham": 426.3114060528767
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 1.9426281250016473
+    },
+    "Mpp__up--M__down": {
+      "ucs": "Mpp__up",
+      "cs": "M__down",
+      "responses": [
+        "MpT"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "b975f1dc306b6fb8e627de6c8fb90ce5b6c50b4f5b1828c112d07be21991d726",
+        "none_delayed": "2c51ff191dbeaa60c2db1306b388cf629e4cc91da3e23c3d3dd793bb027b8cce",
+        "ucs_sham": "822739dc536ac40e562454feff3f50a387901eba20cd3eb4e1d30a64ba4310d0",
+        "ucs_normal": "cfd3773e0c281040164f7e168ce98aacdb3d5362f63a9ca8933e6fb9c93dd734",
+        "ucs_delayed": "85ba0489ccebbf136af417f11feb75e9e9a55d76719d43a7b5f0b767aae66d2e",
+        "cs_sham": "aab4e7191c39646dea357b0ca949953939418b76940de332df2ee4d7b7aa13b3",
+        "cs_normal": "20a1cceb31f9e7981e503804405d5394303a99c6b0d34074117bb37b05470cef",
+        "cs_delayed": "32abf64810acad91de80b8e7135642a0de5631915960132f05850ffe5fb21495",
+        "paired_sham": "9121c705273296ad029520fd703c1c57bf114a141c910c3c8efad4168c336c96",
+        "paired_normal": "55a36f004b309d1c15f922d9df3930ea9eb2c4dc72f7bfab43aea4c662115f4c",
+        "paired_delayed": "8efbdd522991b86f3b7a4c9e5888a482090ef0ec95c9704a045c04ab83bea1b9"
+      },
+      "levels": {
+        "Mpp__up": 1187.875940396708,
+        "M__down": 4.797780623613452
+      },
+      "scores": {
+        "roadrunner": {
+          "MpT": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -22.776342223603834,
+                  "resolution": 0.0021173901462161995,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -45.36910360939265,
+                  "resolution": 0.012159270188310275,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -4.334176145473007,
+                  "resolution": 0.00032804452356472054,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -14.845260048920466,
+                  "resolution": 0.005432600480192999,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 7.931082174683368,
+                  "resolution": 0.007549990626409199,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 30.523843560472187,
+                  "resolution": 0.017591870668503276,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -10.511083903447458,
+                  "resolution": 0.00576064500375772,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 12.08167748234136,
+                "resolution": 0.020037305338284194,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -22.59276138578882,
+                "resolution": 0.014276660334526474,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 18.442166078130825,
+                "resolution": 0.00244543466978092,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -28.52955031178675,
+                  "resolution": 0.0049048084506147505,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 21.106920287326517,
+                  "resolution": 0.00762110869071125,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -23.2196281898825,
+                  "resolution": 0.002382746169707547,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -41.73753737436323,
+                  "resolution": 0.012626770846330987,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -4.4464699749423024,
+                  "resolution": 0.00029336607024463995,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -13.393411629990439,
+                  "resolution": 0.005207531224250677,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 9.82621655989206,
+                  "resolution": 0.007590277393958224,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 28.34412574437279,
+                  "resolution": 0.017834302070581665,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -8.946941655048136,
+                  "resolution": 0.005500897294495317,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 9.570967529432593,
+                "resolution": 0.02051041431053385,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -18.51790918448073,
+                "resolution": 0.015009517016038533,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 18.773158214940196,
+                "resolution": 0.0026761122399521866,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -25.099998232180482,
+                  "resolution": 0.004657180173763284,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 18.403292417185263,
+                  "resolution": 0.007260945785888622,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 22.599367457832884,
+              "control_train": 45.31684345802735,
+              "control_probe": 64.3179247672069,
+              "control_postprobe": 71.17346833762991,
+              "ucs_train": 158.1274233430164,
+              "ucs_wash": 287.6066711329042,
+              "cs_train": 20.632652322809598,
+              "paired_train": 109.50332421557768,
+              "paired_wash": 143.1010154664488,
+              "ucs_probe": 281.2922029030605,
+              "paired_probe": 128.38738198036475,
+              "paired_postprobe": 108.3504361094754,
+              "delayed_preprobe": 143.23264202928522,
+              "delayed_probe": 123.4865747912717,
+              "delayed_sham": 136.87998642126215
+            }
+          }
+        },
+        "copasi": {
+          "MpT": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -22.776342227735036,
+                  "resolution": 0.0021173901461566716,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -45.36910361906786,
+                  "resolution": 0.012159270185254867,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -4.334176144929539,
+                  "resolution": 0.00032804452350735833,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -14.84526005730379,
+                  "resolution": 0.005432600480410298,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 7.931082170431246,
+                  "resolution": 0.00754999062656697,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 30.523843561764068,
+                  "resolution": 0.017591870665665164,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -10.51108391237425,
+                  "resolution": 0.005760645003917656,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 12.081677478958571,
+                "resolution": 0.020037305335329193,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -22.59276139133282,
+                "resolution": 0.014276660331411537,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 18.442166082805496,
+                "resolution": 0.0024454346696640298,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -28.52955032310615,
+                  "resolution": 0.004904808450834239,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 21.106920294454255,
+                  "resolution": 0.007621108691039388,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -23.219628194117504,
+                  "resolution": 0.002382746169637514,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -41.737537380740605,
+                  "resolution": 0.012626770845034541,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -4.446469974329883,
+                  "resolution": 0.00029336607019187237,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -13.393411637337053,
+                  "resolution": 0.005207531224549622,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 9.826216556780452,
+                  "resolution": 0.0075902773941871355,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 28.344125743403552,
+                  "resolution": 0.01783430206958416,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -8.94694166300717,
+                  "resolution": 0.005500897294741494,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 9.57096752361593,
+                "resolution": 0.020510414309413548,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -18.5179091866231,
+                "resolution": 0.015009517014672055,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 18.77315821978762,
+                "resolution": 0.0026761122398293864,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -25.099998239200787,
+                  "resolution": 0.004657180174107401,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 18.40329242053226,
+                  "resolution": 0.007260945786382211,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 22.59936745797552,
+              "control_train": 45.316843458638324,
+              "control_probe": 64.3179247677843,
+              "control_postprobe": 71.1734683379966,
+              "ucs_train": 158.1274232217272,
+              "ucs_wash": 287.60667094048625,
+              "cs_train": 20.632652321041494,
+              "paired_train": 109.50332421322064,
+              "paired_wash": 143.10101547337953,
+              "ucs_probe": 281.2922028218377,
+              "paired_probe": 128.38738198160556,
+              "paired_postprobe": 108.3504361093029,
+              "delayed_preprobe": 143.23264203890935,
+              "delayed_probe": 123.486574795072,
+              "delayed_sham": 136.87998643240905
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 1.2353725829998439
+    },
+    "Mpp__up--M__up": {
+      "ucs": "Mpp__up",
+      "cs": "M__up",
+      "responses": [
+        "MpT"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "62d7f86530136123f589e8f93693d3d4e25c3f44d57006afc41a51a3e03603e9",
+        "none_delayed": "57cb7b24b784acd5c32f9a4eb2a5ec13f5c1e07233f914abd79e629241bf8aa3",
+        "ucs_sham": "822739dc536ac40e562454feff3f50a387901eba20cd3eb4e1d30a64ba4310d0",
+        "ucs_normal": "48ca7233bf0058dbc54d33832ee62f9c7e73bab5ff34f26a39e1d87d9831eaf1",
+        "ucs_delayed": "ffec462657a68f5926641e63d1c5ed4d9df74f3069e9740fdf6e586bae8e2b06",
+        "cs_sham": "215b80974b446e474f267abee4ff5942e209018cc37bc5f53dfd415d04c1c917",
+        "cs_normal": "5a9d94b062ef0dc74bfe4645894a0dcdc632afa7cc2319d85b7a07c7e020c74e",
+        "cs_delayed": "5f16f903ae40b45c4df612fab083affc0e27b233b9b9d3c353e633885b1d0f7a",
+        "paired_sham": "9805b4f12fd5715b41c6978cb067273bfdda19588d58902fdc13e3a9128c409f",
+        "paired_normal": "841292076d7eb3603a6161a3a3267d3483946db8404e5c88d317c647c67c2d07",
+        "paired_delayed": "c5fef103ad8e03a470928cafa4437b423089a45fe6ff17a0ed083acd1881e93c"
+      },
+      "levels": {
+        "Mpp__up": 1187.875940396708,
+        "M__up": 80000.0
+      },
+      "scores": {
+        "roadrunner": {
+          "MpT": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 30.00207103389178,
+                  "resolution": 0.003172958411366112,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 25.950144865272534,
+                  "resolution": 0.013585655157803578,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 0.011114274010537883,
+                  "resolution": 0.00820210243206941,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": -0.030388353331943563,
+                  "resolution": 0.009261563647385385,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -30.032459387223724,
+                  "resolution": 0.012434522058751497,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -25.980533218604478,
+                  "resolution": 0.022847218805188963,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.041502627342481446,
+                  "resolution": 0.017463666079454793,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 4.010423541276765,
+                "resolution": 0.03422227964862448,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -4.0519261686192465,
+                "resolution": 0.01675861356916969,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": -29.990956759881243,
+                "resolution": 0.011375060843435522,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -0.10413478737967807,
+                  "resolution": 0.01228479681235901,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 0.08894061071370629,
+                  "resolution": 0.0169155786360517,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 30.642054695271298,
+                  "resolution": 0.003459979827410623,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 34.357233053155824,
+                  "resolution": 0.014148666254881368,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 0.025681876672365433,
+                  "resolution": 0.010817782282010652,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": -0.04455602775715306,
+                  "resolution": 0.01228598838755146,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -30.68661072302845,
+                  "resolution": 0.015745968214962082,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -34.40178908091298,
+                  "resolution": 0.026434654642432828,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.0702379044295185,
+                  "resolution": 0.023103770669562113,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": -3.785416262314044,
+                "resolution": 0.0407124167518541,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 3.7151783578845254,
+                "resolution": 0.01760864608229199,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -30.616372818598933,
+                "resolution": 0.014277762109421275,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "joint_exposure_candidate",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -0.1381365291772454,
+                  "resolution": 0.015263788644630226,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 0.11585851529866886,
+                  "resolution": 0.021406782838405955,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": true,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 22.599367457832884,
+              "control_train": 45.31684345802735,
+              "control_probe": 64.3179247672069,
+              "control_postprobe": 71.17346833762991,
+              "ucs_train": 158.1274233430164,
+              "ucs_wash": 287.6066711329042,
+              "cs_train": 71.4811961123612,
+              "paired_train": 76.86431325780693,
+              "paired_wash": 154.7864313528078,
+              "ucs_probe": 352.6114513777257,
+              "paired_probe": 231.5188970079686,
+              "paired_postprobe": 307.06285291528536,
+              "delayed_preprobe": 231.54928536130055,
+              "delayed_probe": 307.1224316749079,
+              "delayed_sham": 307.16698770266504
+            }
+          }
+        },
+        "copasi": {
+          "MpT": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": 30.002071060426246,
+                  "resolution": 0.0031729584119198975,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 25.95014487832509,
+                  "resolution": 0.013585655155202724,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 0.011114292053662211,
+                  "resolution": 0.008202102433513239,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": -0.030388247385445766,
+                  "resolution": 0.009261563651730831,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -30.032459307811692,
+                  "resolution": 0.012434522063650729,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -25.980533125710537,
+                  "resolution": 0.022847218806933557,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.04150253943910798,
+                  "resolution": 0.01746366608524407,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 4.010423642662047,
+                "resolution": 0.0342222796523667,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -4.051926182101155,
+                "resolution": 0.016758613567122622,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": -29.990956768372584,
+                "resolution": 0.011375060845433136,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -0.10413453137510942,
+                  "resolution": 0.012284796819610925,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 0.08894040768238654,
+                  "resolution": 0.01691557864547634,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": 30.642054725053754,
+                  "resolution": 0.0034599798280209393,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 34.3572330965323,
+                  "resolution": 0.014148666254579998,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": 0.02568189637827345,
+                  "resolution": 0.010817782283453743,
+                  "resolved_direction": 1
+                },
+                "paired": {
+                  "value": -0.044555853111830857,
+                  "resolution": 0.01228598839317619,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -30.686610578165585,
+                  "resolution": 0.01574596822119713,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -34.40178894964413,
+                  "resolution": 0.026434654647756187,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.0702377494901043,
+                  "resolution": 0.023103770676629932,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": -3.785416120968648,
+                "resolution": 0.04071241675923087,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 3.715178371478544,
+                "resolution": 0.01760864608260094,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": -30.61637282867548,
+                "resolution": 0.014277762111474681,
+                "resolved_direction": -1
+              },
+              "negative_response_values": false,
+              "category": "joint_exposure_candidate",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -0.1381361727100625,
+                  "resolution": 0.015263788653750006,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 0.11585824615414708,
+                  "resolution": 0.0214067828503381,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": true,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 22.59936745797552,
+              "control_train": 45.316843458638324,
+              "control_probe": 64.3179247677843,
+              "control_postprobe": 71.1734683379966,
+              "ucs_train": 158.1274232217272,
+              "ucs_wash": 287.60667094048625,
+              "cs_train": 71.48119612583142,
+              "paired_train": 76.86431328195047,
+              "paired_wash": 154.78643140905598,
+              "ucs_probe": 352.61145131923064,
+              "paired_probe": 231.51889716957803,
+              "paired_postprobe": 307.0628532245855,
+              "delayed_preprobe": 231.54928541696347,
+              "delayed_probe": 307.1224319028488,
+              "delayed_sham": 307.16698775596063
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 1.0083315830015636
+    },
+    "Mpp__up--MpY__down": {
+      "ucs": "Mpp__up",
+      "cs": "MpY__down",
+      "responses": [
+        "MpT"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "f74bbe33cab2f2722ece40d8363784906a96b4296d7736d595f08292a3cd2e43",
+        "none_delayed": "792d2fc2792a9e58378eadc2c67ceb01410eb315038168108aa677f57a134ca5",
+        "ucs_sham": "822739dc536ac40e562454feff3f50a387901eba20cd3eb4e1d30a64ba4310d0",
+        "ucs_normal": "927edb7e078fc6127ba1354fc19b208c270d88ea4fea0b43c16e18094b5abfa4",
+        "ucs_delayed": "82845f191f21bad84c1340b678a3ccbb71b5c5b67c30cba0ee3d22b2349134f2",
+        "cs_sham": "511920b0857dc7dda010a2c3bede26159dfcfdb4bd871a94e88e5a0a1f2dca3f",
+        "cs_normal": "c321212e563e096066fbd72c0c704033be9cb26c7ce149310a167cd83a01bd59",
+        "cs_delayed": "a04865779a6a227d102bac03d9024827fee4b7ccb635c055577ae3fccebce251",
+        "paired_sham": "12cea40281c54592564340e924c0afcff741d844ce077e59362475584cd2e620",
+        "paired_normal": "9351a9de86ae118a56745c6a30a41dfd99f1053cad63d7be50117e89a9a4af14",
+        "paired_delayed": "bd9bd10df7842f027ac4f495954b1d3835986a2d60f5c29a876daa0a19d75733"
+      },
+      "levels": {
+        "Mpp__up": 1187.875940396708,
+        "MpY__down": 0.0
+      },
+      "scores": {
+        "roadrunner": {
+          "MpT": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -15.840938694417595,
+                  "resolution": 0.002256098216799924,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -151.3443113894178,
+                  "resolution": 0.010039766032709771,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -9.715015683783836,
+                  "resolution": 0.0004366523522036419,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -33.24892689803229,
+                  "resolution": 0.0021789576695663638,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -17.407988203614693,
+                  "resolution": 0.004435055886366288,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 118.09538449138552,
+                  "resolution": 0.012218723702276136,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -23.53391121424845,
+                  "resolution": 0.002615610021770006,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 111.96946148075176,
+                "resolution": 0.014911474271279701,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -135.50337269500022,
+                "resolution": 0.012295864249509696,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 6.125923010633759,
+                "resolution": 0.0026927505690035663,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -25.853060534725287,
+                  "resolution": 0.00190298309235033,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 9.228597085709143,
+                  "resolution": 0.002992461927133512,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -18.32886435490164,
+                  "resolution": 0.002480561446407164,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -169.97193996594496,
+                  "resolution": 0.010062082794499352,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -9.685520858041675,
+                  "resolution": 0.0004215607019713672,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -24.170376602489476,
+                  "resolution": 0.0019366367709950463,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -5.841512247587836,
+                  "resolution": 0.004417198217402211,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 145.80156336345547,
+                  "resolution": 0.0119987195654944,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -14.4848557444478,
+                  "resolution": 0.0023581974729664132,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 137.15821986659552,
+                "resolution": 0.01490084171387293,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -151.64307561104332,
+                "resolution": 0.012542644240906516,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 8.643343496859965,
+                "resolution": 0.0029021221483785313,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -17.37826400976946,
+                  "resolution": 0.001733588148263785,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 5.2930757085247215,
+                  "resolution": 0.002701906533761308,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": true,
+              "long_recall": true,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 22.599367457832884,
+              "control_train": 45.31684345802735,
+              "control_probe": 64.3179247672069,
+              "control_postprobe": 71.17346833762991,
+              "ucs_train": 158.1274233430164,
+              "ucs_wash": 287.6066711329042,
+              "cs_train": 37.89835544421671,
+              "paired_train": 155.70881914617536,
+              "paired_wash": 115.27371305498941,
+              "ucs_probe": 175.31699512303535,
+              "paired_probe": 37.84447829014295,
+              "paired_postprobe": 34.643047041395604,
+              "delayed_preprobe": 71.09340518817524,
+              "delayed_probe": 36.325730973631416,
+              "delayed_sham": 60.49610757612089
+            }
+          }
+        },
+        "copasi": {
+          "MpT": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -15.840938694556158,
+                  "resolution": 0.002256098216820249,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -151.34431130441052,
+                  "resolution": 0.010039766031548013,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -9.715015683661793,
+                  "resolution": 0.00043665235219750726,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -33.24892689759682,
+                  "resolution": 0.0021789576695573983,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -17.40798820304066,
+                  "resolution": 0.004435055886377648,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 118.09538440681371,
+                  "resolution": 0.01221872370110541,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -23.533911213935024,
+                  "resolution": 0.0026156100217549056,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 111.96946139591934,
+                "resolution": 0.014911474270123166,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -135.50337260985435,
+                "resolution": 0.012295864248368262,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 6.125923010894365,
+                "resolution": 0.0026927505690177564,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -25.85306053453391,
+                  "resolution": 0.001902983092342941,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 9.228597085735501,
+                  "resolution": 0.0029924619271216404,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -18.32886435489994,
+                  "resolution": 0.0024805614464218652,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -169.97193992535887,
+                  "resolution": 0.010062082794142174,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -9.685520857936904,
+                  "resolution": 0.00042156070196525244,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -24.170376602233894,
+                  "resolution": 0.0019366367709889414,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": -5.841512247333952,
+                  "resolution": 0.004417198217410807,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 145.80156332312498,
+                  "resolution": 0.011998719565131115,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -14.48485574429699,
+                  "resolution": 0.002358197472954194,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 137.15821982616194,
+                "resolution": 0.014900841713518234,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -151.64307557045893,
+                "resolution": 0.01254264424056404,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 8.643343496963038,
+                "resolution": 0.0029021221483871177,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -17.378264009852394,
+                  "resolution": 0.001733588148261809,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 5.293075708735447,
+                  "resolution": 0.0027019065337562796,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": true,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": true,
+              "long_recall": true,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 22.59936745797552,
+              "control_train": 45.316843458638324,
+              "control_probe": 64.3179247677843,
+              "control_postprobe": 71.1734683379966,
+              "ucs_train": 158.1274232217272,
+              "ucs_wash": 287.60667094048625,
+              "cs_train": 37.89835544434376,
+              "paired_train": 155.7088191447995,
+              "paired_wash": 115.27371305375954,
+              "ucs_probe": 175.31699513649502,
+              "paired_probe": 37.84447829013655,
+              "paired_postprobe": 34.643047041306566,
+              "delayed_preprobe": 71.09340518773337,
+              "delayed_probe": 36.32573097360658,
+              "delayed_sham": 60.496107575840476
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 1.0517841250002675
+    },
+    "Mpp__up--MpY__up": {
+      "ucs": "Mpp__up",
+      "cs": "MpY__up",
+      "responses": [
+        "MpT"
+      ],
+      "status": "passed",
+      "branches": {
+        "none_sham": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+        "none_normal": "83f9cd41455c7ca55db6812ddb7fd4f487ae6cfa76f94a50c7235b45f52c0018",
+        "none_delayed": "97fb486fcff0eca17db1d99de5ff3c39a9396359155d6a9c859597e72bf33fa8",
+        "ucs_sham": "822739dc536ac40e562454feff3f50a387901eba20cd3eb4e1d30a64ba4310d0",
+        "ucs_normal": "8f265ab7552afbc7f3191db94f6b6391821bad0bc4e907d37f6fa9f599a274e4",
+        "ucs_delayed": "0a57b262df8674337ae8b7bb95219adb5f7bfe4e165db9bb819b8ec05fc35d41",
+        "cs_sham": "d5e5a9b8c2f85777b08f0dd12198d72884a49a0f377849b01498fbb1c8ab07c3",
+        "cs_normal": "66d408a956450ede91977fa681a2d8e515d27c9d61283594e2a60f42b9a7fffe",
+        "cs_delayed": "a7705ea44d50c2f19905a34c49bdd84a9d228106ebb4c60eb2b0e584bbc640c2",
+        "paired_sham": "e7e7535ca433a786d4230cb63a7eefc9acf5d7bcb32b629e5aa079feadc7d90f",
+        "paired_normal": "4f9f5807ce36aa03603d627984b52b1d9937f9f2fa57100eec5b26f427363eca",
+        "paired_delayed": "92f2cf6789fbbcb0016e46bbabbba167ef0a265bca13f35eee9c0a445195d9cb"
+      },
+      "levels": {
+        "Mpp__up": 1187.875940396708,
+        "MpY__up": 27070.72946282549
+      },
+      "scores": {
+        "roadrunner": {
+          "MpT": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -3.004829537388609,
+                  "resolution": 0.002512820399940504,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -4.170026584178061,
+                  "resolution": 0.012983251728814567,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.10510387983462977,
+                  "resolution": 0.002074270669723385,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -0.32434828065505883,
+                  "resolution": 0.004369216627197338,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 2.6804812567335503,
+                  "resolution": 0.006882037027137843,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 3.8456783035230018,
+                  "resolution": 0.017352468356011907,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.21924440082042906,
+                  "resolution": 0.006443487296920724,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.9459526459690224,
+                "resolution": 0.021939559425675794,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -1.1651970467894515,
+                "resolution": 0.015496072128755072,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 2.8997256575539794,
+                "resolution": 0.004587091069663889,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.1938734798883672,
+                  "resolution": 0.005603747536610215,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 1.0316993395608378,
+                  "resolution": 0.007788355850208884,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -2.4333427215372865,
+                  "resolution": 0.0027984718790744515,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 3.8189736106563146,
+                  "resolution": 0.013537901066031378,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.22709340979574222,
+                  "resolution": 0.0025130683060245506,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -0.5693357793439304,
+                  "resolution": 0.005616238290621103,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 1.864006942193356,
+                  "resolution": 0.008414710169695555,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -4.388309390000245,
+                  "resolution": 0.019154139356652482,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.3422423695481882,
+                  "resolution": 0.008129306596645654,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": -6.594558701741789,
+                "resolution": 0.024465679541751485,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 6.252316332193601,
+                "resolution": 0.01633637294510583,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": 2.2062493117415443,
+                "resolution": 0.005311540185099002,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.9054165005351535,
+                  "resolution": 0.0068926258990676436,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 1.6207486108631883,
+                  "resolution": 0.009700745044378196,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 22.599367457832884,
+              "control_train": 45.31684345802735,
+              "control_probe": 64.3179247672069,
+              "control_postprobe": 71.17346833762991,
+              "ucs_train": 158.1274233430164,
+              "ucs_wash": 287.6066711329042,
+              "cs_train": 38.92152021415996,
+              "paired_train": 51.37602244347956,
+              "paired_wash": 79.59794962534977,
+              "ucs_probe": 322.4912799282751,
+              "paired_probe": 109.06324153960593,
+              "paired_postprobe": 139.49175167531118,
+              "delayed_preprobe": 109.38758982026098,
+              "delayed_probe": 140.11628937585562,
+              "delayed_sham": 140.68562515519955
+            }
+          }
+        },
+        "copasi": {
+          "MpT": {
+            "normal": {
+              "cue_effects": {
+                "none": {
+                  "value": -3.0048295477705977,
+                  "resolution": 0.002512820399755961,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": -4.170026636011812,
+                  "resolution": 0.012983251724915986,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.10510389053066405,
+                  "resolution": 0.002074270669102249,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -0.32434830676736226,
+                  "resolution": 0.004369216626204191,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 2.6804812410032355,
+                  "resolution": 0.006882037025960152,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": 3.84567832924445,
+                  "resolution": 0.017352468351120177,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.21924441623669821,
+                  "resolution": 0.00644348729530644,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": 0.9459526720045162,
+                "resolution": 0.02193955941997839,
+                "resolved_direction": 1
+              },
+              "ucs_history_effect": {
+                "value": -1.1651970882412144,
+                "resolution": 0.015496072124671948,
+                "resolved_direction": -1
+              },
+              "cs_history_effect": {
+                "value": 2.8997256572399337,
+                "resolution": 0.00458709106885821,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.1938735308899027,
+                  "resolution": 0.0056037475351544495,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 1.0316993775062215,
+                  "resolution": 0.007788355848256546,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "delayed": {
+              "cue_effects": {
+                "none": {
+                  "value": -2.433342732464851,
+                  "resolution": 0.002798471878870567,
+                  "resolved_direction": -1
+                },
+                "ucs": {
+                  "value": 3.8189735873197606,
+                  "resolution": 0.013537901064395747,
+                  "resolved_direction": 1
+                },
+                "cs": {
+                  "value": -0.22709341310658715,
+                  "resolution": 0.0025130683055920016,
+                  "resolved_direction": -1
+                },
+                "paired": {
+                  "value": -0.5693358181739256,
+                  "resolution": 0.005616238289408769,
+                  "resolved_direction": -1
+                }
+              },
+              "paired_minus_simpler_history": {
+                "none": {
+                  "value": 1.8640069142909255,
+                  "resolution": 0.008414710168279336,
+                  "resolved_direction": 1
+                },
+                "ucs": {
+                  "value": -4.388309405493686,
+                  "resolution": 0.019154139353804518,
+                  "resolved_direction": -1
+                },
+                "cs": {
+                  "value": -0.3422424050673385,
+                  "resolution": 0.00812930659500077,
+                  "resolved_direction": -1
+                }
+              },
+              "factorial_interaction": {
+                "value": -6.59455872485195,
+                "resolution": 0.024465679538267084,
+                "resolved_direction": -1
+              },
+              "ucs_history_effect": {
+                "value": 6.252316319784612,
+                "resolution": 0.016336372943266314,
+                "resolved_direction": 1
+              },
+              "cs_history_effect": {
+                "value": 2.206249319358264,
+                "resolution": 0.0053115401844625685,
+                "resolved_direction": 1
+              },
+              "negative_response_values": false,
+              "category": "cue_response_without_joint_specificity",
+              "recall": {
+                "cue_increment_after_withdrawal": {
+                  "value": -1.9054165741987106,
+                  "resolution": 0.0068926258971961545,
+                  "resolved_direction": -1
+                },
+                "half_retention_contrast": {
+                  "value": 1.6207486651117478,
+                  "resolution": 0.009700745041900539,
+                  "resolved_direction": 1
+                },
+                "category": "retained_half"
+              }
+            },
+            "paper_like": {
+              "ucs_direction": 1,
+              "cs_direction": 0,
+              "pretest": true,
+              "ucs_memory": true,
+              "pairing_memory": false,
+              "pairing_memory_without_ucs_memory": false,
+              "transfer": false,
+              "association": false,
+              "long_recall": false,
+              "short_recall": false,
+              "matlab_later_relaxation_candidate": false,
+              "delayed_cue_candidate": false
+            },
+            "paper_like_means": {
+              "baseline": 22.59936745797552,
+              "control_train": 45.316843458638324,
+              "control_probe": 64.3179247677843,
+              "control_postprobe": 71.1734683379966,
+              "ucs_train": 158.1274232217272,
+              "ucs_wash": 287.60667094048625,
+              "cs_train": 38.9215202101918,
+              "paired_train": 51.37602243758156,
+              "paired_wash": 79.59794961175498,
+              "ucs_probe": 322.49127980489374,
+              "paired_probe": 109.06324150172111,
+              "paired_postprobe": 139.49175161341628,
+              "delayed_preprobe": 109.38758980848847,
+              "delayed_probe": 140.11628932613226,
+              "delayed_sham": 140.6856251443062
+            }
+          }
+        }
+      },
+      "controlled_classification_disagreements": [],
+      "paper_like_disagreements": {},
+      "elapsed_seconds": 1.0052641670008597
+    }
+  },
+  "status": "passed",
+  "no_candidates": false,
+  "started_at": "2026-11-10T05:34:57.207409+00:00",
+  "control_comparison": {
+    "passed": true,
+    "max_scaled_error": 1.4934644073184598e-06,
+    "max_absolute_error": 3.342734089528676e-09,
+    "worst_observable": "Mpp",
+    "worst_time": 0.62,
+    "samples": 30001,
+    "observables": 6,
+    "per_observable_max_scaled_error": {
+      "M": 5.918509687609729e-07,
+      "MpY": 3.212685601038359e-07,
+      "MpT": 8.163884512098208e-07,
+      "Mpp": 1.4934644073184598e-06,
+      "MEK": 0.0,
+      "MKP3": 0.0
+    }
+  },
+  "branch_archive": {
+    "file": "BIOMD0000000029-branches.jsonl.gz",
+    "sha256": "10832c06bc405d9b3028c0b23faf08b38a11ae0a27dcbe16ee585d52dd312c8a",
+    "format": "gzip JSON Lines, one complete branch record per line"
+  },
+  "evaluated_cases": 8,
+  "passed_cases": 8,
+  "evaluated_unique_branches": 63,
+  "passed_unique_branches": 63,
+  "finished_at": "2026-11-10T05:35:10.060250+00:00",
+  "worker": {
+    "returncode": 0
+  }
+}

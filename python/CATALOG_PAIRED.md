@@ -1,13 +1,33 @@
 # Paired exposure, transfer and delayed cue tests across the catalog
 
 This stage extends the five-model demonstrations to every eligible ordered
-UCS/CS/response combination in the original 35-model catalog. The implementation
-and control tests are in place. Twelve pilot cases across networks 1, 4, 13,
+UCS/CS/response combination in the original 35-model catalog. The first full
+screen has evaluated **all 4,208 cases and 22,578 distinct branches across all
+35 models**. **4,166 cases pass; 42 do not.** All cases pass in 31 models.
+The [aggregate report](results/catalog-paired/report.json) links the original
+per-model results and hashed branch archives, including failures.
+
+The [coverage and evidence audit](results/catalog-paired/audit.json) independently
+rebuilds the candidate inventory, checks source/model/reference/archive hashes,
+verifies every branch reference, and recomputes the scores from saved window
+summaries. It establishes complete attempted coverage, not successful integration
+for every branch. Of 22,578 branches, **22,481 pass, 77 have incomplete solver
+output, and 20 complete but disagree beyond the full-horizon tolerance**.
+Follow-up recoveries are separate evidence and have not been substituted into
+this original report.
+
+| Network | Model | Cases passing | Incomplete branches | Completed mismatches |
+|---|---|---:|---:|---:|
+| 25 | François two-gene network, BioModel 539 | 43/44 | 1 | 0 |
+| 30 | Marhl calcium oscillations, BioModel 39 | 24/26 | 0 | 3 |
+| 32 | Vilar circadian oscillator, BioModel 35 | 136/142 | 7 | 9 |
+| 35 | Rohwer phosphotransferase system, BioModel 38 | 416/449 | 69 | 8 |
+
+Earlier pilots remain useful reproducibility checks. Twelve pilot cases across networks 1, 4, 13,
 26, 30 and 35 pass, as does network 14's untreated delay control: **133 distinct
 branches pass**, with a largest normalized trajectory discrepancy of 0.05873
 (acceptance limit 1). Controlled classifications agree; four response assessments
-have raw paper-style label differences, retained for inspection. The full run
-is in progress. **Full catalog results are not yet available.** The
+have raw paper-style label differences, retained for inspection. The
 [pilot report](results/catalog-paired-pilot/report.json) links the selected-case
 evidence. A second [smoke run](results/catalog-paired-pilot-smoke/report.json)
 fully covers networks 16 and 19 (six cases), plus network 14's delay control;
@@ -162,8 +182,9 @@ solver exception. Both attempts and their settings are recorded. A completed
 trajectory that disagrees with RoadRunner is not retried, and the acceptance
 threshold above is unchanged. An [isolated rerun](results/catalog-paired-recovery/BIOMD0000000539.json) passes all 12 branches of this
 case, including its shared untreated arm; this is selected-case evidence, not
-full-catalog completion. The original running catalog is kept at its original
-source revision while the recovery is validated separately.
+full-catalog validation. The same selected case also passes the
+[Linux solver-regression job](https://github.com/m9h/GRN_ODE/actions/runs/42766999555).
+The original full report is retained at its recorded source revision.
 
 ### Late divergence in the Marhl calcium model
 
@@ -220,6 +241,18 @@ Nine focused tests cover persistent stimulation, clock-dependent cue effects,
 UCS-only and CS-only explanations, additive versus nonadditive exposure,
 unresolved and negative states, the Boolean-recall bug, the distinction between
 relaxation and delayed probing, independent recall windows, schedule identity
-and complete candidate counts. The full-catalog outcome will be reported when
-available. Pilot case selection is deliberately partial, so its aggregate has
+and complete candidate counts. Pilot case selection is deliberately partial, so its aggregate has
 an incomplete-coverage status despite all selected cases passing.
+
+Audit the published full-screen evidence without running new integrations:
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/audit_paired_catalog.py \
+  --source-revision 70a3afad61357e94873ff62a7300c099b4c7ae3e
+```
+
+The audit's successful exit means the evidence is internally consistent and
+the full candidate inventory was attempted. Its output explicitly retains
+`all_numerical_validations_passed: false`. Trajectories are not stored, so this
+audit recomputes classifications from recorded window summaries, rather than
+rerunning the full pointwise simulator comparison.

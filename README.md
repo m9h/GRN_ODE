@@ -26,8 +26,10 @@ The [JAX catalog audit](python/CATALOG_JAX.md) independently validates 32 origin
 baselines and explicitly identifies three unsupported models.
 The [repeated-stimulation screen](python/CATALOG_REPEATED.md) now also passes
 all 538 cases across all 35, including matched isolated-pulse controls.
-The [paired-learning screen](python/CATALOG_PAIRED.md) is running after successful
-pilots. The [three-trial breaking screen](python/CATALOG_BREAKING.md) is also
+The [paired-learning screen](python/CATALOG_PAIRED.md) has evaluated all 4,208
+cases: 4,166 pass and 42 remain failed or numerically unresolved. The original
+results and complete coverage audit are published. The
+[three-trial breaking screen](python/CATALOG_BREAKING.md) is
 running after a successful 119-branch pilot; full-catalog breaking results remain pending. These catalog
 protocols preserve native events, rule variables and delay history and separate
 unresolved or physically invalid responses from interpretable effects.
