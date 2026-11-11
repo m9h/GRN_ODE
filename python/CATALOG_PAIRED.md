@@ -213,7 +213,7 @@ independent state and absolute time between exact external resets. It supports
 autonomous reaction models with fixed positive-volume compartments and derived
 assignment-rule observables. Native events, delays, rate/algebraic rules,
 initial assignments and conversion factors are explicitly unsupported here.
-These restrictions do not change the native catalog's coverage. Fifteen adapter
+These restrictions do not change the native catalog's coverage. Seventeen adapter
 tests include analytic solutions, amount/concentration conversion, simultaneous
 resets, source-cache invalidation and comparisons with both native engines.
 
@@ -227,6 +227,17 @@ both requests and agrees with its own refinement. Thus neither branch passes
 the complete diagnostic's refinement gate; the single successful comparison
 does not establish a general JAX recovery. Original COPASI failures remain
 unchanged and visible.
+
+An [alternative Kvaerno3 run](results/catalog-paired-jax-rohwer-kvaerno3/report.json)
+confirms `d4ace2879cde…` at both requests: all five cross-engine and refinement
+comparisons pass, with largest normalized discrepancy 0.09270. On
+`698ea588e8ce…`, the `1e-7/1e-9` trajectory completes and agrees with RoadRunner
+(0.07689), but the tighter JAX request stops during `[169.4, 169.5]`.
+That branch remains unconfirmed under this diagnostic's refinement gate.
+The adapter exposes Kvaerno3, Kvaerno4 and Kvaerno5 as explicit settings, with
+analytic and two-engine reset checks for each. It does not retry failed
+trajectories automatically. Add `--solver Kvaerno3` to reproduce this comparison
+in a separate output directory.
 
 ```bash
 python scripts/diagnose_jax_paired.py --model 38 \

@@ -23,7 +23,8 @@ def autonomous_decay(tmp_path):
     return path
 
 
-def test_resets_carry_unforced_states_amounts_and_derived_observables(tmp_path):
+@pytest.mark.parametrize("solver", ["Kvaerno3", "Kvaerno4", "Kvaerno5"])
+def test_resets_carry_unforced_states_amounts_and_derived_observables(tmp_path, solver):
     pytest.importorskip("jaxkineticmodel")
     path = autonomous_decay(tmp_path)
     original = path.read_bytes()
@@ -31,7 +32,7 @@ def test_resets_carry_unforced_states_amounts_and_derived_observables(tmp_path):
     trains = [ResetTrain(.4, 1.6, {"A": 4.}, interval=.4),
               ResetTrain(.4, 1.2, {"B": 4.}, interval=.4, include_start=True, include_stop=True)]
     evidence = {}
-    trace = jax_protocol_trajectory(path, times, trains, evidence=evidence)
+    trace = jax_protocol_trajectory(path, times, trains, solver=solver, evidence=evidence)
     for species, onset in (("A", .8), ("B", .4)):
         last = np.where(times > 1.2, 1.2, np.where(times > .8, .8,
                         np.where(times > onset, onset, 0.)))

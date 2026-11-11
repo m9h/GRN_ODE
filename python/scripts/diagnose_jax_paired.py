@@ -66,7 +66,7 @@ def diagnose(args):
     sources = source_hashes()
     sources.update({"grn_memory/"+name: digest(ROOT/"grn_memory"/name)
                     for name in ("jax_protocols.py", "catalog_repeated.py")})
-    metadata = {"model_id": mid, "model_sha256": info["sha256"],
+    metadata = {"model_id": mid, "model_sha256": info["sha256"], "jax_solver": args.solver,
         "source_report_sha256": digest(source), "source_fingerprint": original["fingerprint"],
         "source_archive_sha256": digest(archive), "script_sha256": digest(Path(__file__)),
         "implementation_sha256": sources, "integration_requests": requests,
@@ -102,7 +102,7 @@ def diagnose(args):
             began = time.monotonic()
             try:
                 if label.startswith("jax"):
-                    trace = jax_protocol_trajectory(path, grid, trains, **request, evidence=evidence)
+                    trace = jax_protocol_trajectory(path, grid, trains, **request, solver=args.solver, evidence=evidence)
                 else:
                     trace = protocol_trajectory(path, grid, trains, "roadrunner", **request)
                 trajectories[label] = trace
@@ -142,5 +142,6 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--rtol", type=float)
     parser.add_argument("--atol", type=float)
+    parser.add_argument("--solver", choices=("Kvaerno3", "Kvaerno4", "Kvaerno5"), default="Kvaerno5")
     parser.add_argument("--resume", action="store_true")
     diagnose(parser.parse_args())

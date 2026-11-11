@@ -53,7 +53,7 @@ def supported_model(path):
 
 
 @lru_cache(maxsize=8)
-def _compiled(path, sha256, rtol, atol):
+def _compiled(path, sha256, rtol, atol, solver):
     import diffrax
     import jax
     import jax.numpy as jnp
@@ -70,7 +70,7 @@ def _compiled(path, sha256, rtol, atol):
     if model.species_names != list(targets) or len(model.y0) != len(targets) or not targets:
         raise ValueError("JAX independent state inventory differs from SBML")
     ode.dt0 = 1e-4
-    ode._change_solver(diffrax.Kvaerno5(), rtol=rtol, atol=atol)
+    ode._change_solver(getattr(diffrax, solver)(), rtol=rtol, atol=atol)
     solve = jax.jit(lambda times, state: ode(times, state, model.parameters))
     factors = np.array([model.compartments[model.model.getSpecies(s).getCompartment()]
                         if s in model.amount_species else 1. for s in model.species_names])
@@ -79,7 +79,8 @@ def _compiled(path, sha256, rtol, atol):
     return model, ode, solve, factors, info["observables"], jnp.asarray
 
 
-def jax_protocol_trajectory(path, times, trains, *, rtol=1e-10, atol=1e-12, evidence=None):
+def jax_protocol_trajectory(path, times, trains, *, rtol=1e-10, atol=1e-12,
+                            solver="Kvaerno5", evidence=None):
     """Integrate all requested observables; never return an incomplete trajectory.
 
 The optional evidence dictionary records reset and segment counts, including
@@ -94,6 +95,8 @@ cache key, so replacing an XML file cannot reuse a stale compiled model.
         raise ValueError("Finite increasing sample times must start at zero")
     if not np.isfinite([rtol, atol]).all() or min(rtol, atol) <= 0:
         raise ValueError("Positive finite solver tolerances are required")
+    if solver not in ("Kvaerno3", "Kvaerno4", "Kvaerno5"):
+        raise ValueError("Choose Kvaerno3, Kvaerno4 or Kvaerno5")
     if any(t.stop > times[-1] for t in trains):
         raise ValueError("Reset train extends beyond the simulation window")
     supported_model(path)
@@ -118,13 +121,13 @@ cache key, so replacing an XML file cannot reuse a stale compiled model.
         if np.any(distance <= 1e-10):
             raise ValueError("Sample just before or after resets, not at an ambiguous reset instant")
     source_hash = hashlib.sha256(path.read_bytes()).hexdigest()
-    model, ode, solve, factors, observables, asarray = _compiled(str(path), source_hash, rtol, atol)
+    model, ode, solve, factors, observables, asarray = _compiled(str(path), source_hash, rtol, atol, solver)
     indices = {s: i for i, s in enumerate(model.species_names)}
     state = np.asarray(model.y0).copy()
     states = np.full((len(times), len(state)), np.nan)
     edges = np.r_[0., resets, times[-1]]
     evidence = {} if evidence is None else evidence
-    evidence.update(model_sha256=source_hash, solver="Kvaerno5", rtol=rtol, atol=atol,
+    evidence.update(model_sha256=source_hash, solver=solver, rtol=rtol, atol=atol,
         x64=True, initial_step=1e-4, maximum_steps_per_interval=ode.max_steps,
         absolute_time_preserved=True, expected_resets=len(resets), performed_resets=0,
         expected_train_reset_counts=[len(t.indices()) if t.values else 0 for t in trains],
