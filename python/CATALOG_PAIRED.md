@@ -468,6 +468,12 @@ retains **zero recovered cases**; the two complete cases would require 18
 branches, and completing only these three failed-branch diagnostics does not
 validate their controls or their full case scores.
 
+The optional [higher-precision diagnostic](PRECISION_DIAGNOSTICS.md) now tests
+the same full trajectories with 128-bit and 192-bit Taylor integration. It
+records precision convergence separately from agreement with a native solver
+and retains the complete sampled arrays. It does not promote the original
+failed cases or change their acceptance criteria.
+
 ```bash
 MPLBACKEND=Agg uv run --locked python scripts/diagnose_marhl_paired.py
 ```

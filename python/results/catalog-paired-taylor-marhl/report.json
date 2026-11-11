@@ -1,0 +1,69 @@
+{
+  "purpose": "Probe full failed paired branches with two arithmetic precisions.\n\nPrecision convergence and agreement with a native simulator are separate gates.\nThis diagnostic does not recover complete cases or validate uncomputed controls.\n",
+  "model_id": "BIOMD0000000039",
+  "model_sha256": "6b221222be03747b11454cc4f2a6218697d9c6367d3578a170c7cc5c34ad3b12",
+  "source_report_sha256": "6e0e2d9cf6f0ee1178c232244efe768ddf2cb7c9bc18ddd86e2322a37a14f65a",
+  "source_archive_sha256": "15eec80931e75a823e098b3e324bfa2e470d7e0723d4dc8b36aebb8aa5e59926",
+  "source_fingerprint": "e31053973c1f7356dd5733b98a519ab8006300abfd1645270e0ef3989103f9b2",
+  "requests": {
+    "taylor128": {
+      "precision": 128,
+      "tolerance": "1e-30"
+    },
+    "taylor192": {
+      "precision": 192,
+      "tolerance": "1e-45"
+    }
+  },
+  "native_request": {
+    "rtol": 1e-13,
+    "atol": 1e-15
+  },
+  "acceptance": {
+    "rtol": 2e-05,
+    "atol": 1e-07
+  },
+  "sample_grid_sha256": "c8915978ac88fb2578eb51e1b0d1ced4d38ef1b5c09fc94ebbf6fd2e94a4f2d0",
+  "samples": 30001,
+  "versions": {
+    "heyoka": "7.13.2",
+    "numpy": "2.5.4",
+    "python-libsbml": "5.21.2",
+    "libroadrunner": "2.11.0",
+    "pandas": "3.1.1"
+  },
+  "python": "3.12.16",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "implementation_sha256": {
+    "grn_memory/taylor_reference.py": "04a7ff10ca6d17d0650f7324c6bbd54ecc9a8ba120d7b7d846c01a279aeeb321",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "scripts/diagnose_taylor_paired.py": "bcfffc84c345859542024dc66722864907ccdf2a551e78b74579ea5db0dc6c8b"
+  },
+  "fingerprint": "bd7ac8d5f05a6c0392c75e957ab2337015ef90312313503f9855bb4c30015b6d",
+  "status": "completed",
+  "expected_branches": 3,
+  "branches": [
+    {
+      "branch_id": "7b2974bb7882dd2ae95c01d1bd2aa49030959f6a4ee804d6b51ee7a4494f5527",
+      "file": "7b2974bb7882dd2ae95c01d1bd2aa49030959f6a4ee804d6b51ee7a4494f5527.json",
+      "status": "precision_converged_native_mismatch"
+    },
+    {
+      "branch_id": "d0e2345138b33a16e86f80a3bdbbdae0ee5b590087440f3d36662d18827932b7",
+      "file": "d0e2345138b33a16e86f80a3bdbbdae0ee5b590087440f3d36662d18827932b7.json",
+      "status": "precision_converged_native_mismatch"
+    },
+    {
+      "branch_id": "d4e0182a177ec6c293ec29ffafcb6e902f448a9ce738a0e1c11ed60c8ca07ada",
+      "file": "d4e0182a177ec6c293ec29ffafcb6e902f448a9ce738a0e1c11ed60c8ca07ada.json",
+      "status": "precision_converged_native_mismatch"
+    }
+  ],
+  "started_at": "2026-11-11T23:08:35.668840+00:00",
+  "baseline": {
+    "file": "untreated_baseline.json",
+    "status": "confirmed"
+  },
+  "finished_at": "2026-11-11T23:12:03.276804+00:00"
+}

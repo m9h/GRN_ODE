@@ -28,7 +28,7 @@ four incomplete integrations and eight completed trajectory mismatches.
 | Network | Model | Passing / initial cases | Branches | Result |
 |---|---|---:|---:|---|
 | 3 | Goldbeter 1991, reduced mitotic oscillator | 6 / 8 | 41 | Four incomplete branches leave two conditional decisions unresolved. |
-| 4 | Goldbeter 1991, explicit inactive pools | 51 / 54 | 1,327 | Eight completed mismatches; separate refinement recovery continues. |
+| 4 | Goldbeter 1991, explicit inactive pools | 51 / 54 | 1,327 | Eight original mismatches; the separate full recovery below passes 54/54. |
 | 6 | Tyson 1991, two-variable cell cycle | 0 / 0 | 1 | No eligible cases; untreated control passes. |
 | 9 | Goldbeter 1995, circadian clock | 66 / 66 | 1,657 | Passes. |
 | 13 | Rohwer 2001, sucrose metabolism | 78 / 78 | 2,304 | Passes. |
@@ -157,6 +157,23 @@ published branch and case records. A local resume of the five-case first
 partition reused its 50 unchanged checkpoints without new integration. The
 public archives below contain the scientific evidence; resuming computation
 requires the artifacts' hidden `.evidence` directory as well.
+
+### Complete network 26 coverage with two remaining mismatches
+
+The [network 26 audit](results/catalog-breaking-linux-26/audit.json) checks all
+four partitions from the same distributed run. All **118 initial cases and
+524 conditional trials** were evaluated; **116 cases pass**. The partitions
+retain 2,168 branch records and 795 response-trials, with no unresolved
+conditional decisions. The timed-drive encoding and untreated controls are
+included in the audit.
+
+Fourteen completed branches in the last partition exceed the comparison
+threshold. They affect `MAPK__up--C_Raf_inactive__up` and
+`MSH__down--C_Raf_inactive__up`; their controlled classifications agree, but
+their full trajectories do not. The largest scaled discrepancy is 2.89774 in
+`C_Raf` near time 1912.62. The failed job represents these numerical mismatches,
+not a timeout or missing initial cases. The reports retain the original
+`1e-12/1e-18` requests on those branches; refinement recovery is still needed.
 
 ## Source protocol and documented discrepancies
 
@@ -326,10 +343,15 @@ and 0.06729 at `5e-14/5e-16`. The largest within-engine refinement discrepancies
 are 0.12549 for RoadRunner and 0.02173 for COPASI. Acceptance remains 1.
 
 Network 4 now requests `1e-13/1e-15` in both native solvers. Calibration, XML,
-reset timing, output grid and acceptance thresholds are unchanged. The complete
-54-case recovery run also reevaluates the conditional continuation rules and
-scores; these eight diagnostic branches alone do not validate that complete
-search. The [captured source evidence](results/catalog-breaking-goldbeter4-refinement/source-evidence.json)
+reset timing, output grid and acceptance thresholds are unchanged. The
+[complete recovery](results/catalog-breaking-goldbeter4-full-recovery/audit.json)
+now passes **all 54 cases, 323 conditional trials and 1,327 branches**, covering
+442 response-trials. The audit verifies the complete conditional search and
+recomputes every score against both engines. There are no incomplete branches,
+trajectory mismatches, solver retries or unresolved continuation decisions.
+The producer source is `40ca8ff586220a5df573e7d383defa2c19ed829a`.
+This recovery is separate from the preserved original 51/54 result.
+The [captured source evidence](results/catalog-breaking-goldbeter4-refinement/source-evidence.json)
 preserves the original model report, all eight failed branch records and the
 verified hashes of its complete branch inventory.
 
@@ -339,6 +361,10 @@ python scripts/diagnose_breaking_refinement.py \
   --output results/reproduced-goldbeter4-refinement
 python -m grn_memory.catalog_breaking --network 4 --workers 1 \
   --timeout 604800 --output results/catalog-breaking-goldbeter4-recovery
+python scripts/audit_breaking_catalog.py \
+  --input results/catalog-breaking-goldbeter4-full-recovery --network 4 \
+  --source-revision 40ca8ff586220a5df573e7d383defa2c19ed829a \
+  --output results/catalog-breaking-goldbeter4-full-recovery/audit.json
 ```
 
 ## Validation, checkpoints and evidence
