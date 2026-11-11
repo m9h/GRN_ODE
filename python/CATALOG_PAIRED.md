@@ -350,6 +350,12 @@ For Vilar, the six failed cases need **58 distinct branches**, including **42
 controls in addition to the 16 originally failed branches**. Confirming those
 16 branches alone cannot establish recovery of the six cases.
 
+For Rohwer, the 33 failed cases require **247 distinct branches**: the 77
+original failures and **170 additional controls**. Both disjoint groups are
+being computed with the same five-integration diagnostic. The commands below
+also apply to that model with `--model 38`; partial branch confirmation does
+not establish recovery of any complete case.
+
 Every recovered case must use `scipy_refined` and `roadrunner_refined` throughout
 all its arms. Every branch must pass all five full-trajectory comparisons,
 with all 30,001 samples and original observables. The audit checks model, source,
