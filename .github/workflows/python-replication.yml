@@ -151,7 +151,7 @@ jobs:
           path: python/results/catalog-paired-ci/
   catalog-jax:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: python
@@ -170,7 +170,7 @@ jobs:
           enable-cache: true
           cache-dependency-glob: python/uv.lock
       - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
-      - run: uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q tests/test_catalog_jax.py tests/test_jax_protocols.py
+      - run: uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q tests/test_catalog_jax.py tests/test_jax_protocols.py tests/test_scipy_reference.py
       - run: uv run --locked --extra jaxkineticmodel python -m grn_memory.catalog_jax --workers 2 --expect-unsupported 1 --expect-unsupported 6 --expect-unsupported 14 --output results/catalog-jax-ci
       - name: Check the difficult Rohwer reset branch with Newton implicit solves
         run: |
@@ -187,6 +187,21 @@ jobs:
           assert all(c["passed"] and c["samples"] == 30001 for c in branch["comparisons"].values())
           print("Rohwer: both JAX and RoadRunner requests and all five comparisons pass.")
           PY
+      - name: Check a difficult Vilar branch with the Radau reference
+        run: |
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/diagnose_scipy_paired.py --model 35 --branch 223eba38bdcf2bb1ec64ac048b179d978cf09281f6fa0f0afd0501d2ae4705a3 --output results/catalog-paired-scipy-ci
+          uv run --locked python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path("results/catalog-paired-scipy-ci")
+          report = json.loads((root / "report.json").read_text())
+          assert report["status"] == "completed"
+          assert report["confirmed_branches"] == report["expected_branches"] == 1
+          branch = json.loads((root / report["branches"][0]["file"]).read_text())
+          assert len(branch["comparisons"]) == 5
+          assert all(c["passed"] and c["samples"] == 30001 for c in branch["comparisons"].values())
+          print("Vilar: both Radau and tighter RoadRunner requests and all five comparisons pass.")
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -194,6 +209,7 @@ jobs:
           path: |
             python/results/catalog-jax-ci/
             python/results/catalog-paired-jax-newton-ci/
+            python/results/catalog-paired-scipy-ci/
   catalog-memory:
     runs-on: ubuntu-latest
     timeout-minutes: 30

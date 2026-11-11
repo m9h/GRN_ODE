@@ -1,0 +1,782 @@
+{
+  "branch_id": "a6778accda22910275beb93732d35760b3e55e276c8d74c373b1ff41b13581cc",
+  "fingerprint": "c1ff37aa9b4a76a5173e90a5c49b73356da1dc9781218a37aac5f175db74705e",
+  "status": "failed",
+  "specification": {
+    "training": [
+      "DA__up"
+    ],
+    "probe": "DAp__down",
+    "probe_start": 200.0
+  },
+  "reset_trains": [
+    {
+      "start": 50.0,
+      "stop": 100.0,
+      "values": {
+        "DA": 100.0
+      },
+      "interval": 0.1,
+      "include_start": false,
+      "include_stop": false
+    },
+    {
+      "start": 200.0,
+      "stop": 250.0,
+      "values": {
+        "DAp": 0.0
+      },
+      "interval": 0.1,
+      "include_start": false,
+      "include_stop": false
+    }
+  ],
+  "original_outcome": {
+    "passed": false,
+    "error": "ValueError: Unexpected output shape (20072, 13)"
+  },
+  "integrations": {
+    "jax": {
+      "request": {
+        "rtol": 1e-10,
+        "atol": 1e-12
+      },
+      "model_sha256": "3303169fdd9a672fa25c26586822c9a1b91ac461744d1926d317f493e6981237",
+      "solver": "Kvaerno5",
+      "rtol": 1e-10,
+      "atol": 1e-12,
+      "x64": true,
+      "initial_step": 0.0001,
+      "maximum_steps_per_interval": 300000,
+      "absolute_time_preserved": true,
+      "expected_resets": 998,
+      "performed_resets": 17,
+      "expected_train_reset_counts": [
+        499,
+        499
+      ],
+      "train_reset_counts": [
+        17,
+        0
+      ],
+      "completed_segments": 17,
+      "expected_segments": 999,
+      "completed": false,
+      "sample_count": 30001,
+      "last_interval": [
+        51.7,
+        51.8
+      ],
+      "error": "RuntimeError: JAX integration failed on [51.7, 51.8]: INTERNAL: CpuCallback error calling callback: Traceback (most recent call last):\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 829, in _wrapped_callback\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 232, in _callback\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 102, in pure_callback_impl\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 72, in __call__\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/equinox/_errors.py\", line 88, in raises\n_EquinoxRuntimeError: The maximum number of solver steps was reached. Try increasing `max_steps`.\n\n\n--------------------\nAn error occurred during the runtime of your JAX program! Unfortunately you do not appear to be using `equinox.filter_jit` (perhaps you are using `jax.jit` instead?) and so further information about the error cannot be displayed. (Probably you are seeing a very large but uninformative error message right now.) Please wrap your program with `equinox.filter_jit`.\n--------------------\n",
+      "seconds": 14.374808624997968
+    },
+    "roadrunner": {
+      "request": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "completed": true,
+      "samples": 30001,
+      "observables": 10,
+      "seconds": 0.584980750005343
+    },
+    "jax_refined": {
+      "request": {
+        "rtol": 1.0000000000000001e-11,
+        "atol": 1e-13
+      },
+      "model_sha256": "3303169fdd9a672fa25c26586822c9a1b91ac461744d1926d317f493e6981237",
+      "solver": "Kvaerno5",
+      "rtol": 1.0000000000000001e-11,
+      "atol": 1e-13,
+      "x64": true,
+      "initial_step": 0.0001,
+      "maximum_steps_per_interval": 300000,
+      "absolute_time_preserved": true,
+      "expected_resets": 998,
+      "performed_resets": 5,
+      "expected_train_reset_counts": [
+        499,
+        499
+      ],
+      "train_reset_counts": [
+        5,
+        0
+      ],
+      "completed_segments": 5,
+      "expected_segments": 999,
+      "completed": false,
+      "sample_count": 30001,
+      "last_interval": [
+        50.5,
+        50.6
+      ],
+      "error": "RuntimeError: JAX integration failed on [50.5, 50.6]: INTERNAL: CpuCallback error calling callback: Traceback (most recent call last):\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 829, in _wrapped_callback\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 232, in _callback\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 102, in pure_callback_impl\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/jax/_src/callback.py\", line 72, in __call__\n  File \"/Users/mhough/Workspace/GRN_ODE/python/.venv/lib/python3.12/site-packages/equinox/_errors.py\", line 88, in raises\n_EquinoxRuntimeError: The maximum number of solver steps was reached. Try increasing `max_steps`.\n\n\n--------------------\nAn error occurred during the runtime of your JAX program! Unfortunately you do not appear to be using `equinox.filter_jit` (perhaps you are using `jax.jit` instead?) and so further information about the error cannot be displayed. (Probably you are seeing a very large but uninformative error message right now.) Please wrap your program with `equinox.filter_jit`.\n--------------------\n",
+      "seconds": 16.53971245799039
+    },
+    "roadrunner_refined": {
+      "request": {
+        "rtol": 1e-13,
+        "atol": 1e-15
+      },
+      "completed": true,
+      "samples": 30001,
+      "observables": 10,
+      "seconds": 0.702696249994915
+    }
+  },
+  "comparisons": {
+    "roadrunner_vs_roadrunner_refined": {
+      "passed": true,
+      "max_scaled_error": 0.07373386772563009,
+      "max_absolute_error": 0.001195266842842102,
+      "worst_observable": "DA",
+      "worst_time": 50.90001,
+      "samples": 30001,
+      "observables": 10,
+      "per_observable_max_scaled_error": {
+        "EmptySet": 0.0,
+        "A": 0.0009065530259588274,
+        "C": 3.1355796735243434e-05,
+        "DA": 0.07373386772563009,
+        "DAp": 0.00015084295928785034,
+        "DR": 9.193921164340141e-05,
+        "DRp": 0.00015446132031282178,
+        "MA": 5.1064933764953744e-05,
+        "MR": 3.544051382185693e-05,
+        "R": 0.0001414893007927501
+      }
+    }
+  },
+  "windows": {
+    "roadrunner": {
+      "baseline": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 260.04962996110925,
+          "minimum": 0.0,
+          "maximum": 1744.9886710891988
+        },
+        "C": {
+          "mean": 540.1741809152325,
+          "minimum": 0.0,
+          "maximum": 2192.6926894332496
+        },
+        "DA": {
+          "mean": 0.7525142090951018,
+          "minimum": 0.027855317461894177,
+          "maximum": 1.0
+        },
+        "DAp": {
+          "mean": 0.24748579090490233,
+          "minimum": 0.0,
+          "maximum": 0.9721446825381084
+        },
+        "DR": {
+          "mean": 0.7716032063740408,
+          "minimum": 0.05420085345723177,
+          "maximum": 1.0
+        },
+        "DRp": {
+          "mean": 0.228396793625961,
+          "minimum": 0.0,
+          "maximum": 0.9457991465427675
+        },
+        "MA": {
+          "mean": 16.12386157162594,
+          "minimum": 0.0,
+          "maximum": 48.74505574748651
+        },
+        "MR": {
+          "mean": 22.8164037279828,
+          "minimum": 0.0,
+          "maximum": 86.09819509305434
+        },
+        "R": {
+          "mean": 530.2450642172054,
+          "minimum": 0.0,
+          "maximum": 1735.7877306063565
+        }
+      },
+      "train": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 59651568.84614647,
+          "minimum": 1.4792769251662043,
+          "maximum": 122067457.2673092
+        },
+        "C": {
+          "mean": 11880.571238633542,
+          "minimum": 296.9525020143405,
+          "maximum": 24338.17451634817
+        },
+        "DA": {
+          "mean": 0.16418223328476328,
+          "minimum": 0.020434150839664867,
+          "maximum": 99.9984842737239
+        },
+        "DAp": {
+          "mean": 24946.974673735313,
+          "minimum": 0.02855174373598618,
+          "maximum": 49886.896679989746
+        },
+        "DR": {
+          "mean": 0.0029257343008201385,
+          "minimum": 8.19218490607013e-07,
+          "maximum": 0.985471078751826
+        },
+        "DRp": {
+          "mean": 0.9970742656990356,
+          "minimum": 0.014528921248174736,
+          "maximum": 0.999999180781213
+        },
+        "MA": {
+          "mean": 1242116.7103003773,
+          "minimum": 6.244615411056444,
+          "maximum": 2491435.6462215073
+        },
+        "MR": {
+          "mean": 95.7468850069557,
+          "minimum": 0.9665682094527916,
+          "maximum": 99.99991442403544
+        },
+        "R": {
+          "mean": 0.2724753707728603,
+          "minimum": 0.00010173954067768887,
+          "maximum": 104.85875324239912
+        }
+      },
+      "wash": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 124627357.26332292,
+          "minimum": 122067457.2673092,
+          "maximum": 124688123.45429519
+        },
+        "C": {
+          "mean": 36838.16371968471,
+          "minimum": 24338.17451634817,
+          "maximum": 49338.1528107763
+        },
+        "DA": {
+          "mean": 0.02001451123659954,
+          "minimum": 0.020004670744666435,
+          "maximum": 0.020434150839664867
+        },
+        "DAp": {
+          "mean": 49886.8970996294,
+          "minimum": 49886.896679989746,
+          "maximum": 49886.897109469915
+        },
+        "DR": {
+          "mean": 8.023948708233426e-07,
+          "minimum": 8.020003592129582e-07,
+          "maximum": 8.19218490607013e-07
+        },
+        "DRp": {
+          "mean": 0.9999991976048329,
+          "minimum": 0.999999180781213,
+          "maximum": 0.9999991979993442
+        },
+        "MA": {
+          "mean": 2494338.841881035,
+          "minimum": 2491435.6462215073,
+          "maximum": 2494344.95549683
+        },
+        "MR": {
+          "mean": 99.99991956102426,
+          "minimum": 99.99991442403544,
+          "maximum": 99.9999198130651
+        },
+        "R": {
+          "mean": 0.00014978084778561105,
+          "minimum": 0.00010173935522107389,
+          "maximum": 0.00019988364496431545
+        }
+      },
+      "probe": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 124655409.62116946,
+          "minimum": 124642909.62856056,
+          "maximum": 124667909.6149345
+        },
+        "C": {
+          "mean": 61838.14206766906,
+          "minimum": 49338.1528107763,
+          "maximum": 74338.13015890808
+        },
+        "DA": {
+          "mean": 0.020009920717882445,
+          "minimum": 0.02000791433028429,
+          "maximum": 0.020011927373516904
+        },
+        "DAp": {
+          "mean": 49886.89710421991,
+          "minimum": 49886.897102213254,
+          "maximum": 49886.8971062263
+        },
+        "DR": {
+          "mean": 8.022108339950734e-07,
+          "minimum": 8.021303966337471e-07,
+          "maximum": 8.022912821021407e-07
+        },
+        "DRp": {
+          "mean": 0.9999991977888699,
+          "minimum": 0.9999991977084218,
+          "maximum": 0.9999991978693074
+        },
+        "MA": {
+          "mean": 2494344.9552609567,
+          "minimum": 2494344.9551706584,
+          "maximum": 2494344.9553512465
+        },
+        "MR": {
+          "mean": 99.99991979557387,
+          "minimum": 99.99991978753108,
+          "maximum": 99.99991980361631
+        },
+        "R": {
+          "mean": 0.0002500435400203094,
+          "minimum": 0.00019988364496431545,
+          "maximum": 0.0003002101359752429
+        }
+      },
+      "postprobe": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 2991956.7770072753,
+          "minimum": -2.5236366754893002e-14,
+          "maximum": 124642909.62856056
+        },
+        "C": {
+          "mean": 13125.527047679383,
+          "minimum": 2.953898432659773e-14,
+          "maximum": 78096.6642180185
+        },
+        "DA": {
+          "mean": 4.001587503514301e-05,
+          "minimum": -3.3483187072088067e-34,
+          "maximum": 0.020011934598446024
+        },
+        "DAp": {
+          "mean": 99.75388345160017,
+          "minimum": -6.142961058524798e-29,
+          "maximum": 49886.897102213254
+        },
+        "DR": {
+          "mean": 0.8482882713173053,
+          "minimum": 8.022912821021407e-07,
+          "maximum": 0.9999999999997039
+        },
+        "DRp": {
+          "mean": 0.15171172868239846,
+          "minimum": -3.65872299618704e-32,
+          "maximum": 0.9999991977084218
+        },
+        "MA": {
+          "mean": 10228.848181127161,
+          "minimum": 2.3359271190776858e-49,
+          "maximum": 2494344.9551706584
+        },
+        "MR": {
+          "mean": 19.186527721326772,
+          "minimum": 0.020000061540484986,
+          "maximum": 99.99991978753108
+        },
+        "R": {
+          "mean": 7909.639187517159,
+          "minimum": 0.0003002101359752429,
+          "maximum": 52752.922455406726
+        }
+      },
+      "late": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": -1.1515066732497348e-23,
+          "minimum": -1.2941045901340633e-22,
+          "maximum": 2.409039894239846e-22
+        },
+        "C": {
+          "mean": 5.936198315379355e-16,
+          "minimum": -1.9550805551255616e-23,
+          "maximum": 2.953898432659773e-14
+        },
+        "DA": {
+          "mean": -1.2903405252478735e-25,
+          "minimum": -1.6140094824780832e-25,
+          "maximum": 4.67185423815537e-50
+        },
+        "DAp": {
+          "mean": -5.644951167106644e-29,
+          "minimum": -2.1724210142817858e-27,
+          "maximum": 1.139036996295736e-27
+        },
+        "DR": {
+          "mean": 0.9999999999997038,
+          "minimum": 0.9999999999997039,
+          "maximum": 0.9999999999997039
+        },
+        "DRp": {
+          "mean": -1.1511542070360123e-25,
+          "minimum": -1.2651924700222668e-24,
+          "maximum": 2.6707127372063916e-24
+        },
+        "MA": {
+          "mean": -6.465814966472539e-25,
+          "minimum": -8.191337366132007e-25,
+          "maximum": 2.3359271190776858e-49
+        },
+        "MR": {
+          "mean": 0.020000002467279444,
+          "minimum": 0.0199999999999941,
+          "maximum": 0.020000061540484986
+        },
+        "R": {
+          "mean": 2.555477533794555,
+          "minimum": 0.5009324815183874,
+          "maximum": 21.039271108537935
+        }
+      }
+    },
+    "roadrunner_refined": {
+      "baseline": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 260.0496299616733,
+          "minimum": 0.0,
+          "maximum": 1744.9886710889534
+        },
+        "C": {
+          "mean": 540.1741809149004,
+          "minimum": 0.0,
+          "maximum": 2192.69268943536
+        },
+        "DA": {
+          "mean": 0.7525142090947344,
+          "minimum": 0.02785531746189712,
+          "maximum": 1.0
+        },
+        "DAp": {
+          "mean": 0.24748579090526715,
+          "minimum": 0.0,
+          "maximum": 0.9721446825381008
+        },
+        "DR": {
+          "mean": 0.7716032063736833,
+          "minimum": 0.05420085345723769,
+          "maximum": 1.0
+        },
+        "DRp": {
+          "mean": 0.22839679362631626,
+          "minimum": 0.0,
+          "maximum": 0.9457991465427624
+        },
+        "MA": {
+          "mean": 16.123861571644046,
+          "minimum": 0.0,
+          "maximum": 48.74505574748953
+        },
+        "MR": {
+          "mean": 22.81640372801478,
+          "minimum": 0.0,
+          "maximum": 86.09819509309555
+        },
+        "R": {
+          "mean": 530.2450642191313,
+          "minimum": 0.0,
+          "maximum": 1735.7877306102203
+        }
+      },
+      "train": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 59651568.846164435,
+          "minimum": 1.4792769250506332,
+          "maximum": 122067457.26709753
+        },
+        "C": {
+          "mean": 11880.571238680117,
+          "minimum": 296.95250201063084,
+          "maximum": 24338.17451642885
+        },
+        "DA": {
+          "mean": 0.16418223394264428,
+          "minimum": 0.020434150839700297,
+          "maximum": 99.99848427378228
+        },
+        "DAp": {
+          "mean": 24946.97467373482,
+          "minimum": 0.02855174373379528,
+          "maximum": 49886.896679989506
+        },
+        "DR": {
+          "mean": 0.0029257343008271086,
+          "minimum": 8.192184906082607e-07,
+          "maximum": 0.9854710787529608
+        },
+        "DRp": {
+          "mean": 0.9970742656988554,
+          "minimum": 0.014528921247038869,
+          "maximum": 0.9999991807809971
+        },
+        "MA": {
+          "mean": 1242116.710302778,
+          "minimum": 6.244615410955371,
+          "maximum": 2491435.6462537283
+        },
+        "MR": {
+          "mean": 95.74688500693657,
+          "minimum": 0.9665682093842086,
+          "maximum": 99.99991442401196
+        },
+        "R": {
+          "mean": 0.272475370791008,
+          "minimum": 0.00010173954067819554,
+          "maximum": 104.85875324894533
+        }
+      },
+      "wash": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 124627357.26349996,
+          "minimum": 122067457.26709753,
+          "maximum": 124688123.45482276
+        },
+        "C": {
+          "mean": 36838.16371976238,
+          "minimum": 24338.17451642885,
+          "maximum": 49338.15281085129
+        },
+        "DA": {
+          "mean": 0.02001451123657101,
+          "minimum": 0.020004670744581673,
+          "maximum": 0.020434150839700297
+        },
+        "DAp": {
+          "mean": 49886.89709962911,
+          "minimum": 49886.896679989506,
+          "maximum": 49886.89710946962
+        },
+        "DR": {
+          "mean": 8.023948708220292e-07,
+          "minimum": 8.020003592093915e-07,
+          "maximum": 8.192184906082607e-07
+        },
+        "DRp": {
+          "mean": 0.9999991976046165,
+          "minimum": 0.9999991807809971,
+          "maximum": 0.9999991979991281
+        },
+        "MA": {
+          "mean": 2494338.841881409,
+          "minimum": 2491435.6462537283,
+          "maximum": 2494344.955496816
+        },
+        "MR": {
+          "mean": 99.9999195610022,
+          "minimum": 99.99991442401196,
+          "maximum": 99.99991981304348
+        },
+        "R": {
+          "mean": 0.00014978084778574495,
+          "minimum": 0.00010173935522161414,
+          "maximum": 0.00019988364496454473
+        }
+      },
+      "probe": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 124655409.62116039,
+          "minimum": 124642909.62855428,
+          "maximum": 124667909.61492842
+        },
+        "C": {
+          "mean": 61838.1420677413,
+          "minimum": 49338.15281085129,
+          "maximum": 74338.13015897763
+        },
+        "DA": {
+          "mean": 0.020009920717883784,
+          "minimum": 0.02000791433028516,
+          "maximum": 0.020011927373517778
+        },
+        "DAp": {
+          "mean": 49886.89710421962,
+          "minimum": 49886.89710221296,
+          "maximum": 49886.89710622601
+        },
+        "DR": {
+          "mean": 8.022108339949569e-07,
+          "minimum": 8.021303966336117e-07,
+          "maximum": 8.022912821020062e-07
+        },
+        "DRp": {
+          "mean": 0.9999991977886534,
+          "minimum": 0.9999991977082052,
+          "maximum": 0.9999991978690908
+        },
+        "MA": {
+          "mean": 2494344.955260946,
+          "minimum": 2494344.955170647,
+          "maximum": 2494344.955351235
+        },
+        "MR": {
+          "mean": 99.99991979555305,
+          "minimum": 99.99991978751005,
+          "maximum": 99.99991980359408
+        },
+        "R": {
+          "mean": 0.00025004354002039004,
+          "minimum": 0.00019988364496454473,
+          "maximum": 0.0003002101359752269
+        }
+      },
+      "postprobe": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 2991956.7770003807,
+          "minimum": -3.9313846286339314e-18,
+          "maximum": 124642909.62855428
+        },
+        "C": {
+          "mean": 13125.52704771121,
+          "minimum": 2.953894462005003e-14,
+          "maximum": 78096.6642180997
+        },
+        "DA": {
+          "mean": 4.001587503514479e-05,
+          "minimum": -5.453501506285209e-19,
+          "maximum": 0.020011934598446895
+        },
+        "DAp": {
+          "mean": 99.7538834515996,
+          "minimum": -4.158345005864908e-28,
+          "maximum": 49886.89710221296
+        },
+        "DR": {
+          "mean": 0.8482882713168464,
+          "minimum": 8.022912821020062e-07,
+          "maximum": 0.9999999999994991
+        },
+        "DRp": {
+          "mean": 0.15171172868265156,
+          "minimum": -6.460792449787661e-29,
+          "maximum": 0.9999991977082052
+        },
+        "MA": {
+          "mean": 10228.848180791456,
+          "minimum": -6.0850254419925474e-27,
+          "maximum": 2494344.955170647
+        },
+        "MR": {
+          "mean": 19.186527721294897,
+          "minimum": 0.020000061540475567,
+          "maximum": 99.99991978751005
+        },
+        "R": {
+          "mean": 7909.639187394916,
+          "minimum": 0.0003002101359752269,
+          "maximum": 52752.92245569032
+        }
+      },
+      "late": {
+        "EmptySet": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "A": {
+          "mean": 3.465308001025232e-24,
+          "minimum": -4.525458500561612e-25,
+          "maximum": 5.0672648776969606e-24
+        },
+        "C": {
+          "mean": 5.936189974904417e-16,
+          "minimum": 5.077762354972124e-24,
+          "maximum": 2.953894462005003e-14
+        },
+        "DA": {
+          "mean": 3.800555164938217e-26,
+          "minimum": -6.315077639795764e-28,
+          "maximum": 4.062988261437923e-26
+        },
+        "DAp": {
+          "mean": 1.6478141309217322e-29,
+          "minimum": -8.12723097757961e-28,
+          "maximum": 4.07249201758629e-27
+        },
+        "DR": {
+          "mean": 0.999999999999499,
+          "minimum": 0.9999999999994991,
+          "maximum": 0.9999999999994991
+        },
+        "DRp": {
+          "mean": 3.4642939475495433e-26,
+          "minimum": -5.414838121974995e-27,
+          "maximum": 5.0672543583522465e-26
+        },
+        "MA": {
+          "mean": 1.904397781768311e-25,
+          "minimum": -3.157541951408872e-27,
+          "maximum": 2.066088122339829e-25
+        },
+        "MR": {
+          "mean": 0.020000002467275128,
+          "minimum": 0.019999999999990012,
+          "maximum": 0.020000061540475567
+        },
+        "R": {
+          "mean": 2.555477527772486,
+          "minimum": 0.5009324815101476,
+          "maximum": 21.039271049164512
+        }
+      }
+    }
+  },
+  "seconds": 32.220397541997954
+}

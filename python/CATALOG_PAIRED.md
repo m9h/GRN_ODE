@@ -268,6 +268,45 @@ python scripts/diagnose_jax_paired.py --model 38 \
   --output results/catalog-paired-jax-rohwer
 ```
 
+### Vilar: completed JAX audit and an independent stiff reference
+
+The [complete Vilar failed-branch audit](results/catalog-paired-jax-vilar/report.json)
+checks all 16 original failures using Kvaerno5 at `1e-10/1e-12` and
+`1e-11/1e-13`, plus the original RoadRunner request and its tenfold refinement.
+Every branch has an incomplete JAX integration, so none is confirmed. On nine
+branches RoadRunner also disagrees with its own tighter request beyond the
+acceptance threshold. Those original native results cannot serve as an
+unquestioned reference. The audit used the source at `40ca8ff`; every failed
+attempt, full-grid native comparison and completed window summary is retained.
+
+The optional [SciPy reference adapter](grn_memory/scipy_reference.py) offers a
+different stiff integrator. Jaxkineticmodel supplies the equations and JAX their
+state Jacobian; SciPy supplies Radau or BDF integration between resets. This
+shares the JAX importer's semantics, so comparison with native SBML integration
+remains necessary. This wrapper does not expose gradients through integration.
+Six tests check analytic decay, symbol units, retained unforced states,
+assignment observables, both native engines, source-cache invalidation and
+rejection of unsupported events or ambiguous observations.
+
+The [SciPy diagnostic](scripts/diagnose_scipy_paired.py) uses two SciPy requests
+and two tighter RoadRunner requests. Its five confirmation comparisons require
+cross-engine agreement and stability within each engine. The original native
+request is rerun separately, preserving its disagreement where it occurs.
+No original case is promoted based on a single successful comparison, and the
+conditional case scores still require their own recovery audit.
+
+```bash
+uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q tests/test_scipy_reference.py
+uv run --locked --extra test --extra jaxkineticmodel python scripts/diagnose_scipy_paired.py \
+  --model 35 --output results/catalog-paired-scipy-vilar
+```
+
+The default requests are `1e-10/1e-12` and `1e-11/1e-13` for SciPy, and
+`1e-13/1e-15` and `5e-14/5e-16` for RoadRunner. These are integration requests;
+the unchanged comparison remains `1e-7 + 2e-5 * max(abs(a), abs(b))` at all
+30,001 original observation times and for every original observable. Completed
+interval counts and solver evaluations are persisted during the diagnostic.
+
 ### Reset-encoding diagnostic for Vilar and Rohwer
 
 The [explicit-reset diagnostic](scripts/diagnose_explicit_resets.py) replaces
