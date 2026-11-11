@@ -206,6 +206,35 @@ python scripts/audit_paired_catalog.py --network 25 \
   --source-revision 4108edeca8b2d6d5e454167454a8826319ff6046
 ```
 
+### Independent JAX reset diagnostic
+
+The optional [JAX protocol adapter](grn_memory/jax_protocols.py) carries every
+independent state and absolute time between exact external resets. It supports
+autonomous reaction models with fixed positive-volume compartments and derived
+assignment-rule observables. Native events, delays, rate/algebraic rules,
+initial assignments and conversion factors are explicitly unsupported here.
+These restrictions do not change the native catalog's coverage. Fifteen adapter
+tests include analytic solutions, amount/concentration conversion, simultaneous
+resets, source-cache invalidation and comparisons with both native engines.
+
+The [two-branch Rohwer diagnostic](results/catalog-paired-jax-rohwer/report.json)
+preserves the original full 30,001-sample grid and comparison tolerance. Kvaerno5
+at `1e-7/1e-9` completes branch `d4ace2879cde…` and agrees with RoadRunner
+(maximum normalized discrepancy 0.11736). It reaches its step limit on
+`698ea588e8ce…` during `[178.8, 178.9]`. Tenfold tighter JAX requests fail in
+the initial untreated interval for both branches, while RoadRunner completes
+both requests and agrees with its own refinement. Thus neither branch passes
+the complete diagnostic's refinement gate; the single successful comparison
+does not establish a general JAX recovery. Original COPASI failures remain
+unchanged and visible.
+
+```bash
+python scripts/diagnose_jax_paired.py --model 38 \
+  --branch d4ace2879cdea75e43b77bc82f97ecb73cab9ff6ba258b3e85f6838b0f44c593 \
+  --branch 698ea588e8ce617393a9d712c09db85d171278dff6e9291ce785e1e3f71924df \
+  --output results/catalog-paired-jax-rohwer
+```
+
 ### Reset-encoding diagnostic for Vilar and Rohwer
 
 The [explicit-reset diagnostic](scripts/diagnose_explicit_resets.py) replaces

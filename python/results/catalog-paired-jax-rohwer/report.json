@@ -1,0 +1,86 @@
+{
+  "purpose": "Check selected paired-screen branches with JAX and native RoadRunner.\n\nBy default this diagnoses every failed branch in the original model report.\nBoth engines also receive a tenfold tighter integration request. Every completed\ntrajectory is compared on the original full grid, with the original acceptance\nthreshold. This is branch-level evidence, not a replacement for case scoring or\nthe original COPASI results.\n",
+  "model_id": "BIOMD0000000038",
+  "model_sha256": "33708cec1fad44db6958c3ac6255397ad79b45564a296d29732fd934608d787b",
+  "source_report_sha256": "14e3eaff74908c2e17a4c09009ccd96468c351ac909a459fd34874cb6d0c3160",
+  "source_fingerprint": "4270163cff729586153a23493e7ca413620747eae14ebd3a5c3554a357aeef5b",
+  "source_archive_sha256": "0224059b8037f5f2507239d872eff899c3e764b1988a64d6b22da73ed14b88e4",
+  "script_sha256": "01aabc9855d87ea2735b01a3708395b76e2dad9c2959bc6e7c70e27bc7544ac0",
+  "implementation_sha256": {
+    "jaxkineticmodel/load_sbml/sbml_model.py": "57ddfef282e220affab237ce15e760e8b01aeb4b8e5fd4c39b91696f619477cb",
+    "jaxkineticmodel/load_sbml/jax_kinetic_model.py": "04dabdfc81da14da8a008aa406e723b974213f208442225a1d512d03ab4547b2",
+    "jaxkineticmodel/load_sbml/sympy_converter.py": "8b4bfec0fd8a6ea4dfd72bf6a66af8b50faa9f3975827aac609c460287b9e504",
+    "jaxkineticmodel/load_sbml/export_sbml.py": "54b054ceaef678ae77827ce560e198d70865a34692542c798235af2121114ee9",
+    "jaxkineticmodel/load_sbml/sbml_load_utils.py": "f914d0ee1bf06602d7c9ccac6643c9814ad4f63b9c520acf92e98839e64626ca",
+    "grn_memory/catalog_jax.py": "c2ee2f06f10880232ed6faa1ffa17caebf274306ab0be152ad6d6d703bba49e5",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "grn_memory/jax_protocols.py": "0bfdb0b6b46ac54c3b664ad27df6274df14b5c789420c01eebafc8c998d5a6c3",
+    "grn_memory/catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315"
+  },
+  "integration_requests": {
+    "jax": {
+      "rtol": 1e-07,
+      "atol": 1e-09
+    },
+    "roadrunner": {
+      "rtol": 1e-12,
+      "atol": 1e-14
+    },
+    "jax_refined": {
+      "rtol": 1e-08,
+      "atol": 1e-10
+    },
+    "roadrunner_refined": {
+      "rtol": 1e-13,
+      "atol": 1e-15
+    }
+  },
+  "comparison_settings": {
+    "rtol": 2e-05,
+    "atol": 1e-07
+  },
+  "grid": {
+    "duration": 300.0,
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "samples": 30001
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4",
+    "jax": "0.12.0.1",
+    "jaxlib": "0.12.0.1",
+    "diffrax": "0.7.2",
+    "equinox": "0.13.8",
+    "jaxkineticmodel": "0.0.1"
+  },
+  "fingerprint": "4fd46aa869430c31abaec9d0dad4d236e9c55c23b3f6dee56242f603947fefca",
+  "selection": "explicit branches",
+  "original_branch_count": 2210,
+  "selected_branch_ids": [
+    "698ea588e8ce617393a9d712c09db85d171278dff6e9291ce785e1e3f71924df",
+    "d4ace2879cdea75e43b77bc82f97ecb73cab9ff6ba258b3e85f6838b0f44c593"
+  ],
+  "expected_branches": 2,
+  "started_at": "2026-11-11T20:05:06.851744+00:00",
+  "status": "completed",
+  "branches": [
+    {
+      "branch_id": "698ea588e8ce617393a9d712c09db85d171278dff6e9291ce785e1e3f71924df",
+      "status": "failed",
+      "file": "698ea588e8ce617393a9d712c09db85d171278dff6e9291ce785e1e3f71924df.json"
+    },
+    {
+      "branch_id": "d4ace2879cdea75e43b77bc82f97ecb73cab9ff6ba258b3e85f6838b0f44c593",
+      "status": "failed",
+      "file": "d4ace2879cdea75e43b77bc82f97ecb73cab9ff6ba258b3e85f6838b0f44c593.json"
+    }
+  ],
+  "evaluated_branches": 2,
+  "confirmed_branches": 0,
+  "finished_at": "2026-11-11T20:06:30.075502+00:00"
+}
