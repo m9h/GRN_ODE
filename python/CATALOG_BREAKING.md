@@ -4,8 +4,8 @@ This stage extends the original MATLAB breaking-intervention search across the
 35-model catalog. The selected-case [final pilot](results/catalog-breaking-pilot-final/report.json)
 passes **119 branches across 24 conditional trials**, covering three initial
 cases in networks 3, 26 and 35. Its largest normalized discrepancy is 0.58169
-(acceptance limit 1), with one explicitly recorded solver retry. All 74 local
-tests pass. The full-catalog search is running; **full-catalog breaking results
+(acceptance limit 1), with one explicitly recorded solver retry. The pilot
+revision passed 74 local tests. The full-catalog search is running; **full-catalog breaking results
 are not yet available.** The [validated repeated-stimulation screen](CATALOG_REPEATED.md)
 provides the initial histories, stimulus levels and candidate responses.
 
@@ -62,6 +62,48 @@ partitions in separate directories: shared branch identifiers alone do not
 justify overwriting independently computed evidence. A successful partition
 is not a complete-model result; complete coverage and numerical validation must
 be audited across every partition before reporting a model as finished.
+
+### First complete model from the distributed run
+
+Network **27**, [BioModel 275](models/BIOMD0000000275.xml), now passes all
+**22 initial cases and 57 conditional trials**, covering 72 response-trials.
+The [combined evidence audit](results/catalog-breaking-linux-27/audit.json)
+checks four disjoint Linux partitions produced at revision
+`2e7327b0d273f4b33bdd8aa37601c1a497854a2a` in
+[workflow run 43101294718](https://github.com/m9h/GRN_ODE/actions/runs/43101294718).
+The partitions retain 301 validated branch records representing 260 distinct
+branch specifications; repeated controls across partitions remain separate.
+
+The [audit](scripts/audit_breaking_shards.py) verifies the model, calibration,
+producer source and archive hashes; checks every original observable and full
+branch horizon; reconstructs all eight control schedules, including earlier
+rechallenge pulses; recomputes controlled and raw scores; and verifies the
+complete conditional continuation tree. The partial worker reports retain
+their partial-coverage status. The combined audit establishes full coverage
+without overwriting their independent evidence.
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/audit_breaking_shards.py --network 27 \
+  --input results/catalog-breaking-linux-27/shard-0 \
+  --input results/catalog-breaking-linux-27/shard-1 \
+  --input results/catalog-breaking-linux-27/shard-2 \
+  --input results/catalog-breaking-linux-27/shard-3 \
+  --output results/catalog-breaking-linux-27/audit.json
+```
+
+The producer revision must be available in local Git history. The audit checks
+saved pointwise comparison results and recomputes scores from saved window
+summaries; it does not rerun numerical integration. Nine focused tests check
+all 22 published cases and reject missing third trials, missing controls, wrong
+prior probe histories, altered scores, shortened horizons, dropped observables,
+false pass flags and changed archives. Missing or duplicate partitions are also
+rejected by the complete-model audit. Other model partitions remain in progress.
+
+All 323 hidden atomic checkpoints in the downloaded Linux artifacts match the
+published branch and case records. A local resume of the five-case first
+partition reused its 50 unchanged checkpoints without new integration. The
+public archives below contain the scientific evidence; resuming computation
+requires the artifacts' hidden `.evidence` directory as well.
 
 ## Source protocol and documented discrepancies
 
