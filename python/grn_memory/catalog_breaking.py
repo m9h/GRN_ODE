@@ -103,6 +103,11 @@ def run_model(entry,args):
     plans = candidate_plans(reference)
     integration = deepcopy(reference["configuration"]["integration_settings"])
     overrides = deepcopy(reference["configuration"]["case_integration_overrides"])
+    if entry["network"] == 4:
+        # The full-horizon Goldbeter explicit-pool diagnostic confirms these
+        # requests and a further refinement on all eight original mismatches.
+        # Calibration, reset timing, conditional search and acceptance stay fixed.
+        integration = {engine: {"rtol": 1e-13, "atol": 1e-15} for engine in engines}
     fallbacks = {"copasi":{"rtol":1e-7,"atol":1e-9}} if entry["network"] == 35 else {}
     encoding = None
     if entry["network"] == 26:

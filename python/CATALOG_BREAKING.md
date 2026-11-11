@@ -164,6 +164,40 @@ define a different intervention or model, suitable for a separate comparison.
 MPLBACKEND=Agg uv run --locked python scripts/diagnose_goldbeter_breaking.py
 ```
 
+## Refinement recovery for the explicit-pool Goldbeter model
+
+Network 4 (BioModel 4) has explicit inactive pools and a different failure mode
+from the reduced model above. Its first full run evaluates all 54 initial cases;
+51 pass, while eight branches across the other three cases complete but exceed
+the trajectory-comparison tolerance. The largest normalized discrepancy is
+1.74136, chiefly in `M` near time 2011. All eight branches extend to time 2210,
+with 221,001 sampled times and seven original observables.
+
+The [native refinement diagnostic](results/catalog-breaking-goldbeter4-refinement/report.json)
+retains the original schedules and compares each engine at the original
+`1e-12/1e-14` request, at `1e-13/1e-15`, and at `5e-14/5e-16`.
+All 48 integrations complete. Every branch passes cross-engine comparison at
+both tighter requests, as well as each engine's comparison between those two
+requests. The largest cross-engine discrepancy is 0.17109 at `1e-13/1e-15`
+and 0.06729 at `5e-14/5e-16`. The largest within-engine refinement discrepancies
+are 0.12549 for RoadRunner and 0.02173 for COPASI. Acceptance remains 1.
+
+Network 4 now requests `1e-13/1e-15` in both native solvers. Calibration, XML,
+reset timing, output grid and acceptance thresholds are unchanged. The complete
+54-case recovery run also reevaluates the conditional continuation rules and
+scores; these eight diagnostic branches alone do not validate that complete
+search. The [captured source evidence](results/catalog-breaking-goldbeter4-refinement/source-evidence.json)
+preserves the original model report, all eight failed branch records and the
+verified hashes of its complete branch inventory.
+
+```bash
+python scripts/diagnose_breaking_refinement.py \
+  --evidence results/catalog-breaking-goldbeter4-refinement/source-evidence.json \
+  --output results/reproduced-goldbeter4-refinement
+python -m grn_memory.catalog_breaking --network 4 --workers 1 \
+  --timeout 604800 --output results/catalog-breaking-goldbeter4-recovery
+```
+
 ## Validation, checkpoints and evidence
 
 The default output grid is 0.01 native time units. Samples coinciding with any
