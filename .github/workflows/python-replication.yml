@@ -162,6 +162,8 @@ jobs:
       OMP_NUM_THREADS: '1'
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -202,6 +204,19 @@ jobs:
           assert all(c["passed"] and c["samples"] == 30001 for c in branch["comparisons"].values())
           print("Vilar: both Radau and tighter RoadRunner requests and all five comparisons pass.")
           PY
+      - name: Audit the Vilar branch without promoting incomplete cases
+        run: |
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/recover_scipy_paired_cases.py --model 35 --diagnostics results/catalog-paired-scipy-ci --output results/catalog-paired-scipy-case-audit-ci/report.json
+          uv run --locked python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("results/catalog-paired-scipy-case-audit-ci/report.json").read_text())
+          assert report["required_branch_count"] == 58
+          assert report["confirmed_branches"] == 1
+          assert report["recovered_cases"] == 0
+          assert report["original_passed_cases"] == report["combined_passed_cases"] == 136
+          assert not report["all_cases_validated"]
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -210,6 +225,7 @@ jobs:
             python/results/catalog-jax-ci/
             python/results/catalog-paired-jax-newton-ci/
             python/results/catalog-paired-scipy-ci/
+            python/results/catalog-paired-scipy-case-audit-ci/
   catalog-memory:
     runs-on: ubuntu-latest
     timeout-minutes: 30

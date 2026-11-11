@@ -239,6 +239,32 @@ analytic and two-engine reset checks for each. It does not retry failed
 trajectories automatically. Add `--solver Kvaerno3` to reproduce this comparison
 in a separate output directory.
 
+The subsequent [complete 77-branch Kvaerno3 diagnostic](results/catalog-paired-jax-rohwer-full/report.json)
+uses JAX requests `1e-6/1e-8` and `1e-7/1e-9`, together with RoadRunner
+`1e-12/1e-14` and `1e-13/1e-15`. Its outcome is **23 confirmed, 42 with an
+incomplete integration, and 12 completed mismatches**. The unchanged full-grid
+comparison threshold applies even though these JAX integration requests are
+looser than in the two-branch pilot. This establishes partial numerical recovery,
+not recovery of Rohwer's 33 originally failed cases.
+
+The [evidence audit](results/catalog-paired-jax-rohwer-full/audit.json) verifies
+all 77 original failed branch identities, source hashes, complete comparison
+inventories and outcome consistency. Reproduce the integrations from source
+`40ca8ff586220a5df573e7d383defa2c19ed829a` with:
+
+```bash
+python scripts/diagnose_jax_paired.py --model 38 --solver Kvaerno3 \
+  --rtol 1e-6 --atol 1e-8 --output results/catalog-paired-jax-rohwer-full
+```
+
+Audit the saved evidence from this checkout with:
+
+```bash
+python scripts/audit_jax_paired_diagnostic.py \
+  --input results/catalog-paired-jax-rohwer-full \
+  --source-revision 40ca8ff586220a5df573e7d383defa2c19ed829a
+```
+
 Implicit stages also expose `--root-finder Newton --root-find-max-steps 20` as
 an explicit alternative to the default cached-chord method with ten iterations.
 These options change how each implicit stage is solved; they do not change the
@@ -306,6 +332,63 @@ The default requests are `1e-10/1e-12` and `1e-11/1e-13` for SciPy, and
 the unchanged comparison remains `1e-7 + 2e-5 * max(abs(a), abs(b))` at all
 30,001 original observation times and for every original observable. Completed
 interval counts and solver evaluations are persisted during the diagnostic.
+
+### Recovering complete cases from Radau diagnostics
+
+The [case recovery audit](scripts/recover_scipy_paired_cases.py) rebuilds the
+original candidate inventory and all 12 arms of every originally failed case.
+For Vilar, the six failed cases need **58 distinct branches**, including **42
+controls in addition to the 16 originally failed branches**. Confirming those
+16 branches alone cannot establish recovery of the six cases.
+
+Every recovered case must use `scipy_refined` and `roadrunner_refined` throughout
+all its arms. Every branch must pass all five full-trajectory comparisons,
+with all 30,001 samples and original observables. The audit checks model, source,
+calibration, schedule and evidence hashes, reset counts, window completeness,
+and the consistency of pass flags with recorded errors. It then recomputes every
+response's controlled classifications and requires agreement between the two
+engines. Paper-style labels and any disagreements remain separate outputs.
+
+The audit preserves the original passing cases, reports newly recovered cases
+separately, and explicitly identifies missing or unconfirmed controls. It never
+mixes engines within a case, combines different diagnostic configurations, or
+turns a partial selection into a model pass. It checks saved pointwise comparison
+results and recomputes scores from window summaries; it does not reconstruct or
+rerun full trajectories. Use the recorded checkout and dependency environment.
+
+Generate the complete recovery plan, then run all its branches (this can take
+hours):
+
+```bash
+MPLBACKEND=Agg uv run --locked --extra test --extra jaxkineticmodel \
+  python scripts/recover_scipy_paired_cases.py --model 35 \
+  --output results/vilar-case-recovery/plan.json
+
+MPLBACKEND=Agg uv run --locked --extra test --extra jaxkineticmodel python - <<'PY'
+import json
+from pathlib import Path
+import subprocess
+import sys
+plan = json.loads(Path("results/vilar-case-recovery/plan.json").read_text())
+command = [sys.executable, "scripts/diagnose_scipy_paired.py", "--model", "35",
+           "--resume", "--output", "results/vilar-case-branches"]
+for branch in plan["required_branch_ids"]:
+    command.extend(["--branch", branch])
+subprocess.run(command, check=True)
+PY
+
+MPLBACKEND=Agg uv run --locked --extra test --extra jaxkineticmodel \
+  python scripts/recover_scipy_paired_cases.py --model 35 \
+  --diagnostics results/vilar-case-branches \
+  --output results/vilar-case-recovery/report.json
+```
+
+Multiple disjoint diagnostic directories can be supplied by repeating
+`--diagnostics`; `unselected_branch_ids` lists the additional branches needed
+beyond their declared selections. A successful audit exit establishes evidence
+consistency, not numerical recovery: inspect `all_cases_validated`,
+`recovered_cases`, and each case's status. The Vilar recovery runs are ongoing.
+The full original screen and its original failures remain unchanged.
 
 ### Reset-encoding diagnostic for Vilar and Rohwer
 
