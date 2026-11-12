@@ -150,3 +150,23 @@ The mpmath diagnostic uses no Heyoka native libraries while integrating; its
 equations and arithmetic can also run in a uv-created Python environment with
 the pinned Python requirements above. No completed stimulated-branch result
 is claimed here until the saved arrays have been independently audited.
+
+The [separate array auditor](scripts/audit_marhl_mpmath.py) first re-audits the
+published Heyoka/RoadRunner reference, then verifies every mpmath observation,
+source hash, precision request and reset count. It recomputes all seven
+comparisons for the baseline and each original failed branch. Twelve tests
+use explicitly synthetic temporary records to reject truncated or changed
+arrays, incomplete inventories, missed resets, altered arithmetic settings,
+false comparisons and unsupported case-recovery claims. Those test fixtures
+are not experimental results.
+
+```bash
+uv run --locked python scripts/audit_marhl_mpmath.py \
+  --input results/catalog-paired-mpmath-marhl \
+  --output results/catalog-paired-mpmath-marhl/audit.json
+```
+
+The audit requires a completed diagnostic and does not need mpmath or Heyoka
+installed. The main environment passes 206 tests, with the optional Heyoka
+adapter module skipped; the isolated precision environment separately passes
+the nine mpmath adapter and resume tests.

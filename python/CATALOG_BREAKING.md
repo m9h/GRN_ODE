@@ -162,14 +162,44 @@ four partitions, because shared controls appear in more partitions. These
 duplicate records do not represent additional scientific coverage.
 
 The corresponding [eight-partition Linux resume](https://github.com/m9h/GRN_ODE/actions/runs/43168144204)
-was submitted at revision `a188face8e1b14383cf42c8e9fd148d6b4ee1360`.
+also completes at revision `a188face8e1b14383cf42c8e9fd148d6b4ee1360`.
+Its [combined audit](results/catalog-breaking-repartition-27-linux/audit.json)
+passes all 22 cases, 57 conditional trials and 72 response-trials. The
+[checkpoint verification](results/catalog-breaking-repartition-27-linux/verification.json)
+checks all 646 copied files across the eight children: every inventory and
+checksum remains unchanged, and every case summary matches its original
+apart from the partition index. This verifies the resume workflow on Linux
+as well as locally; it does not add new model coverage.
+
 An additional [sixteen-partition batch for networks 1, 2 and 5](https://github.com/m9h/GRN_ODE/actions/runs/43169085644)
 was submitted at revision `1fc563a9db5370b15df8faf419cc12b205a64648`.
 Its 48 jobs partition 1,210 initial cases and keep the original observation
-horizons, conditional searches and comparison thresholds. Both dispatches were
-queued on 12 November 2026 UTC; completed coverage requires their returned
-evidence and full combined audits. Their independent outputs remain separate
-from the original local calculations.
+horizons, conditional searches and comparison thresholds. Network 1's sixteen
+partitions have stopped with 397/528 passing case results; networks 2 and 5
+continue in that batch. The next dispatches below retain these independent
+outputs separately from the original local calculations.
+
+### Checkpoint continuations dispatched on 12 November
+
+The [dispatch record](results/catalog-breaking-resume-20261112/dispatches.json)
+records each parent artifact's checksum and reported progress. These are
+partial worker results, not complete-model validation. All six networks now
+have sixteen-partition continuations at revision
+`e5ff9bb131b3a815feb584793b9f68dda53ce7a7`; no observation times, controls,
+conditional branches or acceptance thresholds were removed.
+
+| Network | Initial cases with a recorded result | Passing cases reported | Total initial cases | Continuation |
+|---|---:|---:|---:|---|
+| 1 | 397 | 397 | 528 | [Same sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273682876) |
+| 28 | 228 | 201 | 622 | [Four to sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273574799) |
+| 29 | 264 | 264 | 1,088 | [Four to sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273574799) |
+| 31 | 232 | 232 | 728 | [Four to sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273680209) |
+| 32 | 159 | 84 | 204 | [Four to sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273680209) |
+| 35 | 87 | 49 | 260 | [Four to sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273680209) |
+
+Completed failures remain in the parent artifacts. Resuming can retry a failed
+branch; it does not convert a failure into a pass or imply that a missing
+conditional continuation has been resolved.
 
 Keep artifacts from different
 partitions in separate directories: shared branch identifiers alone do not
@@ -314,12 +344,13 @@ These full-horizon breaking mismatches are separate from the three shorter
 paired-learning branches discussed in [the precision diagnostic](PRECISION_DIAGNOSTICS.md).
 The precision results there do not validate these breaking trajectories.
 
-Networks 28 and 29 reached their five-hour partition budgets after completing
-89/622 and 133/1,088 initial cases respectively. Their hidden atomic checkpoints
-were downloaded and retained. A [checkpoint-resume run](https://github.com/m9h/GRN_ODE/actions/runs/43155055643)
-continues all eight partitions with unchanged worker hashes and selections.
-The original artifacts remain available in run `43101294718`; these partial
-reports are not counted as completed models.
+Networks 28 and 29 first reached their five-hour partition budgets with
+103 and 133 recorded case results respectively; 89 and 133 of those passed.
+Their [first checkpoint continuation](https://github.com/m9h/GRN_ODE/actions/runs/43155055643)
+also reached its budgets, increasing recorded results to 228/622 and 264/1,088,
+with 201 and 264 passes reported. Hidden checkpoints from both generations
+are retained. The sixteen-partition continuation above uses the newer artifacts;
+these partial reports are not counted as completed models.
 
 The [network 33 audit](results/catalog-breaking-linux-33/audit.json) validates
 the Tyson 1999 circadian model's full untreated control: 221,001 observations
@@ -327,6 +358,31 @@ over 0–2210 and all three observables agree across the two engines, with a
 largest scaled discrepancy of 0.02223. There are no eligible initial cases
 under this protocol. The other three partitions are explicitly empty; the
 model's result depends on the validated control in partition zero.
+
+### Complete network 34 validation
+
+The [Marwan 2003 regulatory-hierarchy model](models/BIOMD0000000037.xml),
+network 34, passes all **360 initial cases, 3,254 conditional trials and
+6,509 response-trials**. Its [combined audit](results/catalog-breaking-linux-34/audit.json)
+validates four disjoint Linux partitions from run `43101294718` at revision
+`2e7327b0d273f4b33bdd8aa37601c1a497854a2a`. Every branch passes, with
+12,936 branch records representing 12,870 distinct specifications, and no
+unresolved conditional decisions. The [artifact record](results/catalog-breaking-linux-34/source-artifacts.json)
+retains the downloaded archive and public-file checksums.
+
+Of the 6,509 response-trials, 6,397 have no resolved history effect at rechallenge.
+Twenty-one meet the controlled half-restoration criterion; three remain
+unresolved at that classification threshold despite passing trajectory
+agreement. Numerical validation therefore does not mean every intervention
+produces a memory effect or a resolved behavioral label. These are conditional
+trials with repeated response species and histories, not independent samples
+for estimating population frequencies.
+
+Published terminal breaking reports now cover **20 distinct models**. After
+the separate network-4 and network-26 recoveries, 18 models have passing full
+numerical validation; reduced Goldbeter and Marhl retain the failures described
+above. Fifteen models still need their complete searches. All-35 completion
+and whole-catalog frequency comparisons remain pending.
 
 ## Source protocol and documented discrepancies
 
