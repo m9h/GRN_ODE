@@ -80,6 +80,9 @@ passes all eight analytic adapter tests.
 
 The main replication project continues to use its existing uv environment.
 Do not modify that environment while its workers are running.
+GitHub computation jobs also use `uv sync` and `uv run`. Micromamba is only
+the macOS native-library bootstrap described below; uv installs the additional
+Python packages into that isolated environment.
 
 On Linux x86-64, Heyoka supplies a binary wheel and uv can install the whole
 diagnostic environment:
@@ -117,3 +120,33 @@ The report records Python, library and platform versions, source and model
 hashes, the complete observation-grid hash, every reset count and integration
 outcome. `--resume` reuses terminal records only when their complete metadata
 fingerprint matches. Saved records and arrays should be kept together.
+
+## Independent Marhl implementation
+
+The model-specific [mpmath adapter](grn_memory/marhl_mpmath.py) transcribes the
+seven reaction fluxes independently, including the one-quarter stoichiometries
+for ER and mitochondrial calcium. It accepts only the original BioModel 39
+checksum. This is a check of one model, not a general SBML importer.
+Between interventions, its derivatives conserve `Ca_cyt + 4*CaER + 4*CaM + CaPr`
+and `CaPr + Pr`; resetting a species can change the first conserved quantity.
+Tests compare its rates with RoadRunner across widely separated states and
+verify that resets preserve absolute time and every other state.
+
+The [full diagnostic](scripts/diagnose_marhl_mpmath.py) evaluates the untreated
+baseline and all three original failed branches with mpmath at 128 and 192 bits.
+It compares each full array with the saved Heyoka and RoadRunner trajectories,
+retaining every observation and intervention. Both arbitrary-precision
+implementations use Taylor methods. Agreement would support consistency across
+implementations, but would not establish agreement across integrator families
+or validate the two complete cases without their remaining control arms.
+
+```bash
+.venv-taylor/bin/python -m pytest -q tests/test_marhl_mpmath.py
+.venv-taylor/bin/python scripts/diagnose_marhl_mpmath.py \
+  --output results/catalog-paired-mpmath-marhl
+```
+
+The mpmath diagnostic uses no Heyoka native libraries while integrating; its
+equations and arithmetic can also run in a uv-created Python environment with
+the pinned Python requirements above. No completed stimulated-branch result
+is claimed here until the saved arrays have been independently audited.
