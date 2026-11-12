@@ -161,6 +161,16 @@ published archives contain 346 branch records, compared with 301 in the original
 four partitions, because shared controls appear in more partitions. These
 duplicate records do not represent additional scientific coverage.
 
+The corresponding [eight-partition Linux resume](https://github.com/m9h/GRN_ODE/actions/runs/43168144204)
+was submitted at revision `a188face8e1b14383cf42c8e9fd148d6b4ee1360`.
+An additional [sixteen-partition batch for networks 1, 2 and 5](https://github.com/m9h/GRN_ODE/actions/runs/43169085644)
+was submitted at revision `1fc563a9db5370b15df8faf419cc12b205a64648`.
+Its 48 jobs partition 1,210 initial cases and keep the original observation
+horizons, conditional searches and comparison thresholds. Both dispatches were
+queued on 12 November 2026 UTC; completed coverage requires their returned
+evidence and full combined audits. Their independent outputs remain separate
+from the original local calculations.
+
 Keep artifacts from different
 partitions in separate directories: shared branch identifiers alone do not
 justify overwriting independently computed evidence. A successful partition
