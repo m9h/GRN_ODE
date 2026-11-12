@@ -167,6 +167,35 @@ uv run --locked python scripts/audit_marhl_mpmath.py \
 ```
 
 The audit requires a completed diagnostic and does not need mpmath or Heyoka
-installed. The main environment passes 206 tests, with the optional Heyoka
+installed. The main environment passes 211 tests, with the optional Heyoka
 adapter module skipped; the isolated precision environment separately passes
 the nine mpmath adapter and resume tests.
+
+## Complete control-arm computation
+
+The two unresolved Marhl cases each require twelve arms. Their union contains
+18 distinct branches: the three failed branches above and 15 other branches.
+The [control runner](scripts/diagnose_marhl_controls.py) computes all 15 with
+Heyoka and mpmath at both recorded precisions, plus RoadRunner at
+`1e-13/1e-15`. It retains every original reset and all 30,001 observations for
+each branch. Before starting, it validates the original case inventory and
+re-audits the published Heyoka reference.
+
+```bash
+.venv-taylor/bin/python scripts/diagnose_marhl_controls.py \
+  --output results/catalog-paired-marhl-controls
+```
+
+The runner saves the case-to-branch mapping, source and model checksums,
+arithmetic settings, library versions, full trajectory arrays and reset counts.
+It compares all six pairs of high-precision trajectories and reports their
+agreement separately from the four comparisons with RoadRunner. `--resume`
+requires unchanged configuration and verifies each completed array before
+reusing it. Five tests reject missing case arms, incomplete resets, a changed
+absolute clock and truncated cached arrays.
+The isolated precision environment passes these five tests together with all
+nine mpmath adapter and resume tests.
+
+These computations do not themselves recover either case. A combined audit
+must validate all 18 branches and recompute the complete case scores from
+consistent implementations across every arm before coverage can increase.
