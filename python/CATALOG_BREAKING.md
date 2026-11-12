@@ -177,6 +177,31 @@ justify overwriting independently computed evidence. A successful partition
 is not a complete-model result; complete coverage and numerical validation must
 be audited across every partition before reporting a model as finished.
 
+### Collecting completed batches
+
+The [collector](scripts/collect_breaking_runs.py) saves artifacts as jobs finish,
+including hidden checkpoints needed for later resumes. It verifies the downloaded
+ZIP against GitHub's SHA-256, checks the producing revision and job attempt, and
+keeps each attempt and artifact in a separate directory. Source Git objects must
+be available locally for the subsequent evidence audit.
+
+```bash
+MPLBACKEND=Agg uv run --locked --extra delay python scripts/collect_breaking_runs.py \
+  --run 43158961987 --run 43168144204 --run 43169085644 \
+  --output results/catalog-breaking-collected --watch
+```
+
+Omit `--watch` for one collection pass. The watcher polls every 45 seconds and
+writes `status.json` plus a `collection.json` for each workflow attempt. Once all
+partitions for a model have complete selected-case coverage, it runs the full
+combined auditor and saves its report. A completed job alone cannot establish
+validation: missing artifacts remain pending, timed-out partitions are listed
+under `needs_resume`, and completed numerical mismatches retain their failing
+result. Computation and resume dispatches use the explicit commands above.
+Cached audits are reused only for unchanged artifact evidence, model,
+calibration and auditor source. The original failed observations remain in their
+own artifacts throughout collection and subsequent recovery.
+
 ### First complete model from the distributed run
 
 Network **27**, [BioModel 275](models/BIOMD0000000275.xml), now passes all
@@ -242,20 +267,40 @@ now confirms all 14 mismatches. All 84 integrations finish over the original
 The two tighter requests are `1e-13/1e-19` and `5e-14/5e-20`; both native
 cross-engine comparisons and both within-engine refinements pass on every
 branch. The original timed-drive encoding and reset schedules are retained.
-This is branch evidence; a full 118-case recovery must still recompute every
-conditional trial and its controls with the declared tighter settings.
+The separate [full recovery](results/catalog-breaking-muller26-full-recovery/audit.json)
+now passes **all 118 cases**, recomputing every required conditional trial and
+control with `rtol=1e-13` and `atol=1e-19` in both engines. Its four Linux
+partitions were produced at revision `b0891863ffd90b3dfb5c944720f0512d81584167`
+in [run 43158961987](https://github.com/m9h/GRN_ODE/actions/runs/43158961987).
+The full audit covers **573 conditional trials, 836 response-trials and 2,360
+branch records**, representing 2,312 distinct branch specifications. There are
+no unresolved conditional decisions. Every branch comparison passes; the
+largest scaled discrepancy is **0.51046**, below the acceptance limit of one,
+for `C_Raf` at time 1912.62.
+
+The original 116/118 results remain separate. The refined run has a different
+trial inventory from either original run: the literal continuation rule can
+change when small numerical residues change. Each inventory is audited against
+its own complete conditional search; different trial counts are not treated as
+equivalent coverage of identical trajectories.
 
 The diagnostic now divides each branch's recorded relative and absolute
 tolerances by 10 and 20. A fixed absolute setting of `1e-15` would have loosened
 this model's original `1e-18` request. Ten focused tests check strict tightening,
 the preserved Goldbeter requests, complete source-failure selection and rejection
-of altered timed-drive encodings. The full local suite passes 156 tests, with
-the optional Heyoka adapter skipped in the main environment.
+of altered timed-drive encodings. That diagnostic revision passed 156 local
+tests, with the optional Heyoka adapter skipped in the main environment.
 
 ```bash
 MPLBACKEND=Agg uv run --locked python scripts/diagnose_breaking_refinement.py \
   --report results/catalog-breaking-linux-26/shard-3/BIOMD0000000664.json \
   --output results/catalog-breaking-muller26-refinement
+MPLBACKEND=Agg uv run --locked python scripts/audit_breaking_shards.py --network 26 \
+  --input results/catalog-breaking-muller26-full-recovery/shard-0 \
+  --input results/catalog-breaking-muller26-full-recovery/shard-1 \
+  --input results/catalog-breaking-muller26-full-recovery/shard-2 \
+  --input results/catalog-breaking-muller26-full-recovery/shard-3 \
+  --output results/catalog-breaking-muller26-full-recovery/audit.json
 ```
 
 ### Complete network 30 coverage with numerical mismatches
