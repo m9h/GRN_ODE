@@ -108,6 +108,11 @@ def run_model(entry,args):
         # requests and a further refinement on all eight original mismatches.
         # Calibration, reset timing, conditional search and acceptance stay fixed.
         integration = {engine: {"rtol": 1e-13, "atol": 1e-15} for engine in engines}
+    if entry["network"] == 26:
+        # All 14 original full-horizon mismatches pass this request and a
+        # further twofold refinement with the same timed-drive encoding.
+        # Retain the tiny-state absolute tolerance and every conditional trial.
+        integration = {engine: {"rtol": 1e-13, "atol": 1e-19} for engine in engines}
     fallbacks = {"copasi":{"rtol":1e-7,"atol":1e-9}} if entry["network"] == 35 else {}
     encoding = None
     if entry["network"] == 26:

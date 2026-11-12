@@ -187,6 +187,14 @@ branch. The original timed-drive encoding and reset schedules are retained.
 This is branch evidence; a full 118-case recovery must still recompute every
 conditional trial and its controls with the declared tighter settings.
 
+The `kinetics-muller-recovery` branch applies `1e-13/1e-19` to both native
+engines for network 26 and reruns all 118 cases in four complete-case partitions.
+It preserves the repeated-screen calibration, eligibility rules, timed drives,
+reset schedule, observation grid and comparison thresholds. Original reports
+and the distributed checkpoint-resume runs continue on their recorded source
+revisions. No full-model recovery is claimed until all four new partitions
+finish and the combined conditional-search audit passes.
+
 The diagnostic now divides each branch's recorded relative and absolute
 tolerances by 10 and 20. A fixed absolute setting of `1e-15` would have loosened
 this model's original `1e-18` request. Ten focused tests check strict tightening,
