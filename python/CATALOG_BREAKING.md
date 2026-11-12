@@ -352,6 +352,38 @@ with 201 and 264 passes reported. Hidden checkpoints from both generations
 are retained. The sixteen-partition continuation above uses the newer artifacts;
 these partial reports are not counted as completed models.
 
+### Ciliberto partition-zero refinement
+
+The first completed sixteen-way Ciliberto partition (network 28, BioModel 697)
+contains **38 of the model's 622 initial cases**. Thirty-six pass; two retain
+ten incomplete COPASI branches. The [source record](results/catalog-breaking-ciliberto28-shard0-refinement/source-partition.json)
+identifies the workflow artifact and its checksums. This is partial model
+coverage, separate from the complete-model totals below.
+
+The [completed refinement diagnostic](results/catalog-breaking-ciliberto28-shard0-refinement/report.json)
+reruns all ten failed branches at three requests, retaining the full 0–2210
+interval, 221,001 observations and original reset schedules. RoadRunner
+completes all 30 integrations. COPASI completes none at `1e-12/1e-14` or
+`1e-13/1e-15`, and six of ten at `5e-14/5e-16`. Each of those six agrees with
+RoadRunner at the matching request, but **zero branches pass the complete
+refinement gate**, which also requires the preceding request and its
+within-engine comparison. No cases are recovered.
+
+The [verification record](results/catalog-breaking-ciliberto28-shard0-refinement/verification.json)
+checks the captured original failure inventory against the source archives,
+source hashes, all integration requests and the recorded comparison outcomes.
+This producer saves window summaries and comparison records, not full raw
+diagnostic arrays; this verification is not an independent pointwise rerun.
+Reproduce the integrations in a fresh output directory with:
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/diagnose_breaking_refinement.py \
+  --evidence results/catalog-breaking-ciliberto28-shard0-refinement/source-evidence.json \
+  --output results/reproduced-ciliberto28-shard0-refinement
+```
+
+### Complete network 33 control validation
+
 The [network 33 audit](results/catalog-breaking-linux-33/audit.json) validates
 the Tyson 1999 circadian model's full untreated control: 221,001 observations
 over 0–2210 and all three observables agree across the two engines, with a
