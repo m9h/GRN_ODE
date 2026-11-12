@@ -18,12 +18,12 @@ Zero eligible combinations do not establish an absence of learning capacity.
 ## Audited completed models from the original run
 
 The [original-run snapshot](results/catalog-breaking-original-completed/audit.json)
-contains **16 terminal model reports** from source revision
+contains **17 terminal model reports** from source revision
 `70a3afad61357e94873ff62a7300c099b4c7ae3e`, copied on 11 November 2026 while
 the other workers continued. Fourteen models pass their numerical checks.
-Across these reports, **729 of 734 initial cases pass**, with 6,352 conditional
-trials and 25,723 distinct branches within their respective models. There are
-four incomplete integrations and eight completed trajectory mismatches.
+Across these reports, **845 of 852 initial cases pass**, with 6,946 conditional
+trials and 28,127 distinct branches within their respective models. There are
+four incomplete integrations and 22 completed trajectory mismatches.
 
 | Network | Model | Passing / initial cases | Branches | Result |
 |---|---|---:|---:|---|
@@ -42,6 +42,7 @@ four incomplete integrations and eight completed trajectory mismatches.
 | 22 | Chickarmane 2006, irreversible stem-cell switch | 30 / 30 | 675 | Passes. |
 | 23 | Chickarmane 2008, stem-cell lineage determination | 32 / 32 | 237 | Passes. |
 | 24 | Chickarmane 2008, NANOG–GATA-6 switch | 138 / 138 | 6,010 | Passes. |
+| 26 | Muller 2008, simplified MAPK activation | 116 / 118 | 2,404 | Fourteen completed mismatches; refinement evidence and run comparison below. |
 | 27 | Goldbeter 2007, somitogenesis switch | 22 / 22 | 260 | Passes; independent distributed result below also passes. |
 
 The [full-model auditor](scripts/audit_breaking_catalog.py) uses the same branch
@@ -60,7 +61,7 @@ MPLBACKEND=Agg uv run --locked python scripts/audit_breaking_catalog.py \
   --source-revision 70a3afad61357e94873ff62a7300c099b4c7ae3e \
   --network 3 --network 4 --network 6 --network 7 --network 9 --network 13 --network 14 \
   --network 16 --network 17 --network 18 --network 19 --network 21 \
-  --network 22 --network 23 --network 24 --network 27 \
+  --network 22 --network 23 --network 24 --network 26 --network 27 \
   --output results/catalog-breaking-original-completed/audit.json
 ```
 
@@ -218,7 +219,61 @@ continues all eight partitions with unchanged worker hashes and selections.
 The original artifacts remain available in run `43101294718`; these partial
 reports are not counted as completed models.
 
+The [network 33 audit](results/catalog-breaking-linux-33/audit.json) validates
+the Tyson 1999 circadian model's full untreated control: 221,001 observations
+over 0–2210 and all three observables agree across the two engines, with a
+largest scaled discrepancy of 0.02223. There are no eligible initial cases
+under this protocol. The other three partitions are explicitly empty; the
+model's result depends on the validated control in partition zero.
+
 ## Source protocol and documented discrepancies
+
+### Tiny residuals change literal search paths
+
+The [local/distributed comparison](results/catalog-breaking-muller26-run-comparison/report.json)
+audits both complete network 26 runs before comparing their recorded trials.
+Their model, calibration, experimental settings and package versions match.
+Both validate 116/118 initial cases, but **38 cases have different search paths**:
+the local run performs 594 conditional trials and the distributed run 524.
+The runs share 502 trials and 1,440 response/engine assessments. Their controlled
+classification keys agree on every shared assessment, while **210 raw reversal
+labels differ**. All four means involved in every raw disagreement have magnitude
+below `1.35e-19`, far below the `1e-7` absolute comparison floor.
+
+For example, the first trial of `C_Raf_inactive__down--FGFR__up` measures the
+response `MSH`. With the source's last regulation code equal to one, its literal
+downward-reversal test is `cue_mean <= pre_mean / 1.5`:
+
+| RoadRunner run | Pre-cue mean | Cue mean | Literal downward reversal |
+|---|---:|---:|---|
+| Local | −2.48124e-38 | −1.12648e-42 | No |
+| Distributed | 6.72825e-39 | 3.05462e-43 | Yes |
+
+The sign of a residue near zero changes this inequality. Both runs classify
+the response as having **no resolved history effect at rechallenge**. The local
+case continues through eight trials; the distributed case stops after one.
+This illustrates sensitivity in the literal search rule, not a resolved memory
+effect. We retain the literal rule for replication and report classifications
+that account for numerical resolution separately.
+
+There are 92 trials unique to the local run and 22 unique to the distributed
+run. The comparison makes no equivalence claim for these unshared trials and
+does not rerun trajectory arrays. Seven focused tests check the distinction
+between raw and controlled labels, complete assessment inventories and the
+limits of comparisons between different paths.
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/compare_breaking_runs.py \
+  --network 26 --source-revision 70a3afad61357e94873ff62a7300c099b4c7ae3e \
+  --local results/catalog-breaking-original-completed \
+  --partition results/catalog-breaking-linux-26/shard-0 \
+  --partition results/catalog-breaking-linux-26/shard-1 \
+  --partition results/catalog-breaking-linux-26/shard-2 \
+  --partition results/catalog-breaking-linux-26/shard-3 \
+  --output results/catalog-breaking-muller26-run-comparison/report.json
+```
+
+### MATLAB protocol and reconstruction limits
 
 The operational source is
 [`Find_DrugRes_Sensitize_SLURM1.m`](../Find_DrugRes_Sensitize_SLURM1.m), using
