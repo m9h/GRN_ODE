@@ -134,6 +134,7 @@ def test_complete_synthetic_evidence_scores_every_arm(synthetic):
     assert result['native_agreeing_branches']==15
     assert result['original_passed_cases']==24 and result['recovered_cases']==2
     assert result['combined_passed_cases']==26 and result['all_cases_validated']
+    assert result['retained_original_passed_cases']==24 and not result['original_cases_requiring_revalidation']
     assert not result['different_integrator_family_claimed']
     assert all(len(c['branches'])==12 and set(c['scores'])=={'taylor192','mpmath192'} for c in result['cases'].values())
 
@@ -203,8 +204,42 @@ def test_self_consistent_failed_control_cannot_recover_cases(editable):
     change(controls/'report.json',update_summary)
     result=run(editable)
     assert result['high_precision_agreeing_branches']==17
-    assert result['recovered_cases']==0 and result['combined_passed_cases']==24
+    assert result['recovered_cases']==0 and result['combined_passed_cases']==0
+    assert result['retained_original_passed_cases']==0
+    assert len(result['original_cases_requiring_revalidation'])==24
     assert all('none_sham' in c['unconfirmed_branches'] for c in result['cases'].values())
+
+
+def test_new_native_disagreement_does_not_preserve_conflicting_old_passes(editable):
+    controls=editable/'controls';plan=auditor.read(controls/'plan.json')
+    bid=next(iter(plan['cases'].values()))['branches']['none_sham']
+    record_path=controls/(bid+'.json');record=auditor.read(record_path)
+    path=controls/record['traces']['roadrunner']['file']
+    with np.load(path,allow_pickle=False) as data:arrays={k:data[k].copy() for k in data.files}
+    arrays['values']*=2.
+    np.savez_compressed(path,**arrays)
+    record['traces']['roadrunner']['sha256']=auditor.digest(path)
+    traces={k:auditor.trace(controls,v,bid,k,arrays['times']) for k,v in record['traces'].items()}
+    record['comparisons']=auditor.comparisons(traces);record['native_agreement']=False
+    write(record_path,record)
+    result=run(editable)
+    assert result['high_precision_agreeing_branches']==18 and result['recovered_cases']==2
+    assert result['original_passed_cases']==24 and result['retained_original_passed_cases']==0
+    assert result['combined_passed_cases']==2 and not result['all_cases_validated']
+    assert all(c['none_sham']['reasons']==['refined_native_disagreement']
+               for c in result['original_cases_requiring_revalidation'].values())
+
+
+def test_unrelated_original_passes_are_retained():
+    original={'affected':{'status':'passed','branches':{'role':'bad'}},
+              'unchanged':{'status':'passed','branches':{'role':'uncomputed'}},
+              'confirmed':{'status':'passed','branches':{'role':'good'}},
+              'original_failure':{'status':'failed','branches':{'role':'bad'}}}
+    branches={'bad':{'high_precision_agreement':False,'native_agreement':True},
+              'good':{'high_precision_agreement':True,'native_agreement':True}}
+    affected=auditor.original_cases_requiring_revalidation(original,branches)
+    assert set(affected)=={'affected'}
+    assert affected['affected']['role']['reasons']==['precision_refinement_unresolved']
 
 
 def test_baseline_mismatch_prevents_case_promotion(synthetic):

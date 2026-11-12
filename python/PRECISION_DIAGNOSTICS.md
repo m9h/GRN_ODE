@@ -167,7 +167,7 @@ uv run --locked python scripts/audit_marhl_mpmath.py \
 ```
 
 The audit requires a completed diagnostic and does not need mpmath or Heyoka
-installed. The main environment passes 237 tests, with the optional Heyoka
+installed. The main environment passes 249 tests, with the optional Heyoka
 adapter module skipped; the isolated precision environment separately passes
 the nine mpmath adapter and resume tests.
 
@@ -218,9 +218,16 @@ uv run --locked python scripts/audit_marhl_cases.py \
 ```
 
 Native disagreement remains explicit, and original passing cases are reported
-separately from any recovered cases. Thirteen tests exercise incomplete arms,
+separately from any recovered cases. If a newly checked shared arm has unresolved
+precision or disagrees with the refined native solver, any previously passing
+cases that use it require revalidation and are excluded from the combined count.
+Historical passes cannot override conflicting new evidence.
+
+Fifteen tests exercise incomplete arms,
 changed arrays or environments, failed controls, and a classification boundary
 where pointwise-agreeing values nevertheless yield different controlled labels.
+They also check that newly conflicting shared arms invalidate the carried-forward
+count while unrelated original passes remain separate.
 Their temporary fixtures deliberately contain invented trajectories and are
 not simulation evidence. The auditor's availability does not change current
 case coverage while the required computations are running.

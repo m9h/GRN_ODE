@@ -148,6 +148,25 @@ def score_cases(cases, branches, baseline_passed):
     return result
 
 
+def original_cases_requiring_revalidation(original_cases, branches):
+    """Do not carry forward a pass contradicted by newly checked shared arms."""
+    affected = {}
+    for key,case in original_cases.items():
+        if case['status']!='passed':
+            continue
+        conflicts = {}
+        for role,bid in case['branches'].items():
+            if bid not in branches:
+                continue
+            branch = branches[bid]
+            reasons = []
+            if not branch['high_precision_agreement']:reasons.append('precision_refinement_unresolved')
+            if not branch['native_agreement']:reasons.append('refined_native_disagreement')
+            if reasons:conflicts[role] = {'branch_id':bid,'reasons':reasons}
+        if conflicts:affected[key] = conflicts
+    return affected
+
+
 def audit(controls, mpmath, reference=None, original_directory=None):
     controls,mpmath = Path(controls),Path(mpmath)
     reference = ROOT/'results/catalog-paired-taylor-marhl' if reference is None else Path(reference)
@@ -213,7 +232,9 @@ def audit(controls, mpmath, reference=None, original_directory=None):
                        and read(reference/'untreated_baseline.json')['status']=='confirmed')
     results = score_cases(cases,branches,baseline_passed)
     recovered = sum(c['status']=='passed' for c in results.values())
-    combined = original['passed_cases']+recovered
+    revalidation = original_cases_requiring_revalidation(original['cases'],branches)
+    retained = original['passed_cases']-len(revalidation)
+    combined = retained+recovered
     return {'purpose':__doc__,'model_id':MODEL,'model_sha256':MODEL_SHA256,
             'source_revision':REVISION,'original_report_sha256':digest(source),
             'original_archive_sha256':original['branch_archive']['sha256'],
@@ -226,6 +247,7 @@ def audit(controls, mpmath, reference=None, original_directory=None):
             'required_branch_count':18,'high_precision_agreeing_branches':sum(b['high_precision_agreement'] for b in branches.values()),
             'native_agreeing_branches':sum(b['native_agreement'] for b in branches.values()),
             'original_case_count':original['expected_cases'],'original_passed_cases':original['passed_cases'],
+            'retained_original_passed_cases':retained,'original_cases_requiring_revalidation':revalidation,
             'recovered_cases':recovered,'combined_passed_cases':combined,
             'all_cases_validated':combined==original['expected_cases'],
             'status':'passed' if combined==original['expected_cases'] else 'failed',

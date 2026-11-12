@@ -402,6 +402,21 @@ search. `--resume` requires unchanged source, settings and environment, and
 checks every cached array before reuse. A completed mismatch cannot be relabelled
 as a pass merely because the integration finished.
 
+After the batch finishes, the [independent array auditor](scripts/audit_scipy_breaking.py)
+verifies its source fingerprints, selected-branch inventory, arithmetic requests,
+full observation arrays and exact Radau reset counts. It recomputes all six
+comparisons and the original trial-window summaries. Ten tests exercise missing
+integrations, incomplete inventories, changed resets, altered arrays and a
+discrepancy confined to the final observation. Their synthetic fixtures are not
+model results. The audit keeps selected-branch coverage separate from coverage
+of all captured failures and from complete cases:
+
+```bash
+uv run --locked python scripts/audit_scipy_breaking.py \
+  --input results/catalog-breaking-scipy-ciliberto28-shard0 \
+  --output results/catalog-breaking-scipy-ciliberto28-shard0/audit.json
+```
+
 ### Complete network 33 control validation
 
 The [network 33 audit](results/catalog-breaking-linux-33/audit.json) validates
