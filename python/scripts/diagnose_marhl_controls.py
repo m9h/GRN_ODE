@@ -44,6 +44,13 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def runtime_versions():
+    import heyoka
+    # Conda's native build exposes __version__ without Python wheel metadata.
+    return {'heyoka':heyoka.__version__,
+            **{p:version(p) for p in ('mpmath','numpy','pandas','libroadrunner','python-libsbml')}}
+
+
 def prepare_plan(original_directory=ROOT/'results/catalog-paired', reference=ROOT/'results/catalog-paired-taylor-marhl'):
     original, _, branches, info, source = original_context('BIOMD0000000039',original_directory,REVISION)
     if info['sha256'] != MODEL_SHA256 or info['observables'] != NAMES:
@@ -109,7 +116,7 @@ def diagnose(args):
     metadata = {'plan_sha256':fingerprint(plan),'requests':REQUESTS,'acceptance':{'rtol':2e-5,'atol':1e-7},
                 'sample_grid_sha256':hashlib.sha256(times.tobytes()).hexdigest(),'samples':len(times),
                 'implementation_sha256':{name:digest(ROOT/name) for name in sources},
-                'versions':{p:version(p) for p in ('heyoka','mpmath','numpy','pandas','libroadrunner','python-libsbml')},
+                'versions':runtime_versions(),
                 'python':platform.python_version(),'case_recovery_claimed':False,
                 'different_integrator_family_claimed':False}
     signature = fingerprint(metadata)

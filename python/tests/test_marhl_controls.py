@@ -2,11 +2,27 @@
 from copy import deepcopy
 import json
 import shutil
+import sys
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
 
 from scripts import diagnose_marhl_controls as diagnostic
+
+
+def test_conda_heyoka_version_without_wheel_metadata(monkeypatch):
+    monkeypatch.setitem(sys.modules,'heyoka',SimpleNamespace(__version__='7.13.2'))
+    original_version=diagnostic.version
+    def conda_metadata(name):
+        if name=='heyoka':
+            from importlib.metadata import PackageNotFoundError
+            raise PackageNotFoundError(name)
+        return original_version(name)
+    monkeypatch.setattr(diagnostic,'version',conda_metadata)
+    versions=diagnostic.runtime_versions()
+    assert versions['heyoka']=='7.13.2'
+    assert all(versions[p] for p in ('mpmath','numpy','pandas','libroadrunner','python-libsbml'))
 
 
 @pytest.fixture(scope='module')

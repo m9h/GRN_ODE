@@ -167,7 +167,7 @@ uv run --locked python scripts/audit_marhl_mpmath.py \
 ```
 
 The audit requires a completed diagnostic and does not need mpmath or Heyoka
-installed. The main environment passes 211 tests, with the optional Heyoka
+installed. The main environment passes 212 tests, with the optional Heyoka
 adapter module skipped; the isolated precision environment separately passes
 the nine mpmath adapter and resume tests.
 
@@ -193,8 +193,9 @@ agreement separately from the four comparisons with RoadRunner. `--resume`
 requires unchanged configuration and verifies each completed array before
 reusing it. Five tests reject missing case arms, incomplete resets, a changed
 absolute clock and truncated cached arrays.
-The isolated precision environment passes these five tests together with all
-nine mpmath adapter and resume tests.
+A sixth checks version recording for conda's Heyoka build, which exposes its
+version without Python wheel metadata. The isolated precision environment
+passes these six tests together with all nine mpmath adapter and resume tests.
 
 These computations do not themselves recover either case. A combined audit
 must validate all 18 branches and recompute the complete case scores from
