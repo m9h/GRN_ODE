@@ -1,0 +1,334 @@
+{
+  "purpose": "Audit failed paired branches with SciPy/JAX equations and native refinement.\n\nTwo SciPy requests and two tighter RoadRunner requests must agree. The original\nRoadRunner request is rerun and reported separately; its known inaccuracies are\nnot silently promoted into the reference. All original samples and observables\nremain in every comparison. This is branch evidence, not a case-score recovery.\n",
+  "model_id": "BIOMD0000000035",
+  "model_sha256": "3303169fdd9a672fa25c26586822c9a1b91ac461744d1926d317f493e6981237",
+  "scipy_method": "Radau",
+  "source_report_sha256": "6b8232a34f4f3a4a3e2425a45fc7eb016f856b7d277fc9818b0d8953f39e4337",
+  "source_fingerprint": "3e6c889893dbf23f3fcfd5d8216b6d43d4578cb332cb0c1b22419ab3da197e02",
+  "source_archive_sha256": "f12df31104b8a0d722df9e8e7d098e1a6c680db660f477bc9519dd43f2cb7263",
+  "script_sha256": "3fb11ff65c386c73e2baec7a5b7dbecd6353b1bc2214a57daed71989cf299f8c",
+  "implementation_sha256": {
+    "jaxkineticmodel/load_sbml/sbml_model.py": "57ddfef282e220affab237ce15e760e8b01aeb4b8e5fd4c39b91696f619477cb",
+    "jaxkineticmodel/load_sbml/jax_kinetic_model.py": "04dabdfc81da14da8a008aa406e723b974213f208442225a1d512d03ab4547b2",
+    "jaxkineticmodel/load_sbml/sympy_converter.py": "8b4bfec0fd8a6ea4dfd72bf6a66af8b50faa9f3975827aac609c460287b9e504",
+    "jaxkineticmodel/load_sbml/export_sbml.py": "54b054ceaef678ae77827ce560e198d70865a34692542c798235af2121114ee9",
+    "jaxkineticmodel/load_sbml/sbml_load_utils.py": "f914d0ee1bf06602d7c9ccac6643c9814ad4f63b9c520acf92e98839e64626ca",
+    "grn_memory/catalog_jax.py": "c2ee2f06f10880232ed6faa1ffa17caebf274306ab0be152ad6d6d703bba49e5",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "grn_memory/scipy_reference.py": "69c2a55bb79731db6744d6f9d3f78c564f07d5a221ad2f8f2ebb0a033e536b5c",
+    "grn_memory/jax_protocols.py": "d15e5b53081c6392446d5ae3029d43a17292f00d025102dad5c1e27fcb6eb9f7",
+    "grn_memory/catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315",
+    "grn_memory/catalog_paired.py": "8d3de8af6ac9a10c3c0a253b4daac72c0a3339c5b195bb7044325fa33acbf663"
+  },
+  "integration_requests": {
+    "scipy": {
+      "rtol": 1e-10,
+      "atol": 1e-12
+    },
+    "scipy_refined": {
+      "rtol": 1.0000000000000001e-11,
+      "atol": 1e-13
+    },
+    "roadrunner_original": {
+      "rtol": 1e-12,
+      "atol": 1e-14
+    },
+    "roadrunner": {
+      "rtol": 1e-13,
+      "atol": 1e-15
+    },
+    "roadrunner_refined": {
+      "rtol": 5e-14,
+      "atol": 5e-16
+    }
+  },
+  "comparison_settings": {
+    "rtol": 2e-05,
+    "atol": 1e-07
+  },
+  "grid": {
+    "duration": 300.0,
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "samples": 30001
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "jax": "0.12.0.1",
+    "jaxlib": "0.12.0.1",
+    "diffrax": "0.7.2",
+    "equinox": "0.13.8",
+    "jaxkineticmodel": "0.0.1"
+  },
+  "fingerprint": "98f301cfc4c77e31ec6307c0a3f487a6e8df7879509e2bbfa78e4f3fc083ba96",
+  "selection": "explicit branches",
+  "original_branch_count": 755,
+  "selected_branch_ids": [
+    "011b0d248151cefa9a3752236bc976913957e54f4f511840e2c5d6803744f4da",
+    "0d263030bb4d45dcbcdb326a65ef1e7b443b6d4b4f25445668e39f67ebdbdb19",
+    "1661a4e32553278ec40927ca9e98efdee4b93c20132010cd65f4aeeca03e1cce",
+    "1832652e5b97d0e15e19a11bc134f968556279f065337d2feda44de0c0b4817e",
+    "186a042953cb8a1b7bf0cda5895927d30d7a38073e20be308cffe5849f19c549",
+    "1d7a33a4a2e72f778096bf0c23418c700fe0dba7a008f6eeec2d4c91108e887f",
+    "217b8562205396761e2fc7669f1f2c27ca41803f8a4c77add85945a7907cb56e",
+    "21968249aba4aeed245c9b27d0f1957c9f395b35c28db43ee30cbbcfcb606f72",
+    "233bf7167a647a543bbbb4149c16d8f7c80ea9717abd34b70fa30849fb60b081",
+    "2a29925fbce74a7b2af3b1b918872631e56a10e9b0dd6d6885b55e7e30e841e0",
+    "309e3bf750224ddbd6e6cbd91356ca763b15b24d345291d2034b8054c843b6ff",
+    "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+    "31c4e19b70be9ac7b3e232c86555bb20852e2cc1f161965202e6590b5f39382c",
+    "36a7103386e43d47a7198735087a5d1d8176255c6397d2fa57e6d40ed6598f08",
+    "39dc6500e3b56eea1539465e8f0355ab718b96c1c0180cf98356910bd1aa35a8",
+    "3f9afdc52159ea3af85990027637909adbe81e04424bb99986c2c33d51b5e36b",
+    "51ca54ec06ca3d6deb662e40d27a1b9ebe67422a6851775e365baa6d0d8bdc62",
+    "53e2d7086f12aee6a5b5c386a6b978201117196413b7d61f35ae9a3b141b8426",
+    "54048dfff841c35c0452384566b2074ac73574175ab12b9ecff21ac71e8175a0",
+    "56ca6df04af4c9357bfa8f29e639e672561f9a6501431f5a9160f175973e9fdc",
+    "5744feeded0105c40f061aefc698551cc8fbb8c91f5e65ad252b3e801574d553",
+    "57f6fddf2c72551542c16a39ff52e6b5fa3c63bda7801388a44e216fd9e6f749",
+    "5aaf8830043745ade7981fa9315ba3fd4aa8b9d563bdf45313117c300b98c584",
+    "5da7042c27fb3759235a958c37235c614030dab87ca23e8a178f608070af0c7e",
+    "6efde6c0c119d3e799aaa5e1126adc34e8395c7dc57e6434b08cb0ea81c0d677",
+    "873f815cd313d81d03d34257ff6436f0fcb375e6a46feb48a91d26093bd9dae8",
+    "8ca91bcc7ddd0d20fdb30e1c5286d2e234011d88c89e3c445995455fad8a7ee0",
+    "92f07bbbf8b3db773250cb78dac95112c65adea37de5eb58db7bb9526963ec2c",
+    "93924b61b83e5e20e7f8f4957883c581c5ddc23717713a75e9d7d8152cc66c30",
+    "9ea81e9128f182e7561229f5b2a4e182a92b369ffb83b593b8601908df8ceccf",
+    "a976bdd853ca49241b1668f6dff538b4538f2ad4fc636ffb69f695ae2031e4cd",
+    "afc86075c09b7683a1af439bd02137a94e6b9651cdfa2f6e77bf82bce1d53d83",
+    "b17cb52a26331d7c1b9b0ed9ba8d5919d5fa6cca44512155df491f227ae3418d",
+    "b3d3dae0c1091d71abf2d4fd7e907d381109ede1b3588c8fe2573c5f070d7750",
+    "c6dc9833d7642edc86db412dc579d7b630bfd868508b79531d3cc5dd28f39a9b",
+    "d25778a72078a3b045057c6c9add0a407d4f9556c6b4c129347a9321057555b7",
+    "d3c6f04667c3c07ccbbb992e002511699b8662343c409bf7975bd6d99e867372",
+    "d4d179b30ea5e62f5962ea11758e89d633fcd2e547ed7ec40cd8524519e8e56e",
+    "dafe17e979f40f1410eb2356802d908ac92cd0c4f9c4aba3e9981675f77624c0",
+    "ddf445f1c6829f0e2ee3d6739dd8afb586875c4858e799a6cee79f35c640319c",
+    "f06e46e7e65e1ef12fb0c7026a34adfbc98a0bf578b613bb0e33e9f0cbd99dfa",
+    "f8f3f412c610839b6fb4666624226547bc29b3cb2dbbeab720e73c39962e922d"
+  ],
+  "expected_branches": 42,
+  "started_at": "2026-11-12T04:26:24.632267+00:00",
+  "status": "completed",
+  "branches": [
+    {
+      "branch_id": "011b0d248151cefa9a3752236bc976913957e54f4f511840e2c5d6803744f4da",
+      "status": "confirmed",
+      "file": "011b0d248151cefa9a3752236bc976913957e54f4f511840e2c5d6803744f4da.json"
+    },
+    {
+      "branch_id": "0d263030bb4d45dcbcdb326a65ef1e7b443b6d4b4f25445668e39f67ebdbdb19",
+      "status": "confirmed",
+      "file": "0d263030bb4d45dcbcdb326a65ef1e7b443b6d4b4f25445668e39f67ebdbdb19.json"
+    },
+    {
+      "branch_id": "1661a4e32553278ec40927ca9e98efdee4b93c20132010cd65f4aeeca03e1cce",
+      "status": "confirmed",
+      "file": "1661a4e32553278ec40927ca9e98efdee4b93c20132010cd65f4aeeca03e1cce.json"
+    },
+    {
+      "branch_id": "1832652e5b97d0e15e19a11bc134f968556279f065337d2feda44de0c0b4817e",
+      "status": "confirmed",
+      "file": "1832652e5b97d0e15e19a11bc134f968556279f065337d2feda44de0c0b4817e.json"
+    },
+    {
+      "branch_id": "186a042953cb8a1b7bf0cda5895927d30d7a38073e20be308cffe5849f19c549",
+      "status": "confirmed",
+      "file": "186a042953cb8a1b7bf0cda5895927d30d7a38073e20be308cffe5849f19c549.json"
+    },
+    {
+      "branch_id": "1d7a33a4a2e72f778096bf0c23418c700fe0dba7a008f6eeec2d4c91108e887f",
+      "status": "confirmed",
+      "file": "1d7a33a4a2e72f778096bf0c23418c700fe0dba7a008f6eeec2d4c91108e887f.json"
+    },
+    {
+      "branch_id": "217b8562205396761e2fc7669f1f2c27ca41803f8a4c77add85945a7907cb56e",
+      "status": "confirmed",
+      "file": "217b8562205396761e2fc7669f1f2c27ca41803f8a4c77add85945a7907cb56e.json"
+    },
+    {
+      "branch_id": "21968249aba4aeed245c9b27d0f1957c9f395b35c28db43ee30cbbcfcb606f72",
+      "status": "confirmed",
+      "file": "21968249aba4aeed245c9b27d0f1957c9f395b35c28db43ee30cbbcfcb606f72.json"
+    },
+    {
+      "branch_id": "233bf7167a647a543bbbb4149c16d8f7c80ea9717abd34b70fa30849fb60b081",
+      "status": "confirmed",
+      "file": "233bf7167a647a543bbbb4149c16d8f7c80ea9717abd34b70fa30849fb60b081.json"
+    },
+    {
+      "branch_id": "2a29925fbce74a7b2af3b1b918872631e56a10e9b0dd6d6885b55e7e30e841e0",
+      "status": "confirmed",
+      "file": "2a29925fbce74a7b2af3b1b918872631e56a10e9b0dd6d6885b55e7e30e841e0.json"
+    },
+    {
+      "branch_id": "309e3bf750224ddbd6e6cbd91356ca763b15b24d345291d2034b8054c843b6ff",
+      "status": "confirmed",
+      "file": "309e3bf750224ddbd6e6cbd91356ca763b15b24d345291d2034b8054c843b6ff.json"
+    },
+    {
+      "branch_id": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+      "status": "confirmed",
+      "file": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074.json"
+    },
+    {
+      "branch_id": "31c4e19b70be9ac7b3e232c86555bb20852e2cc1f161965202e6590b5f39382c",
+      "status": "confirmed",
+      "file": "31c4e19b70be9ac7b3e232c86555bb20852e2cc1f161965202e6590b5f39382c.json"
+    },
+    {
+      "branch_id": "36a7103386e43d47a7198735087a5d1d8176255c6397d2fa57e6d40ed6598f08",
+      "status": "confirmed",
+      "file": "36a7103386e43d47a7198735087a5d1d8176255c6397d2fa57e6d40ed6598f08.json"
+    },
+    {
+      "branch_id": "39dc6500e3b56eea1539465e8f0355ab718b96c1c0180cf98356910bd1aa35a8",
+      "status": "confirmed",
+      "file": "39dc6500e3b56eea1539465e8f0355ab718b96c1c0180cf98356910bd1aa35a8.json"
+    },
+    {
+      "branch_id": "3f9afdc52159ea3af85990027637909adbe81e04424bb99986c2c33d51b5e36b",
+      "status": "confirmed",
+      "file": "3f9afdc52159ea3af85990027637909adbe81e04424bb99986c2c33d51b5e36b.json"
+    },
+    {
+      "branch_id": "51ca54ec06ca3d6deb662e40d27a1b9ebe67422a6851775e365baa6d0d8bdc62",
+      "status": "confirmed",
+      "file": "51ca54ec06ca3d6deb662e40d27a1b9ebe67422a6851775e365baa6d0d8bdc62.json"
+    },
+    {
+      "branch_id": "53e2d7086f12aee6a5b5c386a6b978201117196413b7d61f35ae9a3b141b8426",
+      "status": "confirmed",
+      "file": "53e2d7086f12aee6a5b5c386a6b978201117196413b7d61f35ae9a3b141b8426.json"
+    },
+    {
+      "branch_id": "54048dfff841c35c0452384566b2074ac73574175ab12b9ecff21ac71e8175a0",
+      "status": "confirmed",
+      "file": "54048dfff841c35c0452384566b2074ac73574175ab12b9ecff21ac71e8175a0.json"
+    },
+    {
+      "branch_id": "56ca6df04af4c9357bfa8f29e639e672561f9a6501431f5a9160f175973e9fdc",
+      "status": "confirmed",
+      "file": "56ca6df04af4c9357bfa8f29e639e672561f9a6501431f5a9160f175973e9fdc.json"
+    },
+    {
+      "branch_id": "5744feeded0105c40f061aefc698551cc8fbb8c91f5e65ad252b3e801574d553",
+      "status": "confirmed",
+      "file": "5744feeded0105c40f061aefc698551cc8fbb8c91f5e65ad252b3e801574d553.json"
+    },
+    {
+      "branch_id": "57f6fddf2c72551542c16a39ff52e6b5fa3c63bda7801388a44e216fd9e6f749",
+      "status": "confirmed",
+      "file": "57f6fddf2c72551542c16a39ff52e6b5fa3c63bda7801388a44e216fd9e6f749.json"
+    },
+    {
+      "branch_id": "5aaf8830043745ade7981fa9315ba3fd4aa8b9d563bdf45313117c300b98c584",
+      "status": "confirmed",
+      "file": "5aaf8830043745ade7981fa9315ba3fd4aa8b9d563bdf45313117c300b98c584.json"
+    },
+    {
+      "branch_id": "5da7042c27fb3759235a958c37235c614030dab87ca23e8a178f608070af0c7e",
+      "status": "confirmed",
+      "file": "5da7042c27fb3759235a958c37235c614030dab87ca23e8a178f608070af0c7e.json"
+    },
+    {
+      "branch_id": "6efde6c0c119d3e799aaa5e1126adc34e8395c7dc57e6434b08cb0ea81c0d677",
+      "status": "confirmed",
+      "file": "6efde6c0c119d3e799aaa5e1126adc34e8395c7dc57e6434b08cb0ea81c0d677.json"
+    },
+    {
+      "branch_id": "873f815cd313d81d03d34257ff6436f0fcb375e6a46feb48a91d26093bd9dae8",
+      "status": "confirmed",
+      "file": "873f815cd313d81d03d34257ff6436f0fcb375e6a46feb48a91d26093bd9dae8.json"
+    },
+    {
+      "branch_id": "8ca91bcc7ddd0d20fdb30e1c5286d2e234011d88c89e3c445995455fad8a7ee0",
+      "status": "confirmed",
+      "file": "8ca91bcc7ddd0d20fdb30e1c5286d2e234011d88c89e3c445995455fad8a7ee0.json"
+    },
+    {
+      "branch_id": "92f07bbbf8b3db773250cb78dac95112c65adea37de5eb58db7bb9526963ec2c",
+      "status": "confirmed",
+      "file": "92f07bbbf8b3db773250cb78dac95112c65adea37de5eb58db7bb9526963ec2c.json"
+    },
+    {
+      "branch_id": "93924b61b83e5e20e7f8f4957883c581c5ddc23717713a75e9d7d8152cc66c30",
+      "status": "confirmed",
+      "file": "93924b61b83e5e20e7f8f4957883c581c5ddc23717713a75e9d7d8152cc66c30.json"
+    },
+    {
+      "branch_id": "9ea81e9128f182e7561229f5b2a4e182a92b369ffb83b593b8601908df8ceccf",
+      "status": "confirmed",
+      "file": "9ea81e9128f182e7561229f5b2a4e182a92b369ffb83b593b8601908df8ceccf.json"
+    },
+    {
+      "branch_id": "a976bdd853ca49241b1668f6dff538b4538f2ad4fc636ffb69f695ae2031e4cd",
+      "status": "confirmed",
+      "file": "a976bdd853ca49241b1668f6dff538b4538f2ad4fc636ffb69f695ae2031e4cd.json"
+    },
+    {
+      "branch_id": "afc86075c09b7683a1af439bd02137a94e6b9651cdfa2f6e77bf82bce1d53d83",
+      "status": "confirmed",
+      "file": "afc86075c09b7683a1af439bd02137a94e6b9651cdfa2f6e77bf82bce1d53d83.json"
+    },
+    {
+      "branch_id": "b17cb52a26331d7c1b9b0ed9ba8d5919d5fa6cca44512155df491f227ae3418d",
+      "status": "confirmed",
+      "file": "b17cb52a26331d7c1b9b0ed9ba8d5919d5fa6cca44512155df491f227ae3418d.json"
+    },
+    {
+      "branch_id": "b3d3dae0c1091d71abf2d4fd7e907d381109ede1b3588c8fe2573c5f070d7750",
+      "status": "confirmed",
+      "file": "b3d3dae0c1091d71abf2d4fd7e907d381109ede1b3588c8fe2573c5f070d7750.json"
+    },
+    {
+      "branch_id": "c6dc9833d7642edc86db412dc579d7b630bfd868508b79531d3cc5dd28f39a9b",
+      "status": "confirmed",
+      "file": "c6dc9833d7642edc86db412dc579d7b630bfd868508b79531d3cc5dd28f39a9b.json"
+    },
+    {
+      "branch_id": "d25778a72078a3b045057c6c9add0a407d4f9556c6b4c129347a9321057555b7",
+      "status": "confirmed",
+      "file": "d25778a72078a3b045057c6c9add0a407d4f9556c6b4c129347a9321057555b7.json"
+    },
+    {
+      "branch_id": "d3c6f04667c3c07ccbbb992e002511699b8662343c409bf7975bd6d99e867372",
+      "status": "confirmed",
+      "file": "d3c6f04667c3c07ccbbb992e002511699b8662343c409bf7975bd6d99e867372.json"
+    },
+    {
+      "branch_id": "d4d179b30ea5e62f5962ea11758e89d633fcd2e547ed7ec40cd8524519e8e56e",
+      "status": "confirmed",
+      "file": "d4d179b30ea5e62f5962ea11758e89d633fcd2e547ed7ec40cd8524519e8e56e.json"
+    },
+    {
+      "branch_id": "dafe17e979f40f1410eb2356802d908ac92cd0c4f9c4aba3e9981675f77624c0",
+      "status": "confirmed",
+      "file": "dafe17e979f40f1410eb2356802d908ac92cd0c4f9c4aba3e9981675f77624c0.json"
+    },
+    {
+      "branch_id": "ddf445f1c6829f0e2ee3d6739dd8afb586875c4858e799a6cee79f35c640319c",
+      "status": "confirmed",
+      "file": "ddf445f1c6829f0e2ee3d6739dd8afb586875c4858e799a6cee79f35c640319c.json"
+    },
+    {
+      "branch_id": "f06e46e7e65e1ef12fb0c7026a34adfbc98a0bf578b613bb0e33e9f0cbd99dfa",
+      "status": "confirmed",
+      "file": "f06e46e7e65e1ef12fb0c7026a34adfbc98a0bf578b613bb0e33e9f0cbd99dfa.json"
+    },
+    {
+      "branch_id": "f8f3f412c610839b6fb4666624226547bc29b3cb2dbbeab720e73c39962e922d",
+      "status": "confirmed",
+      "file": "f8f3f412c610839b6fb4666624226547bc29b3cb2dbbeab720e73c39962e922d.json"
+    }
+  ],
+  "evaluated_branches": 42,
+  "confirmed_branches": 42,
+  "finished_at": "2026-11-12T04:26:24.700641+00:00"
+}

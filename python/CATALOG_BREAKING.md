@@ -18,11 +18,11 @@ Zero eligible combinations do not establish an absence of learning capacity.
 ## Audited completed models from the original run
 
 The [original-run snapshot](results/catalog-breaking-original-completed/audit.json)
-contains the first **13 terminal model reports** from source revision
+contains **16 terminal model reports** from source revision
 `70a3afad61357e94873ff62a7300c099b4c7ae3e`, copied on 11 November 2026 while
-the other workers continued. Eleven models pass their numerical checks.
-Across these reports, **349 of 354 initial cases pass**, with 1,853 conditional
-trials and 7,711 distinct branches within their respective models. There are
+the other workers continued. Fourteen models pass their numerical checks.
+Across these reports, **729 of 734 initial cases pass**, with 6,352 conditional
+trials and 25,723 distinct branches within their respective models. There are
 four incomplete integrations and eight completed trajectory mismatches.
 
 | Network | Model | Passing / initial cases | Branches | Result |
@@ -30,6 +30,7 @@ four incomplete integrations and eight completed trajectory mismatches.
 | 3 | Goldbeter 1991, reduced mitotic oscillator | 6 / 8 | 41 | Four incomplete branches leave two conditional decisions unresolved. |
 | 4 | Goldbeter 1991, explicit inactive pools | 51 / 54 | 1,327 | Eight original mismatches; the separate full recovery below passes 54/54. |
 | 6 | Tyson 1991, two-variable cell cycle | 0 / 0 | 1 | No eligible cases; untreated control passes. |
+| 7 | Kholodenko 2000, oscillatory MAPK cascade | 220 / 220 | 11,742 | Passes. |
 | 9 | Goldbeter 1995, circadian clock | 66 / 66 | 1,657 | Passes. |
 | 13 | Rohwer 2001, sucrose metabolism | 78 / 78 | 2,304 | Passes. |
 | 14 | Scheper 1999, delayed circadian clock | 0 / 0 | 1 | No eligible cases; untreated control and delay refinements pass. |
@@ -40,6 +41,8 @@ four incomplete integrations and eight completed trajectory mismatches.
 | 21 | Chickarmane 2006, reversible stem-cell switch | 24 / 24 | 542 | Passes. |
 | 22 | Chickarmane 2006, irreversible stem-cell switch | 30 / 30 | 675 | Passes. |
 | 23 | Chickarmane 2008, stem-cell lineage determination | 32 / 32 | 237 | Passes. |
+| 24 | Chickarmane 2008, NANOG–GATA-6 switch | 138 / 138 | 6,010 | Passes. |
+| 27 | Goldbeter 2007, somitogenesis switch | 22 / 22 | 260 | Passes; independent distributed result below also passes. |
 
 The [full-model auditor](scripts/audit_breaking_catalog.py) uses the same branch
 and conditional-search checks as the partition audit. It verifies every
@@ -55,9 +58,9 @@ Network 4's original results are likewise retained independently of recovery.
 MPLBACKEND=Agg uv run --locked python scripts/audit_breaking_catalog.py \
   --input results/catalog-breaking-original-completed \
   --source-revision 70a3afad61357e94873ff62a7300c099b4c7ae3e \
-  --network 3 --network 4 --network 6 --network 9 --network 13 --network 14 \
+  --network 3 --network 4 --network 6 --network 7 --network 9 --network 13 --network 14 \
   --network 16 --network 17 --network 18 --network 19 --network 21 \
-  --network 22 --network 23 \
+  --network 22 --network 23 --network 24 --network 27 \
   --output results/catalog-breaking-original-completed/audit.json
 ```
 
@@ -173,7 +176,47 @@ threshold. They affect `MAPK__up--C_Raf_inactive__up` and
 their full trajectories do not. The largest scaled discrepancy is 2.89774 in
 `C_Raf` near time 1912.62. The failed job represents these numerical mismatches,
 not a timeout or missing initial cases. The reports retain the original
-`1e-12/1e-18` requests on those branches; refinement recovery is still needed.
+`1e-12/1e-18` requests on those branches.
+
+The [complete refinement diagnostic](results/catalog-breaking-muller26-refinement/report.json)
+now confirms all 14 mismatches. All 84 integrations finish over the original
+0–2210 interval, retaining 221,001 observations and all ten observables.
+The two tighter requests are `1e-13/1e-19` and `5e-14/5e-20`; both native
+cross-engine comparisons and both within-engine refinements pass on every
+branch. The original timed-drive encoding and reset schedules are retained.
+This is branch evidence; a full 118-case recovery must still recompute every
+conditional trial and its controls with the declared tighter settings.
+
+The diagnostic now divides each branch's recorded relative and absolute
+tolerances by 10 and 20. A fixed absolute setting of `1e-15` would have loosened
+this model's original `1e-18` request. Ten focused tests check strict tightening,
+the preserved Goldbeter requests, complete source-failure selection and rejection
+of altered timed-drive encodings. The full local suite passes 156 tests, with
+the optional Heyoka adapter skipped in the main environment.
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/diagnose_breaking_refinement.py \
+  --report results/catalog-breaking-linux-26/shard-3/BIOMD0000000664.json \
+  --output results/catalog-breaking-muller26-refinement
+```
+
+### Complete network 30 coverage with numerical mismatches
+
+The [network 30 audit](results/catalog-breaking-linux-30/audit.json) covers
+all four Marhl partitions: **38 initial cases, 171 conditional trials and
+783 branch records**. All required conditional decisions were evaluated.
+Twenty-six cases pass; 12 retain mismatches in 30 completed branches. All
+integrations finish, with no missing branch output or unresolved continuation.
+These full-horizon breaking mismatches are separate from the three shorter
+paired-learning branches discussed in [the precision diagnostic](PRECISION_DIAGNOSTICS.md).
+The precision results there do not validate these breaking trajectories.
+
+Networks 28 and 29 reached their five-hour partition budgets after completing
+89/622 and 133/1,088 initial cases respectively. Their hidden atomic checkpoints
+were downloaded and retained. A [checkpoint-resume run](https://github.com/m9h/GRN_ODE/actions/runs/43155055643)
+continues all eight partitions with unchanged worker hashes and selections.
+The original artifacts remain available in run `43101294718`; these partial
+reports are not counted as completed models.
 
 ## Source protocol and documented discrepancies
 

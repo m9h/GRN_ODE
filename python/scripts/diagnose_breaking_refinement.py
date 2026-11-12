@@ -7,11 +7,13 @@ recompute case scores or the conditional choice of later trials.
 """
 
 import argparse
+from decimal import Decimal
 import gzip
 import hashlib
 from importlib.metadata import version
 import json
 import logging
+import math
 from pathlib import Path
 import sys
 import time
@@ -24,10 +26,36 @@ from grn_memory.catalog_memory import write_json
 from grn_memory.catalog_repeated import pulse_schedule, summarize, trains_for
 from grn_memory.catalog_validation import PACKAGES, comparison, inspect_model
 from grn_memory.native_protocols import ResetTrain, protocol_trajectory, sample_times
+from grn_memory.timed_drives import encode_yoon_drives, yoon_trajectory
 
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def refinement_requests(original):
+    """Tighten both recorded tolerances, including models with tiny states."""
+    if set(original) != {"rtol", "atol"} or any(not math.isfinite(v) or v <= 0 for v in original.values()):
+        raise ValueError("Positive finite original rtol and atol are required")
+    requests = {"original": dict(original)}
+    for label, factor in (("tight", 10), ("tighter", 20)):
+        requests[label] = {k: float(Decimal(str(v))/factor) for k, v in original.items()}
+    if any(not 0 < requests["tighter"][k] < requests["tight"][k] < original[k] for k in original):
+        raise ValueError("Both tolerances must remain positive and strictly decrease")
+    return requests
+
+
+def trajectory_for(original, path):
+    if original["engines"] != ["roadrunner", "copasi"]:
+        raise NotImplementedError("This diagnostic requires the two native ODE engines")
+    encoding = original["configuration"].get("timed_drive_encoding")
+    if encoding:
+        expected = {"method": "equivalent timed g1/g2 switches as events for t >= 0",
+                    "sha256": hashlib.sha256(encode_yoon_drives(path).encode()).hexdigest()}
+        if encoding != expected:
+            raise ValueError("Original timed-drive encoding differs")
+        return yoon_trajectory
+    return protocol_trajectory
 
 
 def capture(report_path):
@@ -63,8 +91,7 @@ def diagnose(args):
     info = inspect_model(path)
     if info["sha256"] != original["model_sha256"]:
         raise ValueError("Model and original report hashes differ")
-    if original["engines"] != ["roadrunner", "copasi"] or original["configuration"].get("timed_drive_encoding"):
-        raise NotImplementedError("This diagnostic requires the original native ODE encoding")
+    trajectory = trajectory_for(original, path)
     args.output.mkdir(parents=True, exist_ok=True)
     evidence_path = args.output/"source-evidence.json"
     write_json(evidence_path, evidence)
@@ -76,7 +103,10 @@ def diagnose(args):
         "model_sha256": info["sha256"], "source_evidence_sha256": digest(evidence_path),
         "script_sha256": digest(Path(__file__)),
         "implementation_sha256": {name: digest(ROOT/"grn_memory"/name) for name in
-            ("native_protocols.py", "catalog_validation.py", "catalog_repeated.py", "catalog_breaking.py")},
+            ("native_protocols.py", "catalog_validation.py", "catalog_repeated.py", "catalog_breaking.py", "timed_drives.py")},
+        "timed_drive_encoding": config.get("timed_drive_encoding"),
+        "request_policy": "original recorded tolerances, each divided by 10, then by 20",
+        "observation_grid_sha256": hashlib.sha256(grid.tobytes()).hexdigest(),
         "versions": {p: version(p) for p in PACKAGES},
         "comparison_settings": {"rtol": config["comparison_rtol"], "atol": config["comparison_atol"]},
         "expected_branches": len(evidence["failed_branches"]), "branches": [], "status": "running"}
@@ -94,15 +124,16 @@ def diagnose(args):
         destination = args.output/(bid+".json")
         traces = {}
         for engine in original["engines"]:
-            requests = {"original": spec["integration_settings"][engine],
-                        "tight": {"rtol": 1e-13, "atol": 1e-15},
-                        "tighter": {"rtol": 5e-14, "atol": 5e-16}}
+            requests = refinement_requests(spec["integration_settings"][engine])
             for label, request in requests.items():
                 key = engine+"_"+label
                 row = {"request": request}
                 began = time.monotonic()
                 try:
-                    trace = protocol_trajectory(path, times, trains, engine, **request)
+                    trace = trajectory(path, times, trains, engine, **request)
+                    if (list(trace.columns) != ["time"]+info["observables"] or len(trace) != len(times)
+                            or not (trace["time"].to_numpy() == times).all()):
+                        raise ValueError("Complete original observation inventory is required")
                     traces[key] = trace
                     row.update(completed=True, samples=len(trace))
                     result["windows"][key] = summarize(trace, trial_windows(round((spec["stop"]-1010)/400)))
@@ -111,6 +142,8 @@ def diagnose(args):
                 row["seconds"] = time.monotonic()-began
                 result["integrations"][key] = row
                 write_json(destination, result)
+                print(bid[:12], key, "completed" if row["completed"] else row["error"],
+                      f'{row["seconds"]:.2f}s', flush=True)
         pairs = [("roadrunner_"+v, "copasi_"+v) for v in ("original", "tight", "tighter")]
         pairs += [(e+"_"+a, e+"_"+b) for e in original["engines"]
                   for a,b in (("original", "tight"), ("tight", "tighter"))]

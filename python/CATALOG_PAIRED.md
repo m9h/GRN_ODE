@@ -351,10 +351,12 @@ controls in addition to the 16 originally failed branches**. Confirming those
 16 branches alone cannot establish recovery of the six cases.
 
 For Rohwer, the 33 failed cases require **247 distinct branches**: the 77
-original failures and **170 additional controls**. Both disjoint groups are
-being computed with the same five-integration diagnostic. The commands below
-also apply to that model with `--model 38`; partial branch confirmation does
-not establish recovery of any complete case.
+original failures and **170 additional controls**. The
+[complete failed-branch diagnostic](results/catalog-paired-scipy-rohwer/report.json)
+now confirms all 77 branches: all 385 integrations finish, and every required
+cross-engine and refinement comparison passes. The additional controls remain
+in progress. The commands below also apply to that model with `--model 38`;
+branch confirmation alone does not establish recovery of a complete case.
 
 Every recovered case must use `scipy_refined` and `roadrunner_refined` throughout
 all its arms. Every branch must pass all five full-trajectory comparisons,
@@ -402,8 +404,32 @@ Multiple disjoint diagnostic directories can be supplied by repeating
 `--diagnostics`; `unselected_branch_ids` lists the additional branches needed
 beyond their declared selections. A successful audit exit establishes evidence
 consistency, not numerical recovery: inspect `all_cases_validated`,
-`recovered_cases`, and each case's status. The Vilar recovery runs are ongoing.
-The full original screen and its original failures remain unchanged.
+`recovered_cases`, and each case's status. The full original screen and its
+original failures remain unchanged.
+
+### Completed Vilar recovery computation
+
+The [16 original failures](results/catalog-paired-scipy-vilar/report.json) and
+[42 additional controls](results/catalog-paired-scipy-vilar-controls/report.json)
+are now fully computed. All 290 integrations finish; 49 branches pass all
+confirmation comparisons and nine remain completed mismatches. The
+[complete-case audit](results/catalog-paired-scipy-vilar-cases/audit.json)
+recomputes every required score and recovers three of the six failed cases:
+`DA__up--DAp__down`, `DA__up--DR__up` and `DA__up--DRp__down`.
+Together with the original passing cases, **139/142 Vilar cases now validate**.
+
+The remaining cases are `DAp__up--DR__up`, `DAp__up--DRp__up` and
+`DAp__up--MR__up`. Each retains mismatches in all three paired-history arms;
+none is missing a control or an attempted integration. The audit does not count
+complete computation as successful numerical validation.
+
+```bash
+MPLBACKEND=Agg uv run --locked --extra test --extra jaxkineticmodel \
+  python scripts/recover_scipy_paired_cases.py --model 35 \
+  --diagnostics results/catalog-paired-scipy-vilar \
+  --diagnostics results/catalog-paired-scipy-vilar-controls \
+  --output results/catalog-paired-scipy-vilar-cases/audit.json
+```
 
 ### Reset-encoding diagnostic for Vilar and Rohwer
 
