@@ -148,11 +148,18 @@ MPLBACKEND=Agg uv run --locked --extra delay python scripts/run_breaking_shard.p
 
 `resume-source.json` records the parent revision and manifest digest, the new
 selection, and the digest of every copied checkpoint. Preparation performs no
-integration and makes no model-completion claim. A local end-to-end check split
-network 27's first four-way partition into its first eight-way child, validated
-all 50 parent checkpoints (45 branches and 5 cases), and passed the two selected
-cases in under one second. All 50 checkpoint files remained byte-for-byte
-unchanged after the worker resumed; no new integration was needed.
+integration and makes no model-completion claim.
+
+A [complete local resume check](results/catalog-breaking-repartition-27/verification.json)
+split all four original network-27 partitions into eight children. Every copied
+checkpoint remained byte-for-byte unchanged after execution. The
+[combined audit](results/catalog-breaking-repartition-27/audit.json) passes all
+**22 cases, 57 conditional trials and 72 response-trials**, with every case summary
+identical to its original apart from the partition index. The eight workers
+reuse all 260 distinct branch specifications without new integration. Their
+published archives contain 346 branch records, compared with 301 in the original
+four partitions, because shared controls appear in more partitions. These
+duplicate records do not represent additional scientific coverage.
 
 Keep artifacts from different
 partitions in separate directories: shared branch identifiers alone do not
