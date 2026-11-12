@@ -382,6 +382,26 @@ MPLBACKEND=Agg uv run --locked python scripts/diagnose_breaking_refinement.py \
   --output results/reproduced-ciliberto28-shard0-refinement
 ```
 
+The [Radau diagnostic](scripts/diagnose_scipy_breaking.py) provides a second
+route for these failed native branches. It compares two SciPy Radau requests,
+using the guarded Jaxkineticmodel equations and Jacobian, with two refined
+RoadRunner requests. All six pairwise full-trajectory comparisons must pass.
+It saves every raw array, observable and reset count, and preserves the distinct
+trained/untrained and cue/sham schedules. Its twelve tests check the source
+inventory, exact schedules, tiny absolute tolerances and safe checkpoint reuse.
+
+```bash
+MPLBACKEND=Agg uv run --locked python scripts/diagnose_scipy_breaking.py \
+  --evidence results/catalog-breaking-ciliberto28-shard0-refinement/source-evidence.json \
+  --output results/catalog-breaking-scipy-ciliberto28-shard0
+```
+
+This is a branch diagnostic. Complete-case recovery additionally requires
+all corresponding controls, recomputed scores and validation of the conditional
+search. `--resume` requires unchanged source, settings and environment, and
+checks every cached array before reuse. A completed mismatch cannot be relabelled
+as a pass merely because the integration finished.
+
 ### Complete network 33 control validation
 
 The [network 33 audit](results/catalog-breaking-linux-33/audit.json) validates

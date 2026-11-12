@@ -167,7 +167,7 @@ uv run --locked python scripts/audit_marhl_mpmath.py \
 ```
 
 The audit requires a completed diagnostic and does not need mpmath or Heyoka
-installed. The main environment passes 225 tests, with the optional Heyoka
+installed. The main environment passes 237 tests, with the optional Heyoka
 adapter module skipped; the isolated precision environment separately passes
 the nine mpmath adapter and resume tests.
 
