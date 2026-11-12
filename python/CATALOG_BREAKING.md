@@ -79,7 +79,7 @@ inventory into disjoint contiguous ranges. It invokes the existing worker for
 each range: every selected case keeps its full conditional second/third-trial
 search, all eight control arms, every original observation and the original
 comparison thresholds. Tests verify that all **7,324 initial cases** appear
-exactly once for partition counts 1, 4 and 7.
+exactly once for partition counts 1, 4, 7, 8 and 16.
 
 For example, the first of four partitions of network 19 contains three of its
 14 cases. All three pass and match their entries in the locally completed
@@ -101,8 +101,9 @@ with no candidates, partition zero still validates its untreated trajectory;
 the other empty partitions do not claim model validation.
 
 The existing GitHub workflow also accepts `breaking_networks`, a JSON array of
-catalog network numbers. This dispatch creates four partitions per selected
-network, runs at most eight jobs concurrently, and gives each worker five hours
+catalog network numbers, and `breaking_shard_count`, a choice of 4, 8 or 16
+partitions per model (default 4). It runs at most sixteen jobs concurrently,
+subject to available GitHub runners, and gives each worker five hours
 before preserving its checkpoints. Ordinary validation jobs are skipped for
 this explicit computation dispatch. Artifact uploads include hidden checkpoints
 and retain them for seven days, so download them before expiration.
@@ -113,8 +114,47 @@ gh workflow run 410775433 --repo m9h/GRN_ODE --ref kinetics-newton-reference \
 ```
 
 To continue an unfinished batch, repeat the dispatch with the same networks and
-`-f breaking_resume_run=PREVIOUS_RUN_ID`. The workflow restores each matching
-artifact before running with `--resume`. Keep artifacts from different
+`-f breaking_resume_run=PREVIOUS_RUN_ID`. Set `breaking_resume_shard_count` to
+the previous run's partition count (default 4). The new count must be the same
+or an integer multiple of that count. The workflow restores the corresponding
+parent artifact, validates its checkpoints, and runs the new selection with
+`--resume`. For example, a stopped four-partition run can continue as eight
+smaller partitions:
+
+```bash
+gh workflow run 410775433 --repo m9h/GRN_ODE --ref kinetics-newton-reference \
+  -f breaking_networks='[28,29]' -f breaking_shard_count=8 \
+  -f breaking_resume_run=PREVIOUS_RUN_ID -f breaking_resume_shard_count=4
+```
+
+The [checkpoint preparation tool](scripts/prepare_breaking_resume.py) requires
+a stopped source partition and an unused destination. It checks the model,
+calibration, complete case inventory, worker source hashes, installed package
+versions, checkpoint identities, full observation horizons and control histories
+before copying any evidence. It rejects an active source lock. Passing cached
+records can then be reused; failed records may be recomputed by the worker.
+The original artifact remains intact, including its failed observations.
+
+For a local preparation followed by a resume:
+
+```bash
+uv run --locked --extra delay python scripts/prepare_breaking_resume.py \
+  --source results/previous-network-27-shard-0 --network 27 \
+  --shard-index 0 --shard-count 8 --output results/new-network-27-shard-0
+MPLBACKEND=Agg uv run --locked --extra delay python scripts/run_breaking_shard.py \
+  --network 27 --shard-index 0 --shard-count 8 --timeout 18000 \
+  --resume --output results/new-network-27-shard-0
+```
+
+`resume-source.json` records the parent revision and manifest digest, the new
+selection, and the digest of every copied checkpoint. Preparation performs no
+integration and makes no model-completion claim. A local end-to-end check split
+network 27's first four-way partition into its first eight-way child, validated
+all 50 parent checkpoints (45 branches and 5 cases), and passed the two selected
+cases in under one second. All 50 checkpoint files remained byte-for-byte
+unchanged after the worker resumed; no new integration was needed.
+
+Keep artifacts from different
 partitions in separate directories: shared branch identifiers alone do not
 justify overwriting independently computed evidence. A successful partition
 is not a complete-model result; complete coverage and numerical validation must

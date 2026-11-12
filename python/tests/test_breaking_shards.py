@@ -14,7 +14,7 @@ def test_all_7324_initial_cases_appear_in_exactly_one_partition():
     for entry in json.loads((ROOT/"models/catalog.json").read_text())["models"]:
         reference = json.loads((ROOT/"results/catalog-repeated"/(entry["biomodel_id"]+".json")).read_text())
         plans = candidate_plans(reference)
-        for count in (1, 4, 7):
+        for count in (1, 4, 7, 8, 16):
             chunks = [select_cases(plans,i,count) for i in range(count)]
             joined = [key for chunk in chunks for key in chunk]
             assert joined == sorted(plans)

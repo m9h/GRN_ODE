@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       breaking_networks:
-        description: 'JSON array of network numbers for four-way complete-case computation; blank runs ordinary validation'
+        description: 'JSON array of network numbers for complete-case partitions; blank runs ordinary validation'
         required: false
         default: ''
         type: string
@@ -16,6 +16,18 @@ on:
         required: false
         default: ''
         type: string
+      breaking_shard_count:
+        description: 'Number of complete-case partitions per model'
+        required: true
+        default: '4'
+        type: choice
+        options: ['4', '8', '16']
+      breaking_resume_shard_count:
+        description: 'Partition count in the previous run; new count must be a multiple'
+        required: true
+        default: '4'
+        type: choice
+        options: ['4', '8', '16']
 jobs:
   catalog-breaking-shards:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.breaking_networks != '' }}
@@ -26,10 +38,10 @@ jobs:
       actions: read
     strategy:
       fail-fast: false
-      max-parallel: 8
+      max-parallel: 16
       matrix:
         network: ${{ fromJSON(inputs.breaking_networks || '[33]') }}
-        shard: [0, 1, 2, 3]
+        shard: ${{ fromJSON(inputs.breaking_shard_count == '16' && '[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]' || inputs.breaking_shard_count == '8' && '[0,1,2,3,4,5,6,7]' || '[0,1,2,3]') }}
     defaults:
       run:
         working-directory: python
@@ -38,6 +50,8 @@ jobs:
       MPLCONFIGDIR: /tmp/grn-breaking-shard-mpl
       SHARD_NETWORK: ${{ matrix.network }}
       SHARD_INDEX: ${{ matrix.shard }}
+      SHARD_COUNT: ${{ inputs.breaking_shard_count || '4' }}
+      RESUME_SHARD_COUNT: ${{ inputs.breaking_resume_shard_count || '4' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -48,17 +62,40 @@ jobs:
           enable-cache: true
           cache-dependency-glob: python/uv.lock
       - run: uv sync --python python --locked --extra test --extra delay
-      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_breaking_shards.py
+      - run: uv run --locked --extra test --extra delay python -m pytest -q tests/test_breaking_shards.py tests/test_breaking_resume.py
+      - name: Select the previous parent partition
+        id: parent_partition
+        if: ${{ inputs.breaking_resume_run != '' }}
+        run: |
+          python - <<'PY'
+          import os
+          count, previous, index = (int(os.environ[k]) for k in ('SHARD_COUNT', 'RESUME_SHARD_COUNT', 'SHARD_INDEX'))
+          if not (count >= previous > 0 and count % previous == 0 and 0 <= index < count):
+              raise ValueError('New partition count must be a multiple of the previous count')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
+              stream.write(f'index={index * previous // count}\n')
+          PY
       - name: Restore previous atomic checkpoints
         if: ${{ inputs.breaking_resume_run != '' }}
         uses: actions/download-artifact@v4
         with:
-          name: breaking-network-${{ matrix.network }}-shard-${{ matrix.shard }}
-          path: python/results/catalog-breaking-shard
+          name: breaking-network-${{ matrix.network }}-shard-${{ steps.parent_partition.outputs.index }}
+          path: python/results/catalog-breaking-resume-source
           run-id: ${{ inputs.breaking_resume_run }}
           github-token: ${{ github.token }}
+      - name: Verify and prepare the new checkpoint selection
+        if: ${{ inputs.breaking_resume_run != '' }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          manifest = json.loads(Path('results/catalog-breaking-resume-source/shard.json').read_text())
+          if manifest['shard_count'] != int(os.environ['RESUME_SHARD_COUNT']):
+              raise ValueError('Downloaded partition count differs from the declared previous count')
+          PY
+          uv run --locked --extra delay python scripts/prepare_breaking_resume.py --source results/catalog-breaking-resume-source --network "$SHARD_NETWORK" --shard-index "$SHARD_INDEX" --shard-count "$SHARD_COUNT" --output results/catalog-breaking-shard
       - name: Compute complete cases for up to five hours
-        run: uv run --locked --extra delay python scripts/run_breaking_shard.py --network "$SHARD_NETWORK" --shard-index "$SHARD_INDEX" --shard-count 4 --timeout 18000 --resume --output results/catalog-breaking-shard
+        run: uv run --locked --extra delay python scripts/run_breaking_shard.py --network "$SHARD_NETWORK" --shard-index "$SHARD_INDEX" --shard-count "$SHARD_COUNT" --timeout 18000 --resume --output results/catalog-breaking-shard
       - uses: actions/upload-artifact@v4
         if: always()
         with:
