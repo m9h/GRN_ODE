@@ -16,6 +16,15 @@ output, and 20 complete but disagree beyond the full-horizon tolerance**.
 Follow-up recoveries are separate evidence and have not been substituted into
 this original report.
 
+Combining the original passing cases with the separately audited
+[François recovery](results/catalog-paired-francois-full-recovery/audit.json),
+[Vilar recovery](results/catalog-paired-scipy-vilar-cases/audit.json) and
+[Rohwer recovery](results/catalog-paired-scipy-rohwer-cases/audit.json) now gives
+**4,203 of 4,208 validated cases**. All cases validate in 33 of the 35 models.
+The five remaining cases are two Marhl cases and three Vilar cases with
+completed trajectory mismatches. The table below retains the original screen's
+results, before those follow-up recoveries.
+
 | Network | Model | Cases passing | Incomplete branches | Completed mismatches |
 |---|---|---:|---:|---:|
 | 25 | François two-gene network, BioModel 539 | 43/44 | 1 | 0 |
@@ -354,9 +363,12 @@ For Rohwer, the 33 failed cases require **247 distinct branches**: the 77
 original failures and **170 additional controls**. The
 [complete failed-branch diagnostic](results/catalog-paired-scipy-rohwer/report.json)
 now confirms all 77 branches: all 385 integrations finish, and every required
-cross-engine and refinement comparison passes. The additional controls remain
-in progress. The commands below also apply to that model with `--model 38`;
-branch confirmation alone does not establish recovery of a complete case.
+cross-engine and refinement comparison passes. The
+[170 additional controls](results/catalog-paired-scipy-rohwer-controls/report.json)
+are also complete and confirmed, with 850 completed integrations. Their
+full-case recovery result is detailed below. The commands below also apply to
+that model with `--model 38`; branch confirmation alone does not establish
+recovery of a complete case.
 
 Every recovered case must use `scipy_refined` and `roadrunner_refined` throughout
 all its arms. Every branch must pass all five full-trajectory comparisons,
@@ -406,6 +418,33 @@ beyond their declared selections. A successful audit exit establishes evidence
 consistency, not numerical recovery: inspect `all_cases_validated`,
 `recovered_cases`, and each case's status. The full original screen and its
 original failures remain unchanged.
+
+### Complete Rohwer paired-exposure recovery
+
+The [complete-case audit](results/catalog-paired-scipy-rohwer-cases/audit.json)
+recovers **all 33 originally failed cases**, bringing this model to
+**449/449 validated cases**. All 247 required branches are present and confirmed;
+none is missing or unselected. Across the original-failure diagnostic and its
+additional controls, all **1,235 integrations** finish. Every required
+cross-engine and refinement comparison passes over the full 0–300 interval,
+at all 30,001 observation times and for every original observable. The largest
+scaled discrepancy among those confirmation comparisons is **0.157145**, below
+the acceptance limit of one.
+
+Every recovered case uses the refined SciPy Radau and refined RoadRunner
+results consistently across all twelve arms. The auditor reconstructs the
+original reset schedules and recomputes every controlled response classification;
+the two engines agree on every recovered case. The original 416 passing cases
+retain their original independent-engine evidence. Numerical validation of these
+protocols does not by itself establish a prevalence of associative learning.
+
+```bash
+MPLBACKEND=Agg uv run --locked --extra jaxkineticmodel \
+  python scripts/recover_scipy_paired_cases.py --model 38 \
+  --diagnostics results/catalog-paired-scipy-rohwer \
+  --diagnostics results/catalog-paired-scipy-rohwer-controls \
+  --output results/catalog-paired-scipy-rohwer-cases/audit.json
+```
 
 ### Completed Vilar recovery computation
 
