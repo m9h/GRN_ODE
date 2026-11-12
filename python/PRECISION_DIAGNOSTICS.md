@@ -167,7 +167,7 @@ uv run --locked python scripts/audit_marhl_mpmath.py \
 ```
 
 The audit requires a completed diagnostic and does not need mpmath or Heyoka
-installed. The main environment passes 212 tests, with the optional Heyoka
+installed. The main environment passes 225 tests, with the optional Heyoka
 adapter module skipped; the isolated precision environment separately passes
 the nine mpmath adapter and resume tests.
 
@@ -200,3 +200,27 @@ passes these six tests together with all nine mpmath adapter and resume tests.
 These computations do not themselves recover either case. A combined audit
 must validate all 18 branches and recompute the complete case scores from
 consistent implementations across every arm before coverage can increase.
+
+The [complete-case auditor](scripts/audit_marhl_cases.py) performs that check
+after both computations finish. It re-audits the three failed-branch diagnostics,
+requires all 15 control branches, and verifies compatible implementations,
+arithmetic settings and producer environments across every arm. It recomputes
+all ten pairwise trajectory comparisons for each branch and every window mean
+from the saved arrays. Both 192-bit implementations must then agree on all
+controlled case classifications. A failed baseline, unresolved precision check
+or differing controlled classification prevents case promotion.
+
+```bash
+uv run --locked python scripts/audit_marhl_cases.py \
+  --controls results/catalog-paired-marhl-controls \
+  --mpmath results/catalog-paired-mpmath-marhl \
+  --output results/catalog-paired-marhl-case-recovery/report.json
+```
+
+Native disagreement remains explicit, and original passing cases are reported
+separately from any recovered cases. Thirteen tests exercise incomplete arms,
+changed arrays or environments, failed controls, and a classification boundary
+where pointwise-agreeing values nevertheless yield different controlled labels.
+Their temporary fixtures deliberately contain invented trajectories and are
+not simulation evidence. The auditor's availability does not change current
+case coverage while the required computations are running.
