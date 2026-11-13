@@ -88,3 +88,12 @@ Continue the `--input` list for the remaining branches. `--allow-partial` can
 report available evidence and explicit missing arms; it never promotes a case
 with missing or unconfirmed controls. The files in this directory are a plan,
 not evidence that the 23 computations have finished.
+
+## Execution
+
+[Run 43510523842](https://github.com/m9h/GRN_ODE/actions/runs/43510523842)
+was dispatched at producer revision `bfd276c2ff3ec2ed907596966808efe7068745de`.
+`dispatch.json` records the accepted run and all 23 requested partition indices.
+Its Linux validation job must pass before any control runs. Local validation
+passed the 102 precision tests, including 29 new case-control and restoration
+tests; the 29 new tests passed again after the final resume guard.
