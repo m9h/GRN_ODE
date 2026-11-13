@@ -300,6 +300,33 @@ earlier 32 adapter/checkpoint tests also passed on Linux in workflow run
 [`43377553111`](https://github.com/m9h/GRN_ODE/actions/runs/43377553111);
 the expanded suite is a required gate before distributed precision computation.
 
+The first Vilar dispatch is
+[`43380180550`](https://github.com/m9h/GRN_ODE/actions/runs/43380180550),
+at producer revision `a982f1f015361e51957da1cdae43068b96d1f5d2`.
+Its [complete partition plan](results/catalog-paired-taylor-dispatch-vilar-20261113/plan.json)
+and [dispatch record](results/catalog-paired-taylor-dispatch-vilar-20261113/dispatch.json)
+bind all 17 selections and the workflow/settings hashes. At dispatch the
+Linux validation job was queued; matrix jobs and new numerical results were
+not yet available. The ongoing local Marhl control run already has its three
+precision-diagnostic branches, so this dispatch does not repeat those branches.
+
+The [precision collector](scripts/collect_taylor_runs.py) downloads immutable
+artifacts into separate run/attempt/artifact directories. It verifies archive
+digests and producer identities, checks extracted bytes against the retained
+archive, and independently audits every completed partition. It requires all
+17 Vilar partitions, including the baseline, before reporting complete
+original-failure coverage. Partial checkpoint bytes are preserved for the
+matching Linux runtime to validate on resume; collecting them is not a claim
+that their integrations completed. The collector never integrates or dispatches
+work, and never claims recovery of complete memory cases. Four additional
+local tests cover collection, including cache reuse and altered evidence.
+
+```bash
+uv run --locked python scripts/collect_taylor_runs.py \
+  --run 43380180550 --model 35 \
+  --output results/taylor-vilar-collected --watch
+```
+
 ## Independent Marhl implementation
 
 The model-specific [mpmath adapter](grn_memory/marhl_mpmath.py) transcribes the
