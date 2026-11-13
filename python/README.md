@@ -27,9 +27,11 @@ models. The [repeated-stimulation screen](CATALOG_REPEATED.md) also passes all
 The [paired-learning screen](CATALOG_PAIRED.md) has evaluated all 4,208 stimulus
 pairs with sham, UCS-only and CS-only controls: 4,166 pass and 42 remain failed
 or numerically unresolved. Complete attempted coverage and original evidence
-are audited separately from validation success. The
-[three-trial breaking screen](CATALOG_BREAKING.md) is running after a successful
-119-branch pilot; its full-catalog results remain pending.
+are audited separately from validation success. Separate audited recoveries
+raise combined validation to 4,203/4,208 cases across 33 fully passing models.
+The [three-trial breaking screen](CATALOG_BREAKING.md) has terminal results for
+25 models, with 21 fully passing numerical validation; ten complete searches
+remain unfinished.
 
 ## Run it
 

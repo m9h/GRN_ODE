@@ -99,16 +99,17 @@ All twelve original Leloup mismatches pass the
 within-engine refinements also pass. This diagnostic preserves schedules and
 sample counts, but saves comparison records and window summaries rather than
 raw arrays. Its verification checks provenance and recorded outcomes; it does
-not recompute pointwise errors. Full cases and their conditional searches still
-need validation at the refined settings. The separate Fuss diagnostic is running.
+not recompute pointwise errors. The full-case recovery below now supplies
+validation at the refined settings. The separate Fuss diagnostic is running.
 
 A [fresh sixteen-partition Leloup recovery](https://github.com/m9h/GRN_ODE/actions/runs/43370464101)
-has been submitted at `daed47882d2d20fa81b193a21c1934a5d83e64dd`, after 39
-targeted tests passed. It uses `1e-13/1e-15` in both engines for all 216 initial
+now passes [all 216 cases](results/catalog-breaking-linux-12/audit.json),
+produced at `daed47882d2d20fa81b193a21c1934a5d83e64dd` after 39 targeted
+tests passed. It uses `1e-13/1e-15` in both engines for all 216 initial
 cases and their full conditional searches. Model, calibration, reset schedules,
-observation grid and acceptance thresholds stay fixed. This run starts fresh
-and keeps the original 212/216 evidence separate; its submission is not a
-full-model recovery result.
+observation grid and acceptance thresholds stay fixed. This run started fresh
+and keeps the original 212/216 evidence separate. The complete sixteen-partition
+audit preserves all 3,323 conditional trials and 13,230 distinct branches.
 
 ## Restartable computation in complete-case partitions
 
@@ -247,7 +248,7 @@ Completed failures remain in the parent artifacts. Resuming can retry a failed
 branch; it does not convert a failure into a pass or imply that a missing
 conditional continuation has been resolved.
 
-On 13 November UTC, network 28 had recorded **537/622 cases, with 463 passing**,
+Early on 13 November UTC, network 28 had recorded **537/622 cases, with 463 passing**,
 and network 31 **726/728, all 726 passing**. Nine Ciliberto partitions and one
 network-31 partition still lacked complete selected-case coverage. New
 [network-28](https://github.com/m9h/GRN_ODE/actions/runs/43370478631) and
@@ -255,7 +256,9 @@ network-31 partition still lacked complete selected-case coverage. New
 continuations reuse the sixteen-way checkpoints. Their
 [dispatch record](results/catalog-breaking-dispatches-20261113/dispatches.json)
 retains all parent artifact and report hashes, original partial counts and
-the unchanged producer settings. These remain incomplete model searches.
+the unchanged producer settings. Both continuations have now completed and
+their combined audits are reported below: network 28 retains 74 failed cases,
+while network 31 passes all 728.
 
 Keep artifacts from different
 partitions in separate directories: shared branch identifiers alone do not
@@ -636,11 +639,45 @@ comparisons and window summaries; the audit reconstructs the complete search
 and scores without reintegrating trajectories. A passing numerical check does
 not imply that every intervention establishes a resolved memory effect.
 
-Published terminal breaking reports now cover **23 distinct models**. After
-the separate network-4 and network-26 recoveries, 19 models have passing full
-numerical validation; reduced Goldbeter, Fuss, Leloup and Marhl retain the original
-failures described above. Twelve models still need their complete searches. All-35 completion
-and whole-catalog frequency comparisons remain pending.
+### Complete Leloup, Ciliberto and Martins searches
+
+Three additional independent combined audits are available from sixteen
+partitions per model. Every selected initial case is present, and the auditor
+reconstructs the conditional search, required controls and recorded scores.
+
+| Network / model | Passing / initial cases | Conditional trials | Response-trials | Branch records / distinct specifications |
+|---|---:|---:|---:|---:|
+| 12, Leloup circadian clock | [216 / 216](results/catalog-breaking-linux-12/audit.json) | 3,323 | 7,830 | 13,588 / 13,230 |
+| 28, Ciliberto cyclin E/Cdk2 timer | [548 / 622](results/catalog-breaking-linux-28/audit.json) | 13,663 | 44,912 | 54,904 / 54,344 |
+| 31, Martins Amadori degradation | [728 / 728](results/catalog-breaking-linux-31/audit.json) | 16,729 | 48,738 | 67,084 / 66,526 |
+
+Leloup's fresh run at the independently supported refined tolerances passes
+the entire search. The Ciliberto and Martins continuations retain their
+original numerical settings and parent checkpoints, with producer revision
+`e07a53b219d995dde937e5a7ed7c923c463cff81`. Ciliberto has complete case
+coverage but retains 74 failed cases and 89 unresolved conditional decisions;
+it is not a full numerical pass. The full-array control computation for its
+two selected partition-zero cases remains separate and ongoing. Martins has
+no unresolved continuation decisions and passes all cases.
+
+The [three-model release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-breaking-12-28-31-20261113)
+contains every referenced compressed branch/case archive and parent-resume
+metadata. All 1,456 release members were checked against their original
+checksums after packaging. Reports, complete audits, artifact provenance and
+download manifests are tracked in Git. See the reproduction instructions for
+[Leloup](results/catalog-breaking-linux-12/README.md),
+[Ciliberto](results/catalog-breaking-linux-28/README.md) and
+[Martins](results/catalog-breaking-linux-31/README.md). These archives preserve
+recorded pointwise comparisons and window summaries; they are not full raw
+trajectory arrays, and the audit does not repeat numerical integration.
+
+Published terminal breaking reports now cover **25 distinct models**, with
+**21 passing full numerical validation** after the separate recoveries.
+Reduced Goldbeter, Fuss, Ciliberto and Marhl retain numerical failures.
+Ten searches remain unfinished: networks **2, 5, 10, 11, 15, 20, 25, 29, 32
+and 35**. All-35 completion and whole-catalog frequency comparisons remain
+pending. Passing validation does not imply that every intervention establishes
+a resolved memory effect.
 
 ## Source protocol and documented discrepancies
 
