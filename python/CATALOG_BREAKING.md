@@ -102,6 +102,13 @@ raw arrays. Its verification checks provenance and recorded outcomes; it does
 not recompute pointwise errors. Full cases and their conditional searches still
 need validation at the refined settings. The separate Fuss diagnostic is running.
 
+The `kinetics-leloup-recovery` branch requests `1e-13/1e-15` in both native
+engines for every network-12 case. It starts a fresh complete conditional
+search, with unchanged model, calibration, reset schedules, observation grid
+and comparison thresholds. The original 212/216 result remains separate.
+The new request is supported by the twelve-branch diagnostic; full-model
+recovery is not claimed until all cases and continuations have been audited.
+
 ## Restartable computation in complete-case partitions
 
 The [shard runner](scripts/run_breaking_shard.py) divides the sorted initial-case

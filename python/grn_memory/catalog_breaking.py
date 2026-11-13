@@ -108,6 +108,12 @@ def run_model(entry,args):
         # requests and a further refinement on all eight original mismatches.
         # Calibration, reset timing, conditional search and acceptance stay fixed.
         integration = {engine: {"rtol": 1e-13, "atol": 1e-15} for engine in engines}
+    if entry["network"] == 12:
+        # All twelve original Leloup mismatches pass both native cross-engine
+        # comparisons and each engine's tighter refinement over the full horizon.
+        # Recompute every case and conditional continuation at the supported
+        # tighter request; the original completed evidence remains separate.
+        integration = {engine: {"rtol": 1e-13, "atol": 1e-15} for engine in engines}
     fallbacks = {"copasi":{"rtol":1e-7,"atol":1e-9}} if entry["network"] == 35 else {}
     encoding = None
     if entry["network"] == 26:
