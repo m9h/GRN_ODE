@@ -263,6 +263,33 @@ justify overwriting independently computed evidence. A successful partition
 is not a complete-model result; complete coverage and numerical validation must
 be audited across every partition before reporting a model as finished.
 
+### Distributed coverage for the remaining local-only searches
+
+The [13 November dispatch](https://github.com/m9h/GRN_ODE/actions/runs/43374603951)
+adds fresh Linux searches for five unfinished models whose full local workers
+are still running. The [case inventory](results/catalog-breaking-dispatches-remaining-20261113/plan.json)
+partitions all 1,414 initial cases exactly once across 80 jobs. Each model has
+sixteen disjoint partitions, and each case retains its complete conditional
+search, original controls, observation grid and numerical acceptance rule.
+
+| Network | BioModel | Model | Initial cases | Cases per partition |
+|---|---|---|---:|---:|
+| 10 | BIOMD0000000017 | Hoefnagel pyruvate branches | 112 | 7 |
+| 11 | BIOMD0000000022 | Ueda circadian clock | 302 | 18–19 |
+| 15 | BIOMD0000000026 | Markevich MAPK, ordered elementary reactions | 398 | 24–25 |
+| 20 | BIOMD0000000631 | De Caluwé circadian clock | 484 | 30–31 |
+| 25 | BIOMD0000000539 | François mixed feedback loop | 118 | 7–8 |
+
+The [dispatch verification](results/catalog-breaking-dispatches-remaining-20261113/dispatch.json)
+records all 80 GitHub job identities and producer revision
+`a0ea22a0b7c24cee52bec3e5bab7f5bd3d602e93`. The run allows at most sixteen jobs
+at once, subject to available runners, with five hours per partition before
+checkpoint preservation. It uses uv and the pinned project dependencies.
+These are fresh computations; the active local checkpoints are not reused or
+modified. Local and Linux evidence will remain separate for comparison.
+The jobs were queued when verified, and no new model completion or validation
+is claimed from their dispatch.
+
 ### Collecting completed batches
 
 The [collector](scripts/collect_breaking_runs.py) saves artifacts as jobs finish,
