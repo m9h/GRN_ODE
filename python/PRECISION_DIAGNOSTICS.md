@@ -110,9 +110,9 @@ Run the analytic checks and the full diagnostic from `python/`:
 
 ```bash
 HEYOKA_CACHE_DIR=/tmp/grn-taylor-cache OMP_NUM_THREADS=1 \
-  .venv-taylor/bin/python -m pytest -q tests/test_taylor_reference.py
+  uv run --no-project --python .venv-taylor/bin/python python -m pytest -q tests/test_taylor_reference.py
 HEYOKA_CACHE_DIR=/tmp/grn-taylor-cache OMP_NUM_THREADS=1 MPLBACKEND=Agg \
-  .venv-taylor/bin/python scripts/diagnose_taylor_paired.py --model 39 \
+  uv run --no-project --python .venv-taylor/bin/python python scripts/diagnose_taylor_paired.py --model 39 \
   --output results/catalog-paired-taylor-marhl
 ```
 
@@ -169,8 +169,75 @@ writes, and unchanged complete samples after resume. Short Vilar and Marhl
 probes at 128 and 192 bits also require identical final full-precision states
 and integration-step counts. These are implementation checks, not complete
 memory experiments. A separate Linux CI job installs Heyoka with uv and runs
-the same checks. Production diagnostic runners still need to adopt the
-checkpoint API before distributed precision jobs can use it.
+the same checks, together with the partition-runner tests below.
+
+### Complete-branch partitions
+
+The [partition runner](scripts/run_taylor_checkpoint_partition.py) now adopts
+this checkpoint API. Each invocation selects one whole original failed branch,
+or the untreated 0–50 baseline. BioModel **35** (Vilar, catalog network 32)
+requires **17 partitions**, indexed 0–16: one baseline plus all 16 original
+failed branches. BioModel **39** (Marhl, catalog network 30) requires **four
+partitions**, indexed 0–3. Index zero is the baseline; other indices follow
+sorted original branch IDs. The runner rejects a partition count that omits
+any original failure. Partitioning changes scheduling, not the equations,
+calibration, reset times, 0–300 branch horizon, 30,001 samples or acceptance.
+
+For example, run the first Vilar failed branch with a four-hour cooperative
+budget, then repeat the command with `--resume` as needed:
+
+```bash
+HEYOKA_CACHE_DIR=/tmp/grn-taylor-cache OMP_NUM_THREADS=1 \
+  uv run --no-project --python .venv-taylor/bin/python python \
+  scripts/run_taylor_checkpoint_partition.py \
+  --model 35 --partition-index 1 --partition-count 17 \
+  --output results/vilar-partition-01 --max-seconds 14400
+```
+
+Each partition saves the Taylor 128-bit, Taylor 192-bit and RoadRunner arrays
+separately. Resume validates completed arrays and their numerical evidence
+before reusing them, then continues the unfinished Taylor checkpoint. The
+report binds the model and original archives, complete failure inventory,
+grid, reset plan, implementation hashes, library versions and numerical
+requests. An exclusive directory lock prevents competing writers. Each
+attempt retains its source revision, any implementation files differing from
+that revision, wall budget and outcome; retried solver
+failures remain in the integration history. A finished partition is rechecked
+without reintegration. Code or environment changes require a separate output
+directory rather than reusing incompatible checkpoints.
+
+Exit code **75** means the cooperative budget stopped an incomplete job;
+`checkpointed` and `budget_exhausted` are distinct from `integration_failed`.
+Exit code zero means all three integrations finished, which can still produce
+`precision_unresolved` or `precision_converged_native_mismatch`. It does not
+mean the model or a complete memory case has passed. Long individual segments
+can exceed the cooperative budget; scheduling still needs time to upload
+artifacts, including partial checkpoints and reports.
+
+The [partition auditor](scripts/audit_taylor_partitions.py) runs in the main
+uv environment without Heyoka. It reconstructs the original inventory, checks
+every saved array and integration outcome, and recomputes all three pointwise
+comparisons. Pass `--input` once for each partition directory. By default it
+requires the baseline and every original failed branch. `--allow-partial`
+audits supplied completed partitions and explicitly reports missing indices:
+
+```bash
+uv run --locked python scripts/audit_taylor_partitions.py \
+  --input results/vilar-partition-01 --allow-partial \
+  --output results/vilar-partition-01/audit.json
+```
+
+The 19 runner and auditor tests check interruption after one solver completes,
+exact agreement with uninterrupted observations after resume, corrupted arrays
+and reset counts, changed requests and environments, duplicate or missing
+partitions, writer exclusion, explicit retry history and budget exhaustion
+between solvers. Combined with the 32 adapter/checkpoint tests, **51 tests pass
+locally**. Full untreated Vilar and Marhl baselines also completed with all
+three comparisons confirmed, and the separate auditor reproduced those
+comparisons from the saved arrays. These baseline probes establish no
+additional stimulated-branch or case coverage. The existing long local
+diagnostics retain their frozen sources; distributed dispatch and artifact
+restoration for this new runner are the next integration step.
 
 ## Independent Marhl implementation
 
