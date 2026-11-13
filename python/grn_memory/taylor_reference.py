@@ -8,9 +8,13 @@ are rejected. This is an optional diagnostic, not a general SBML simulator.
 """
 
 from functools import reduce
+from contextlib import nullcontext
 import hashlib
+import json
 import math
 from pathlib import Path
+import platform
+import time
 
 import libsbml
 import numpy as np
@@ -99,7 +103,37 @@ def _model(path, precision):
     return list(zip(variables, (rates[name] for name in names))), initial, names, writable
 
 
-def taylor_trajectory(path, times, trains=(), *, precision=128, tolerance="1e-30", evidence=None, progress=None):
+def taylor_trajectory(path, times, trains=(), *, precision=128, tolerance="1e-30", evidence=None, progress=None,
+                      checkpoint=None, resume=False, checkpoint_every=10, stop_after_segments=None, max_seconds=None):
+    """Integrate a full protocol, optionally saving exact state between segments.
+
+Checkpoint stops are cooperative and occur after a complete segment. A single
+long interval can exceed the requested wall budget. ``stop_after_segments``
+counts segments computed by this invocation, including after a resume.
+    """
+    if type(checkpoint_every) is not int or checkpoint_every < 1:
+        raise ValueError("Checkpoint interval must be a positive integer")
+    if stop_after_segments is not None and (type(stop_after_segments) is not int or stop_after_segments < 1):
+        raise ValueError("Segment budget must be a positive integer")
+    if max_seconds is not None and (not math.isfinite(max_seconds) or max_seconds <= 0):
+        raise ValueError("Wall budget must be finite and positive")
+    if checkpoint is None and (stop_after_segments is not None or max_seconds is not None):
+        raise ValueError("A cooperative stop requires a checkpoint")
+    if checkpoint is None:
+        if resume:
+            raise ValueError("Resume requires a checkpoint path")
+        lock = nullcontext()
+    else:
+        from .taylor_checkpoints import checkpoint_lock
+        lock = checkpoint_lock(checkpoint, resume)
+    with lock:
+        return _taylor_trajectory(path, times, trains, precision=precision, tolerance=tolerance,
+            evidence=evidence, progress=progress, checkpoint=checkpoint, resume=resume,
+            checkpoint_every=checkpoint_every, stop_after_segments=stop_after_segments, max_seconds=max_seconds)
+
+
+def _taylor_trajectory(path, times, trains, *, precision, tolerance, evidence, progress,
+                       checkpoint, resume, checkpoint_every, stop_after_segments, max_seconds):
     """Integrate all requested samples, preserving state at external resets.
 
 ``trains`` contains dictionaries with the same explicit timing fields as
@@ -108,6 +142,9 @@ Only the saved observations are rounded to binary64; internal state and dense
 output use the requested precision throughout.
     """
     import heyoka as hy
+    if checkpoint is not None:
+        from . import taylor_checkpoints as checkpoints
+    began = time.monotonic()
     if type(precision) is not int or precision < 64:
         raise ValueError("At least 64 bits of arithmetic precision are required")
     real = lambda value: hy.real(value, precision)
@@ -148,8 +185,6 @@ output use the requested precision throughout.
         positions = np.searchsorted(times, resets)
         if np.any(np.minimum(abs(times[positions]-resets), abs(times[positions-1]-resets)) <= 1e-10):
             raise ValueError("Samples must avoid ambiguous reset instants")
-    integrator = hy.taylor_adaptive(equations, initial, fp_type=hy.real, prec=precision,
-                                    tol=tol, high_accuracy=True, compact_mode=True)
     states = np.full((len(times), len(names)), np.nan)
     evidence = {} if evidence is None else evidence
     edges = np.r_[0., resets, times[-1]]
@@ -159,7 +194,30 @@ output use the requested precision throughout.
         expected_train_reset_counts=counts, train_reset_counts=[0]*len(trains),
         expected_segments=len(edges)-1, completed_segments=0, integration_steps=0,
         sample_count=len(times), observables=names, completed=False)
-    for start, end in zip(edges[:-1], edges[1:]):
+    identity = None
+    if checkpoint is not None:
+        identity = {"model_sha256": evidence["model_sha256"], "precision_bits": precision, "tolerance": str(tol),
+            "observables": names, "times_sha256": hashlib.sha256(times.tobytes()).hexdigest(), "samples": len(times),
+            "trains": json.loads(json.dumps(trains)), "high_accuracy": True, "compact_mode": True,
+            "numeric_inputs": evidence["numeric_inputs"],
+            "sources": {name: hashlib.sha256(Path(file).read_bytes()).hexdigest() for name, file in
+                        (("adapter", __file__), ("checkpoints", checkpoints.__file__))},
+            "environment": {"heyoka": hy.__version__, "numpy": np.__version__,
+                            "libsbml": libsbml.getLibSBMLDottedVersion(), "python": platform.python_version(),
+                            "system": platform.system(), "machine": platform.machine()}}
+    resumed_segments = 0
+    if resume:
+        initial, observed, saved = checkpoints.load(checkpoint, identity, times, edges, events, dict(evidence), real)
+        states[:len(observed)] = observed
+        evidence.update(saved)
+        resumed_segments = evidence["completed_segments"]
+        evidence["resumed_from_checkpoint_segments"] = resumed_segments
+        if evidence["completed"]:
+            return names, states
+    integrator = hy.taylor_adaptive(equations, initial, fp_type=hy.real, prec=precision,
+                                    tol=tol, high_accuracy=True, compact_mode=True)
+    integrator.time = real(float(edges[resumed_segments]))
+    for start, end in zip(edges[resumed_segments:-1], edges[resumed_segments+1:]):
         if start in events:
             for name, value in events[start]["values"].items():
                 integrator.state[indices[name]] = real(value)
@@ -184,10 +242,18 @@ output use the requested precision throughout.
         evidence["integration_steps"] += int(output[3])
         evidence["completed_segments"] += 1
         evidence["last_interval"] = [float(start), float(end)]
+        stopping = ((stop_after_segments is not None and evidence["completed_segments"] - resumed_segments >= stop_after_segments)
+                    or (max_seconds is not None and time.monotonic() - began >= max_seconds))
+        if checkpoint is not None and end != times[-1] and (stopping or evidence["completed_segments"] % checkpoint_every == 0):
+            checkpoints.save(checkpoint, identity, integrator.state, states[:last], evidence, real)
         if progress is not None:
             progress(evidence)
+        if stopping and end != times[-1]:
+            raise checkpoints.TaylorCheckpointStop(f"Saved Taylor checkpoint after segment {evidence['completed_segments']}")
     if (not np.isfinite(states).all() or evidence["performed_resets"] != len(resets)
             or evidence["train_reset_counts"] != counts):
         raise RuntimeError("Taylor protocol did not complete every sample and reset")
     evidence["completed"] = True
+    if checkpoint is not None:
+        checkpoints.save(checkpoint, identity, integrator.state, states, evidence, real)
     return names, states

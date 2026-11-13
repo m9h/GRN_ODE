@@ -121,6 +121,57 @@ hashes, the complete observation-grid hash, every reset count and integration
 outcome. `--resume` reuses terminal records only when their complete metadata
 fingerprint matches. Saved records and arrays should be kept together.
 
+## Resuming within a precision trajectory
+
+The checkpoint adapter is being developed on `precision-checkpoint-resume`,
+separately from the frozen sources used by the running diagnostics above.
+The optional `checkpoint` argument to `taylor_trajectory` saves the complete
+internal state at an existing protocol-segment boundary, before the next reset.
+State values retain their arbitrary precision through an exact decimal
+round-trip; saved observations retain the original binary64 representation.
+The file contains numeric arrays and JSON, with no executable serialized objects.
+
+`resume=True` requires a matching checkpoint. Model, complete reset plan,
+observation grid, arithmetic settings, adapter sources, library versions,
+Python version and platform must match. The reader verifies checksums and
+reconstructs the required sample-prefix length and reset counters from the
+original schedule. Publication is atomic, and an exclusive lock prevents two
+workers from writing the same checkpoint.
+
+```python
+from pathlib import Path
+from grn_memory.taylor_reference import taylor_trajectory
+from grn_memory.taylor_checkpoints import TaylorCheckpointStop
+
+checkpoint = Path("results/precision-branch/state.npz")
+try:
+    names, values = taylor_trajectory(
+        model_path, observation_times, reset_trains,
+        precision=192, tolerance="1e-45",
+        checkpoint=checkpoint, resume=checkpoint.exists(),
+        max_seconds=4 * 3600,
+    )
+except TaylorCheckpointStop:
+    # Invoke the same request again to continue from the saved segment.
+    pass
+```
+
+The wall budget is cooperative: the current segment finishes before stopping,
+so one long interval can exceed that budget. `checkpoint_every` defaults to ten
+segments; a requested stop and successful completion always save the current
+state. `stop_after_segments` provides a deterministic per-invocation budget
+for testing. A stopped calculation remains incomplete and must not be treated
+as a numerical failure or a validated trajectory.
+
+The 32 adapter and checkpoint tests include repeated interruption across
+simultaneous resets, missed-reset and truncated-array rejection, failed atomic
+writes, and unchanged complete samples after resume. Short Vilar and Marhl
+probes at 128 and 192 bits also require identical final full-precision states
+and integration-step counts. These are implementation checks, not complete
+memory experiments. A separate Linux CI job installs Heyoka with uv and runs
+the same checks. Production diagnostic runners still need to adopt the
+checkpoint API before distributed precision jobs can use it.
+
 ## Independent Marhl implementation
 
 The model-specific [mpmath adapter](grn_memory/marhl_mpmath.py) transcribes the

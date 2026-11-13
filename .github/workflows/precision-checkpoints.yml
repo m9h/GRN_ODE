@@ -1,0 +1,46 @@
+name: Taylor checkpoint validation
+permissions:
+  contents: read
+on:
+  push:
+    branches: ['**']
+    paths:
+      - '.github/workflows/precision-checkpoints.yml'
+      - 'python/grn_memory/taylor_*.py'
+      - 'python/tests/test_taylor_*.py'
+      - 'python/environments/heyoka-python-requirements.txt'
+  pull_request:
+    paths:
+      - '.github/workflows/precision-checkpoints.yml'
+      - 'python/grn_memory/taylor_*.py'
+      - 'python/tests/test_taylor_*.py'
+      - 'python/environments/heyoka-python-requirements.txt'
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  precision-checkpoints:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: python
+    env:
+      HEYOKA_CACHE_DIR: /tmp/grn-checkpoint-test-cache
+      OMP_NUM_THREADS: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv .venv-taylor --python python
+      - run: uv pip install --python .venv-taylor/bin/python heyoka==7.13.2 -r environments/heyoka-python-requirements.txt
+      - name: Check uninterrupted and resumed protocols at both precisions
+        run: uv run --no-project --python .venv-taylor/bin/python python -m pytest -q tests/test_taylor_reference.py tests/test_taylor_checkpoints.py --junitxml=results/taylor-checkpoint-tests.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: taylor-checkpoint-test-report
+          path: python/results/taylor-checkpoint-tests.xml
