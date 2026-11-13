@@ -732,13 +732,35 @@ preserves all 162 referenced compressed archives, verified after packaging.
 identify the same producer revision as Hoefnagel and keep numerical validation
 separate from complete search coverage.
 
-The original local Ueda worker also finished. Its separate evidence audit
-records 298/302 passing cases, zero incomplete branches and 24 completed
-branch mismatches. A uv-managed refinement diagnostic is running for those
-24 branches, retaining every reset and observation while dividing the recorded
-solver tolerances by ten and twenty. It checks both native solvers and their
-refinements; full case recovery will still require complete control and
-conditional-search validation. No additional passing cases are claimed.
+The [complete local Ueda evidence](results/catalog-breaking-ueda11-local/README.md)
+also records 298/302 passing cases, zero incomplete branches and 24 completed
+branch mismatches. A [comparison of both fully audited runs](results/catalog-breaking-ueda11-local/run-comparison.json)
+finds identical paths in all 302 cases and matching raw and controlled labels
+across all 10,726 shared response/engine assessments. Both runs retain the
+same four failed cases. Label reproducibility does not establish pointwise
+trajectory agreement.
+
+The [native refinement diagnostic](results/catalog-breaking-ueda11-refinement/README.md)
+finishes all 144 integrations. **16/24 branches pass the complete refinement
+gate; eight still disagree.** It retains every reset and observation while
+dividing the original solver tolerances by ten and twenty. Its
+[verification](results/catalog-breaking-ueda11-refinement/verification.json)
+checks provenance, complete failure coverage and recorded comparisons, rather
+than independently recomputing errors from arrays the producer did not save.
+The new verifier and existing refinement tests pass **22 targeted checks**.
+
+A separate [full-array Radau/RoadRunner plan](results/catalog-breaking-ueda11-diagnostic-plan-20261113/README.md)
+covers all 24 original mismatch branches, with 96 integrations and 144 pairwise
+comparisons. RoadRunner requests are `1e-14/1e-16` and `5e-15/5e-17`; Radau
+requests are `1e-11/1e-13` and `1e-12/1e-14`. All retain 221,001 observations
+per trajectory and unchanged acceptance thresholds. The computation is running.
+Full case recovery still requires complete controls and conditional-search
+validation; no additional passing cases are claimed.
+
+The [local evidence and diagnostic release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-ueda-diagnostics-20261113)
+preserves all 138 original local archives, checked against their source hashes
+after packaging. Reports, the complete run comparison, native refinement
+records, verification and the full-array diagnostic plan are tracked in Git.
 
 Published terminal breaking reports now cover **27 distinct models**, with
 **22 passing full numerical validation** after the separate recoveries.
