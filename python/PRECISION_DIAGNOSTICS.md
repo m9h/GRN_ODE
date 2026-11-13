@@ -310,6 +310,20 @@ Linux validation job was queued; matrix jobs and new numerical results were
 not yet available. The ongoing local Marhl control run already has its three
 precision-diagnostic branches, so this dispatch does not repeat those branches.
 
+The first Vilar run subsequently passed all 73 Linux tests and produced all
+17 artifacts. Its baseline passes; ten stimulated 128-bit trajectories are
+complete. Ten jobs stopped cooperatively with checkpoints, and six retained
+atomic checkpoints after interruption. The branch reports contain no solver
+exception, but no stimulated partition has yet completed all three integrations.
+The [continuation plan](results/catalog-paired-taylor-dispatch-vilar-20261113/resume-plan.json)
+binds every parent archive and report checksum. Resume run
+[`43483480217`](https://github.com/m9h/GRN_ODE/actions/runs/43483480217)
+uses producer `ec8ec7cbadecd2a8c2067992011c88028eb5690f` and retains completed
+integrations; its [dispatch record](results/catalog-paired-taylor-dispatch-vilar-20261113/resume-dispatch.json)
+records the parent run explicitly. The independent collector retrieved all
+parent artifacts without errors. Neither the checkpoints nor this continuation
+add validated case coverage.
+
 The [precision collector](scripts/collect_taylor_runs.py) downloads immutable
 artifacts into separate run/attempt/artifact directories. It verifies archive
 digests and producer identities, checks extracted bytes against the retained
