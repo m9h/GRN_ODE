@@ -13,8 +13,10 @@ import gzip
 import hashlib
 from importlib.metadata import version
 import json
+import logging
 from pathlib import Path
 import platform
+import shutil
 import subprocess
 import sys
 import time
@@ -94,9 +96,29 @@ def copasi_messages():
 
 def observe_time_course(original, destination, monitor, *args, **kwargs):
     """Observe one unchanged call; never pad, trim, interpolate or retry output."""
+    # Basico consumes solver exceptions before returning the partial array.
+    # Its logger therefore retains information absent from CCopasiMessage.
+    logger = logging.getLogger("basico.task_timecourse")
+    old_handlers, old_level, old_propagate = logger.handlers, logger.level, logger.propagate
+    log_path = destination.with_suffix(".log")
+    handler = logging.FileHandler(log_path, mode="x", encoding="utf-8")
+    handler.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
+    logger.handlers, logger.propagate = [handler], False
+    logger.setLevel(logging.WARNING)
     try:
         output = original(*args, **kwargs)
     finally:
+        logger.handlers, logger.propagate = old_handlers, old_propagate
+        logger.setLevel(old_level)
+        handler.close()
+        compressed = log_path.with_suffix(".log.gz")
+        with log_path.open("rb") as source, compressed.open("wb") as target:
+            with gzip.GzipFile(fileobj=target, mode="wb", filename="", mtime=0) as stream:
+                shutil.copyfileobj(source, stream)
+        text = log_path.read_text(encoding="utf-8")
+        monitor["timecourse_log"] = {"file": compressed.name, "sha256": digest(compressed),
+                                     "uncompressed_bytes": log_path.stat().st_size, "tail": text[-1500:]}
+        log_path.unlink()
         monitor["copasi_messages"] = copasi_messages()
     monitor["output_type"] = type(output).__name__
     monitor["settings"] = {key: kwargs.get(key) for key in
@@ -178,7 +200,8 @@ def diagnose(source, output):
                 result["integrations"][key] = row
                 write_json(destination, result)
                 print(bid[:12], key, "completed" if row["completed"] else row["error"], flush=True)
-                if row.get("copasi_messages"): print(row["copasi_messages"][:3000], flush=True)
+                if row.get("timecourse_log", {}).get("tail"):
+                    print(row["timecourse_log"]["tail"][-600:], flush=True)
         pairs = [("roadrunner_"+label, "copasi_"+label) for label in ("original", "tight", "tighter")]
         pairs += [(engine+"_"+a, engine+"_"+b) for engine in ("roadrunner", "copasi")
                   for a,b in (("original", "tight"), ("tight", "tighter"))]

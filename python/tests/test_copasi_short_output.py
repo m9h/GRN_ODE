@@ -3,6 +3,8 @@
 import numpy as np
 import pandas as pd
 import pytest
+import gzip
+import logging
 
 from scripts import diagnose_copasi_short_output as probe
 
@@ -37,4 +39,21 @@ def test_solver_exception_is_preserved_and_no_trajectory_is_invented(tmp_path, m
     with pytest.raises(RuntimeError) as caught:
         probe.observe_time_course(original, path, monitor, values=[0., 1.])
     assert caught.value is error and not path.exists()
-    assert monitor == {"copasi_messages": "convergence failure"}
+    assert monitor["copasi_messages"] == "convergence failure"
+    assert monitor["timecourse_log"]["uncompressed_bytes"] == 0
+
+
+def test_basico_error_log_is_saved_and_logger_configuration_is_restored(tmp_path, monkeypatch):
+    logger = logging.getLogger("basico.task_timecourse")
+    previous = (logger.handlers, logger.level, logger.propagate)
+    output = pd.DataFrame({"Time": [0.], "A": [1.]})
+    def original(*args, **kwargs):
+        logger.error("DLSODAR: MXSTEP 100000 before reaching TOUT")
+        return output
+    monkeypatch.setattr(probe, "copasi_messages", lambda: "annotation messages only")
+    monitor = {}
+    assert probe.observe_time_course(original, tmp_path/"raw.npz", monitor, values=[0., 1.]) is output
+    assert (logger.handlers, logger.level, logger.propagate) == previous
+    with gzip.open(tmp_path/monitor["timecourse_log"]["file"], "rt") as stream:
+        assert "MXSTEP 100000" in stream.read()
+    assert "MXSTEP 100000" in monitor["timecourse_log"]["tail"]
