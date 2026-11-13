@@ -465,6 +465,45 @@ collectively reference 214 distinct branches, including
 re-evaluate conditional continuation with consistent implementations; the
 original incomplete branches left some continuation decisions unresolved.
 
+The [complete-control runner](scripts/diagnose_scipy_breaking_controls.py)
+reconstructs all 214 distinct branches for those two cases and adds the full
+untreated 0–2210 control. It computes every possible third-trial intervention,
+including any that a later conditional audit may find unnecessary. Each of the
+215 branches receives two RoadRunner and two Radau requests, retaining the
+complete original observation grid and all observables. The ten already audited
+branches can be reused only after their full arrays, settings, source and
+producer environment are checked; the other 205 branches require new computation.
+
+The [selected original records](results/catalog-breaking-scipy-ciliberto28-shard0/source-branches-provenance.json)
+were captured after checking all original public branch and case archives and
+the two selected cases. The runner rechecks their summaries, original case scores,
+source revision, calibration and complete possible-control inventory. Both
+original native engines agree on eligibility and the last regulation code for
+every selected response. That common source information is carried explicitly
+to the new solvers; conflicting eligibility is rejected rather than assigned
+arbitrarily to Radau.
+
+```bash
+case_evidence=results/catalog-breaking-scipy-ciliberto28-shard0
+MPLBACKEND=Agg uv run --locked --extra jaxkineticmodel python scripts/diagnose_scipy_breaking_controls.py \
+  --evidence "$case_evidence/source-evidence.json" \
+  --case-plan "$case_evidence/original-case-plan.json" \
+  --original-branches "$case_evidence/source-branches.jsonl.gz" \
+  --source-revision e5ff9bb131b3a815feb584793b9f68dda53ce7a7 \
+  --diagnostics "$case_evidence" \
+  --output results/catalog-breaking-scipy-ciliberto-cases
+```
+
+Download the ten-branch trajectory asset before this command. `--resume` requires
+unchanged metadata and validates every reused array; incomplete prior attempts
+remain recorded. Seventeen new tests check the real 215-branch inventory, retained
+prior rechallenges, conflicting eligibility, altered evidence, final-sample
+disagreements, failed integrations and corrupted caches. Together with the
+existing branch-producer and array-auditor tests, all 39 targeted checks pass.
+Synthetic test trajectories are explicitly fixtures, not experimental evidence.
+The control producer does not recover cases: a separate audit must recompute
+the actual conditional paths and controlled scores from consistent full arrays.
+
 ```bash
 MPLBACKEND=Agg uv run --locked python scripts/diagnose_scipy_breaking.py \
   --evidence results/catalog-breaking-ciliberto28-shard0-refinement/source-evidence.json \

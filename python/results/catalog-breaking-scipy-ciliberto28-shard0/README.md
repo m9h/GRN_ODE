@@ -31,3 +31,14 @@ MPLBACKEND=Agg uv run --locked --extra jaxkineticmodel python scripts/audit_scip
 The asset's SHA-256 and every archive member were verified before publication.
 `download.json` records all member paths, sizes and hashes. It is approximately
 921 MB; the archive of native network-8/12/30 evidence is a separate download.
+
+`original-case-plan.json` retains the two original failed cases and the schedules
+of their 214 distinct branches. `source-branches.jsonl.gz` additionally contains
+the selected original branch records, including native comparisons and window
+summaries. Its provenance file records the checksums of all original archives
+verified during capture. These native summaries are distinct from the four
+complete raw arrays per branch produced by the Radau diagnostic.
+
+The [complete-control computation](../../CATALOG_BREAKING.md#ciliberto-partition-zero-refinement)
+adds a full untreated control and prepares all possible conditional continuations.
+Successful branch comparisons alone cannot promote either complete case.
