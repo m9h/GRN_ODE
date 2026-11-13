@@ -72,6 +72,36 @@ integrations. Nine further tests exercise complete and failed models, the
 delay-model control, partial and running reports, missing controls, changed
 producer sources, and the distinction between selected and catalog coverage.
 
+### Further completed searches: networks 8, 12 and 30
+
+The [12 November snapshot](results/catalog-breaking-original-completed-20261112/audit.json)
+adds complete original-run searches for Fuss (network 8) and Leloup (network 12),
+and preserves a separate local Marhl result (network 30). Every required initial
+case and conditional continuation is present. None of these three original runs
+passes all numerical comparisons:
+
+| Network | Passing / initial cases | Conditional trials | Branches | Completed mismatches |
+|---|---:|---:|---:|---:|
+| 8, Fuss 2006 mitotic activation | 314 / 332 | 4,163 | 16,539 | 330 |
+| 12, Leloup 1999 circadian clock | 212 / 216 | 3,323 | 13,230 | 12 |
+| 30, Marhl 2000 calcium oscillations | 27 / 38 | 171 | 724 | 27 |
+
+All integrations finish; numerical disagreements remain explicit. The
+[download instructions](results/catalog-breaking-original-completed-20261112/README.md)
+provide the 315 compressed evidence files as a checksummed release asset.
+Reports, source-file hashes and the audit remain in Git. The auditor requires
+those downloaded archives to reproduce the check.
+
+All twelve original Leloup mismatches pass the
+[recorded refinement gate](results/catalog-breaking-leloup12-refinement/verification.json):
+72 integrations finish, with maximum cross-engine scaled errors of 0.65434 at
+`1e-13/1e-15` and 0.38478 at `5e-14/5e-16` (acceptance limit one). Both
+within-engine refinements also pass. This diagnostic preserves schedules and
+sample counts, but saves comparison records and window summaries rather than
+raw arrays. Its verification checks provenance and recorded outcomes; it does
+not recompute pointwise errors. Full cases and their conditional searches still
+need validation at the refined settings. The separate Fuss diagnostic is running.
+
 ## Restartable computation in complete-case partitions
 
 The [shard runner](scripts/run_breaking_shard.py) divides the sorted initial-case
@@ -175,22 +205,24 @@ An additional [sixteen-partition batch for networks 1, 2 and 5](https://github.c
 was submitted at revision `1fc563a9db5370b15df8faf419cc12b205a64648`.
 Its 48 jobs partition 1,210 initial cases and keep the original observation
 horizons, conditional searches and comparison thresholds. Network 1's sixteen
-partitions have stopped with 397/528 passing case results; networks 2 and 5
-continue in that batch. The next dispatches below retain these independent
+partitions have stopped with 397/528 passing case results; network 2 has stopped
+with 321/624, and network 5 continues in that batch. The next dispatches retain these independent
 outputs separately from the original local calculations.
 
 ### Checkpoint continuations dispatched on 12 November
 
 The [dispatch record](results/catalog-breaking-resume-20261112/dispatches.json)
 records each parent artifact's checksum and reported progress. These are
-partial worker results, not complete-model validation. All six networks now
-have sixteen-partition continuations at revision
-`e5ff9bb131b3a815feb584793b9f68dda53ce7a7`; no observation times, controls,
+partial worker results, not complete-model validation. Seven networks now
+have sixteen-partition continuations. Six use revision
+`e5ff9bb131b3a815feb584793b9f68dda53ce7a7`; network 2 uses
+`9cc040bf95dd0a69ff94cb498de48619de65213c`. No observation times, controls,
 conditional branches or acceptance thresholds were removed.
 
 | Network | Initial cases with a recorded result | Passing cases reported | Total initial cases | Continuation |
 |---|---:|---:|---:|---|
 | 1 | 397 | 397 | 528 | [Same sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273682876) |
+| 2 | 321 | 321 | 624 | [Same sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43290979142) |
 | 28 | 228 | 201 | 622 | [Four to sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273574799) |
 | 29 | 264 | 264 | 1,088 | [Four to sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273574799) |
 | 31 | 232 | 232 | 728 | [Four to sixteen partitions](https://github.com/m9h/GRN_ODE/actions/runs/43273680209) |
@@ -344,6 +376,15 @@ These full-horizon breaking mismatches are separate from the three shorter
 paired-learning branches discussed in [the precision diagnostic](PRECISION_DIAGNOSTICS.md).
 The precision results there do not validate these breaking trajectories.
 
+The separate local result above passes 27/38 cases. A
+[comparison of both complete runs](results/catalog-breaking-marhl30-run-comparison/report.json)
+finds identical search paths, all 171 shared trials, and matching raw and
+controlled labels on all 406 response/engine assessments. Only
+`CaM__up--CaPr__up` changes case validation status: it passes locally and retains
+a trajectory mismatch on Linux. Matching window-based labels do not establish
+agreement of the complete trajectories. Both original results are retained;
+neither establishes full numerical validation of this model.
+
 Networks 28 and 29 first reached their five-hour partition budgets with
 103 and 133 recorded case results respectively; 89 and 133 of those passed.
 Their [first checkpoint continuation](https://github.com/m9h/GRN_ODE/actions/runs/43155055643)
@@ -389,6 +430,22 @@ RoadRunner requests. All six pairwise full-trajectory comparisons must pass.
 It saves every raw array, observable and reset count, and preserves the distinct
 trained/untrained and cue/sham schedules. Its twelve tests check the source
 inventory, exact schedules, tiny absolute tolerances and safe checkpoint reuse.
+
+The [completed full-array audit](results/catalog-breaking-scipy-ciliberto28-shard0/audit.json)
+now confirms all ten captured branches: 40 integrations finish, and all 60
+pairwise comparisons pass. Each retains 221,001 samples and all 20 observables.
+The maximum scaled error is **0.0078033**, below the unchanged acceptance limit
+of one. RoadRunner uses `1e-13/1e-15` and `5e-14/5e-16`; Radau uses
+`1e-10/1e-12` and `1e-11/1e-13`. The
+[40 full trajectory arrays](results/catalog-breaking-scipy-ciliberto28-shard0/README.md)
+are available as a checksummed release asset for independent re-auditing.
+
+This confirms branches, not either complete failed case or the entire model.
+The [two original case inventories](results/catalog-breaking-scipy-ciliberto28-shard0/original-case-plan.json)
+collectively reference 214 distinct branches, including
+204 additional controls. A recovery must validate every required arm and
+re-evaluate conditional continuation with consistent implementations; the
+original incomplete branches left some continuation decisions unresolved.
 
 ```bash
 MPLBACKEND=Agg uv run --locked python scripts/diagnose_scipy_breaking.py \
@@ -445,10 +502,10 @@ produces a memory effect or a resolved behavioral label. These are conditional
 trials with repeated response species and histories, not independent samples
 for estimating population frequencies.
 
-Published terminal breaking reports now cover **20 distinct models**. After
+Published terminal breaking reports now cover **22 distinct models**. After
 the separate network-4 and network-26 recoveries, 18 models have passing full
-numerical validation; reduced Goldbeter and Marhl retain the failures described
-above. Fifteen models still need their complete searches. All-35 completion
+numerical validation; reduced Goldbeter, Fuss, Leloup and Marhl retain the original
+failures described above. Thirteen models still need their complete searches. All-35 completion
 and whole-catalog frequency comparisons remain pending.
 
 ## Source protocol and documented discrepancies

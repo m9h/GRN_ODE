@@ -1,0 +1,60 @@
+{
+  "purpose": "Cross-check the full Marhl precision diagnostic with mpmath.\n\nmpmath integrates independently transcribed, checksummed model equations. Both\nimplementations use Taylor methods. These full-branch checks do not recover\ncomplete cases or substitute for uncomputed control arms.\n",
+  "model_id": "BIOMD0000000039",
+  "model_sha256": "6b221222be03747b11454cc4f2a6218697d9c6367d3578a170c7cc5c34ad3b12",
+  "reference_report_sha256": "c9cbb50df3006c077f2282d290d2f249994489ea30cd80c54befa505c91d4cde",
+  "reference_audit_sha256": "b3f841babf49fdde391bc1700b2287aa8a28578c8587ea65202ae7221d21c6b7",
+  "requests": {
+    "mpmath128": {
+      "precision": 128,
+      "tolerance": "1e-30",
+      "degree": 32
+    },
+    "mpmath192": {
+      "precision": 192,
+      "tolerance": "1e-45",
+      "degree": 48
+    }
+  },
+  "acceptance": {
+    "rtol": 2e-05,
+    "atol": 1e-07
+  },
+  "mpmath_version": "1.4.1",
+  "numpy_version": "2.5.4",
+  "pandas_version": "3.1.1",
+  "python": "3.12.16",
+  "implementation_sha256": {
+    "grn_memory/marhl_mpmath.py": "3bc6408a7762fdc665758b06f49d83668af226791f878a75e07a2b694d31ede2",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "scripts/diagnose_marhl_mpmath.py": "9d32c332866bd4bed50cb29d965ec7f325c4078bc2630a84f066301eab69b2b5"
+  },
+  "case_recovery_claimed": false,
+  "different_integrator_family_claimed": false,
+  "fingerprint": "bd4fd5988085262e43d9f2afc3ea624a543f113b83777809c5921a90e00880d8",
+  "status": "completed",
+  "expected_branches": 3,
+  "branches": [
+    {
+      "branch_id": "7b2974bb7882dd2ae95c01d1bd2aa49030959f6a4ee804d6b51ee7a4494f5527",
+      "file": "7b2974bb7882dd2ae95c01d1bd2aa49030959f6a4ee804d6b51ee7a4494f5527.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "d0e2345138b33a16e86f80a3bdbbdae0ee5b590087440f3d36662d18827932b7",
+      "file": "d0e2345138b33a16e86f80a3bdbbdae0ee5b590087440f3d36662d18827932b7.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "d4e0182a177ec6c293ec29ffafcb6e902f448a9ce738a0e1c11ed60c8ca07ada",
+      "file": "d4e0182a177ec6c293ec29ffafcb6e902f448a9ce738a0e1c11ed60c8ca07ada.json",
+      "status": "high_precision_agreement"
+    }
+  ],
+  "started_at": "2026-11-12T17:51:26.329178+00:00",
+  "baseline": {
+    "file": "untreated_baseline.json",
+    "status": "high_precision_agreement"
+  },
+  "finished_at": "2026-11-12T20:21:41.840111+00:00"
+}

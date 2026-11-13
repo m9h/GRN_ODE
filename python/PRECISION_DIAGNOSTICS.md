@@ -136,8 +136,8 @@ The [full diagnostic](scripts/diagnose_marhl_mpmath.py) evaluates the untreated
 baseline and all three original failed branches with mpmath at 128 and 192 bits.
 It compares each full array with the saved Heyoka and RoadRunner trajectories,
 retaining every observation and intervention. Both arbitrary-precision
-implementations use Taylor methods. Agreement would support consistency across
-implementations, but would not establish agreement across integrator families
+implementations use Taylor methods. Agreement supports consistency across
+implementations, but does not establish agreement across integrator families
 or validate the two complete cases without their remaining control arms.
 
 ```bash
@@ -148,8 +148,18 @@ or validate the two complete cases without their remaining control arms.
 
 The mpmath diagnostic uses no Heyoka native libraries while integrating; its
 equations and arithmetic can also run in a uv-created Python environment with
-the pinned Python requirements above. No completed stimulated-branch result
-is claimed here until the saved arrays have been independently audited.
+the pinned Python requirements above.
+
+The [completed independent array audit](results/catalog-paired-mpmath-marhl/audit.json)
+now confirms all three original failed branches at both precisions. Every
+high-precision comparison agrees across mpmath and Heyoka, while none of the
+three stimulated branches agrees with the recorded RoadRunner trajectory.
+The untreated baseline agrees across all implementations. The largest scaled
+discrepancies among the four high-precision trajectories are 0, `3.11e-11`
+and `1.04e-11` for the three branches in the table above. All 30,001 samples
+and 998 resets per stimulated branch are retained. The saved mpmath arrays
+are included with the report. The fifteen remaining control arms are still
+being computed, so this result does not recover either complete Marhl case.
 
 The [separate array auditor](scripts/audit_marhl_mpmath.py) first re-audits the
 published Heyoka/RoadRunner reference, then verifies every mpmath observation,
