@@ -1,0 +1,116 @@
+name: Taylor paired-case controls
+permissions:
+  contents: read
+on:
+  push:
+    branches: ['**']
+    paths:
+      - '.github/workflows/precision-case-controls.yml'
+      - 'python/grn_memory/taylor_case_controls.py'
+      - 'python/grn_memory/taylor_control_resume.py'
+      - 'python/scripts/run_taylor_case_control.py'
+      - 'python/scripts/run_taylor_control_ci.py'
+      - 'python/tests/test_taylor_case_controls.py'
+      - 'python/tests/test_taylor_control_resume.py'
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: 'Validate implementation, or compute all 23 declared Vilar controls'
+        required: true
+        default: validate
+        type: choice
+        options: [validate, compute]
+      resume_run:
+        description: 'Previous control computation run; blank starts fresh'
+        required: false
+        default: ''
+        type: string
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: python
+    env:
+      HEYOKA_CACHE_DIR: /tmp/grn-control-test-cache
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.12'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv .venv-taylor --python python
+      - run: uv pip install --python .venv-taylor/bin/python heyoka==7.13.2 -r environments/heyoka-python-requirements.txt
+      - name: Verify full case coverage, numerical checkpoints and artifact restoration
+        run: uv run --no-project --python .venv-taylor/bin/python python -m pytest -q tests/test_taylor_reference.py tests/test_taylor_checkpoints.py tests/test_taylor_partitions.py tests/test_taylor_partition_resume.py tests/test_taylor_case_controls.py tests/test_taylor_control_resume.py --junitxml=results/taylor-control-tests.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: taylor-control-test-report
+          path: python/results/taylor-control-tests.xml
+  controls:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.operation == 'compute' }}
+    needs: validate
+    name: precision-control-model-35-partition-${{ matrix.partition }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 345
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        partition: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]
+    defaults:
+      run:
+        working-directory: python
+    env:
+      HEYOKA_CACHE_DIR: /tmp/grn-control-cache
+      OMP_NUM_THREADS: '1'
+      PARTITION_INDEX: ${{ matrix.partition }}
+      PARENT_RUN: ${{ inputs.resume_run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.12'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv .venv-taylor --python python
+      - run: uv pip install --python .venv-taylor/bin/python heyoka==7.13.2 -r environments/heyoka-python-requirements.txt
+      - name: Restore and compute the full control
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          resume_args=()
+          if [[ -n "$PARENT_RUN" ]]; then
+            resume_args=(--resume-run "$PARENT_RUN")
+          fi
+          timeout --signal=TERM --kill-after=30s 18000s \
+            uv run --no-project --python .venv-taylor/bin/python python -u \
+            scripts/run_taylor_control_ci.py \
+            --plan results/catalog-paired-taylor-vilar-controls-20261113/plan.json \
+            --partition-index "$PARTITION_INDEX" --partition-count 23 \
+            --output results/taylor-control --max-seconds 14400 "${resume_args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: precision-control-model-35-partition-${{ matrix.partition }}
+          path: |
+            python/results/taylor-control/
+            !python/results/taylor-control/**/*.tmp
+            !python/results/taylor-control/**/*.lock
+            !python/results/taylor-control/evidence/.runner.lock
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
