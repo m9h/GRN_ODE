@@ -102,6 +102,14 @@ raw arrays. Its verification checks provenance and recorded outcomes; it does
 not recompute pointwise errors. Full cases and their conditional searches still
 need validation at the refined settings. The separate Fuss diagnostic is running.
 
+A [fresh sixteen-partition Leloup recovery](https://github.com/m9h/GRN_ODE/actions/runs/43370464101)
+has been submitted at `daed47882d2d20fa81b193a21c1934a5d83e64dd`, after 39
+targeted tests passed. It uses `1e-13/1e-15` in both engines for all 216 initial
+cases and their full conditional searches. Model, calibration, reset schedules,
+observation grid and acceptance thresholds stay fixed. This run starts fresh
+and keeps the original 212/216 evidence separate; its submission is not a
+full-model recovery result.
+
 ## Restartable computation in complete-case partitions
 
 The [shard runner](scripts/run_breaking_shard.py) divides the sorted initial-case
@@ -232,6 +240,16 @@ conditional branches or acceptance thresholds were removed.
 Completed failures remain in the parent artifacts. Resuming can retry a failed
 branch; it does not convert a failure into a pass or imply that a missing
 conditional continuation has been resolved.
+
+On 13 November UTC, network 28 had recorded **537/622 cases, with 463 passing**,
+and network 31 **726/728, all 726 passing**. Nine Ciliberto partitions and one
+network-31 partition still lacked complete selected-case coverage. New
+[network-28](https://github.com/m9h/GRN_ODE/actions/runs/43370478631) and
+[network-31](https://github.com/m9h/GRN_ODE/actions/runs/43370565797)
+continuations reuse the sixteen-way checkpoints. Their
+[dispatch record](results/catalog-breaking-dispatches-20261113/dispatches.json)
+retains all parent artifact and report hashes, original partial counts and
+the unchanged producer settings. These remain incomplete model searches.
 
 Keep artifacts from different
 partitions in separate directories: shared branch identifiers alone do not
