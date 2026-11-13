@@ -504,6 +504,32 @@ Synthetic test trajectories are explicitly fixtures, not experimental evidence.
 The control producer does not recover cases: a separate audit must recompute
 the actual conditional paths and controlled scores from consistent full arrays.
 
+The [complete-case auditor](scripts/audit_scipy_breaking_cases.py) runs after all
+215 branches finish. It rederives the complete control inventory, verifies each
+saved observation and reset schedule, recomputes all six pairwise comparisons,
+and calculates window summaries from the arrays. It then replays the source
+conditional search separately for the primary RoadRunner/Radau pair and the
+refined pair. Every original and possible control must pass, including controls
+that a newly computed search path does not reach. A failed full untreated
+baseline or a controlled classification disagreement prevents case recovery.
+
+```bash
+uv run --locked python scripts/audit_scipy_breaking_cases.py \
+  --input results/catalog-breaking-scipy-ciliberto-cases \
+  --output results/catalog-breaking-scipy-ciliberto-cases/audit.json
+```
+
+The report retains the original, primary and refined paths separately. Literal
+raw-sign decisions near zero can produce different paths even when all
+controlled classifications agree; any such difference is reported explicitly.
+The audit reports only the two selected cases and does not carry forward the
+original native passes or claim whole-model validation. Newly contradictory
+window summaries in previously passing shared branches are flagged for
+revalidation; those summaries cannot establish cross-run pointwise agreement.
+Twenty-four tests check these gates and audit complete synthetic saved-array
+fixtures, including truncation and final-sample damage with updated checksums.
+The running computation has not yet produced a complete-case recovery result.
+
 ```bash
 MPLBACKEND=Agg uv run --locked python scripts/diagnose_scipy_breaking.py \
   --evidence results/catalog-breaking-ciliberto28-shard0-refinement/source-evidence.json \
