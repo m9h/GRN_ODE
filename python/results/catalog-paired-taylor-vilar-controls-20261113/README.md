@@ -97,3 +97,18 @@ was dispatched at producer revision `bfd276c2ff3ec2ed907596966808efe7068745de`.
 Its Linux validation job must pass before any control runs. Local validation
 passed the 102 precision tests, including 29 new case-control and restoration
 tests; the 29 new tests passed again after the final resume guard.
+
+Collect completed artifacts and audit their arrays without Heyoka:
+
+```bash
+uv run --locked python scripts/collect_taylor_runs.py \
+  --run 43510523842 --model 35 \
+  --control-plan results/catalog-paired-taylor-vilar-controls-20261113/plan.json \
+  --output results/vilar-control-collection --watch
+```
+
+The collector preserves partial checkpoints, verifies the exact case plan and
+producer, and checks extracted files against the original artifact ZIP. Its
+eight collection tests cover both workflow types. Complete control coverage
+remains separate from case recovery: the nine required failed training arms
+must still be supplied to the case auditor.
