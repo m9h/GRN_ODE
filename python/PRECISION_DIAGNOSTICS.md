@@ -239,6 +239,16 @@ additional stimulated-branch or case coverage. The existing long local
 diagnostics retain their frozen sources; distributed dispatch and artifact
 restoration for this new runner are the next integration step.
 
+The committed [Vilar baseline audit](results/catalog-paired-taylor-partition-probes-20261113/vilar/audit.json)
+and [Marhl baseline audit](results/catalog-paired-taylor-partition-probes-20261113/marhl/audit.json)
+include links by filename and checksum to all six complete trajectory arrays.
+Both probes used unmodified numerical sources from commit
+`47cae24be42b0c7bb94bfe631b2cc6eeaae7e69b`. The maximum scaled discrepancy
+against RoadRunner was 0.00003068 for Vilar and 0.002652 for Marhl, below the
+acceptance limit of one. In both baselines the two Taylor precisions produced
+identical saved binary64 observations. Their audits explicitly report zero
+full stimulated branches and incomplete original-failure coverage.
+
 ## Independent Marhl implementation
 
 The model-specific [mpmath adapter](grn_memory/marhl_mpmath.py) transcribes the
