@@ -31,7 +31,7 @@ cases: 4,166 pass and 42 remain failed or numerically unresolved. The original
 results and complete coverage audit are published. Separate audited recoveries
 raise combined validation to 4,203/4,208 cases across 33 fully passing models.
 The [three-trial breaking screen](python/CATALOG_BREAKING.md) has terminal
-results for 25 models, with 21 fully passing numerical validation; ten complete
+results for 26 models, with 22 fully passing numerical validation; nine complete
 searches remain unfinished. These catalog
 protocols preserve native events, rule variables and delay history and separate
 unresolved or physically invalid responses from interpretable effects.

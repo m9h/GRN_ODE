@@ -266,6 +266,28 @@ justify overwriting independently computed evidence. A successful partition
 is not a complete-model result; complete coverage and numerical validation must
 be audited across every partition before reporting a model as finished.
 
+### Further checkpoint continuations on 13 November
+
+Four stopped searches have additional sixteen-partition continuations. The
+[plan](results/catalog-breaking-continuations-next-20261113/plan.json) binds
+each parent artifact and report to its unchanged model, calibration, numerical
+source and package versions. The [dispatch record](results/catalog-breaking-continuations-next-20261113/dispatches.json)
+verifies all 64 job identities at producer revision
+`83c78cd367b42ceee894c6b32f979b2faad0ecbb`.
+
+| Network | Parent recorded / expected cases | Parent passing cases | Continuation |
+|---|---:|---:|---|
+| 2 | 519 / 624 | 519 | [43485094928](https://github.com/m9h/GRN_ODE/actions/runs/43485094928) |
+| 5 | 46 / 58 | 44 | [43485099563](https://github.com/m9h/GRN_ODE/actions/runs/43485099563) |
+| 29 | 643 / 1,088 | 643 | [43485104520](https://github.com/m9h/GRN_ODE/actions/runs/43485104520) |
+| 32 | 201 / 204 | 103 | [43485109761](https://github.com/m9h/GRN_ODE/actions/runs/43485109761) |
+
+These counts describe the parent reports, not completed model validation.
+Every selected parent partition is terminal. Each CI job validates its atomic
+checkpoints before resuming the full conditional protocol. No cases, controls
+or observation times are removed. The jobs were queued when recorded; a
+read-only collector now preserves and audits their completed artifacts.
+
 ### Distributed coverage for the remaining local-only searches
 
 The [13 November dispatch](https://github.com/m9h/GRN_ODE/actions/runs/43374603951)
@@ -290,8 +312,8 @@ at once, subject to available runners, with five hours per partition before
 checkpoint preservation. It uses uv and the pinned project dependencies.
 These are fresh computations; the active local checkpoints are not reused or
 modified. Local and Linux evidence will remain separate for comparison.
-The jobs were queued when verified, and no new model completion or validation
-is claimed from their dispatch.
+The jobs were queued when dispatched. Hoefnagel's complete evidence audit now
+passes all 112 cases, as reported below; the other four searches remain unfinished.
 
 ### Collecting completed batches
 
@@ -671,10 +693,31 @@ download manifests are tracked in Git. See the reproduction instructions for
 recorded pointwise comparisons and window summaries; they are not full raw
 trajectory arrays, and the audit does not repeat numerical integration.
 
-Published terminal breaking reports now cover **25 distinct models**, with
-**21 passing full numerical validation** after the separate recoveries.
+### Complete Hoefnagel search
+
+Network 10, the Hoefnagel pyruvate-branch model (BioModel 17), now passes
+[all 112 initial cases](results/catalog-breaking-linux-10/audit.json) across
+sixteen partitions from the five-model Linux dispatch above. The audit checks
+2,045 conditional trials, 4,741 response-trials and 8,443 branch records
+(8,158 distinct specifications), with no unresolved conditional decisions.
+The producer revision is `a0ea22a0b7c24cee52bec3e5bab7f5bd3d602e93`.
+
+The controlled classifications include 2,635 response-trials with no resolved
+history effect at rechallenge, 676 with no resolved breaker effect on history,
+470 with a history effect reduced by at least half, 770 changed without that
+reduction, 189 amplified and one reversed. These are conditional assessments
+that reuse species and histories, not independent population samples.
+
+The [evidence release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-hoefnagel-20261113)
+contains all 109 referenced compressed archives, each checked against its source
+hash after packaging. [Download and audit instructions](results/catalog-breaking-linux-10/README.md)
+describe the recorded-comparison audit and its limits. The separate local run
+continues with its original source and environment.
+
+Published terminal breaking reports now cover **26 distinct models**, with
+**22 passing full numerical validation** after the separate recoveries.
 Reduced Goldbeter, Fuss, Ciliberto and Marhl retain numerical failures.
-Ten searches remain unfinished: networks **2, 5, 10, 11, 15, 20, 25, 29, 32
+Nine searches remain unfinished: networks **2, 5, 11, 15, 20, 25, 29, 32
 and 35**. All-35 completion and whole-catalog frequency comparisons remain
 pending. Passing validation does not imply that every intervention establishes
 a resolved memory effect.
