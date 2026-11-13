@@ -8,6 +8,7 @@ on:
       - '.github/workflows/precision-checkpoints.yml'
       - 'python/grn_memory/taylor_*.py'
       - 'python/scripts/run_taylor_checkpoint_partition.py'
+      - 'python/scripts/run_taylor_ci_partition.py'
       - 'python/scripts/audit_taylor_partitions.py'
       - 'python/tests/test_taylor_*.py'
       - 'python/environments/heyoka-python-requirements.txt'
@@ -16,16 +17,35 @@ on:
       - '.github/workflows/precision-checkpoints.yml'
       - 'python/grn_memory/taylor_*.py'
       - 'python/scripts/run_taylor_checkpoint_partition.py'
+      - 'python/scripts/run_taylor_ci_partition.py'
       - 'python/scripts/audit_taylor_partitions.py'
       - 'python/tests/test_taylor_*.py'
       - 'python/environments/heyoka-python-requirements.txt'
   workflow_dispatch:
+    inputs:
+      operation:
+        description: 'Validate the implementation, or compute every complete branch partition'
+        required: true
+        default: validate
+        type: choice
+        options: [validate, compute]
+      model:
+        description: 'BioModels number: 35 is Vilar (network 32); 39 is Marhl (network 30)'
+        required: true
+        default: '35'
+        type: choice
+        options: ['35', '39']
+      resume_run:
+        description: 'Previous precision computation run ID; blank starts fresh'
+        required: false
+        default: ''
+        type: string
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
 jobs:
   precision-checkpoints:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     defaults:
       run:
@@ -37,14 +57,75 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.12'
       - uses: astral-sh/setup-uv@v5
       - run: uv venv .venv-taylor --python python
       - run: uv pip install --python .venv-taylor/bin/python heyoka==7.13.2 -r environments/heyoka-python-requirements.txt
       - name: Check uninterrupted and resumed protocols at both precisions
-        run: uv run --no-project --python .venv-taylor/bin/python python -m pytest -q tests/test_taylor_reference.py tests/test_taylor_checkpoints.py tests/test_taylor_partitions.py --junitxml=results/taylor-checkpoint-tests.xml
+        run: uv run --no-project --python .venv-taylor/bin/python python -m pytest -q tests/test_taylor_reference.py tests/test_taylor_checkpoints.py tests/test_taylor_partitions.py tests/test_taylor_partition_resume.py --junitxml=results/taylor-checkpoint-tests.xml
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: taylor-checkpoint-test-report
           path: python/results/taylor-checkpoint-tests.xml
+  precision-partitions:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.operation == 'compute' }}
+    needs: precision-checkpoints
+    name: precision-model-${{ inputs.model }}-partition-${{ matrix.partition }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 345
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      max-parallel: 16
+      matrix:
+        partition: ${{ fromJSON(inputs.model == '39' && '[0,1,2,3]' || '[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]') }}
+    defaults:
+      run:
+        working-directory: python
+    env:
+      HEYOKA_CACHE_DIR: /tmp/grn-precision-partition-cache
+      OMP_NUM_THREADS: '1'
+      PRECISION_MODEL: ${{ inputs.model }}
+      PARTITION_INDEX: ${{ matrix.partition }}
+      PARTITION_COUNT: ${{ inputs.model == '39' && '4' || '17' }}
+      PARENT_RUN: ${{ inputs.resume_run }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.12'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv .venv-taylor --python python
+      - run: uv pip install --python .venv-taylor/bin/python heyoka==7.13.2 -r environments/heyoka-python-requirements.txt
+      - name: Restore and compute the complete branch with preserved checkpoints
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          resume_args=()
+          if [[ -n "$PARENT_RUN" ]]; then
+            resume_args=(--resume-run "$PARENT_RUN")
+          fi
+          # The cooperative stop is four hours. A five-hour external deadline
+          # preserves time to upload checkpoints even if a segment runs longer.
+          timeout --signal=TERM --kill-after=30s 18000s \
+            uv run --no-project --python .venv-taylor/bin/python python -u \
+            scripts/run_taylor_ci_partition.py \
+            --model "$PRECISION_MODEL" --partition-index "$PARTITION_INDEX" \
+            --partition-count "$PARTITION_COUNT" --output results/taylor-partition \
+            --max-seconds 14400 "${resume_args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: precision-model-${{ inputs.model }}-partition-${{ matrix.partition }}
+          path: |
+            python/results/taylor-partition/
+            !python/results/taylor-partition/**/*.tmp
+            !python/results/taylor-partition/**/*.lock
+            !python/results/taylor-partition/evidence/.runner.lock
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30

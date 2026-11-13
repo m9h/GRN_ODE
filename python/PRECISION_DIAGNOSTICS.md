@@ -237,7 +237,7 @@ three comparisons confirmed, and the separate auditor reproduced those
 comparisons from the saved arrays. These baseline probes establish no
 additional stimulated-branch or case coverage. The existing long local
 diagnostics retain their frozen sources; distributed dispatch and artifact
-restoration for this new runner are the next integration step.
+restoration use the separate workflow described below.
 
 The committed [Vilar baseline audit](results/catalog-paired-taylor-partition-probes-20261113/vilar/audit.json)
 and [Marhl baseline audit](results/catalog-paired-taylor-partition-probes-20261113/marhl/audit.json)
@@ -248,6 +248,57 @@ against RoadRunner was 0.00003068 for Vilar and 0.002652 for Marhl, below the
 acceptance limit of one. In both baselines the two Taylor precisions produced
 identical saved binary64 observations. Their audits explicitly report zero
 full stimulated branches and incomplete original-failure coverage.
+
+### Linux execution and artifact restoration
+
+The [precision workflow](../.github/workflows/precision-checkpoints.yml) has
+two explicit modes. `validate` runs the implementation tests; `compute` first
+runs those same tests, then schedules all 17 Vilar partitions or all four
+Marhl partitions. Every worker uses Ubuntu 24.04, Python 3.12.12 and the pinned
+Heyoka/Python requirements installed with **uv**. At most 16 partition jobs run
+in parallel. Explicit dispatches have distinct concurrency groups, so a later
+source push or another dispatch cannot cancel a computation.
+
+```bash
+gh workflow run precision-checkpoints.yml --repo m9h/GRN_ODE \
+  --ref precision-checkpoint-resume -f operation=compute -f model=35
+```
+
+Each worker has a four-hour cooperative solver budget and a separate five-hour
+process deadline. The 345-minute job limit leaves time for setup and artifact
+upload after that deadline. Artifacts retain the execution manifest, report,
+complete solver arrays, partial Taylor checkpoints and restoration history;
+temporary publications and lock files are excluded. Artifacts are retained for
+30 days. A hard process deadline can leave the report marked `running`; the
+last complete atomic checkpoint is still eligible for verified restoration.
+
+To continue a previous computation, dispatch the same model with
+`-f resume_run=RUN_ID`. Use a new dispatch rather than rerunning jobs in place.
+Every partition requires its matching completed parent job and uploaded
+artifact; missing evidence fails explicitly instead of silently starting over.
+The [restoration module](grn_memory/taylor_partition_resume.py) verifies the
+run and attempt, job identity, artifact age, producer revision and archive
+SHA-256 before inspecting the numerical evidence. It then checks the original
+problem and environment, validates every completed array and recomputes
+completed comparisons, and validates the exact saved MPFR state, observation
+prefix and reset counters of each checkpoint. Restoration performs no
+integration and publishes the new directory only after all checks pass.
+
+The [CI runner](scripts/run_taylor_ci_partition.py) records the current run
+separately from its parent artifact. GitHub may mark a budget-limited job as
+failed because exit code 75 or the external timeout is nonzero; the scientific
+report retains `checkpointed`, `budget_exhausted` or an interrupted `running`
+state. A completed job can also report numerical disagreement. Neither job
+success nor artifact availability establishes full model validation.
+
+The 22 artifact/CI tests cover restoration and continuation of a partial
+integration, reports that lag valid checkpoints after interruption, completed
+arrays without checkpoints, wrong or stale producers, altered reset evidence,
+missing arrays, archive paths and links, and failure records. Together with
+the adapter, checkpoint and partition tests, **73 local tests pass**. The
+earlier 32 adapter/checkpoint tests also passed on Linux in workflow run
+[`43377553111`](https://github.com/m9h/GRN_ODE/actions/runs/43377553111);
+the expanded suite is a required gate before distributed precision computation.
 
 ## Independent Marhl implementation
 
