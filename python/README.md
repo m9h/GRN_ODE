@@ -30,7 +30,7 @@ or numerically unresolved. Complete attempted coverage and original evidence
 are audited separately from validation success. Separate audited recoveries
 raise combined validation to 4,203/4,208 cases across 33 fully passing models.
 The [three-trial breaking screen](CATALOG_BREAKING.md) has terminal results for
-26 models, with 22 fully passing numerical validation; nine complete searches
+27 models, with 22 fully passing numerical validation; eight complete searches
 remain unfinished.
 
 ## Run it

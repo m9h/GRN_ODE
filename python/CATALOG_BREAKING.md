@@ -313,7 +313,8 @@ checkpoint preservation. It uses uv and the pinned project dependencies.
 These are fresh computations; the active local checkpoints are not reused or
 modified. Local and Linux evidence will remain separate for comparison.
 The jobs were queued when dispatched. Hoefnagel's complete evidence audit now
-passes all 112 cases, as reported below; the other four searches remain unfinished.
+passes all 112 cases, as reported below. Ueda now has complete coverage with four
+failed cases; the other three searches remain unfinished.
 
 ### Collecting completed batches
 
@@ -714,10 +715,35 @@ hash after packaging. [Download and audit instructions](results/catalog-breaking
 describe the recorded-comparison audit and its limits. The separate local run
 continues with its original source and environment.
 
-Published terminal breaking reports now cover **26 distinct models**, with
+### Complete Ueda search with numerical mismatches
+
+Network 11, the Ueda circadian-clock model (BioModel 22), now has
+[complete coverage of all 302 initial cases](results/catalog-breaking-linux-11/audit.json).
+The sixteen-partition audit reconstructs 3,354 conditional trials, 5,363
+response-trials and 13,741 branch records (13,315 distinct specifications).
+There are no unresolved conditional decisions, but **298/302 cases pass**
+numerical validation. The four mismatched cases are `CCn__down--CCc__up`,
+`CCn__down--Clkc__up`, `Perm__down--Perc__up` and `Timm__down--Timc__up`.
+Their response labels do not override failed trajectory comparisons.
+
+The [Ueda evidence release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-ueda-20261113)
+preserves all 162 referenced compressed archives, verified after packaging.
+[Reproduction instructions](results/catalog-breaking-linux-11/README.md)
+identify the same producer revision as Hoefnagel and keep numerical validation
+separate from complete search coverage.
+
+The original local Ueda worker also finished. Its separate evidence audit
+records 298/302 passing cases, zero incomplete branches and 24 completed
+branch mismatches. A uv-managed refinement diagnostic is running for those
+24 branches, retaining every reset and observation while dividing the recorded
+solver tolerances by ten and twenty. It checks both native solvers and their
+refinements; full case recovery will still require complete control and
+conditional-search validation. No additional passing cases are claimed.
+
+Published terminal breaking reports now cover **27 distinct models**, with
 **22 passing full numerical validation** after the separate recoveries.
-Reduced Goldbeter, Fuss, Ciliberto and Marhl retain numerical failures.
-Nine searches remain unfinished: networks **2, 5, 11, 15, 20, 25, 29, 32
+Reduced Goldbeter, Fuss, Ueda, Ciliberto and Marhl retain numerical failures.
+Eight searches remain unfinished: networks **2, 5, 15, 20, 25, 29, 32
 and 35**. All-35 completion and whole-catalog frequency comparisons remain
 pending. Passing validation does not imply that every intervention establishes
 a resolved memory effect.
