@@ -1,0 +1,750 @@
+{
+  "network": 1,
+  "biomodel_id": "BIOMD0000000001",
+  "name": "Edelstein1996 - EPSP ACh event",
+  "configuration": {
+    "dt": 0.01,
+    "post_reset_offset": 1e-05,
+    "prefix": [
+      {
+        "pulse": 1,
+        "start": 50.0,
+        "stop": 100.0,
+        "rest_stop": 160.0
+      },
+      {
+        "pulse": 2,
+        "start": 160.0,
+        "stop": 220.0,
+        "rest_stop": 290.0
+      },
+      {
+        "pulse": 3,
+        "start": 290.0,
+        "stop": 360.0,
+        "rest_stop": 440.0
+      },
+      {
+        "pulse": 4,
+        "start": 440.0,
+        "stop": 520.0,
+        "rest_stop": 610.0
+      },
+      {
+        "pulse": 5,
+        "start": 610.0,
+        "stop": 700.0,
+        "rest_stop": 800.0
+      },
+      {
+        "pulse": 6,
+        "start": 800.0,
+        "stop": 900.0,
+        "rest_stop": 1010.0
+      }
+    ],
+    "trials": {
+      "prefix": [
+        0.0,
+        1010.0
+      ],
+      "intervention_1": [
+        1010.0,
+        1110.0
+      ],
+      "pre_1": [
+        1110.0,
+        1210.0
+      ],
+      "cue_1": [
+        1210.0,
+        1310.0
+      ],
+      "post_1": [
+        1310.0,
+        1410.0
+      ],
+      "intervention_2": [
+        1410.0,
+        1510.0
+      ],
+      "pre_2": [
+        1510.0,
+        1610.0
+      ],
+      "cue_2": [
+        1610.0,
+        1710.0
+      ],
+      "post_2": [
+        1710.0,
+        1810.0
+      ],
+      "intervention_3": [
+        1810.0,
+        1910.0
+      ],
+      "pre_3": [
+        1910.0,
+        2010.0
+      ],
+      "cue_3": [
+        2010.0,
+        2110.0
+      ],
+      "post_3": [
+        2110.0,
+        2210.0
+      ]
+    },
+    "reset_interval": 0.1,
+    "prefix_endpoint_resets": true,
+    "later_endpoint_resets": false,
+    "later_resets_per_exposure": 999,
+    "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+    "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+    "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+    "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+    "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+    "integration_settings": {
+      "roadrunner": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      },
+      "copasi": {
+        "rtol": 1e-12,
+        "atol": 1e-14
+      }
+    },
+    "case_integration_overrides": {},
+    "integration_error_fallbacks": {},
+    "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+    "timed_drive_encoding": null,
+    "comparison_rtol": 2e-05,
+    "comparison_atol": 1e-07,
+    "candidate_plan_sha256": "f4cd853b06e93dde967e5a50ac06e57969df6147e96d5927e83dc291b91744be",
+    "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+    "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+  },
+  "model_sha256": "407fccc883f80e6d120e34d8b0810a206a5cc6535a26d4574611504e683beb08",
+  "reference_fingerprint": "52c46b071f4e474a02e70d0b1c548a490a973a36d5a016282416c884b43b38cb",
+  "reference_file_sha256": "b13726ca62c600cc2ad9a9f2501273c547fda82b9d4bb25b5f931a59d3c27104",
+  "implementation_sha256": {
+    "catalog_breaking.py": "48834a2d0ed8c9105b381413a27314ef71f5d37c4243a677a583d47955e48c73",
+    "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+    "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+    "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+    "catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315",
+    "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+    "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+    "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+    "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+    "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+    "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+    "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+    "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+  },
+  "versions": {
+    "libroadrunner": "2.11.0",
+    "python-copasi": "4.48.311",
+    "copasi-basico": "0.92",
+    "python-libsbml": "5.21.2",
+    "numpy": "2.5.4"
+  },
+  "fingerprint": "5f3f37177207f847ec4355cc4d1e64e903f804232cd2a8de23686a5e1192539b",
+  "targets": {
+    "BLL": "concentration",
+    "IL": "concentration",
+    "AL": "concentration",
+    "A": "concentration",
+    "BL": "concentration",
+    "B": "concentration",
+    "DLL": "concentration",
+    "D": "concentration",
+    "ILL": "concentration",
+    "DL": "concentration",
+    "I": "concentration",
+    "ALL": "concentration"
+  },
+  "excluded_species": {},
+  "engines": [
+    "roadrunner",
+    "copasi"
+  ],
+  "expected_cases": 528,
+  "expected_initial_response_assessments": 3280,
+  "cases": {
+    "IL__up--ALL__down": {
+      "record_id": "feb126cce2168070d58d347928825b1017375666717f81c5ca644ad349e9748b",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 120,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 120
+      },
+      "raw_disagreeing_response_trials": 29
+    },
+    "IL__up--ALL__up": {
+      "record_id": "196f481324a0bc749476c7ecbb61a8cc30135e81ad6938493811fb956cafa363",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 63,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 63
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "IL__up--AL__down": {
+      "record_id": "f054006c886d495beb77a9c82eedf5d9a589aa3271c1bc13058a85350b0ac3de",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 65,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 65
+      },
+      "raw_disagreeing_response_trials": 1
+    },
+    "IL__up--AL__up": {
+      "record_id": "4e358778156259a773c2db5de5315e49b03b169bbefb264ef62e1fb48586afea",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 84,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 84
+      },
+      "raw_disagreeing_response_trials": 14
+    },
+    "IL__up--A__down": {
+      "record_id": "b1f34ff2322ba2b8a1b84616012c5442323a57e4798416929eea4f29c46e8d58",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 65,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 65
+      },
+      "raw_disagreeing_response_trials": 11
+    },
+    "IL__up--A__up": {
+      "record_id": "3d320801fac4f3c482f710eadfca92662db687b2e6f0bc3b1466b9290f6123a2",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 65,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 65
+      },
+      "raw_disagreeing_response_trials": 10
+    },
+    "IL__up--BLL__down": {
+      "record_id": "dd50f2396eeca90292107ab75d190c6e6f53e9ca62965bcd117510a50e4baf5d",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 84,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 84
+      },
+      "raw_disagreeing_response_trials": 9
+    },
+    "IL__up--BLL__up": {
+      "record_id": "3c187c868d4aa819c623bf91b60100e2744cb15194419643f7c8c9d0b807d9db",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 63,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 63
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "IL__up--BL__down": {
+      "record_id": "10ce5e5ba187fa1abe67460f3c0b0d8a39f33c6b17d814e8d3e4bcb2f6a7cbc4",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 83,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 83
+      },
+      "raw_disagreeing_response_trials": 9
+    },
+    "IL__up--BL__up": {
+      "record_id": "c970a5ede54a1a90a27160dac4c17b331a585576d904d2984f1ce48b7de4e51a",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 66,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 66
+      },
+      "raw_disagreeing_response_trials": 2
+    },
+    "IL__up--B__down": {
+      "record_id": "bfd22fa646dbae03e2dd81d57699260ed1bc2e7e1b5ee11a41c4bd4da7dc6803",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 65,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 65
+      },
+      "raw_disagreeing_response_trials": 13
+    },
+    "IL__up--B__up": {
+      "record_id": "675b43b521d07970ee917aac3eae7ebd9391bc1c6d0800294231669ca4c16452",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 64,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 64
+      },
+      "raw_disagreeing_response_trials": 10
+    },
+    "IL__up--DLL__down": {
+      "record_id": "fbd23b215401845f1b5e616ff07f1917a690dbecca5cae140c72b002d09ead04",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 82,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 82
+      },
+      "raw_disagreeing_response_trials": 13
+    },
+    "IL__up--DLL__up": {
+      "record_id": "9b327da6f6a9c416362ea5d1603514a735c1c0850dfb6e33cc582b1f6f6e5ee2",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 63,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 63
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "IL__up--DL__down": {
+      "record_id": "4b9df79f4308f754a3d5d370b7342fda268a778795da433993bfafc0751f03a9",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 84,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 84
+      },
+      "raw_disagreeing_response_trials": 10
+    },
+    "IL__up--DL__up": {
+      "record_id": "3e52b63054439397e8ed1055006f98620aa94ef9e300d1961d846ff0bbf73f2e",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 83,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 83
+      },
+      "raw_disagreeing_response_trials": 8
+    },
+    "IL__up--D__down": {
+      "record_id": "c99b48a21a01af311e17f7d3b5d07ac6c2d8e4d9a4c25e76b22069d752db09f0",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 44,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 44
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "IL__up--D__up": {
+      "record_id": "c0e96615c94e3efdbc0e6097ad790148646e65c7b0865d7b9c0f57c3105dd32f",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 44,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 44
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "IL__up--ILL__down": {
+      "record_id": "222c86474d2686b5e41b3df38b46b36616fc89bf5792c4d61c1d74669d0c3aac",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 101,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 101
+      },
+      "raw_disagreeing_response_trials": 19
+    },
+    "IL__up--ILL__up": {
+      "record_id": "72eed05dafc6c85ab79ac3f7a7cdb7cc1d108ea1aab055962228295f0370ca30",
+      "status": "passed",
+      "initial_response_assessments": 6,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 63,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 63
+      },
+      "raw_disagreeing_response_trials": 0
+    },
+    "IL__up--I__down": {
+      "record_id": "33ea30e70b240818672514f811cfc8105a7b4a5877c9195130b0658fed61381a",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 65,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 65
+      },
+      "raw_disagreeing_response_trials": 1
+    },
+    "IL__up--I__up": {
+      "record_id": "feae9928dcdc1e01553a6c2abcf7015eb59f47e71f4311a01466202bfec4fb35",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 83,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 83
+      },
+      "raw_disagreeing_response_trials": 8
+    },
+    "I__down--ALL__down": {
+      "record_id": "099ba0ce9c5922f84591e92660847dcd4d1195e1f8a7bb69c25e6e00412fc746",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 102,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 102
+      },
+      "raw_disagreeing_response_trials": 41
+    },
+    "I__down--ALL__up": {
+      "record_id": "a494a182d6f6fb06297ce34ab5c5b34b955f6509bd66ae61e1abbf98e371e407",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 7,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 7
+      },
+      "raw_disagreeing_response_trials": 2
+    },
+    "I__down--AL__down": {
+      "record_id": "6858416789b2384355bb5cea52789eaba4d5c1c730b3d5a3002b1405bef0ebfa",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 46,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 46
+      },
+      "raw_disagreeing_response_trials": 24
+    },
+    "I__down--AL__up": {
+      "record_id": "c567f08527497e34fcc963835f1ea5fd712192a0ce0ac5a85cbae6883899d557",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 2,
+      "evaluated_response_trials": 11,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 11
+      },
+      "raw_disagreeing_response_trials": 5
+    },
+    "I__down--A__down": {
+      "record_id": "58d6bbf4f0a21b459936b5a356b246570a1e949760a72c78a51835b2e62ce0a3",
+      "status": "passed",
+      "initial_response_assessments": 8,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 46,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 46
+      },
+      "raw_disagreeing_response_trials": 19
+    },
+    "I__down--A__up": {
+      "record_id": "d0c3a9debab9dd3fc8c08fedde170915f57ad857dba91c3964dbf62995298acd",
+      "status": "passed",
+      "initial_response_assessments": 8,
+      "evaluated_trials": 2,
+      "evaluated_response_trials": 12,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 12
+      },
+      "raw_disagreeing_response_trials": 6
+    },
+    "I__down--BLL__down": {
+      "record_id": "1d5c4879a256b635b289f3fc71c5bfc2da89a852c0f6d7830098697b90e664fd",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 64,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 64
+      },
+      "raw_disagreeing_response_trials": 24
+    },
+    "I__down--BLL__up": {
+      "record_id": "cf1fb1a8b3bde62d91b79ddfee4e99e90589f9478dbc8a4e312f2c260a94a90a",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 1,
+      "evaluated_response_trials": 7,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 7
+      },
+      "raw_disagreeing_response_trials": 2
+    },
+    "I__down--BL__down": {
+      "record_id": "4266b0117107a9e909ec305abd950b6ac590df692b5bb7e5fbe1336d7e062617",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 47,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 47
+      },
+      "raw_disagreeing_response_trials": 27
+    },
+    "I__down--BL__up": {
+      "record_id": "446b95cea86d8c86b15cfd7af6bff75af7e60465337c25f8143d0266c9545f2c",
+      "status": "passed",
+      "initial_response_assessments": 7,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 45,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 45
+      },
+      "raw_disagreeing_response_trials": 25
+    },
+    "I__down--B__down": {
+      "record_id": "93fb82710c51561b8ce21e2ccdba660edf82a1ff3b9a84cff70f219b10a6a688",
+      "status": "passed",
+      "initial_response_assessments": 8,
+      "evaluated_trials": 22,
+      "evaluated_response_trials": 46,
+      "controlled_categories": {
+        "no_resolved_history_effect_at_rechallenge": 46
+      },
+      "raw_disagreeing_response_trials": 20
+    }
+  },
+  "status": "incomplete_or_failed",
+  "no_candidates": false,
+  "started_at": "2026-11-12T23:01:28.724762+00:00",
+  "control_comparison": {
+    "passed": true,
+    "max_scaled_error": 1.0298676226455629e-07,
+    "max_absolute_error": 1.0306103979127249e-14,
+    "worst_observable": "DL",
+    "worst_time": 20.36,
+    "samples": 221001,
+    "observables": 20,
+    "per_observable_max_scaled_error": {
+      "BLL": 6.658876428349483e-10,
+      "IL": 1.0240863858852808e-07,
+      "AL": 3.453216618315952e-10,
+      "A": 3.468679510669812e-11,
+      "BL": 7.62708976600486e-09,
+      "B": 5.671723762127547e-08,
+      "DLL": 6.360814277612527e-08,
+      "D": 7.459904257871745e-08,
+      "ILL": 5.523986002940903e-08,
+      "DL": 1.0298676226455629e-07,
+      "I": 5.977101646530068e-08,
+      "ALL": 2.7364408139536615e-08,
+      "kf_0": 0.0,
+      "kf_3": 0.0,
+      "kf_7": 0.0,
+      "kf_12": 0.0,
+      "kf_1": 0.0,
+      "kf_4": 0.0,
+      "kf_8": 0.0,
+      "kf_13": 0.0
+    }
+  },
+  "evidence_archives": {
+    "branches": [
+      {
+        "file": "evidence/BIOMD0000000001-branches-00000.jsonl.gz",
+        "records": 100,
+        "bytes": 814023,
+        "sha256": "170281b8a38ad7b7b9b52f67a9c6ea261664ea8688ea368a5c6c9801fde4b0f9"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00001.jsonl.gz",
+        "records": 100,
+        "bytes": 812402,
+        "sha256": "36668c74fde7e839b76ad3ef33cfaa5a6054f8d2e66d7ce6237e11c88d793aa0"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00002.jsonl.gz",
+        "records": 100,
+        "bytes": 856199,
+        "sha256": "26d494f60d5873a1eb40a1fa131277e4880ec59368e3545636b3152fa2051109"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00003.jsonl.gz",
+        "records": 100,
+        "bytes": 867442,
+        "sha256": "ae97435a67e3b233fc565622fbeef948b534b5efe801623f60d94f3f1fafdabe"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00004.jsonl.gz",
+        "records": 100,
+        "bytes": 802792,
+        "sha256": "0386c4f91e989e0dd3db052ec734dc50209913f05d7e84d51d0ee0fe9e71aeb5"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00005.jsonl.gz",
+        "records": 100,
+        "bytes": 810734,
+        "sha256": "e063f1900c8043b25eb409b0375ea728f13e24fdf3d18718d282d82488cbbdb4"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00006.jsonl.gz",
+        "records": 100,
+        "bytes": 826771,
+        "sha256": "dff8f5e78677b70b26542232245b8460fd1715ef3113257759dffe1e5d467407"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00007.jsonl.gz",
+        "records": 100,
+        "bytes": 831839,
+        "sha256": "c2aeff8c42237a1bcc03280d69c523d2bd809df74e28ae5954f398dd1c408280"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00008.jsonl.gz",
+        "records": 100,
+        "bytes": 837547,
+        "sha256": "7f9305f6fccf05dafdbfac599efc18a55cdc240562d464b2ada1f32a3440360a"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00009.jsonl.gz",
+        "records": 100,
+        "bytes": 846765,
+        "sha256": "4f8e8d62deabdb29ad1024c5bc6906801eea6aa081a80caea10b9d0743b358f6"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00010.jsonl.gz",
+        "records": 100,
+        "bytes": 800421,
+        "sha256": "dfb28594938ab9f6b1996c3dfa7b3b2fe887c98fae6a947e329f218c55cf3cc0"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00011.jsonl.gz",
+        "records": 100,
+        "bytes": 816249,
+        "sha256": "dfee585c0985f371fe1b4b5f7c42e5b5c18818b11da71aba6a67835089f0220f"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00012.jsonl.gz",
+        "records": 100,
+        "bytes": 811088,
+        "sha256": "30be7bc2b8fe7b8e7a75250ea1ff95d5cd0ebb53aa3781516b8281c36da05291"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00013.jsonl.gz",
+        "records": 100,
+        "bytes": 831251,
+        "sha256": "e4d9b14c46b5373711e1e7c2a5de17645861e3af20b4ad02c06dcd3134cc2a08"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00014.jsonl.gz",
+        "records": 100,
+        "bytes": 805469,
+        "sha256": "b6bb19ff4bf84146b932c02713da17496fb5487f37578d200ab7341d3d1efff4"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00015.jsonl.gz",
+        "records": 100,
+        "bytes": 831249,
+        "sha256": "9ae8b8593815193c4e0216f8e8897b20700b05cec5654cc485d8840cd16cc603"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00016.jsonl.gz",
+        "records": 100,
+        "bytes": 817656,
+        "sha256": "c248e00f4d75144de4d834f0f101564a1ce5f6b52b67457b95e405f5c1c969d8"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00017.jsonl.gz",
+        "records": 100,
+        "bytes": 790035,
+        "sha256": "236dfe3fe1303a035993474df6c233905e9e3e88c991b3c45e8f6e3c97c908fc"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00018.jsonl.gz",
+        "records": 100,
+        "bytes": 848322,
+        "sha256": "130cc5d8a79fe6d3686ff2f68239c223c93ae3316a55d7c43018c1cdd92e0fa6"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00019.jsonl.gz",
+        "records": 100,
+        "bytes": 851202,
+        "sha256": "f4db9fffed5f98b74ccdaf8aa30c966b015ad348daf3b6e4e8071e5a55f5a98c"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00020.jsonl.gz",
+        "records": 100,
+        "bytes": 839145,
+        "sha256": "89124fc6ed0100908e582c6bc50fb1affa31f78b0061911524c565c5acfb4fa6"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00021.jsonl.gz",
+        "records": 100,
+        "bytes": 808779,
+        "sha256": "40fb41a6f7d2860360d1c8842f628793ca4db43ae764d4f19d3f18a2ba3b4249"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00022.jsonl.gz",
+        "records": 100,
+        "bytes": 847053,
+        "sha256": "33b45d3fbd993a13a1ae16301f86f5e269d9a6d6d792387dd02a48f5fe008ad4"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00023.jsonl.gz",
+        "records": 100,
+        "bytes": 827539,
+        "sha256": "8832d67c4a97331e97602fbf3172abc05468fcae8ded8e59abc7acfdd6ff15b3"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00024.jsonl.gz",
+        "records": 100,
+        "bytes": 842565,
+        "sha256": "f49de447c6524aaa36870764b34679c03c0fcbc5196b918d3fcbc94bbd806bf3"
+      },
+      {
+        "file": "evidence/BIOMD0000000001-branches-00025.jsonl.gz",
+        "records": 89,
+        "bytes": 737277,
+        "sha256": "2f28ef30b8c6f1b41fedb781f76733fbf3a42c84401a992a05cfae01cbf4e77d"
+      }
+    ],
+    "cases": [
+      {
+        "file": "evidence/BIOMD0000000001-cases-00000.jsonl.gz",
+        "records": 33,
+        "bytes": 563440,
+        "sha256": "d194472ad96e4d1f17e7b9b6a3dd72162665476772a5bf180a2b97669acc20b5"
+      }
+    ]
+  },
+  "evaluated_cases": 33,
+  "passed_cases": 33,
+  "evaluated_unique_branches": 2589,
+  "solver_retry_branches": 0,
+  "finished_at": "2026-11-13T01:14:43.006159+00:00"
+}

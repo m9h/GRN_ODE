@@ -520,10 +520,28 @@ produces a memory effect or a resolved behavioral label. These are conditional
 trials with repeated response species and histories, not independent samples
 for estimating population frequencies.
 
-Published terminal breaking reports now cover **22 distinct models**. After
-the separate network-4 and network-26 recoveries, 18 models have passing full
+### Complete network 1 validation
+
+The [Edelstein 1996 acetylcholine-receptor model](models/BIOMD0000000001.xml)
+now passes **all 528 initial cases, 9,452 conditional trials and 30,169
+response-trials**. Its [combined audit](results/catalog-breaking-linux-1/audit.json)
+checks sixteen disjoint Linux partitions from
+[run 43273682876](https://github.com/m9h/GRN_ODE/actions/runs/43273682876),
+produced at `e5ff9bb131b3a815feb584793b9f68dda53ce7a7`. All 38,024 branch
+records pass (37,570 distinct specifications), with no unresolved continuation
+decisions. Shared controls from different partitions remain separate.
+
+The [403 compressed evidence archives](results/catalog-breaking-linux-1/README.md)
+are distributed as a checksummed release asset, with reports, source-artifact
+hashes and the complete audit tracked in Git. They preserve recorded pointwise
+comparisons and window summaries; the audit reconstructs the complete search
+and scores without reintegrating trajectories. A passing numerical check does
+not imply that every intervention establishes a resolved memory effect.
+
+Published terminal breaking reports now cover **23 distinct models**. After
+the separate network-4 and network-26 recoveries, 19 models have passing full
 numerical validation; reduced Goldbeter, Fuss, Leloup and Marhl retain the original
-failures described above. Thirteen models still need their complete searches. All-35 completion
+failures described above. Twelve models still need their complete searches. All-35 completion
 and whole-catalog frequency comparisons remain pending.
 
 ## Source protocol and documented discrepancies
