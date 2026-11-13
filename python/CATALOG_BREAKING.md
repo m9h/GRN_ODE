@@ -146,6 +146,12 @@ before preserving its checkpoints. Ordinary validation jobs are skipped for
 this explicit computation dispatch. Artifact uploads include hidden checkpoints
 and retain them for seven days, so download them before expiration.
 
+Ordinary push and pull-request validation keeps the latest run for each event
+and Git ref; pushing a release tag does not launch a duplicate validation suite.
+Each manually dispatched computation has a unique concurrency group and cannot
+be replaced by a later push or another dispatch. This uses GitHub's
+[workflow concurrency controls](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
+
 ```bash
 gh workflow run 410775433 --repo m9h/GRN_ODE --ref kinetics-newton-reference \
   -f breaking_networks='[26,27,28,29,30,31,32,33,34,35]'

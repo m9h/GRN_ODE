@@ -3,6 +3,7 @@ permissions:
   contents: read
 on:
   push:
+    branches: ['**']
   pull_request:
   workflow_dispatch:
     inputs:
@@ -28,6 +29,11 @@ on:
         default: '4'
         type: choice
         options: ['4', '8', '16']
+# Superseded branch/PR checks can stop. Every explicit computation has a unique
+# group so another dispatch or a source push cannot cancel its model partitions.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
 jobs:
   catalog-breaking-shards:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.breaking_networks != '' }}
