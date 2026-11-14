@@ -364,6 +364,38 @@ Cached audits are reused only for unchanged artifact evidence, model,
 calibration and auditor source. The original failed observations remain in their
 own artifacts throughout collection and subsequent recovery.
 
+When targeted continuations put a model's partitions in different runs, use
+the [continuation auditor](scripts/audit_breaking_continuations.py). Its fixed
+selection plan names the run, attempt, job and producing revision for every
+partition, including completed partitions retained from the original run.
+Every index must appear exactly once. It reads existing collector outputs and
+performs no downloads, integrations or workflow dispatches.
+
+```bash
+uv run --locked python scripts/audit_breaking_continuations.py \
+  --plan results/catalog-breaking-network32-resume-repair-20261114/combined-audit-plan.json \
+  --collection-root results/collected-original \
+  --collection-root results/collected-repair \
+  --output results/combined-network-32 --watch
+```
+
+Collectors must remain active for unfinished jobs. The auditor waits for the
+planned artifacts, checks every extracted file against its checksummed ZIP,
+and then runs the existing complete-model audit. It keeps duplicate branch
+identifiers in their original partitions and rejects missing indices, changed
+jobs, incompatible configurations and altered evidence. A timed-out selection
+is reported under `needs_continuation_indices`; the watcher stops so a new,
+explicit selection plan can be prepared. It also stops after a terminal model
+audit, preserving numerical disagreements instead of converting them to passes.
+
+These original archives contain recorded comparisons and window summaries.
+The audit recomputes conditional searches and classifications from that
+evidence; it does not independently regenerate the original pointwise arrays.
+The [verification record](results/catalog-breaking-continuation-auditor-20261114/README.md)
+includes 46 tests and a real four-artifact smoke check with historical Git
+objects. That check reproduces the existing 22-case network-27 result and
+adds no new scientific validation count.
+
 ### First complete model from the distributed run
 
 Network **27**, [BioModel 275](models/BIOMD0000000275.xml), now passes all

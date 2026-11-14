@@ -45,3 +45,7 @@ contains only partition 7; `dispatch.json` binds its producer and parent artifac
 The final full-model audit must combine this partition with the other fifteen
 from run 43485109761 after their selected inventories finish, retaining each
 partition's own branch evidence.
+
+`combined-audit-plan.json` fixes all sixteen job identities for the
+[continuation auditor](../../scripts/audit_breaking_continuations.py). The
+auditor waits for indices 7 and 10 before it can validate the complete model.

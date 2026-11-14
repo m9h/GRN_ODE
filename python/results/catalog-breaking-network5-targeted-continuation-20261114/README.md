@@ -27,3 +27,7 @@ taking 13 and 15 from their targeted continuations and the other fourteen
 from run 43485099563, unless a later documented continuation is needed. Each
 partition retains its own branch evidence. A dispatched or completed partial
 job does not by itself establish complete-model validation.
+
+`combined-audit-plan.json` fixes all sixteen job identities for the
+[continuation auditor](../../scripts/audit_breaking_continuations.py), including
+the original partition 14 and both targeted continuations.
