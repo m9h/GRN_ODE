@@ -39,12 +39,19 @@ def test_children_preserve_the_parent_selection_and_checkpoint_bytes(source, tmp
         output = tmp_path/f"child-{index}"
         result = resume.prepare(source, output, 27, index, 8)
         children.extend(result["case_keys"])
-        assert result["copied_checkpoints"] == 50
-        assert result["validated_branch_checkpoints"] == 45 and result["validated_case_checkpoints"] == 5
+        assert result["copied_checkpoints"] == 45+len(result["case_keys"])
+        assert result["validated_branch_checkpoints"] == 45
+        assert result["validated_case_checkpoints"] == len(result["case_keys"])
+        assert result["examined_case_checkpoints"] == 5
+        assert result["preserved_case_checkpoints"] == 5-len(result["case_keys"])
         assert result["numerical_integrations_performed"] == 0 and not result["model_completion_claimed"]
         assert not (output/"shard.json").exists()
         for relative, sha in result["copied_checkpoint_sha256"].items():
             assert resume.digest(output/relative) == sha == before[relative]
+        for relative, history in result["preserved_case_history"].items():
+            assert history["reason"] == "outside_new_selection"
+            assert resume.digest(output/history["preserved_path"]) == history["sha256"] == before[relative]
+            assert not (output/relative).exists()
     assert children == parent["case_keys"] and len(children) == len(set(children))
     assert before == {str(p.relative_to(source)): resume.digest(p) for p in source.rglob("*") if p.is_file()}
 
@@ -69,13 +76,65 @@ def test_active_source_lock_is_respected_even_with_an_old_terminal_manifest(sour
             resume.prepare(source, tmp_path/"child", 27, 0, 8)
 
 
+def case_checkpoint(source, *, selected=True):
+    manifest = json.loads((source/"shard.json").read_text())
+    reference = json.loads((resume.ROOT/"results/catalog-repeated"/(manifest["model_id"]+".json")).read_text())
+    selection = resume.select_cases(resume.candidate_plans(reference), 0, 8)
+    for path in sorted(source.glob(".evidence/*/*/cases-*.json.gz")):
+        with gzip.open(path, "rt") as stream:
+            case = json.load(stream)
+        if (case["case_key"] in selection) == selected:
+            return path, case
+    raise AssertionError("Fixture does not contain a suitable case")
+
+
+def write_checkpoint(path, row):
+    with gzip.open(path, "wt") as stream:
+        json.dump(row, stream)
+
+
 def test_missing_branch_invalidates_a_cached_complete_case(source, tmp_path):
-    case_path = next(source.glob(".evidence/*/*/cases-*.json.gz"))
-    with gzip.open(case_path, "rt") as stream:
-        case = json.load(stream)
+    case_path, case = case_checkpoint(source)
     branch = next(iter(case["trials"]["first"]["branches"].values()))
     (case_path.parent/("branches-"+branch+".json.gz")).unlink()
     with pytest.raises(ValueError, match="branch evidence is missing"):
+        resume.prepare(source, tmp_path/"child", 27, 0, 8)
+    assert not (tmp_path/"child").exists()
+
+
+@pytest.mark.parametrize("selected,passed", [(False, False), (False, True), (True, False)])
+def test_stale_unused_aggregate_is_preserved_but_not_reused(source, tmp_path, selected, passed):
+    path, case = case_checkpoint(source, selected=selected)
+    case["passed"] = passed
+    case["trials"]["first"]["scores"] = {}  # Simulate an older branch snapshot.
+    write_checkpoint(path, case)
+    original_bytes = path.read_bytes()
+    output = tmp_path/"child"
+    result = resume.prepare(source, output, 27, 0, 8)
+    relative = str(path.relative_to(source))
+    history = result["preserved_case_history"][relative]
+    assert history["reason"] == ("failed_case_requires_recomputation" if selected else "outside_new_selection")
+    assert (output/history["preserved_path"]).read_bytes() == original_bytes == path.read_bytes()
+    assert not (output/relative).exists()
+    assert result["validated_case_checkpoints"] == len(result["case_keys"])-int(selected)
+    assert result["numerical_integrations_performed"] == 0 and not result["model_completion_claimed"]
+
+
+def test_selected_passing_case_must_still_reproduce_its_scores(source, tmp_path):
+    path, case = case_checkpoint(source)
+    case["trials"]["first"]["scores"] = {}
+    write_checkpoint(path, case)
+    with pytest.raises(ValueError, match="Trial scores do not reproduce"):
+        resume.prepare(source, tmp_path/"child", 27, 0, 8)
+    assert not (tmp_path/"child").exists()
+
+
+@pytest.mark.parametrize("field,value", [("case_key", "other"), ("ucs", "other"), ("passed", "false")])
+def test_omitted_case_must_have_valid_identity_and_outcome(source, tmp_path, field, value):
+    path, case = case_checkpoint(source, selected=False)
+    case[field] = value
+    write_checkpoint(path, case)
+    with pytest.raises(ValueError, match="Checkpoint case"):
         resume.prepare(source, tmp_path/"child", 27, 0, 8)
     assert not (tmp_path/"child").exists()
 

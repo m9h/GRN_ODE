@@ -183,9 +183,25 @@ The [checkpoint preparation tool](scripts/prepare_breaking_resume.py) requires
 a stopped source partition and an unused destination. It checks the model,
 calibration, complete case inventory, worker source hashes, installed package
 versions, checkpoint identities, full observation horizons and control histories
-before copying any evidence. It rejects an active source lock. Passing cached
-records can then be reused; failed records may be recomputed by the worker.
-The original artifact remains intact, including its failed observations.
+before copying reusable evidence. It rejects an active source lock. Every
+branch checkpoint is audited; only passing case aggregates in the new selection
+enter the active case cache, after their complete conditional searches reproduce.
+Other case aggregates retain their exact bytes under `resume-history/`, with
+their hashes and omission reasons in `resume-source.json`. Failed selected cases
+must be recomputed by the worker. The original artifact remains intact.
+
+This distinction matters when a previously failed branch was recomputed after
+an unused aggregate was saved: the aggregate can describe an older branch
+snapshot. The [network-32 regression](results/catalog-breaking-network32-resume-repair-20261114/README.md)
+reproduces five such nonmatching historical aggregates, all already marked
+failed and outside the new selection. No score tolerance is relaxed.
+
+Set `breaking_only_shard` to one index to repair a stopped partition without
+starting another copy of still-running partitions. Its default, `all`, retains
+the full dispatch. Keep the original `breaking_shard_count`: the selected job
+still represents that one portion of the complete inventory. A single repaired
+partition never establishes whole-model completion; the final audit must include
+every disjoint partition, retaining each partition's own branch evidence.
 
 For a local preparation followed by a resume:
 

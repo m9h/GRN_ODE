@@ -110,9 +110,11 @@ Run the analytic checks and the full diagnostic from `python/`:
 
 ```bash
 HEYOKA_CACHE_DIR=/tmp/grn-taylor-cache OMP_NUM_THREADS=1 \
-  .venv-taylor/bin/python -m pytest -q tests/test_taylor_reference.py
+  uv run --no-project --python .venv-taylor/bin/python python \
+  -m pytest -q tests/test_taylor_reference.py
 HEYOKA_CACHE_DIR=/tmp/grn-taylor-cache OMP_NUM_THREADS=1 MPLBACKEND=Agg \
-  .venv-taylor/bin/python scripts/diagnose_taylor_paired.py --model 39 \
+  uv run --no-project --python .venv-taylor/bin/python python \
+  scripts/diagnose_taylor_paired.py --model 39 \
   --output results/catalog-paired-taylor-marhl
 ```
 

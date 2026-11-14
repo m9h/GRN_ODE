@@ -66,6 +66,7 @@ def prepare(source, output, network, index, count):
         require(set(selected) <= set(manifest["case_keys"]), "New cases fall outside the parent selection")
         require(manifest["executed_control"] == (not plans and old_index == 0), "Source control selection differs")
         checkpoint_files, report_sha, signature = {}, None, None
+        case_history, validated_cases = {}, 0
         report_path = source/(mid+".json")
         records = {"branches": {}, "cases": {}}
         if report_path.exists():
@@ -97,12 +98,31 @@ def prepare(source, output, network, index, count):
                 checkpoint_files[str(path.relative_to(source))] = digest(path)
             for row in records["branches"].values():
                 audit_branch(row, report, info["observables"])
-            by_id = {fingerprint(plan): plan for plan in plans.values()}
+            by_id = {fingerprint(plan): (case_key, plan) for case_key, plan in plans.items()}
             for key, row in records["cases"].items():
                 require(key in by_id, "Checkpoint case is not in the full candidate plan")
-                audit_case(row, by_id[key], records["branches"], report, reference)
-            # A later run may carry valid unused checkpoints inherited from its
-            # parent. They remain reusable; only selected cases are executed.
+                case_key, plan = by_id[key]
+                require(row.get("case_key") == case_key and
+                        all(row.get(k) == plan[k] for k in ("ucs", "breaker", "responses")),
+                        "Checkpoint case plan or key differs")
+                require(type(row.get("passed")) is bool, "Checkpoint case outcome must be boolean")
+                if case_key in selected and row["passed"]:
+                    # Only these aggregates can be reused by the worker. Their
+                    # complete conditional histories must still reproduce.
+                    audit_case(row, plan, records["branches"], report, reference)
+                    validated_cases += 1
+                else:
+                    # Failed branches may have been recomputed since a failed
+                    # aggregate was written. Do not validate that historical
+                    # aggregate against a different branch snapshot, or place
+                    # it in the active cache. Keep its exact bytes as evidence.
+                    relative = str((cache/("cases-"+key+".json.gz")).relative_to(source))
+                    case_history[relative] = {
+                        "case_key": case_key,
+                        "sha256": checkpoint_files.pop(relative),
+                        "preserved_path": str(Path("resume-history")/manifest_sha/("cases-"+key+".json.gz")),
+                        "reason": "outside_new_selection" if case_key not in selected else "failed_case_requires_recomputation",
+                    }
         else:
             require(manifest["status"] == "empty_shard" and not manifest["case_keys"]
                     and not manifest["executed_control"], "Nonempty source has no model report")
@@ -119,13 +139,21 @@ def prepare(source, output, network, index, count):
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(source/relative, dest)
                 require(digest(dest) == sha, "Checkpoint changed while copying")
+            for relative, history in case_history.items():
+                dest = staging/history["preserved_path"]
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source/relative, dest)
+                require(digest(dest) == history["sha256"], "Historical case changed while copying")
             result = {"purpose": __doc__, "network": network, "model_id": mid,
                       "shard_index": index, "shard_count": count, "case_keys": selected,
                       "source_shard_index": old_index, "source_shard_count": old_count,
                       "source_git_revision": manifest["git_revision"], "source_manifest_sha256": manifest_sha,
                       "source_report_sha256": report_sha, "model_fingerprint": signature,
                       "validated_branch_checkpoints": len(records["branches"]),
-                      "validated_case_checkpoints": len(records["cases"]),
+                      "examined_case_checkpoints": len(records["cases"]),
+                      "validated_case_checkpoints": validated_cases,
+                      "preserved_case_checkpoints": len(case_history),
+                      "preserved_case_history": case_history,
                       "copied_checkpoint_sha256": copied, "copied_checkpoints": len(copied),
                       "numerical_integrations_performed": 0, "model_completion_claimed": False,
                       "preparation_source_sha256": digest(Path(__file__))}
