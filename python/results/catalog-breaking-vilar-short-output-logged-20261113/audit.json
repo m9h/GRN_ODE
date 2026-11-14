@@ -1,0 +1,361 @@
+{
+  "purpose": "Recompute saved-array comparisons and inspect conserved promoter pools.\n\nNo numerical integration is performed. Invariants describe the original SBML\nbetween imposed resets; measurements from RoadRunner alone are labelled as\ndiagnostics and do not establish cross-simulator agreement or case recovery.\n",
+  "report_sha256": "3624f89e41943266dade751499124df0d51b03fa089924c1ffac9893b410a204",
+  "model_sha256": "3303169fdd9a672fa25c26586822c9a1b91ac461744d1926d317f493e6981237",
+  "audit_script_sha256": "e376f7e85330c121ede8d4f31c1f0efe788686d13ef297985e9be1d831461909",
+  "conserved_pools": {
+    "DA+DAp": {
+      "species": [
+        "DA",
+        "DAp"
+      ],
+      "reaction_stoichiometric_residuals": {
+        "Reaction1": 0,
+        "Reaction2": 0,
+        "Reaction3": 0,
+        "Reaction4": 0,
+        "Reaction5": 0.0,
+        "Reaction6": 0.0,
+        "Reaction7": 0.0,
+        "Reaction8": 0.0,
+        "Reaction9": 0,
+        "Reaction10": 0,
+        "Reaction11": 0,
+        "Reaction12": 0,
+        "Reaction13": 0,
+        "Reaction14": 0,
+        "Reaction15": 0,
+        "Reaction16": 0
+      },
+      "constant_compartment": "deterministicOscillator",
+      "compartment_size": 1.0,
+      "claim": "Sum of concentrations is constant between external resets"
+    },
+    "DR+DRp": {
+      "species": [
+        "DR",
+        "DRp"
+      ],
+      "reaction_stoichiometric_residuals": {
+        "Reaction1": 0,
+        "Reaction2": 0,
+        "Reaction3": 0,
+        "Reaction4": 0,
+        "Reaction5": 0,
+        "Reaction6": 0,
+        "Reaction7": 0,
+        "Reaction8": 0,
+        "Reaction9": 0,
+        "Reaction10": 0,
+        "Reaction11": 0.0,
+        "Reaction12": 0.0,
+        "Reaction13": 0.0,
+        "Reaction14": 0.0,
+        "Reaction15": 0,
+        "Reaction16": 0
+      },
+      "constant_compartment": "deterministicOscillator",
+      "compartment_size": 1.0,
+      "claim": "Sum of concentrations is constant between external resets"
+    }
+  },
+  "records": [
+    {
+      "record_id": "22cb3e8c0c5e7e6d83dd601984a2ede025195d21f97a4ccb2d471132f19b59e9",
+      "samples": 141001,
+      "copasi": {
+        "copasi_original": {
+          "completed": false,
+          "returned_rows": 101112,
+          "required_rows": 141001,
+          "last_time": 1011.100042537473,
+          "step_limit_exhausted": true,
+          "clock_resolution_warning": true,
+          "log_sha256": "d1600395ca3a2d2203276e948571b39629afa6e2336d8ade4940c05a56c76d9b"
+        },
+        "copasi_tight": {
+          "completed": false,
+          "returned_rows": 101652,
+          "required_rows": 141001,
+          "last_time": 1016.500041264066,
+          "step_limit_exhausted": true,
+          "clock_resolution_warning": true,
+          "log_sha256": "66466f8f662720b0ccb488cfe266941829440682747684ef629daddb98d70f29"
+        },
+        "copasi_tighter": {
+          "completed": false,
+          "returned_rows": 101182,
+          "required_rows": 141001,
+          "last_time": 1011.8000415363059,
+          "step_limit_exhausted": true,
+          "clock_resolution_warning": true,
+          "log_sha256": "294e77fa066a6f8b11623a90a207caabad2dbcb177b08c1f6fc79e99f20e70f7"
+        }
+      },
+      "comparisons": {
+        "roadrunner_original_vs_roadrunner_tight": {
+          "passed": true,
+          "max_scaled_error": 0.03457241393443163,
+          "max_absolute_error": 0.01721024513244629,
+          "worst_observable": "DA",
+          "worst_time": 50.90001,
+          "samples": 141001,
+          "observables": 10,
+          "per_observable_max_scaled_error": {
+            "EmptySet": 0.0,
+            "A": 0.00018781188867831675,
+            "C": 7.782739363125363e-06,
+            "DA": 0.03457241393443163,
+            "DAp": 0.00024308877491662783,
+            "DR": 3.7135339925438223e-05,
+            "DRp": 0.00015446132031282178,
+            "MA": 5.1064933764953744e-05,
+            "MR": 3.544051382185693e-05,
+            "R": 0.00013009746487201778
+          }
+        },
+        "roadrunner_tight_vs_roadrunner_tighter": {
+          "passed": true,
+          "max_scaled_error": 0.0665742151309701,
+          "max_absolute_error": 0.007478475570678711,
+          "worst_observable": "DA",
+          "worst_time": 50.80001,
+          "samples": 141001,
+          "observables": 10,
+          "per_observable_max_scaled_error": {
+            "EmptySet": 0.0,
+            "A": 1.3859015533716294e-05,
+            "C": 7.970696464328277e-07,
+            "DA": 0.0665742151309701,
+            "DAp": 0.0001631042121243401,
+            "DR": 8.421655911124401e-06,
+            "DRp": 1.1449633742035956e-05,
+            "MA": 5.424662645225295e-06,
+            "MR": 2.4990163447444557e-05,
+            "R": 2.402269904135878e-05
+          }
+        }
+      },
+      "refinement_confirmed": false,
+      "roadrunner_tighter_diagnostics": [
+        {
+          "time": 0.0,
+          "DA+DAp": 1.0,
+          "DR+DRp": 1.0,
+          "A": 0.0
+        },
+        {
+          "time": 1000.0,
+          "DA+DAp": 450506.28079040576,
+          "DR+DRp": 1.0000000000262048,
+          "A": 1125791267.7331996
+        },
+        {
+          "time": 1410.0,
+          "DA+DAp": 450506.2807904254,
+          "DR+DRp": 94.5799230901728,
+          "A": 1106968543.322144
+        }
+      ]
+    },
+    {
+      "record_id": "dbcdc48819ea975acd2a844737328560ee9042341f23d58ff70f59555bf23110",
+      "samples": 221001,
+      "copasi": {
+        "copasi_original": {
+          "completed": false,
+          "returned_rows": 181072,
+          "required_rows": 221001,
+          "last_time": 1810.7000277806223,
+          "step_limit_exhausted": true,
+          "clock_resolution_warning": true,
+          "log_sha256": "06f7a80bcf4d06a11e79910b28d028d4431ec0db2b39222f9fd031a148a0bf8d"
+        },
+        "copasi_tight": {
+          "completed": false,
+          "returned_rows": 181862,
+          "required_rows": 221001,
+          "last_time": 1818.600034601988,
+          "step_limit_exhausted": true,
+          "clock_resolution_warning": true,
+          "log_sha256": "9530c36109e7753c476f58d1334f3ca25aa7fd9c0f5868ed73684e13d9485384"
+        },
+        "copasi_tighter": {
+          "completed": false,
+          "returned_rows": 181332,
+          "required_rows": 221001,
+          "last_time": 1813.30003185147,
+          "step_limit_exhausted": true,
+          "clock_resolution_warning": true,
+          "log_sha256": "814f25f56c82c5d2bcb6f7ca3851e8690268dad2fd5d67812fce36f6813313d9"
+        }
+      },
+      "comparisons": {
+        "roadrunner_original_vs_roadrunner_tight": {
+          "passed": true,
+          "max_scaled_error": 0.14819027780922028,
+          "max_absolute_error": 0.044948041439056396,
+          "worst_observable": "MA",
+          "worst_time": 1463.50001,
+          "samples": 221001,
+          "observables": 10,
+          "per_observable_max_scaled_error": {
+            "EmptySet": 0.0,
+            "A": 0.00018781188867831675,
+            "C": 7.782739363125363e-06,
+            "DA": 0.03457241393443163,
+            "DAp": 0.00024308877491662783,
+            "DR": 3.7135339925438223e-05,
+            "DRp": 0.00015446132031282178,
+            "MA": 0.14819027780922028,
+            "MR": 3.544051382185693e-05,
+            "R": 0.00013009746487201778
+          }
+        },
+        "roadrunner_tight_vs_roadrunner_tighter": {
+          "passed": true,
+          "max_scaled_error": 0.17051627930715735,
+          "max_absolute_error": 0.0512772798538208,
+          "worst_observable": "MA",
+          "worst_time": 1503.50001,
+          "samples": 221001,
+          "observables": 10,
+          "per_observable_max_scaled_error": {
+            "EmptySet": 0.0,
+            "A": 1.3859015533716294e-05,
+            "C": 1.3193084730799681e-06,
+            "DA": 0.0665742151309701,
+            "DAp": 0.0001631042121243401,
+            "DR": 8.421655911124401e-06,
+            "DRp": 1.1449633742035956e-05,
+            "MA": 0.17051627930715735,
+            "MR": 9.531222915754729e-06,
+            "R": 2.402269904135878e-05
+          }
+        }
+      },
+      "refinement_confirmed": false,
+      "roadrunner_tighter_diagnostics": [
+        {
+          "time": 0.0,
+          "DA+DAp": 1.0,
+          "DR+DRp": 1.0,
+          "A": 0.0
+        },
+        {
+          "time": 1000.0,
+          "DA+DAp": 450506.28079040576,
+          "DR+DRp": 1.0000000000262048,
+          "A": 1125791267.7331996
+        },
+        {
+          "time": 2210.0,
+          "DA+DAp": 650266.2239497579,
+          "DR+DRp": 94.57992049196604,
+          "A": 1605968401.4461699
+        }
+      ]
+    },
+    {
+      "record_id": "db03016c6cb0cd7a42c2871f5030193963d8b0cb1ae39315fc0dda49a6c1600f",
+      "samples": 221001,
+      "copasi": {
+        "copasi_original": {
+          "completed": false,
+          "returned_rows": 202692,
+          "required_rows": 221001,
+          "last_time": 2026.9001320774662,
+          "step_limit_exhausted": true,
+          "clock_resolution_warning": true,
+          "log_sha256": "ae361f380501cf8e92292e880a38377b5adb1d6f8e327af441b16cbba3e53b9f"
+        },
+        "copasi_tight": {
+          "completed": false,
+          "returned_rows": 201012,
+          "required_rows": 221001,
+          "last_time": 2010.1001763472332,
+          "step_limit_exhausted": true,
+          "clock_resolution_warning": true,
+          "log_sha256": "e5551c7f229f034a1951e6ec936eec35e064550ed2ae69617410fe3d12c515fb"
+        },
+        "copasi_tighter": {
+          "completed": false,
+          "returned_rows": 201172,
+          "required_rows": 221001,
+          "last_time": 2011.7001507743705,
+          "step_limit_exhausted": true,
+          "clock_resolution_warning": true,
+          "log_sha256": "2826c4b3b112c4ac14de7c79d176356da8b516734b151480d99c9366e3f764b1"
+        }
+      },
+      "comparisons": {
+        "roadrunner_original_vs_roadrunner_tight": {
+          "passed": false,
+          "max_scaled_error": 1.4189824602013723,
+          "max_absolute_error": 0.0025148987770080566,
+          "worst_observable": "DA",
+          "worst_time": 1810.80001,
+          "samples": 221001,
+          "observables": 10,
+          "per_observable_max_scaled_error": {
+            "EmptySet": 0.0,
+            "A": 0.00018781188867831675,
+            "C": 8.206350561002987e-05,
+            "DA": 1.4189824602013723,
+            "DAp": 0.010635894814851178,
+            "DR": 0.00012628770318174823,
+            "DRp": 0.00015446132031282178,
+            "MA": 6.483457086251458e-05,
+            "MR": 3.8199889985842494e-05,
+            "R": 0.00013009746487201778
+          }
+        },
+        "roadrunner_tight_vs_roadrunner_tighter": {
+          "passed": false,
+          "max_scaled_error": 1.2354361072150852,
+          "max_absolute_error": 0.0021571069955825806,
+          "worst_observable": "DA",
+          "worst_time": 1810.90001,
+          "samples": 221001,
+          "observables": 10,
+          "per_observable_max_scaled_error": {
+            "EmptySet": 0.0,
+            "A": 2.5543351610794184e-05,
+            "C": 2.2169352033926086e-05,
+            "DA": 1.2354361072150852,
+            "DAp": 0.0193639049167528,
+            "DR": 1.3104174148181282e-05,
+            "DRp": 8.472806644588446e-05,
+            "MA": 6.991056109846412e-05,
+            "MR": 2.700887249468606e-06,
+            "R": 2.543586466949792e-05
+          }
+        }
+      },
+      "refinement_confirmed": false,
+      "roadrunner_tighter_diagnostics": [
+        {
+          "time": 0.0,
+          "DA+DAp": 1.0,
+          "DR+DRp": 1.0,
+          "A": 0.0
+        },
+        {
+          "time": 1000.0,
+          "DA+DAp": 1.0000000000001643,
+          "DR+DRp": 3.3520866470059474e-06,
+          "A": 2042.2954344708455
+        },
+        {
+          "time": 2210.0,
+          "DA+DAp": 99975.7636238669,
+          "DR+DRp": 3.195479420485494e-06,
+          "A": 249938958.41135472
+        }
+      ]
+    }
+  ],
+  "full_arrays_recompared": true,
+  "case_recovery_claimed": false,
+  "model_completion_claimed": false
+}

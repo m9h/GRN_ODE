@@ -1,0 +1,924 @@
+{
+  "purpose": "Inspect truncated COPASI output without changing the original protocols.\n\nThis is a declared three-record diagnostic, not a case or model recovery.\nInstrumentation preserves the arguments and returned object of Basico's time\ncourse call. It saves COPASI messages and the raw output before the unchanged\nadapter rejects incomplete observations. Both native solvers run the full\nprotocol at the original tolerances and at two strictly tighter requests.\n",
+  "source_run": 43273680209,
+  "source_revision": "e5ff9bb131b3a815feb584793b9f68dda53ce7a7",
+  "inventory_sha256": "619daaa8d35b12f019878343a24a9c987202f01cf6f034a9d347cdfd15d4c531",
+  "selection_rule": "first, middle and last by returned_rows, record_id, artifact_id",
+  "exported_incomplete_records": 300,
+  "selected_records": [
+    {
+      "artifact_id": 14017417097,
+      "original_report_sha256": "47d6aa1c7a891cf6a7015669f2234813249ee8cf06a4f06106cdab3aaa113c2c",
+      "original_archive": {
+        "file": "evidence/BIOMD0000000035-branches-00000.jsonl.gz",
+        "records": 100,
+        "bytes": 384054,
+        "sha256": "43c326dfe3d155452c8fa660074a8f1509a401a36cab23ef4ee00917fe7ea7b2"
+      },
+      "source_fingerprint": "bee042f1f0f1c89633b8b236ca4ab9871704ee95bdd0b1ebc7f1051309dfbd64",
+      "model_id": "BIOMD0000000035",
+      "model_sha256": "3303169fdd9a672fa25c26586822c9a1b91ac461744d1926d317f493e6981237",
+      "original_implementation_sha256": {
+        "catalog_breaking.py": "48834a2d0ed8c9105b381413a27314ef71f5d37c4243a677a583d47955e48c73",
+        "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+        "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+        "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+        "catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315",
+        "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+        "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+        "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+        "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+        "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+        "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+        "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+        "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+        "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+        "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+      },
+      "configuration": {
+        "dt": 0.01,
+        "post_reset_offset": 1e-05,
+        "prefix": [
+          {
+            "pulse": 1,
+            "start": 50.0,
+            "stop": 100.0,
+            "rest_stop": 160.0
+          },
+          {
+            "pulse": 2,
+            "start": 160.0,
+            "stop": 220.0,
+            "rest_stop": 290.0
+          },
+          {
+            "pulse": 3,
+            "start": 290.0,
+            "stop": 360.0,
+            "rest_stop": 440.0
+          },
+          {
+            "pulse": 4,
+            "start": 440.0,
+            "stop": 520.0,
+            "rest_stop": 610.0
+          },
+          {
+            "pulse": 5,
+            "start": 610.0,
+            "stop": 700.0,
+            "rest_stop": 800.0
+          },
+          {
+            "pulse": 6,
+            "start": 800.0,
+            "stop": 900.0,
+            "rest_stop": 1010.0
+          }
+        ],
+        "trials": {
+          "prefix": [
+            0.0,
+            1010.0
+          ],
+          "intervention_1": [
+            1010.0,
+            1110.0
+          ],
+          "pre_1": [
+            1110.0,
+            1210.0
+          ],
+          "cue_1": [
+            1210.0,
+            1310.0
+          ],
+          "post_1": [
+            1310.0,
+            1410.0
+          ],
+          "intervention_2": [
+            1410.0,
+            1510.0
+          ],
+          "pre_2": [
+            1510.0,
+            1610.0
+          ],
+          "cue_2": [
+            1610.0,
+            1710.0
+          ],
+          "post_2": [
+            1710.0,
+            1810.0
+          ],
+          "intervention_3": [
+            1810.0,
+            1910.0
+          ],
+          "pre_3": [
+            1910.0,
+            2010.0
+          ],
+          "cue_3": [
+            2010.0,
+            2110.0
+          ],
+          "post_3": [
+            2110.0,
+            2210.0
+          ]
+        },
+        "reset_interval": 0.1,
+        "prefix_endpoint_resets": true,
+        "later_endpoint_resets": false,
+        "later_resets_per_exposure": 999,
+        "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+        "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+        "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+        "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+        "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        },
+        "case_integration_overrides": {},
+        "integration_error_fallbacks": {},
+        "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+        "timed_drive_encoding": null,
+        "comparison_rtol": 2e-05,
+        "comparison_atol": 1e-07,
+        "candidate_plan_sha256": "c92b8cdde4f78fbd5315fd03e279f5e3162aa74cd254bab324d3d5aa7a0251c1",
+        "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+        "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+      },
+      "record": {
+        "specification": {
+          "reset_trains": [
+            {
+              "start": 50.0,
+              "stop": 100.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 160.0,
+              "stop": 220.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 290.0,
+              "stop": 360.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 440.0,
+              "stop": 520.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 610.0,
+              "stop": 700.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 800.0,
+              "stop": 900.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 1010.0,
+              "stop": 1110.0,
+              "values": {
+                "DRp": 94.57991465427675
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            }
+          ],
+          "stop": 1410.0,
+          "integration_settings": {
+            "roadrunner": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "copasi": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            }
+          }
+        },
+        "sample_count": 141001,
+        "passed": false,
+        "solver_attempts": {
+          "roadrunner": [
+            {
+              "settings": {
+                "rtol": 1e-12,
+                "atol": 1e-14
+              },
+              "status": "completed"
+            }
+          ],
+          "copasi": [
+            {
+              "settings": {
+                "rtol": 1e-12,
+                "atol": 1e-14
+              },
+              "status": "error",
+              "error": "ValueError: Unexpected output shape (101042, 18)"
+            }
+          ]
+        },
+        "integration_settings_used": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        },
+        "error": "ValueError: Unexpected output shape (101042, 18)",
+        "elapsed_seconds": 7.745491755000103,
+        "record_id": "22cb3e8c0c5e7e6d83dd601984a2ede025195d21f97a4ccb2d471132f19b59e9",
+        "fingerprint": "bee042f1f0f1c89633b8b236ca4ab9871704ee95bdd0b1ebc7f1051309dfbd64"
+      }
+    },
+    {
+      "artifact_id": 14017417097,
+      "original_report_sha256": "47d6aa1c7a891cf6a7015669f2234813249ee8cf06a4f06106cdab3aaa113c2c",
+      "original_archive": {
+        "file": "evidence/BIOMD0000000035-branches-00005.jsonl.gz",
+        "records": 100,
+        "bytes": 412895,
+        "sha256": "7211fd16f59d3878db65568fd65130ea36c31b7dcf11d7d6d4075254cacff4e8"
+      },
+      "source_fingerprint": "bee042f1f0f1c89633b8b236ca4ab9871704ee95bdd0b1ebc7f1051309dfbd64",
+      "model_id": "BIOMD0000000035",
+      "model_sha256": "3303169fdd9a672fa25c26586822c9a1b91ac461744d1926d317f493e6981237",
+      "original_implementation_sha256": {
+        "catalog_breaking.py": "48834a2d0ed8c9105b381413a27314ef71f5d37c4243a677a583d47955e48c73",
+        "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+        "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+        "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+        "catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315",
+        "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+        "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+        "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+        "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+        "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+        "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+        "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+        "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+        "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+        "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+      },
+      "configuration": {
+        "dt": 0.01,
+        "post_reset_offset": 1e-05,
+        "prefix": [
+          {
+            "pulse": 1,
+            "start": 50.0,
+            "stop": 100.0,
+            "rest_stop": 160.0
+          },
+          {
+            "pulse": 2,
+            "start": 160.0,
+            "stop": 220.0,
+            "rest_stop": 290.0
+          },
+          {
+            "pulse": 3,
+            "start": 290.0,
+            "stop": 360.0,
+            "rest_stop": 440.0
+          },
+          {
+            "pulse": 4,
+            "start": 440.0,
+            "stop": 520.0,
+            "rest_stop": 610.0
+          },
+          {
+            "pulse": 5,
+            "start": 610.0,
+            "stop": 700.0,
+            "rest_stop": 800.0
+          },
+          {
+            "pulse": 6,
+            "start": 800.0,
+            "stop": 900.0,
+            "rest_stop": 1010.0
+          }
+        ],
+        "trials": {
+          "prefix": [
+            0.0,
+            1010.0
+          ],
+          "intervention_1": [
+            1010.0,
+            1110.0
+          ],
+          "pre_1": [
+            1110.0,
+            1210.0
+          ],
+          "cue_1": [
+            1210.0,
+            1310.0
+          ],
+          "post_1": [
+            1310.0,
+            1410.0
+          ],
+          "intervention_2": [
+            1410.0,
+            1510.0
+          ],
+          "pre_2": [
+            1510.0,
+            1610.0
+          ],
+          "cue_2": [
+            1610.0,
+            1710.0
+          ],
+          "post_2": [
+            1710.0,
+            1810.0
+          ],
+          "intervention_3": [
+            1810.0,
+            1910.0
+          ],
+          "pre_3": [
+            1910.0,
+            2010.0
+          ],
+          "cue_3": [
+            2010.0,
+            2110.0
+          ],
+          "post_3": [
+            2110.0,
+            2210.0
+          ]
+        },
+        "reset_interval": 0.1,
+        "prefix_endpoint_resets": true,
+        "later_endpoint_resets": false,
+        "later_resets_per_exposure": 999,
+        "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+        "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+        "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+        "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+        "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        },
+        "case_integration_overrides": {},
+        "integration_error_fallbacks": {},
+        "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+        "timed_drive_encoding": null,
+        "comparison_rtol": 2e-05,
+        "comparison_atol": 1e-07,
+        "candidate_plan_sha256": "c92b8cdde4f78fbd5315fd03e279f5e3162aa74cd254bab324d3d5aa7a0251c1",
+        "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+        "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+      },
+      "record": {
+        "specification": {
+          "reset_trains": [
+            {
+              "start": 50.0,
+              "stop": 100.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 160.0,
+              "stop": 220.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 290.0,
+              "stop": 360.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 440.0,
+              "stop": 520.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 610.0,
+              "stop": 700.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 800.0,
+              "stop": 900.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 1010.0,
+              "stop": 1110.0,
+              "values": {
+                "MA": 0.004762192551660493
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            },
+            {
+              "start": 1210.0,
+              "stop": 1310.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            },
+            {
+              "start": 1410.0,
+              "stop": 1510.0,
+              "values": {
+                "MA": 0.004762192551660493
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            },
+            {
+              "start": 1610.0,
+              "stop": 1710.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            },
+            {
+              "start": 1810.0,
+              "stop": 1910.0,
+              "values": {
+                "DRp": 94.57991465427675
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            }
+          ],
+          "stop": 2210.0,
+          "integration_settings": {
+            "roadrunner": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "copasi": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            }
+          }
+        },
+        "sample_count": 221001,
+        "passed": false,
+        "solver_attempts": {
+          "roadrunner": [
+            {
+              "settings": {
+                "rtol": 1e-12,
+                "atol": 1e-14
+              },
+              "status": "completed"
+            }
+          ],
+          "copasi": [
+            {
+              "settings": {
+                "rtol": 1e-12,
+                "atol": 1e-14
+              },
+              "status": "error",
+              "error": "ValueError: Unexpected output shape (181102, 22)"
+            }
+          ]
+        },
+        "integration_settings_used": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        },
+        "error": "ValueError: Unexpected output shape (181102, 22)",
+        "elapsed_seconds": 18.619886997000094,
+        "record_id": "dbcdc48819ea975acd2a844737328560ee9042341f23d58ff70f59555bf23110",
+        "fingerprint": "bee042f1f0f1c89633b8b236ca4ab9871704ee95bdd0b1ebc7f1051309dfbd64"
+      }
+    },
+    {
+      "artifact_id": 14032964174,
+      "original_report_sha256": "6051bb53af14564cb054df3a07d0683fc7ef30e4e4feed6f19454bf157d9bef7",
+      "original_archive": {
+        "file": "evidence/BIOMD0000000035-branches-00006.jsonl.gz",
+        "records": 100,
+        "bytes": 510870,
+        "sha256": "0660b083c4a9eb1967f9ac1a1669e8b56af3e6245f9a6b6d4aec1d26bd082116"
+      },
+      "source_fingerprint": "bee042f1f0f1c89633b8b236ca4ab9871704ee95bdd0b1ebc7f1051309dfbd64",
+      "model_id": "BIOMD0000000035",
+      "model_sha256": "3303169fdd9a672fa25c26586822c9a1b91ac461744d1926d317f493e6981237",
+      "original_implementation_sha256": {
+        "catalog_breaking.py": "48834a2d0ed8c9105b381413a27314ef71f5d37c4243a677a583d47955e48c73",
+        "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+        "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+        "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+        "catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315",
+        "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+        "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+        "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+        "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+        "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+        "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+        "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+        "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+        "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+        "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+      },
+      "configuration": {
+        "dt": 0.01,
+        "post_reset_offset": 1e-05,
+        "prefix": [
+          {
+            "pulse": 1,
+            "start": 50.0,
+            "stop": 100.0,
+            "rest_stop": 160.0
+          },
+          {
+            "pulse": 2,
+            "start": 160.0,
+            "stop": 220.0,
+            "rest_stop": 290.0
+          },
+          {
+            "pulse": 3,
+            "start": 290.0,
+            "stop": 360.0,
+            "rest_stop": 440.0
+          },
+          {
+            "pulse": 4,
+            "start": 440.0,
+            "stop": 520.0,
+            "rest_stop": 610.0
+          },
+          {
+            "pulse": 5,
+            "start": 610.0,
+            "stop": 700.0,
+            "rest_stop": 800.0
+          },
+          {
+            "pulse": 6,
+            "start": 800.0,
+            "stop": 900.0,
+            "rest_stop": 1010.0
+          }
+        ],
+        "trials": {
+          "prefix": [
+            0.0,
+            1010.0
+          ],
+          "intervention_1": [
+            1010.0,
+            1110.0
+          ],
+          "pre_1": [
+            1110.0,
+            1210.0
+          ],
+          "cue_1": [
+            1210.0,
+            1310.0
+          ],
+          "post_1": [
+            1310.0,
+            1410.0
+          ],
+          "intervention_2": [
+            1410.0,
+            1510.0
+          ],
+          "pre_2": [
+            1510.0,
+            1610.0
+          ],
+          "cue_2": [
+            1610.0,
+            1710.0
+          ],
+          "post_2": [
+            1710.0,
+            1810.0
+          ],
+          "intervention_3": [
+            1810.0,
+            1910.0
+          ],
+          "pre_3": [
+            1910.0,
+            2010.0
+          ],
+          "cue_3": [
+            2010.0,
+            2110.0
+          ],
+          "post_3": [
+            2110.0,
+            2210.0
+          ]
+        },
+        "reset_interval": 0.1,
+        "prefix_endpoint_resets": true,
+        "later_endpoint_resets": false,
+        "later_resets_per_exposure": 999,
+        "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+        "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+        "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+        "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+        "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        },
+        "case_integration_overrides": {},
+        "integration_error_fallbacks": {},
+        "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+        "timed_drive_encoding": null,
+        "comparison_rtol": 2e-05,
+        "comparison_atol": 1e-07,
+        "candidate_plan_sha256": "c92b8cdde4f78fbd5315fd03e279f5e3162aa74cd254bab324d3d5aa7a0251c1",
+        "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+        "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+      },
+      "record": {
+        "specification": {
+          "reset_trains": [
+            {
+              "start": 50.0,
+              "stop": 100.0,
+              "values": {
+                "DRp": 3.195478141982065e-06
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 160.0,
+              "stop": 220.0,
+              "values": {
+                "DRp": 3.195478141982065e-06
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 290.0,
+              "stop": 360.0,
+              "values": {
+                "DRp": 3.195478141982065e-06
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 440.0,
+              "stop": 520.0,
+              "values": {
+                "DRp": 3.195478141982065e-06
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 610.0,
+              "stop": 700.0,
+              "values": {
+                "DRp": 3.195478141982065e-06
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 800.0,
+              "stop": 900.0,
+              "values": {
+                "DRp": 3.195478141982065e-06
+              },
+              "interval": 0.1,
+              "include_start": true,
+              "include_stop": true
+            },
+            {
+              "start": 1010.0,
+              "stop": 1110.0,
+              "values": {
+                "DAp": 97.21446825381084
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            },
+            {
+              "start": 1210.0,
+              "stop": 1310.0,
+              "values": {
+                "DRp": 3.195478141982065e-06
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            },
+            {
+              "start": 1410.0,
+              "stop": 1510.0,
+              "values": {
+                "DAp": 97.21446825381084
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            },
+            {
+              "start": 1610.0,
+              "stop": 1710.0,
+              "values": {
+                "DRp": 3.195478141982065e-06
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            },
+            {
+              "start": 1810.0,
+              "stop": 1910.0,
+              "values": {
+                "DA": 100.0
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            },
+            {
+              "start": 2010.0,
+              "stop": 2110.0,
+              "values": {
+                "DRp": 3.195478141982065e-06
+              },
+              "interval": 0.1,
+              "include_start": false,
+              "include_stop": false
+            }
+          ],
+          "stop": 2210.0,
+          "integration_settings": {
+            "roadrunner": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "copasi": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            }
+          }
+        },
+        "sample_count": 221001,
+        "passed": false,
+        "solver_attempts": {
+          "roadrunner": [
+            {
+              "settings": {
+                "rtol": 1e-12,
+                "atol": 1e-14
+              },
+              "status": "completed"
+            }
+          ],
+          "copasi": [
+            {
+              "settings": {
+                "rtol": 1e-12,
+                "atol": 1e-14
+              },
+              "status": "error",
+              "error": "ValueError: Unexpected output shape (202692, 23)"
+            }
+          ]
+        },
+        "integration_settings_used": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        },
+        "error": "ValueError: Unexpected output shape (202692, 23)",
+        "elapsed_seconds": 7.169335130000007,
+        "record_id": "db03016c6cb0cd7a42c2871f5030193963d8b0cb1ae39315fc0dda49a6c1600f",
+        "fingerprint": "bee042f1f0f1c89633b8b236ca4ab9871704ee95bdd0b1ebc7f1051309dfbd64"
+      }
+    }
+  ],
+  "full_model_coverage_claimed": false,
+  "case_recovery_claimed": false
+}
