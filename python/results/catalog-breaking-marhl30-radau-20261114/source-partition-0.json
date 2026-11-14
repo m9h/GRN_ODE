@@ -1,0 +1,685 @@
+{
+  "original_report": {
+    "network": 30,
+    "biomodel_id": "BIOMD0000000039",
+    "name": "Marhl2000_CaOscillations",
+    "configuration": {
+      "dt": 0.01,
+      "post_reset_offset": 1e-05,
+      "prefix": [
+        {
+          "pulse": 1,
+          "start": 50.0,
+          "stop": 100.0,
+          "rest_stop": 160.0
+        },
+        {
+          "pulse": 2,
+          "start": 160.0,
+          "stop": 220.0,
+          "rest_stop": 290.0
+        },
+        {
+          "pulse": 3,
+          "start": 290.0,
+          "stop": 360.0,
+          "rest_stop": 440.0
+        },
+        {
+          "pulse": 4,
+          "start": 440.0,
+          "stop": 520.0,
+          "rest_stop": 610.0
+        },
+        {
+          "pulse": 5,
+          "start": 610.0,
+          "stop": 700.0,
+          "rest_stop": 800.0
+        },
+        {
+          "pulse": 6,
+          "start": 800.0,
+          "stop": 900.0,
+          "rest_stop": 1010.0
+        }
+      ],
+      "trials": {
+        "prefix": [
+          0.0,
+          1010.0
+        ],
+        "intervention_1": [
+          1010.0,
+          1110.0
+        ],
+        "pre_1": [
+          1110.0,
+          1210.0
+        ],
+        "cue_1": [
+          1210.0,
+          1310.0
+        ],
+        "post_1": [
+          1310.0,
+          1410.0
+        ],
+        "intervention_2": [
+          1410.0,
+          1510.0
+        ],
+        "pre_2": [
+          1510.0,
+          1610.0
+        ],
+        "cue_2": [
+          1610.0,
+          1710.0
+        ],
+        "post_2": [
+          1710.0,
+          1810.0
+        ],
+        "intervention_3": [
+          1810.0,
+          1910.0
+        ],
+        "pre_3": [
+          1910.0,
+          2010.0
+        ],
+        "cue_3": [
+          2010.0,
+          2110.0
+        ],
+        "post_3": [
+          2110.0,
+          2210.0
+        ]
+      },
+      "reset_interval": 0.1,
+      "prefix_endpoint_resets": true,
+      "later_endpoint_resets": false,
+      "later_resets_per_exposure": 999,
+      "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+      "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+      "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+      "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+      "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+      "integration_settings": {
+        "roadrunner": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        },
+        "copasi": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        }
+      },
+      "case_integration_overrides": {},
+      "integration_error_fallbacks": {},
+      "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+      "timed_drive_encoding": null,
+      "comparison_rtol": 2e-05,
+      "comparison_atol": 1e-07,
+      "candidate_plan_sha256": "14ea7e5716900256df4e90a3c14f4f3a1883c7f41ad66f3e3def2d1147ac676b",
+      "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+      "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+    },
+    "model_sha256": "6b221222be03747b11454cc4f2a6218697d9c6367d3578a170c7cc5c34ad3b12",
+    "reference_fingerprint": "db9618d423d1d32bbeb4aa1e48417e4f37eceeacff57a3bbc685feaed79cb286",
+    "reference_file_sha256": "6d84675ce97016c13c86ac693cbf5fcf4c5bc7e748feaf1096b93af42029cbe3",
+    "implementation_sha256": {
+      "catalog_breaking.py": "48834a2d0ed8c9105b381413a27314ef71f5d37c4243a677a583d47955e48c73",
+      "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+      "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+      "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+      "catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315",
+      "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+      "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+      "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+      "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+      "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+      "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+      "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+      "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+      "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+      "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+    },
+    "versions": {
+      "libroadrunner": "2.11.0",
+      "python-copasi": "4.48.311",
+      "copasi-basico": "0.92",
+      "python-libsbml": "5.21.2",
+      "numpy": "2.5.4"
+    },
+    "fingerprint": "2bf0ca3e3444dc6a3f3506e185c477e9587efb1c2c1f5fcc79fbb77ee39dbc85",
+    "targets": {
+      "Ca_cyt": "concentration",
+      "CaER": "concentration",
+      "CaM": "concentration",
+      "CaPr": "concentration",
+      "Pr": "concentration"
+    },
+    "excluded_species": {},
+    "engines": [
+      "roadrunner",
+      "copasi"
+    ],
+    "expected_cases": 38,
+    "expected_initial_response_assessments": 48,
+    "cases": {
+      "CaER__down--CaM__down": {
+        "record_id": "6b595b3f541cb9066a7ef2b777b0b99e92655baadba9d4db6eed2116efab8072",
+        "status": "mismatch",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__down--CaM__up": {
+        "record_id": "48fe0accab793397170f6f112fc5d48f1d6c342c3cc9ce8bd2475434ea6fd667",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_amplified": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__down--CaPr__down": {
+        "record_id": "4137aab1f4bcdeadd48a7cea2ba85ea691d5a1473a7be2b34cc6a4af460c6570",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__down--CaPr__up": {
+        "record_id": "593e70b7b22fc824e9a2efe389e2572d904eedffb31b8cd2e36aba16959966d9",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_amplified": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__down--Pr__down": {
+        "record_id": "82c5e13f9c663555e1f002793e623f810495e478133519f30662aa3ae3e81147",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_amplified": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__down--Pr__up": {
+        "record_id": "183e161c35c9ff31c54545e4f4a671c61f58d8a7d368721c5b471cb84dadc253",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 6,
+        "evaluated_response_trials": 6,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 6
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__up--CaM__down": {
+        "record_id": "00b2212b769e5fc9f0c9782dec019d73da6d78bd0a19b5f49cbacbc0ff2ee876",
+        "status": "mismatch",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__up--CaM__up": {
+        "record_id": "c3d468ff42c748a2d958ec30b66056c289fa311f156a4f05c5bd6d005fbe57a0",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 6,
+        "evaluated_response_trials": 6,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 1,
+          "no_resolved_history_effect_at_rechallenge": 5
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__up--CaPr__down": {
+        "record_id": "3b46e32798eccf1f2caf862902e96f02ad5f32458c88ffe246517b7e36a0a676",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 6,
+        "evaluated_response_trials": 6,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 1,
+          "no_resolved_history_effect_at_rechallenge": 5
+        },
+        "raw_disagreeing_response_trials": 0
+      }
+    },
+    "status": "incomplete_or_failed",
+    "no_candidates": false,
+    "started_at": "2026-11-12T02:17:00.892075+00:00",
+    "control_comparison": {
+      "passed": true,
+      "max_scaled_error": 0.061386800114508706,
+      "max_absolute_error": 4.886582228302849e-07,
+      "worst_observable": "Ca_cyt",
+      "worst_time": 2199.61,
+      "samples": 221001,
+      "observables": 5,
+      "per_observable_max_scaled_error": {
+        "Ca_cyt": 0.061386800114508706,
+        "CaER": 0.008553257420285657,
+        "CaM": 0.017676485094931343,
+        "CaPr": 4.133270182021724e-05,
+        "Pr": 9.692571465862946e-05
+      }
+    },
+    "evidence_archives": {
+      "branches": [
+        {
+          "file": "evidence/BIOMD0000000039-branches-00000.jsonl.gz",
+          "records": 100,
+          "bytes": 174875,
+          "sha256": "9528739bc8db63990b0b4495de0c999d629091085dacd0d49ca855069a115064"
+        },
+        {
+          "file": "evidence/BIOMD0000000039-branches-00001.jsonl.gz",
+          "records": 17,
+          "bytes": 27565,
+          "sha256": "0dbd0e4600e8c2d0187a5851fcd13473999476bd816218e92a92e072df5b58dd"
+        }
+      ],
+      "cases": [
+        {
+          "file": "evidence/BIOMD0000000039-cases-00000.jsonl.gz",
+          "records": 9,
+          "bytes": 13837,
+          "sha256": "47a9b12a783be3b6d9f35b82c90cda7dfe4b74fbf6aca1b70e38819ac9f757a4"
+        }
+      ]
+    },
+    "evaluated_cases": 9,
+    "passed_cases": 7,
+    "evaluated_unique_branches": 117,
+    "solver_retry_branches": 0,
+    "finished_at": "2026-11-12T02:21:37.317069+00:00"
+  },
+  "original_report_sha256": "5773de6990e321373467a4dc621a9bd1918fb922e2e6dbccdca4fa856640ed7e",
+  "verified_source_archives": {
+    "evidence/BIOMD0000000039-branches-00000.jsonl.gz": "9528739bc8db63990b0b4495de0c999d629091085dacd0d49ca855069a115064",
+    "evidence/BIOMD0000000039-branches-00001.jsonl.gz": "0dbd0e4600e8c2d0187a5851fcd13473999476bd816218e92a92e072df5b58dd"
+  },
+  "failed_branches": [
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 1410.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          },
+          "copasi": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          }
+        }
+      },
+      "sample_count": 141001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        },
+        "copasi": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        }
+      },
+      "comparison": {
+        "passed": false,
+        "max_scaled_error": 1.749927708403103,
+        "max_absolute_error": 1.4690780877291143e-05,
+        "worst_observable": "Ca_cyt",
+        "worst_time": 1391.88,
+        "samples": 141001,
+        "observables": 5,
+        "per_observable_max_scaled_error": {
+          "Ca_cyt": 1.749927708403103,
+          "CaER": 0.21208320674444636,
+          "CaM": 0.2388641013002004,
+          "CaPr": 0.002811794047524021,
+          "Pr": 0.0011959530535422533
+        }
+      },
+      "windows": {
+        "roadrunner": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402691717,
+              "minimum": 0.056901060213266214,
+              "maximum": 0.5121961133104859
+            },
+            "CaER": {
+              "mean": 0.7688428911860452,
+              "minimum": 0.7041704092232469,
+              "maximum": 1.0955962769556564
+            },
+            "CaM": {
+              "mean": 0.43389641502401555,
+              "minimum": 0.29,
+              "maximum": 0.6049142860767626
+            },
+            "CaPr": {
+              "mean": 84.94689225115917,
+              "minimum": 84.02712795641462,
+              "maximum": 85.6475002626583
+            },
+            "Pr": {
+              "mean": 35.05310774886201,
+              "minimum": 34.35249973734126,
+              "maximum": 35.972872043586115
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.08707465148235718,
+              "minimum": 0.026895220775373752,
+              "maximum": 0.6272002768205753
+            },
+            "CaER": {
+              "mean": 1.086673911466465,
+              "minimum": 0.7124935265705765,
+              "maximum": 1.7364687822583509
+            },
+            "CaM": {
+              "mean": 0.006463257062866093,
+              "minimum": 0.0028966684706301965,
+              "maximum": 0.5445145721974245
+            },
+            "CaPr": {
+              "mean": 69.69843698751082,
+              "minimum": 56.392237653726774,
+              "maximum": 84.67902577093705
+            },
+            "Pr": {
+              "mean": 50.30156301253024,
+              "minimum": 35.3209742291027,
+              "maximum": 63.60776234631546
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.04454804779149629,
+              "minimum": 0.01996761856964358,
+              "maximum": 0.7167484758202346
+            },
+            "CaER": {
+              "mean": 1.4362947272788853,
+              "minimum": 0.7051731187933756,
+              "maximum": 2.2256685817865596
+            },
+            "CaM": {
+              "mean": 1.8605417042982035,
+              "minimum": 0.0027985033229528805,
+              "maximum": 3.7910470542066057
+            },
+            "CaPr": {
+              "mean": 47.403836035852805,
+              "minimum": 40.681124557900375,
+              "maximum": 56.71797792312163
+            },
+            "Pr": {
+              "mean": 72.59616396418842,
+              "minimum": 63.282022076920605,
+              "maximum": 79.31887544214038
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.043369031997941655,
+              "minimum": 0.018912006647836925,
+              "maximum": 0.740814538070941
+            },
+            "CaER": {
+              "mean": 1.615599802536083,
+              "minimum": 0.7000978238844979,
+              "maximum": 2.4122878520735282
+            },
+            "CaM": {
+              "mean": 3.79491545489036,
+              "minimum": 3.2629360831761014,
+              "maximum": 4.952084588917822
+            },
+            "CaPr": {
+              "mean": 38.95029974825148,
+              "minimum": 35.88699073056391,
+              "maximum": 42.10605757025579
+            },
+            "Pr": {
+              "mean": 81.04970025178831,
+              "minimum": 77.89394242978422,
+              "maximum": 84.11300926947564
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.04625635105603799,
+              "minimum": 0.018898180043669804,
+              "maximum": 0.7494148537124835
+            },
+            "CaER": {
+              "mean": 1.6490077083880452,
+              "minimum": 0.7000338444593733,
+              "maximum": 2.420459208938283
+            },
+            "CaM": {
+              "mean": 3.9853995759014698,
+              "minimum": 3.7872839155117295,
+              "maximum": 4.99969816312985
+            },
+            "CaPr": {
+              "mean": 38.05184432174271,
+              "minimum": 35.690703793721894,
+              "maximum": 41.266519384669316
+            },
+            "Pr": {
+              "mean": 81.94815567829538,
+              "minimum": 78.73348061536899,
+              "maximum": 84.30929620631598
+            }
+          }
+        },
+        "copasi": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402715953,
+              "minimum": 0.056901060212527416,
+              "maximum": 0.5121961132679934
+            },
+            "CaER": {
+              "mean": 0.7688428911883046,
+              "minimum": 0.704170409222316,
+              "maximum": 1.0955962769627408
+            },
+            "CaM": {
+              "mean": 0.43389641500412107,
+              "minimum": 0.29,
+              "maximum": 0.6049142860805697
+            },
+            "CaPr": {
+              "mean": 84.94689225121262,
+              "minimum": 84.02712795638679,
+              "maximum": 85.6475002626602
+            },
+            "Pr": {
+              "mean": 35.053107748791206,
+              "minimum": 34.35249973733997,
+              "maximum": 35.97287204361301
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.08707465144556148,
+              "minimum": 0.026895220766886066,
+              "maximum": 0.6272001877302265
+            },
+            "CaER": {
+              "mean": 1.086673911676272,
+              "minimum": 0.7124935265668192,
+              "maximum": 1.7364687826278595
+            },
+            "CaM": {
+              "mean": 0.006463257010955835,
+              "minimum": 0.002896668470698112,
+              "maximum": 0.5445145733020736
+            },
+            "CaPr": {
+              "mean": 69.6984369798266,
+              "minimum": 56.39223764170911,
+              "maximum": 84.67902576801959
+            },
+            "Pr": {
+              "mean": 50.30156302018061,
+              "minimum": 35.32097423199051,
+              "maximum": 63.607762358296014
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.04454804782041809,
+              "minimum": 0.01996761856058522,
+              "maximum": 0.7167484844648421
+            },
+            "CaER": {
+              "mean": 1.4362947277285523,
+              "minimum": 0.7051731185934526,
+              "maximum": 2.225668582564793
+            },
+            "CaM": {
+              "mean": 1.860541703011674,
+              "minimum": 0.0027985033211851192,
+              "maximum": 3.791047058133235
+            },
+            "CaPr": {
+              "mean": 47.40383602771217,
+              "minimum": 40.6811245383319,
+              "maximum": 56.71797792025309
+            },
+            "Pr": {
+              "mean": 72.59616397229357,
+              "minimum": 63.282022079752025,
+              "maximum": 79.31887546167385
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.04336903232865668,
+              "minimum": 0.018912006637029397,
+              "maximum": 0.7408137703576416
+            },
+            "CaER": {
+              "mean": 1.6155998024838518,
+              "minimum": 0.7000978239487053,
+              "maximum": 2.4122878530958047
+            },
+            "CaM": {
+              "mean": 3.794915455250465,
+              "minimum": 3.2629357566235617,
+              "maximum": 4.952084598163004
+            },
+            "CaPr": {
+              "mean": 38.950299735223794,
+              "minimum": 35.88699071169549,
+              "maximum": 42.106057550617656
+            },
+            "Pr": {
+              "mean": 81.04970026478316,
+              "minimum": 77.89394244938917,
+              "maximum": 84.11300928831197
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.046256351778293577,
+              "minimum": 0.01889818003469756,
+              "maximum": 0.7494150701001558
+            },
+            "CaER": {
+              "mean": 1.6490077086418227,
+              "minimum": 0.7000338444443468,
+              "maximum": 2.4204592096915323
+            },
+            "CaM": {
+              "mean": 3.9853995768132657,
+              "minimum": 3.78728403276441,
+              "maximum": 4.999698160508035
+            },
+            "CaPr": {
+              "mean": 38.051844304886856,
+              "minimum": 35.69070377566475,
+              "maximum": 41.26651936876468
+            },
+            "Pr": {
+              "mean": 81.94815569511934,
+              "minimum": 78.73348063124209,
+              "maximum": 84.30929622434078
+            }
+          }
+        }
+      },
+      "elapsed_seconds": 1.314440378999997,
+      "record_id": "52c4262d15793b942c2161f29cd82d6a4d4ffc61ec63e4175ff79f1e28ef3f8d",
+      "fingerprint": "2bf0ca3e3444dc6a3f3506e185c477e9587efb1c2c1f5fcc79fbb77ee39dbc85"
+    }
+  ]
+}

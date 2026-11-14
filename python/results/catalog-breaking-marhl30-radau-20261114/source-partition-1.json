@@ -1,0 +1,4297 @@
+{
+  "original_report": {
+    "network": 30,
+    "biomodel_id": "BIOMD0000000039",
+    "name": "Marhl2000_CaOscillations",
+    "configuration": {
+      "dt": 0.01,
+      "post_reset_offset": 1e-05,
+      "prefix": [
+        {
+          "pulse": 1,
+          "start": 50.0,
+          "stop": 100.0,
+          "rest_stop": 160.0
+        },
+        {
+          "pulse": 2,
+          "start": 160.0,
+          "stop": 220.0,
+          "rest_stop": 290.0
+        },
+        {
+          "pulse": 3,
+          "start": 290.0,
+          "stop": 360.0,
+          "rest_stop": 440.0
+        },
+        {
+          "pulse": 4,
+          "start": 440.0,
+          "stop": 520.0,
+          "rest_stop": 610.0
+        },
+        {
+          "pulse": 5,
+          "start": 610.0,
+          "stop": 700.0,
+          "rest_stop": 800.0
+        },
+        {
+          "pulse": 6,
+          "start": 800.0,
+          "stop": 900.0,
+          "rest_stop": 1010.0
+        }
+      ],
+      "trials": {
+        "prefix": [
+          0.0,
+          1010.0
+        ],
+        "intervention_1": [
+          1010.0,
+          1110.0
+        ],
+        "pre_1": [
+          1110.0,
+          1210.0
+        ],
+        "cue_1": [
+          1210.0,
+          1310.0
+        ],
+        "post_1": [
+          1310.0,
+          1410.0
+        ],
+        "intervention_2": [
+          1410.0,
+          1510.0
+        ],
+        "pre_2": [
+          1510.0,
+          1610.0
+        ],
+        "cue_2": [
+          1610.0,
+          1710.0
+        ],
+        "post_2": [
+          1710.0,
+          1810.0
+        ],
+        "intervention_3": [
+          1810.0,
+          1910.0
+        ],
+        "pre_3": [
+          1910.0,
+          2010.0
+        ],
+        "cue_3": [
+          2010.0,
+          2110.0
+        ],
+        "post_3": [
+          2110.0,
+          2210.0
+        ]
+      },
+      "reset_interval": 0.1,
+      "prefix_endpoint_resets": true,
+      "later_endpoint_resets": false,
+      "later_resets_per_exposure": 999,
+      "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+      "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+      "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+      "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+      "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+      "integration_settings": {
+        "roadrunner": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        },
+        "copasi": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        }
+      },
+      "case_integration_overrides": {},
+      "integration_error_fallbacks": {},
+      "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+      "timed_drive_encoding": null,
+      "comparison_rtol": 2e-05,
+      "comparison_atol": 1e-07,
+      "candidate_plan_sha256": "14ea7e5716900256df4e90a3c14f4f3a1883c7f41ad66f3e3def2d1147ac676b",
+      "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+      "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+    },
+    "model_sha256": "6b221222be03747b11454cc4f2a6218697d9c6367d3578a170c7cc5c34ad3b12",
+    "reference_fingerprint": "db9618d423d1d32bbeb4aa1e48417e4f37eceeacff57a3bbc685feaed79cb286",
+    "reference_file_sha256": "6d84675ce97016c13c86ac693cbf5fcf4c5bc7e748feaf1096b93af42029cbe3",
+    "implementation_sha256": {
+      "catalog_breaking.py": "48834a2d0ed8c9105b381413a27314ef71f5d37c4243a677a583d47955e48c73",
+      "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+      "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+      "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+      "catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315",
+      "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+      "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+      "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+      "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+      "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+      "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+      "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+      "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+      "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+      "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+    },
+    "versions": {
+      "libroadrunner": "2.11.0",
+      "python-copasi": "4.48.311",
+      "copasi-basico": "0.92",
+      "python-libsbml": "5.21.2",
+      "numpy": "2.5.4"
+    },
+    "fingerprint": "2bf0ca3e3444dc6a3f3506e185c477e9587efb1c2c1f5fcc79fbb77ee39dbc85",
+    "targets": {
+      "Ca_cyt": "concentration",
+      "CaER": "concentration",
+      "CaM": "concentration",
+      "CaPr": "concentration",
+      "Pr": "concentration"
+    },
+    "excluded_species": {},
+    "engines": [
+      "roadrunner",
+      "copasi"
+    ],
+    "expected_cases": 38,
+    "expected_initial_response_assessments": 48,
+    "cases": {
+      "CaER__up--CaPr__up": {
+        "record_id": "79c52b7fd665d0d2ad9fc1312c1cc33385a2a3b30288e27c6c8424a8772f34dc",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 6,
+        "evaluated_response_trials": 6,
+        "controlled_categories": {
+          "history_effect_amplified": 1,
+          "no_resolved_history_effect_at_rechallenge": 5
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__up--Ca_cyt__down": {
+        "record_id": "c27f7d48b567fa635ae5b807348f41eab2325c3c2dc5adb2586bcde139faedae",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaER__up--Ca_cyt__up": {
+        "record_id": "19b7b4c14ed79210ae048d95eb871b039d2e0734c49104dfb4887139106a18b9",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaM__down--CaER__down": {
+        "record_id": "da1dc251ee66923d5d54e8fea0cb1301f6a018a8ec09857033dea9b6c5be6ceb",
+        "status": "mismatch",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 6,
+        "evaluated_response_trials": 6,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 2,
+          "no_resolved_history_effect_at_rechallenge": 4
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaM__down--CaER__up": {
+        "record_id": "eb7b1c5c6602bd46b55b263fb7b4c2b4da93fc9fa400f82ecfb18b83f24d493b",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaM__down--CaPr__down": {
+        "record_id": "6ebdcd1d005cffb77bc19b80a2e9a67f52f314b1e072fc73dfb1639be43dcb07",
+        "status": "mismatch",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 6,
+        "evaluated_response_trials": 6,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 2,
+          "no_resolved_history_effect_at_rechallenge": 4
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaM__down--CaPr__up": {
+        "record_id": "347ebdf3ade91bbbdb78afb0c323f3d1f316d2129c0b3757611637389c8f499c",
+        "status": "passed",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_amplified": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaM__down--Pr__down": {
+        "record_id": "ce6d9546c97448bd12777c1eed752fb2ef9299acd7b7a09522401cb349e06cd1",
+        "status": "mismatch",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 1,
+        "evaluated_response_trials": 1,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaM__down--Pr__up": {
+        "record_id": "b4a75325c38c31213451709bc63c49cf4aef0064eead98922e33eaf300fcd10b",
+        "status": "mismatch",
+        "initial_response_assessments": 1,
+        "evaluated_trials": 6,
+        "evaluated_response_trials": 6,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 2,
+          "no_resolved_history_effect_at_rechallenge": 4
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "CaM__up--CaER__down": {
+        "record_id": "0ae151006ea4e18697258b04e41df723e6a78fd16cfcbe17d01f2f66c74bd978",
+        "status": "passed",
+        "initial_response_assessments": 2,
+        "evaluated_trials": 6,
+        "evaluated_response_trials": 7,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 2,
+          "no_resolved_history_effect_at_rechallenge": 5
+        },
+        "raw_disagreeing_response_trials": 0
+      }
+    },
+    "status": "incomplete_or_failed",
+    "no_candidates": false,
+    "started_at": "2026-11-12T02:18:04.853236+00:00",
+    "control_comparison": {
+      "passed": true,
+      "max_scaled_error": 0.06139934135140129,
+      "max_absolute_error": 4.887588239688156e-07,
+      "worst_observable": "Ca_cyt",
+      "worst_time": 2199.61,
+      "samples": 221001,
+      "observables": 5,
+      "per_observable_max_scaled_error": {
+        "Ca_cyt": 0.06139934135140129,
+        "CaER": 0.00855563689236963,
+        "CaM": 0.017681161819149204,
+        "CaPr": 4.1346490136128834e-05,
+        "Pr": 9.695328797745146e-05
+      }
+    },
+    "evidence_archives": {
+      "branches": [
+        {
+          "file": "evidence/BIOMD0000000039-branches-00000.jsonl.gz",
+          "records": 100,
+          "bytes": 206882,
+          "sha256": "30a308f25e7323de22271caa77dba4aa4888e6f694d7eb72321d44381d0cc206"
+        },
+        {
+          "file": "evidence/BIOMD0000000039-branches-00001.jsonl.gz",
+          "records": 73,
+          "bytes": 134659,
+          "sha256": "d2e65823a9cdbbe0e6c4f00c7a4e80cb3a156236104b9ae47256e43e3abb6365"
+        }
+      ],
+      "cases": [
+        {
+          "file": "evidence/BIOMD0000000039-cases-00000.jsonl.gz",
+          "records": 10,
+          "bytes": 20094,
+          "sha256": "c7c3daaa6defd779c6dce436eb3e9e16b6aa7d658472f1b3123546836e2eafb3"
+        }
+      ]
+    },
+    "evaluated_cases": 10,
+    "passed_cases": 6,
+    "evaluated_unique_branches": 173,
+    "solver_retry_branches": 0,
+    "finished_at": "2026-11-12T02:31:22.957216+00:00"
+  },
+  "original_report_sha256": "c84e70a0c8cdca77c4ce8acad41a9ff35c81f7d1a7180439ff33161e44a08a8f",
+  "verified_source_archives": {
+    "evidence/BIOMD0000000039-branches-00000.jsonl.gz": "30a308f25e7323de22271caa77dba4aa4888e6f694d7eb72321d44381d0cc206",
+    "evidence/BIOMD0000000039-branches-00001.jsonl.gz": "d2e65823a9cdbbe0e6c4f00c7a4e80cb3a156236104b9ae47256e43e3abb6365"
+  },
+  "failed_branches": [
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          },
+          "copasi": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        },
+        "copasi": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        }
+      },
+      "comparison": {
+        "passed": false,
+        "max_scaled_error": 109.59148803972482,
+        "max_absolute_error": 0.00021428399893996808,
+        "worst_observable": "CaM",
+        "worst_time": 1655.76,
+        "samples": 221001,
+        "observables": 5,
+        "per_observable_max_scaled_error": {
+          "Ca_cyt": 15.631799576037881,
+          "CaER": 2.658075357429233,
+          "CaM": 109.59148803972482,
+          "CaPr": 0.03862169516787792,
+          "Pr": 0.015067995261216842
+        }
+      },
+      "windows": {
+        "roadrunner": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402691717,
+              "minimum": 0.056901060213266214,
+              "maximum": 0.5121961133104859
+            },
+            "CaER": {
+              "mean": 0.7688428911860452,
+              "minimum": 0.7041704092232469,
+              "maximum": 1.0955962769556564
+            },
+            "CaM": {
+              "mean": 0.43389641502401555,
+              "minimum": 0.29,
+              "maximum": 0.6049142860767626
+            },
+            "CaPr": {
+              "mean": 84.94689225115917,
+              "minimum": 84.02712795641462,
+              "maximum": 85.6475002626583
+            },
+            "Pr": {
+              "mean": 35.05310774886201,
+              "minimum": 34.35249973734126,
+              "maximum": 35.972872043586115
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.2445136257165292,
+              "minimum": 0.058036817303934,
+              "maximum": 0.5117714879995905
+            },
+            "CaER": {
+              "mean": 0.765310971214314,
+              "minimum": 0.7043247453635669,
+              "maximum": 1.094879418033483
+            },
+            "CaM": {
+              "mean": 0.4352003965687993,
+              "minimum": 0.33852332722018785,
+              "maximum": 0.5846357748138084
+            },
+            "CaPr": {
+              "mean": 84.95344090320175,
+              "minimum": 84.11264444635249,
+              "maximum": 85.42932301607763
+            },
+            "Pr": {
+              "mean": 35.04655909683924,
+              "minimum": 34.57067698396389,
+              "maximum": 35.887355553687094
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.24080285751429906,
+              "minimum": 0.05803681757997747,
+              "maximum": 0.5117723883549962
+            },
+            "CaER": {
+              "mean": 0.7709632525571428,
+              "minimum": 0.7043247468612924,
+              "maximum": 1.0948794302039282
+            },
+            "CaM": {
+              "mean": 0.4348104308051033,
+              "minimum": 0.3385234750162443,
+              "maximum": 0.5846357736302378
+            },
+            "CaPr": {
+              "mean": 84.9361024090907,
+              "minimum": 84.11264467989098,
+              "maximum": 85.42932301622557
+            },
+            "Pr": {
+              "mean": 35.0638975909523,
+              "minimum": 34.57067698381952,
+              "maximum": 35.887355320150725
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.08721800230596619,
+              "minimum": 0.02722512699065182,
+              "maximum": 0.6299847693611994
+            },
+            "CaER": {
+              "mean": 1.0802635683002897,
+              "minimum": 0.7122853962795552,
+              "maximum": 1.7202333565995702
+            },
+            "CaM": {
+              "mean": 0.006449800736866709,
+              "minimum": 0.0028966472539641184,
+              "maximum": 0.49785945703574896
+            },
+            "CaPr": {
+              "mean": 69.87177920884747,
+              "minimum": 56.61762391319328,
+              "maximum": 84.8941352862919
+            },
+            "Pr": {
+              "mean": 50.12822079119724,
+              "minimum": 35.10586471375304,
+              "maximum": 63.38237608685182
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.044622304710938615,
+              "minimum": 0.020373136328521117,
+              "maximum": 0.6983872616113266
+            },
+            "CaER": {
+              "mean": 1.4284271909262445,
+              "minimum": 0.7053558390936707,
+              "maximum": 2.1890028362691814
+            },
+            "CaM": {
+              "mean": 1.9329818155247815,
+              "minimum": 0.0028120426331163157,
+              "maximum": 3.708249883771996
+            },
+            "CaPr": {
+              "mean": 47.6490640951576,
+              "minimum": 41.15126067761412,
+              "maximum": 56.61762391319328
+            },
+            "Pr": {
+              "mean": 72.35093590488619,
+              "minimum": 63.38237608685182,
+              "maximum": 78.8487393224287
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.04373759903576894,
+              "minimum": 0.019273787427243345,
+              "maximum": 0.72628459786524
+            },
+            "CaER": {
+              "mean": 1.6392329277998046,
+              "minimum": 0.7001066932512343,
+              "maximum": 2.371958008757238
+            },
+            "CaM": {
+              "mean": 3.774985798525957,
+              "minimum": 3.2048000810170603,
+              "maximum": 4.875273623562388
+            },
+            "CaPr": {
+              "mean": 39.438709921336,
+              "minimum": 36.72161025009291,
+              "maximum": 42.87972406995528
+            },
+            "Pr": {
+              "mean": 80.56129007870628,
+              "minimum": 77.12027593008793,
+              "maximum": 83.2783897499494
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.052953167476548865,
+              "minimum": 0.019256845526834484,
+              "maximum": 0.7418537210598705
+            },
+            "CaER": {
+              "mean": 1.6381545990223803,
+              "minimum": 0.7000290643341603,
+              "maximum": 2.3812278380065535
+            },
+            "CaM": {
+              "mean": 3.947172537088163,
+              "minimum": 3.751805962174849,
+              "maximum": 4.9304764811054005
+            },
+            "CaPr": {
+              "mean": 38.74506071375761,
+              "minimum": 36.49356150339027,
+              "maximum": 41.971216526546684
+            },
+            "Pr": {
+              "mean": 81.2549392862835,
+              "minimum": 78.02878347349515,
+              "maximum": 83.50643849664998
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.022583079465838995,
+              "minimum": 0.01473148811304341,
+              "maximum": 0.7540974169743889
+            },
+            "CaER": {
+              "mean": 1.9392573202738788,
+              "minimum": 0.7000284380225208,
+              "maximum": 2.793275166121657
+            },
+            "CaM": {
+              "mean": 0.007643423620036737,
+              "minimum": 0.0028977894043188675,
+              "maximum": 4.227332109644238
+            },
+            "CaPr": {
+              "mean": 33.370509405776154,
+              "minimum": 27.18144900067028,
+              "maximum": 41.4666336699384
+            },
+            "Pr": {
+              "mean": 86.62949059426597,
+              "minimum": 78.53336633010102,
+              "maximum": 92.81855099937312
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.025529310287789812,
+              "minimum": 0.020608722436240665,
+              "maximum": 0.026988323184317656
+            },
+            "CaER": {
+              "mean": 3.1501422134206716,
+              "minimum": 2.793275166121657,
+              "maximum": 3.212480490565849
+            },
+            "CaM": {
+              "mean": 0.0025880309724662085,
+              "minimum": 0.002284832739710948,
+              "maximum": 0.002899393082188265
+            },
+            "CaPr": {
+              "mean": 25.75030567206157,
+              "minimum": 25.49999237070276,
+              "maximum": 27.18144900067028
+            },
+            "Pr": {
+              "mean": 94.24969432798174,
+              "minimum": 92.81855099937312,
+              "maximum": 94.5000076293405
+            }
+          },
+          "intervention_3": {
+            "Ca_cyt": {
+              "mean": 0.026989764424073664,
+              "minimum": 0.026988323184317656,
+              "maximum": 0.026991090799590025
+            },
+            "CaER": {
+              "mean": 3.2123717691740996,
+              "minimum": 3.212305044299492,
+              "maximum": 3.212444209962503
+            },
+            "CaM": {
+              "mean": 0.0020242375393181864,
+              "minimum": 0.0017842457958656061,
+              "maximum": 0.002284832739710948
+            },
+            "CaPr": {
+              "mean": 25.50218216864416,
+              "minimum": 25.500851465928726,
+              "maximum": 25.503407708740884
+            },
+            "Pr": {
+              "mean": 94.49781783139905,
+              "minimum": 94.49659229130233,
+              "maximum": 94.49914853411447
+            }
+          },
+          "pre_3": {
+            "Ca_cyt": {
+              "mean": 0.02699221554865347,
+              "minimum": 0.026991090799590025,
+              "maximum": 0.02699325136921198
+            },
+            "CaER": {
+              "mean": 3.212248458053263,
+              "minimum": 3.2121963449664332,
+              "maximum": 3.212305044299492
+            },
+            "CaM": {
+              "mean": 0.0015807329419435915,
+              "minimum": 0.0013933124972882415,
+              "maximum": 0.0017842457958656061
+            },
+            "CaPr": {
+              "mean": 25.50444698039243,
+              "minimum": 25.503407708740884,
+              "maximum": 25.505404078697815
+            },
+            "Pr": {
+              "mean": 94.49555301965077,
+              "minimum": 94.4945959213454,
+              "maximum": 94.49659229130233
+            }
+          },
+          "cue_3": {
+            "Ca_cyt": {
+              "mean": 0.02699412974075614,
+              "minimum": 0.02699325136921198,
+              "maximum": 0.026994938655149597
+            },
+            "CaER": {
+              "mean": 3.2121521520141276,
+              "minimum": 3.2121114531017776,
+              "maximum": 3.2121963449664332
+            },
+            "CaM": {
+              "mean": 0.001234383186377251,
+              "minimum": 0.001088022187457416,
+              "maximum": 0.0013933124972882415
+            },
+            "CaPr": {
+              "mean": 25.506215689379143,
+              "minimum": 25.505404078697815,
+              "maximum": 25.506963120109837
+            },
+            "Pr": {
+              "mean": 94.49378431066401,
+              "minimum": 94.49303687993333,
+              "maximum": 94.4945959213454
+            }
+          },
+          "post_3": {
+            "Ca_cyt": {
+              "mean": 0.026995624598393306,
+              "minimum": 0.026994938655149597,
+              "maximum": 0.026996256295578183
+            },
+            "CaER": {
+              "mean": 3.2120769404631124,
+              "minimum": 3.2120451568547104,
+              "maximum": 3.2121114531017776
+            },
+            "CaM": {
+              "mean": 0.0009639124782451418,
+              "minimum": 0.0008496182706536345,
+              "maximum": 0.001088022187457416
+            },
+            "CaPr": {
+              "mean": 25.507596923558093,
+              "minimum": 25.506963120109837,
+              "maximum": 25.50818060312488
+            },
+            "Pr": {
+              "mean": 94.49240307648506,
+              "minimum": 94.49181939691829,
+              "maximum": 94.49303687993333
+            }
+          }
+        },
+        "copasi": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.242150524027176,
+              "minimum": 0.056901060212516695,
+              "maximum": 0.5121961132684806
+            },
+            "CaER": {
+              "mean": 0.7688428911882909,
+              "minimum": 0.7041704092223167,
+              "maximum": 1.0955962769627439
+            },
+            "CaM": {
+              "mean": 0.43389641500403353,
+              "minimum": 0.29,
+              "maximum": 0.6049142860803077
+            },
+            "CaPr": {
+              "mean": 84.94689225121374,
+              "minimum": 84.02712795638783,
+              "maximum": 85.64750026265978
+            },
+            "Pr": {
+              "mean": 35.05310774879092,
+              "minimum": 34.352499737340004,
+              "maximum": 35.97287204361171
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.24451362570576282,
+              "minimum": 0.05803681731628032,
+              "maximum": 0.5117714839051438
+            },
+            "CaER": {
+              "mean": 0.7653109712211208,
+              "minimum": 0.7043247453560436,
+              "maximum": 1.0948794179852464
+            },
+            "CaM": {
+              "mean": 0.43520039660679316,
+              "minimum": 0.33852332649785544,
+              "maximum": 0.584635774762828
+            },
+            "CaPr": {
+              "mean": 84.95344090300281,
+              "minimum": 84.11264444531433,
+              "maximum": 85.42932301607097
+            },
+            "Pr": {
+              "mean": 35.04655909700613,
+              "minimum": 34.570676983938,
+              "maximum": 35.8873555546946
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.24080285752196254,
+              "minimum": 0.05803681759429336,
+              "maximum": 0.5117723837865382
+            },
+            "CaER": {
+              "mean": 0.7709632525585013,
+              "minimum": 0.7043247468529388,
+              "maximum": 1.0948794301497464
+            },
+            "CaM": {
+              "mean": 0.4348104307404366,
+              "minimum": 0.33852347421366413,
+              "maximum": 0.5846357735662733
+            },
+            "CaPr": {
+              "mean": 84.93610240930452,
+              "minimum": 84.11264467874447,
+              "maximum": 85.42932301623206
+            },
+            "Pr": {
+              "mean": 35.06389759070518,
+              "minimum": 34.570676983778135,
+              "maximum": 35.88735532126424
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.08721800228760801,
+              "minimum": 0.02722512697933022,
+              "maximum": 0.6299847884506333
+            },
+            "CaER": {
+              "mean": 1.0802635684295332,
+              "minimum": 0.7122853962801764,
+              "maximum": 1.720233357079121
+            },
+            "CaM": {
+              "mean": 0.006449800997508543,
+              "minimum": 0.0028966472539377285,
+              "maximum": 0.49785949995990775
+            },
+            "CaPr": {
+              "mean": 69.87177920490203,
+              "minimum": 56.617623916235814,
+              "maximum": 84.89413528385877
+            },
+            "Pr": {
+              "mean": 50.12822079510555,
+              "minimum": 35.10586471615147,
+              "maximum": 63.38237608377027
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.04462230488831854,
+              "minimum": 0.020373136314660194,
+              "maximum": 0.6983876485964919
+            },
+            "CaER": {
+              "mean": 1.4284271908885444,
+              "minimum": 0.7053558391661601,
+              "maximum": 2.189002837161154
+            },
+            "CaM": {
+              "mean": 1.932981813604664,
+              "minimum": 0.0028120426329996235,
+              "maximum": 3.7082498847704732
+            },
+            "CaPr": {
+              "mean": 47.64906408924726,
+              "minimum": 41.1512606889274,
+              "maximum": 56.617623916235814
+            },
+            "Pr": {
+              "mean": 72.35093591075855,
+              "minimum": 63.38237608377027,
+              "maximum": 78.84873931107805
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.043737598917328896,
+              "minimum": 0.019273787412436783,
+              "maximum": 0.7262853254240637
+            },
+            "CaER": {
+              "mean": 1.6392329267854662,
+              "minimum": 0.7001066931854757,
+              "maximum": 2.371958009970642
+            },
+            "CaM": {
+              "mean": 3.774985799138202,
+              "minimum": 3.2047998082656766,
+              "maximum": 4.875273631808844
+            },
+            "CaPr": {
+              "mean": 39.438709909492914,
+              "minimum": 36.72161022727392,
+              "maximum": 42.87972404685207
+            },
+            "Pr": {
+              "mean": 80.56129009051304,
+              "minimum": 77.12027595315342,
+              "maximum": 83.27838977273194
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.052953165658611766,
+              "minimum": 0.019256845508250964,
+              "maximum": 0.7418545853080134
+            },
+            "CaER": {
+              "mean": 1.6381546055805207,
+              "minimum": 0.7000290642529944,
+              "maximum": 2.381227838747321
+            },
+            "CaM": {
+              "mean": 3.9471725368108057,
+              "minimum": 3.7518049139188467,
+              "maximum": 4.930476468503738
+            },
+            "CaPr": {
+              "mean": 38.745060676877245,
+              "minimum": 36.493561481645806,
+              "maximum": 41.97121650722984
+            },
+            "Pr": {
+              "mean": 81.2549393231304,
+              "minimum": 78.02878349277715,
+              "maximum": 83.50643851836199
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.022583074801570565,
+              "minimum": 0.014731487607115908,
+              "maximum": 0.7541169748584298
+            },
+            "CaER": {
+              "mean": 1.9392572933206655,
+              "minimum": 0.7000284380309372,
+              "maximum": 2.7932750441764167
+            },
+            "CaM": {
+              "mean": 0.007643421925093715,
+              "minimum": 0.0028977894040692178,
+              "maximum": 4.227332341564184
+            },
+            "CaPr": {
+              "mean": 33.37050876097153,
+              "minimum": 27.181448396102816,
+              "maximum": 41.466632783978646
+            },
+            "Pr": {
+              "mean": 86.62949123903788,
+              "minimum": 78.5333672160293,
+              "maximum": 92.81855160390668
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.025529307729227926,
+              "minimum": 0.02060872038698481,
+              "maximum": 0.026988321214333453
+            },
+            "CaER": {
+              "mean": 3.150142248014928,
+              "minimum": 2.7932750441764167,
+              "maximum": 3.2124805837717814
+            },
+            "CaM": {
+              "mean": 0.002588030993575098,
+              "minimum": 0.0022848327768751585,
+              "maximum": 0.0028993930822188113
+            },
+            "CaPr": {
+              "mean": 25.750304441761134,
+              "minimum": 25.499990906606133,
+              "maximum": 27.181448396102816
+            },
+            "Pr": {
+              "mean": 94.24969555824853,
+              "minimum": 92.81855160390668,
+              "maximum": 94.5000090934036
+            }
+          },
+          "intervention_3": {
+            "Ca_cyt": {
+              "mean": 0.0269897624540071,
+              "minimum": 0.026988321214333453,
+              "maximum": 0.026991088829431863
+            },
+            "CaER": {
+              "mean": 3.2123718624986672,
+              "minimum": 3.2123051376315095,
+              "maximum": 3.2124443032784074
+            },
+            "CaM": {
+              "mean": 0.002024237585138762,
+              "minimum": 0.001784245848596292,
+              "maximum": 0.0022848327768751585
+            },
+            "CaPr": {
+              "mean": 25.502180702735178,
+              "minimum": 25.50085000008894,
+              "maximum": 25.50340624277455
+            },
+            "Pr": {
+              "mean": 94.49781929727465,
+              "minimum": 94.49659375723525,
+              "maximum": 94.49914999992092
+            }
+          },
+          "pre_3": {
+            "Ca_cyt": {
+              "mean": 0.0269922135784278,
+              "minimum": 0.026991088829431863,
+              "maximum": 0.026993249398928942
+            },
+            "CaER": {
+              "mean": 3.212248551391097,
+              "minimum": 3.2121964383093946,
+              "maximum": 3.2123051376315095
+            },
+            "CaM": {
+              "mean": 0.0015807329987287766,
+              "minimum": 0.0013933125569783676,
+              "maximum": 0.001784245848596292
+            },
+            "CaPr": {
+              "mean": 25.504445514386678,
+              "minimum": 25.50340624277455,
+              "maximum": 25.50540261265999
+            },
+            "Pr": {
+              "mean": 94.49555448562312,
+              "minimum": 94.4945973873498,
+              "maximum": 94.49659375723525
+            }
+          },
+          "cue_3": {
+            "Ca_cyt": {
+              "mean": 0.026994127770432374,
+              "minimum": 0.026993249398928942,
+              "maximum": 0.026994936684791783
+            },
+            "CaER": {
+              "mean": 3.212152245361045,
+              "minimum": 3.2121115464521566,
+              "maximum": 3.2121964383093946
+            },
+            "CaM": {
+              "mean": 0.0012343832471216887,
+              "minimum": 0.0010880222485253124,
+              "maximum": 0.0013933125569783676
+            },
+            "CaPr": {
+              "mean": 25.5062142233213,
+              "minimum": 25.50540261265999,
+              "maximum": 25.506961654036875
+            },
+            "Pr": {
+              "mean": 94.49378577668845,
+              "minimum": 94.49303834597285,
+              "maximum": 94.4945973873498
+            }
+          },
+          "post_3": {
+            "Ca_cyt": {
+              "mean": 0.026995622628012864,
+              "minimum": 0.026994936684791783,
+              "maximum": 0.02699625432517972
+            },
+            "CaER": {
+              "mean": 3.2120770338161213,
+              "minimum": 3.2120452502099988,
+              "maximum": 3.2121115464521566
+            },
+            "CaM": {
+              "mean": 0.0009639125384867836,
+              "minimum": 0.0008496183296286516,
+              "maximum": 0.0010880222485253124
+            },
+            "CaPr": {
+              "mean": 25.50759545747794,
+              "minimum": 25.506961654036875,
+              "maximum": 25.5081791370407
+            },
+            "Pr": {
+              "mean": 94.49240454253179,
+              "minimum": 94.49182086296898,
+              "maximum": 94.49303834597285
+            }
+          }
+        }
+      },
+      "elapsed_seconds": 2.8317420050000237,
+      "record_id": "05056ec6440014c2322b4715a6b2614b0f44c545e59dcfb34def3cda414d35cd",
+      "fingerprint": "2bf0ca3e3444dc6a3f3506e185c477e9587efb1c2c1f5fcc79fbb77ee39dbc85"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 1810.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          },
+          "copasi": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          }
+        }
+      },
+      "sample_count": 181001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        },
+        "copasi": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        }
+      },
+      "comparison": {
+        "passed": false,
+        "max_scaled_error": 109.06716064407014,
+        "max_absolute_error": 0.00021325706071517736,
+        "worst_observable": "CaM",
+        "worst_time": 1655.76,
+        "samples": 181001,
+        "observables": 5,
+        "per_observable_max_scaled_error": {
+          "Ca_cyt": 15.556885477988974,
+          "CaER": 2.6453439164827435,
+          "CaM": 109.06716064407014,
+          "CaPr": 0.0384367257230827,
+          "Pr": 0.014995831513637736
+        }
+      },
+      "windows": {
+        "roadrunner": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402691717,
+              "minimum": 0.056901060213266214,
+              "maximum": 0.5121961133104859
+            },
+            "CaER": {
+              "mean": 0.7688428911860452,
+              "minimum": 0.7041704092232469,
+              "maximum": 1.0955962769556564
+            },
+            "CaM": {
+              "mean": 0.43389641502401555,
+              "minimum": 0.29,
+              "maximum": 0.6049142860767626
+            },
+            "CaPr": {
+              "mean": 84.94689225115917,
+              "minimum": 84.02712795641462,
+              "maximum": 85.6475002626583
+            },
+            "Pr": {
+              "mean": 35.05310774886201,
+              "minimum": 34.35249973734126,
+              "maximum": 35.972872043586115
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.2445136257165292,
+              "minimum": 0.058036817303934,
+              "maximum": 0.5117714879995905
+            },
+            "CaER": {
+              "mean": 0.765310971214314,
+              "minimum": 0.7043247453635669,
+              "maximum": 1.094879418033483
+            },
+            "CaM": {
+              "mean": 0.4352003965687993,
+              "minimum": 0.33852332722018785,
+              "maximum": 0.5846357748138084
+            },
+            "CaPr": {
+              "mean": 84.95344090320175,
+              "minimum": 84.11264444635249,
+              "maximum": 85.42932301607763
+            },
+            "Pr": {
+              "mean": 35.04655909683924,
+              "minimum": 34.57067698396389,
+              "maximum": 35.887355553687094
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.24080285751429906,
+              "minimum": 0.05803681757997747,
+              "maximum": 0.5117723883549962
+            },
+            "CaER": {
+              "mean": 0.7709632525571428,
+              "minimum": 0.7043247468612924,
+              "maximum": 1.0948794302039282
+            },
+            "CaM": {
+              "mean": 0.4348104308051033,
+              "minimum": 0.3385234750162443,
+              "maximum": 0.5846357736302378
+            },
+            "CaPr": {
+              "mean": 84.9361024090907,
+              "minimum": 84.11264467989098,
+              "maximum": 85.42932301622557
+            },
+            "Pr": {
+              "mean": 35.0638975909523,
+              "minimum": 34.57067698381952,
+              "maximum": 35.887355320150725
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.08721800230596619,
+              "minimum": 0.02722512699065182,
+              "maximum": 0.6299847693611994
+            },
+            "CaER": {
+              "mean": 1.0802635683002897,
+              "minimum": 0.7122853962795552,
+              "maximum": 1.7202333565995702
+            },
+            "CaM": {
+              "mean": 0.006449800736866709,
+              "minimum": 0.0028966472539641184,
+              "maximum": 0.49785945703574896
+            },
+            "CaPr": {
+              "mean": 69.87177920884747,
+              "minimum": 56.61762391319328,
+              "maximum": 84.8941352862919
+            },
+            "Pr": {
+              "mean": 50.12822079119724,
+              "minimum": 35.10586471375304,
+              "maximum": 63.38237608685182
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.044622304710938615,
+              "minimum": 0.020373136328521117,
+              "maximum": 0.6983872616113266
+            },
+            "CaER": {
+              "mean": 1.4284271909262445,
+              "minimum": 0.7053558390936707,
+              "maximum": 2.1890028362691814
+            },
+            "CaM": {
+              "mean": 1.9329818155247815,
+              "minimum": 0.0028120426331163157,
+              "maximum": 3.708249883771996
+            },
+            "CaPr": {
+              "mean": 47.6490640951576,
+              "minimum": 41.15126067761412,
+              "maximum": 56.61762391319328
+            },
+            "Pr": {
+              "mean": 72.35093590488619,
+              "minimum": 63.38237608685182,
+              "maximum": 78.8487393224287
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.04373759903576894,
+              "minimum": 0.019273787427243345,
+              "maximum": 0.72628459786524
+            },
+            "CaER": {
+              "mean": 1.6392329277998046,
+              "minimum": 0.7001066932512343,
+              "maximum": 2.371958008757238
+            },
+            "CaM": {
+              "mean": 3.774985798525957,
+              "minimum": 3.2048000810170603,
+              "maximum": 4.875273623562388
+            },
+            "CaPr": {
+              "mean": 39.438709921336,
+              "minimum": 36.72161025009291,
+              "maximum": 42.87972406995528
+            },
+            "Pr": {
+              "mean": 80.56129007870628,
+              "minimum": 77.12027593008793,
+              "maximum": 83.2783897499494
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.052953167476548865,
+              "minimum": 0.019256845526834484,
+              "maximum": 0.7418537210598705
+            },
+            "CaER": {
+              "mean": 1.6381545990223803,
+              "minimum": 0.7000290643341603,
+              "maximum": 2.3812278380065535
+            },
+            "CaM": {
+              "mean": 3.947172537088163,
+              "minimum": 3.751805962174849,
+              "maximum": 4.9304764811054005
+            },
+            "CaPr": {
+              "mean": 38.74506071375761,
+              "minimum": 36.49356150339027,
+              "maximum": 41.971216526546684
+            },
+            "Pr": {
+              "mean": 81.2549392862835,
+              "minimum": 78.02878347349515,
+              "maximum": 83.50643849664998
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.022583079465838995,
+              "minimum": 0.01473148811304341,
+              "maximum": 0.7540974169743889
+            },
+            "CaER": {
+              "mean": 1.9392573202738788,
+              "minimum": 0.7000284380225208,
+              "maximum": 2.793275166121657
+            },
+            "CaM": {
+              "mean": 0.007643423620036737,
+              "minimum": 0.0028977894043188675,
+              "maximum": 4.227332109644238
+            },
+            "CaPr": {
+              "mean": 33.370509405776154,
+              "minimum": 27.18144900067028,
+              "maximum": 41.4666336699384
+            },
+            "Pr": {
+              "mean": 86.62949059426597,
+              "minimum": 78.53336633010102,
+              "maximum": 92.81855099937312
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.025529310287789812,
+              "minimum": 0.020608722436240665,
+              "maximum": 0.026988323184317656
+            },
+            "CaER": {
+              "mean": 3.1501422134206716,
+              "minimum": 2.793275166121657,
+              "maximum": 3.212480490565849
+            },
+            "CaM": {
+              "mean": 0.0025880309724662085,
+              "minimum": 0.002284832739710948,
+              "maximum": 0.002899393082188265
+            },
+            "CaPr": {
+              "mean": 25.75030567206157,
+              "minimum": 25.49999237070276,
+              "maximum": 27.18144900067028
+            },
+            "Pr": {
+              "mean": 94.24969432798174,
+              "minimum": 92.81855099937312,
+              "maximum": 94.5000076293405
+            }
+          }
+        },
+        "copasi": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.2421505240271515,
+              "minimum": 0.056901060212521795,
+              "maximum": 0.5121961132681753
+            },
+            "CaER": {
+              "mean": 0.7688428911882933,
+              "minimum": 0.7041704092223169,
+              "maximum": 1.0955962769627683
+            },
+            "CaM": {
+              "mean": 0.4338964150042506,
+              "minimum": 0.29,
+              "maximum": 0.6049142860812392
+            },
+            "CaPr": {
+              "mean": 84.94689225121166,
+              "minimum": 84.02712795638405,
+              "maximum": 85.64750026265973
+            },
+            "Pr": {
+              "mean": 35.05310774879201,
+              "minimum": 34.352499737340246,
+              "maximum": 35.97287204361579
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.2445136257059388,
+              "minimum": 0.05803681731609329,
+              "maximum": 0.5117714839396746
+            },
+            "CaER": {
+              "mean": 0.7653109712211525,
+              "minimum": 0.704324745356089,
+              "maximum": 1.094879417985737
+            },
+            "CaM": {
+              "mean": 0.4352003966064729,
+              "minimum": 0.3385233265039428,
+              "maximum": 0.5846357747638445
+            },
+            "CaPr": {
+              "mean": 84.95344090300333,
+              "minimum": 84.11264444532588,
+              "maximum": 85.42932301606939
+            },
+            "Pr": {
+              "mean": 35.046559097005286,
+              "minimum": 34.57067698393936,
+              "maximum": 35.887355554681804
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.24080285752189057,
+              "minimum": 0.05803681759415371,
+              "maximum": 0.5117723838063603
+            },
+            "CaER": {
+              "mean": 0.7709632525585494,
+              "minimum": 0.7043247468529883,
+              "maximum": 1.094879430150038
+            },
+            "CaM": {
+              "mean": 0.4348104307408812,
+              "minimum": 0.3385234742206462,
+              "maximum": 0.5846357735667234
+            },
+            "CaPr": {
+              "mean": 84.93610240930236,
+              "minimum": 84.11264467874837,
+              "maximum": 85.42932301623257
+            },
+            "Pr": {
+              "mean": 35.06389759070732,
+              "minimum": 34.57067698377773,
+              "maximum": 35.88735532126059
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.08721800228783838,
+              "minimum": 0.027225126979378938,
+              "maximum": 0.6299847883789338
+            },
+            "CaER": {
+              "mean": 1.0802635684287327,
+              "minimum": 0.7122853962801566,
+              "maximum": 1.7202333570771142
+            },
+            "CaM": {
+              "mean": 0.0064498009967206785,
+              "minimum": 0.0028966472539377766,
+              "maximum": 0.4978594997974071
+            },
+            "CaPr": {
+              "mean": 69.87177920492725,
+              "minimum": 56.61762391622917,
+              "maximum": 84.8941352838695
+            },
+            "Pr": {
+              "mean": 50.12822079508097,
+              "minimum": 35.10586471614117,
+              "maximum": 63.38237608377738
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.04462230488736707,
+              "minimum": 0.020373136314722096,
+              "maximum": 0.6983876466034722
+            },
+            "CaER": {
+              "mean": 1.4284271908889477,
+              "minimum": 0.7053558391656592,
+              "maximum": 2.1890028371573607
+            },
+            "CaM": {
+              "mean": 1.9329818136150747,
+              "minimum": 0.0028120426330000654,
+              "maximum": 3.7082498847671532
+            },
+            "CaPr": {
+              "mean": 47.649064089264996,
+              "minimum": 41.151260688862095,
+              "maximum": 56.61762391622917
+            },
+            "Pr": {
+              "mean": 72.35093591074363,
+              "minimum": 63.38237608377738,
+              "maximum": 78.84873931114612
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.04373759891786772,
+              "minimum": 0.019273787412504864,
+              "maximum": 0.7262853219022326
+            },
+            "CaER": {
+              "mean": 1.639232926791393,
+              "minimum": 0.7001066931857867,
+              "maximum": 2.3719580099652995
+            },
+            "CaM": {
+              "mean": 3.774985799135582,
+              "minimum": 3.2047998095566252,
+              "maximum": 4.8752736317697645
+            },
+            "CaPr": {
+              "mean": 39.438709909539384,
+              "minimum": 36.72161022737408,
+              "maximum": 42.8797240469549
+            },
+            "Pr": {
+              "mean": 80.56129009046872,
+              "minimum": 77.1202759530535,
+              "maximum": 83.27838977263373
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.05295316566732732,
+              "minimum": 0.019256845508336666,
+              "maximum": 0.7418545812584836
+            },
+            "CaER": {
+              "mean": 1.638154605551502,
+              "minimum": 0.7000290642533695,
+              "maximum": 2.3812278387440915
+            },
+            "CaM": {
+              "mean": 3.947172536811769,
+              "minimum": 3.751804918876045,
+              "maximum": 4.9304764685640645
+            },
+            "CaPr": {
+              "mean": 38.74506067704108,
+              "minimum": 36.493561481744024,
+              "maximum": 41.971216507316576
+            },
+            "Pr": {
+              "mean": 81.25493932296823,
+              "minimum": 78.02878349269216,
+              "maximum": 83.50643851826598
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.022583074823978193,
+              "minimum": 0.014731487609533417,
+              "maximum": 0.7541168811818801
+            },
+            "CaER": {
+              "mean": 1.9392572934499137,
+              "minimum": 0.7000284380308949,
+              "maximum": 2.7932750447608985
+            },
+            "CaM": {
+              "mean": 0.0076434219332091845,
+              "minimum": 0.0028977894040704273,
+              "maximum": 4.227332340455262
+            },
+            "CaPr": {
+              "mean": 33.37050876404863,
+              "minimum": 27.181448398984646,
+              "maximum": 41.46663278821304
+            },
+            "Pr": {
+              "mean": 86.62949123596239,
+              "minimum": 78.5333672117967,
+              "maximum": 92.81855160102643
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.025529307741456467,
+              "minimum": 0.02060872039678857,
+              "maximum": 0.026988321223746215
+            },
+            "CaER": {
+              "mean": 3.1501422478498653,
+              "minimum": 2.7932750447608985,
+              "maximum": 3.2124805833264447
+            },
+            "CaM": {
+              "mean": 0.002588030993474093,
+              "minimum": 0.0022848327766974157,
+              "maximum": 0.002899393082218663
+            },
+            "CaPr": {
+              "mean": 25.750304447639063,
+              "minimum": 25.499990913601884,
+              "maximum": 27.181448398984646
+            },
+            "Pr": {
+              "mean": 94.24969555237195,
+              "minimum": 92.81855160102643,
+              "maximum": 94.50000908640916
+            }
+          }
+        }
+      },
+      "elapsed_seconds": 2.4438544940000213,
+      "record_id": "1a432eeffb6779acf1191dc0e112be42b6924e1815d6da2cc03e38a3ddd287e4",
+      "fingerprint": "2bf0ca3e3444dc6a3f3506e185c477e9587efb1c2c1f5fcc79fbb77ee39dbc85"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "CaPr": 0.8402712795641463
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "CaPr": 0.8402712795641463
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "CaER": 109.55962769555987
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 2010.0,
+            "stop": 2110.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          },
+          "copasi": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        },
+        "copasi": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        }
+      },
+      "comparison": {
+        "passed": false,
+        "max_scaled_error": 49552.52481274538,
+        "max_absolute_error": 12.179084074360208,
+        "worst_observable": "CaM",
+        "worst_time": 2109.89,
+        "samples": 221001,
+        "observables": 5,
+        "per_observable_max_scaled_error": {
+          "Ca_cyt": 48725.07552509846,
+          "CaER": 36888.384278682395,
+          "CaM": 49552.52481274538,
+          "CaPr": 23097.860460405256,
+          "Pr": 27750.048082769994
+        }
+      },
+      "windows": {
+        "roadrunner": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402691717,
+              "minimum": 0.056901060213266214,
+              "maximum": 0.5121961133104859
+            },
+            "CaER": {
+              "mean": 0.7688428911860452,
+              "minimum": 0.7041704092232469,
+              "maximum": 1.0955962769556564
+            },
+            "CaM": {
+              "mean": 0.43389641502401555,
+              "minimum": 0.29,
+              "maximum": 0.6049142860767626
+            },
+            "CaPr": {
+              "mean": 84.94689225115917,
+              "minimum": 84.02712795641462,
+              "maximum": 85.6475002626583
+            },
+            "Pr": {
+              "mean": 35.05310774886201,
+              "minimum": 34.35249973734126,
+              "maximum": 35.972872043586115
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.002834515615694526,
+              "minimum": 0.002148031440832936,
+              "maximum": 0.2597714137519219
+            },
+            "CaER": {
+              "mean": 0.8123584693364344,
+              "minimum": 0.7243413148240141,
+              "maximum": 0.8554400124441832
+            },
+            "CaM": {
+              "mean": 0.49732759907005364,
+              "minimum": 0.45932607253758473,
+              "maximum": 0.5445145721974245
+            },
+            "CaPr": {
+              "mean": 0.9241298335071835,
+              "minimum": 0.8401958084569078,
+              "maximum": 84.67374557613876
+            },
+            "Pr": {
+              "mean": 35.24157878923513,
+              "minimum": 35.21114218252862,
+              "maximum": 35.33200724379098
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.0023917873132784343,
+              "minimum": 0.0023249147262870543,
+              "maximum": 0.0024546610351532747
+            },
+            "CaER": {
+              "mean": 0.8899534020288541,
+              "minimum": 0.8554400124441832,
+              "maximum": 0.9210451641268341
+            },
+            "CaM": {
+              "mean": 0.42509418849456954,
+              "minimum": 0.39260149888279444,
+              "maximum": 0.45932607253758473
+            },
+            "CaPr": {
+              "mean": 0.8390578946320545,
+              "minimum": 0.8369103179030168,
+              "maximum": 0.8445987309653566
+            },
+            "Pr": {
+              "mean": 35.26258214940244,
+              "minimum": 35.25704131306917,
+              "maximum": 35.26472972613148
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.002349134978944472,
+              "minimum": 0.002347827780213193,
+              "maximum": 0.0024547675700559895
+            },
+            "CaER": {
+              "mean": 0.9228613331574707,
+              "minimum": 0.9210451641268341,
+              "maximum": 0.9241425253103254
+            },
+            "CaM": {
+              "mean": 0.0032894301779290034,
+              "minimum": 0.0028995449089078695,
+              "maximum": 0.39260149888279444
+            },
+            "CaPr": {
+              "mean": 0.8385943434569332,
+              "minimum": 0.8343790832439912,
+              "maximum": 0.8446227265838836
+            },
+            "Pr": {
+              "mean": 35.26304570058253,
+              "minimum": 35.257017317450625,
+              "maximum": 35.26726096080191
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.00235057980465187,
+              "minimum": 0.0023499412149189354,
+              "maximum": 0.002351128271921416
+            },
+            "CaER": {
+              "mean": 0.9248565408096033,
+              "minimum": 0.9241425253103254,
+              "maximum": 0.9254020507730596
+            },
+            "CaM": {
+              "mean": 0.002683467463613687,
+              "minimum": 0.0024783998834976744,
+              "maximum": 0.0028995449089078695
+            },
+            "CaPr": {
+              "mean": 0.8323866924383221,
+              "minimum": 0.8310243744376903,
+              "maximum": 0.8343790832439912
+            },
+            "Pr": {
+              "mean": 35.269253351607595,
+              "minimum": 35.26726096080191,
+              "maximum": 35.27061566960821
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.0023579331249885998,
+              "minimum": 0.002351128271921416,
+              "maximum": 0.0023605079943774016
+            },
+            "CaER": {
+              "mean": 0.9266895488622613,
+              "minimum": 0.9254020507730596,
+              "maximum": 0.9278836811217822
+            },
+            "CaM": {
+              "mean": 0.002293702289014499,
+              "minimum": 0.0021184149889071887,
+              "maximum": 0.0024783998834976744
+            },
+            "CaPr": {
+              "mean": 0.8402582089754747,
+              "minimum": 0.8310227850437729,
+              "maximum": 0.8402712788134589
+            },
+            "Pr": {
+              "mean": 35.27503367644104,
+              "minimum": 35.27061566960821,
+              "maximum": 35.27911163115058
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.002361108811751237,
+              "minimum": 0.0023605079943774016,
+              "maximum": 0.002361603806246727
+            },
+            "CaER": {
+              "mean": 0.9287118737473363,
+              "minimum": 0.9278836811217822,
+              "maximum": 0.9293261863579081
+            },
+            "CaM": {
+              "mean": 0.0019605423217034378,
+              "minimum": 0.0018107141185494948,
+              "maximum": 0.0021184149889071887
+            },
+            "CaPr": {
+              "mean": 0.8375818969136403,
+              "minimum": 0.8357234642894746,
+              "maximum": 0.8402637775644164
+            },
+            "Pr": {
+              "mean": 35.281793511801375,
+              "minimum": 35.27911163115058,
+              "maximum": 35.28365194442552
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.002362496094843804,
+              "minimum": 0.002361603806246727,
+              "maximum": 0.0023630594785545517
+            },
+            "CaER": {
+              "mean": 0.9297548543215398,
+              "minimum": 0.9293261863579081,
+              "maximum": 0.9301116334119325
+            },
+            "CaM": {
+              "mean": 0.002898706063847908,
+              "minimum": 0.0018104583688397114,
+              "maximum": 0.00289999995448542
+            },
+            "CaPr": {
+              "mean": 0.8349174411907695,
+              "minimum": 0.8343999867622282,
+              "maximum": 0.8357234642894746
+            },
+            "Pr": {
+              "mean": 35.28445796753143,
+              "minimum": 35.28365194442552,
+              "maximum": 35.28497542196552
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.002363500417507044,
+              "minimum": 0.0023630594785545517,
+              "maximum": 0.002363909785726823
+            },
+            "CaER": {
+              "mean": 0.930371582021252,
+              "minimum": 0.9301116334119325,
+              "maximum": 0.9305974340227139
+            },
+            "CaM": {
+              "mean": 0.002683457451711461,
+              "minimum": 0.0024783809948982927,
+              "maximum": 0.0028995448864989055
+            },
+            "CaPr": {
+              "mean": 0.834224101125149,
+              "minimum": 0.8341405895783353,
+              "maximum": 0.8343999867622282
+            },
+            "Pr": {
+              "mean": 35.2851513076026,
+              "minimum": 35.28497542196552,
+              "maximum": 35.28523481914941
+            }
+          },
+          "intervention_3": {
+            "Ca_cyt": {
+              "mean": 108.87177720353118,
+              "minimum": 0.002363909785726823,
+              "maximum": 109.02667820917532
+            },
+            "CaER": {
+              "mean": 109.41959492545593,
+              "minimum": 0.9305974340227139,
+              "maximum": 109.55962769556001
+            },
+            "CaM": {
+              "mean": 2.4015296699904964,
+              "minimum": 0.0024779920083244046,
+              "maximum": 2.404985594699149
+            },
+            "CaPr": {
+              "mean": 36.0093157267409,
+              "minimum": 0.8341405612301998,
+              "maximum": 36.08627683374801
+            },
+            "Pr": {
+              "mean": 0.11005968198571371,
+              "minimum": 0.033098574978606576,
+              "maximum": 35.28523484749755
+            }
+          },
+          "pre_3": {
+            "Ca_cyt": {
+              "mean": 109.02667820917526,
+              "minimum": 109.02667820917527,
+              "maximum": 109.0266782091753
+            },
+            "CaER": {
+              "mean": 109.55962769556002,
+              "minimum": 109.55962769556,
+              "maximum": 109.55962769556
+            },
+            "CaM": {
+              "mean": 2.404927109556138,
+              "minimum": 2.4049271095561386,
+              "maximum": 2.4049271095561386
+            },
+            "CaPr": {
+              "mean": 36.08627683374801,
+              "minimum": 36.08627683374801,
+              "maximum": 36.08627683374801
+            },
+            "Pr": {
+              "mean": 0.03309857497860658,
+              "minimum": 0.033098574978606576,
+              "maximum": 0.03309857497860658
+            }
+          },
+          "cue_3": {
+            "Ca_cyt": {
+              "mean": 3.5137625528521768,
+              "minimum": 0.01674835464621849,
+              "maximum": 109.0266782091753
+            },
+            "CaER": {
+              "mean": 4.231502320126563,
+              "minimum": 0.6993432807404888,
+              "maximum": 109.55962769556
+            },
+            "CaM": {
+              "mean": 0.09661765880106819,
+              "minimum": 0.002897580491575288,
+              "maximum": 4.845404254662582
+            },
+            "CaPr": {
+              "mean": 28.815697527337463,
+              "minimum": 21.44241705085901,
+              "maximum": 36.08627683374801
+            },
+            "Pr": {
+              "mean": 7.3036778813889605,
+              "minimum": 0.03309857497860658,
+              "maximum": 14.676958357867317
+            }
+          },
+          "post_3": {
+            "Ca_cyt": {
+              "mean": 0.0682402275052891,
+              "minimum": 0.012623025030305905,
+              "maximum": 0.789900675575719
+            },
+            "CaER": {
+              "mean": 1.5592175936850599,
+              "minimum": 0.6992479300796367,
+              "maximum": 2.7365815505021023
+            },
+            "CaM": {
+              "mean": 0.646856789583077,
+              "minimum": 0.29072508728391544,
+              "maximum": 2.1858165114465993
+            },
+            "CaPr": {
+              "mean": 17.88485517474545,
+              "minimum": 14.180011628871267,
+              "maximum": 21.885486259928896
+            },
+            "Pr": {
+              "mean": 18.234520233980998,
+              "minimum": 14.23388914879738,
+              "maximum": 21.939363779855256
+            }
+          }
+        },
+        "copasi": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402715204,
+              "minimum": 0.05690106021250055,
+              "maximum": 0.5121961132688622
+            },
+            "CaER": {
+              "mean": 0.7688428911883112,
+              "minimum": 0.7041704092223149,
+              "maximum": 1.0955962769627792
+            },
+            "CaM": {
+              "mean": 0.4338964150041238,
+              "minimum": 0.29,
+              "maximum": 0.6049142860810982
+            },
+            "CaPr": {
+              "mean": 84.94689225121196,
+              "minimum": 84.02712795638487,
+              "maximum": 85.64750026265999
+            },
+            "Pr": {
+              "mean": 35.05310774879116,
+              "minimum": 34.352499737340096,
+              "maximum": 35.972872043614984
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.0028345156096194163,
+              "minimum": 0.0021480314406536936,
+              "maximum": 0.25977141231462364
+            },
+            "CaER": {
+              "mean": 0.8123584692130871,
+              "minimum": 0.724341314290097,
+              "maximum": 0.8554400123908826
+            },
+            "CaM": {
+              "mean": 0.4973276001532901,
+              "minimum": 0.4593260735381226,
+              "maximum": 0.5445145733065355
+            },
+            "CaPr": {
+              "mean": 0.9241298335044715,
+              "minimum": 0.8401958084569235,
+              "maximum": 84.67374557405736
+            },
+            "Pr": {
+              "mean": 35.24157879306296,
+              "minimum": 35.21114218639393,
+              "maximum": 35.33200724554783
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.0023917873135338233,
+              "minimum": 0.002324914726407595,
+              "maximum": 0.002454661035540425
+            },
+            "CaER": {
+              "mean": 0.8899534020347662,
+              "minimum": 0.8554400123908826,
+              "maximum": 0.9210451641892717
+            },
+            "CaM": {
+              "mean": 0.4250941894205145,
+              "minimum": 0.39260149973792463,
+              "maximum": 0.4593260735381226
+            },
+            "CaPr": {
+              "mean": 0.8390578946935648,
+              "minimum": 0.8369103179478022,
+              "maximum": 0.8445987310838948
+            },
+            "Pr": {
+              "mean": 35.26258215312236,
+              "minimum": 35.257041316732014,
+              "maximum": 35.264729729868115
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.0023491349791040137,
+              "minimum": 0.0023478277803658217,
+              "maximum": 0.0024547675704433653
+            },
+            "CaER": {
+              "mean": 0.922861333220404,
+              "minimum": 0.9210451641892717,
+              "maximum": 0.9241425253727139
+            },
+            "CaM": {
+              "mean": 0.003289430178783818,
+              "minimum": 0.00289954490890769,
+              "maximum": 0.39260149973792463
+            },
+            "CaPr": {
+              "mean": 0.8385943435743672,
+              "minimum": 0.8343790833635755,
+              "maximum": 0.84462272670256
+            },
+            "Pr": {
+              "mean": 35.26304570424174,
+              "minimum": 35.25701732111333,
+              "maximum": 35.26726096445266
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.002350579804804713,
+              "minimum": 0.002349941215075514,
+              "maximum": 0.0023511282720738214
+            },
+            "CaER": {
+              "mean": 0.9248565408701034,
+              "minimum": 0.9241425253727139,
+              "maximum": 0.9254020508325742
+            },
+            "CaM": {
+              "mean": 0.0026834674636133375,
+              "minimum": 0.0024783998834972316,
+              "maximum": 0.00289954490890769
+            },
+            "CaPr": {
+              "mean": 0.8323866925654669,
+              "minimum": 0.8310243745687788,
+              "maximum": 0.8343790833635755
+            },
+            "Pr": {
+              "mean": 35.26925335525079,
+              "minimum": 35.26726096445266,
+              "maximum": 35.27061567324746
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.002357933125053972,
+              "minimum": 0.0023511282720738214,
+              "maximum": 0.002360507994415588
+            },
+            "CaER": {
+              "mean": 0.9266895489078422,
+              "minimum": 0.9254020508325742,
+              "maximum": 0.9278836811543868
+            },
+            "CaM": {
+              "mean": 0.0022937022890121323,
+              "minimum": 0.002118414988903036,
+              "maximum": 0.0024783998834972316
+            },
+            "CaPr": {
+              "mean": 0.8402582089756522,
+              "minimum": 0.8310227851748662,
+              "maximum": 0.840271278813458
+            },
+            "Pr": {
+              "mean": 35.27503368002362,
+              "minimum": 35.27061567324746,
+              "maximum": 35.27911163467868
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.0023611088117835534,
+              "minimum": 0.002360507994415588,
+              "maximum": 0.00236160380627646
+            },
+            "CaER": {
+              "mean": 0.9287118737709577,
+              "minimum": 0.9278836811543868,
+              "maximum": 0.9293261863756543
+            },
+            "CaM": {
+              "mean": 0.001960542321699662,
+              "minimum": 0.0018107141185459863,
+              "maximum": 0.002118414988903036
+            },
+            "CaPr": {
+              "mean": 0.8375818969496749,
+              "minimum": 0.8357234643490109,
+              "maximum": 0.840263777564511
+            },
+            "Pr": {
+              "mean": 35.281793515293515,
+              "minimum": 35.27911163467868,
+              "maximum": 35.28365194789417
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.0023624960948771556,
+              "minimum": 0.00236160380627646,
+              "maximum": 0.0023630594785883766
+            },
+            "CaER": {
+              "mean": 0.9297548543366972,
+              "minimum": 0.9293261863756543,
+              "maximum": 0.9301116334251617
+            },
+            "CaM": {
+              "mean": 0.0028987060638477175,
+              "minimum": 0.0018104583688362034,
+              "maximum": 0.0028999999544853283
+            },
+            "CaPr": {
+              "mean": 0.8349174412607642,
+              "minimum": 0.8343999868400732,
+              "maximum": 0.8357234643490109
+            },
+            "Pr": {
+              "mean": 35.28445797098242,
+              "minimum": 35.28365194789417,
+              "maximum": 35.284975425403054
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.002363500417534635,
+              "minimum": 0.0023630594785883766,
+              "maximum": 0.0023639097857542078
+            },
+            "CaER": {
+              "mean": 0.93037158203359,
+              "minimum": 0.9301116334251617,
+              "maximum": 0.9305974340345934
+            },
+            "CaM": {
+              "mean": 0.002683457451711714,
+              "minimum": 0.0024783809948984202,
+              "maximum": 0.002899544886498693
+            },
+            "CaPr": {
+              "mean": 0.834224101206561,
+              "minimum": 0.8341405896615803,
+              "maximum": 0.8343999868400732
+            },
+            "Pr": {
+              "mean": 35.28515131103655,
+              "minimum": 35.284975425403054,
+              "maximum": 35.285234822581515
+            }
+          },
+          "intervention_3": {
+            "Ca_cyt": {
+              "mean": 108.87177720381924,
+              "minimum": 0.0023639097857542078,
+              "maximum": 109.02667820917533
+            },
+            "CaER": {
+              "mean": 109.41959492538238,
+              "minimum": 0.9305974340345934,
+              "maximum": 109.55962769556002
+            },
+            "CaM": {
+              "mean": 2.4015296699904294,
+              "minimum": 0.0024779920083245256,
+              "maximum": 2.4049855946991676
+            },
+            "CaPr": {
+              "mean": 36.009315730246875,
+              "minimum": 0.8341405613134492,
+              "maximum": 36.08627683726124
+            },
+            "Pr": {
+              "mean": 0.11005968199620876,
+              "minimum": 0.03309857498182894,
+              "maximum": 35.28523485092966
+            }
+          },
+          "pre_3": {
+            "Ca_cyt": {
+              "mean": 109.02667820917507,
+              "minimum": 109.02667820917505,
+              "maximum": 109.02667820917529
+            },
+            "CaER": {
+              "mean": 109.55962769555975,
+              "minimum": 109.55962769555974,
+              "maximum": 109.55962769556
+            },
+            "CaM": {
+              "mean": 2.404927109556138,
+              "minimum": 2.4049271095561386,
+              "maximum": 2.4049271095561386
+            },
+            "CaPr": {
+              "mean": 36.086276837261245,
+              "minimum": 36.08627683726124,
+              "maximum": 36.08627683726124
+            },
+            "Pr": {
+              "mean": 0.033098574981829,
+              "minimum": 0.03309857498182893,
+              "maximum": 0.03309857498182901
+            }
+          },
+          "cue_3": {
+            "Ca_cyt": {
+              "mean": 3.5206767316569327,
+              "minimum": 0.01658141435071784,
+              "maximum": 109.02667820917505
+            },
+            "CaER": {
+              "mean": 4.179463375665506,
+              "minimum": 0.6993432807403647,
+              "maximum": 109.55962769555974
+            },
+            "CaM": {
+              "mean": 0.09604130192802102,
+              "minimum": 0.0028981498756691297,
+              "maximum": 4.845404255138027
+            },
+            "CaPr": {
+              "mean": 28.979156082685545,
+              "minimum": 21.896161889660352,
+              "maximum": 36.08627683726124
+            },
+            "Pr": {
+              "mean": 7.1402193295579846,
+              "minimum": 0.03309857498182901,
+              "maximum": 14.223213522582977
+            }
+          },
+          "post_3": {
+            "Ca_cyt": {
+              "mean": 0.2773127281496584,
+              "minimum": 0.01623286205852413,
+              "maximum": 0.7161328830524996
+            },
+            "CaER": {
+              "mean": 0.777014455690503,
+              "minimum": 0.6992422701433595,
+              "maximum": 2.261850004414801
+            },
+            "CaM": {
+              "mean": 0.3540351225792491,
+              "minimum": 0.0028678951800795815,
+              "maximum": 1.3857402700130876
+            },
+            "CaPr": {
+              "mean": 25.532754192600404,
+              "minimum": 21.213733867014277,
+              "maximum": 26.537188306027147
+            },
+            "Pr": {
+              "mean": 10.586621219642756,
+              "minimum": 9.582187106215944,
+              "maximum": 14.905641545228999
+            }
+          }
+        }
+      },
+      "elapsed_seconds": 3.6468067249999763,
+      "record_id": "1b8e0520f170e8eb138c45a72be1e4c6e2d0e9bc43076fa7f21be9ac49deadd1",
+      "fingerprint": "2bf0ca3e3444dc6a3f3506e185c477e9587efb1c2c1f5fcc79fbb77ee39dbc85"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 1810.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          },
+          "copasi": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          }
+        }
+      },
+      "sample_count": 181001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        },
+        "copasi": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        }
+      },
+      "comparison": {
+        "passed": false,
+        "max_scaled_error": 3.3140838177952503,
+        "max_absolute_error": 3.75691721737903e-05,
+        "worst_observable": "Ca_cyt",
+        "worst_time": 1734.42,
+        "samples": 181001,
+        "observables": 5,
+        "per_observable_max_scaled_error": {
+          "Ca_cyt": 3.3140838177952503,
+          "CaER": 0.401453770044901,
+          "CaM": 0.6845994777690195,
+          "CaPr": 0.005417098251163576,
+          "Pr": 0.002380226171112351
+        }
+      },
+      "windows": {
+        "roadrunner": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402691717,
+              "minimum": 0.056901060213266214,
+              "maximum": 0.5121961133104859
+            },
+            "CaER": {
+              "mean": 0.7688428911860452,
+              "minimum": 0.7041704092232469,
+              "maximum": 1.0955962769556564
+            },
+            "CaM": {
+              "mean": 0.43389641502401555,
+              "minimum": 0.29,
+              "maximum": 0.6049142860767626
+            },
+            "CaPr": {
+              "mean": 84.94689225115917,
+              "minimum": 84.02712795641462,
+              "maximum": 85.6475002626583
+            },
+            "Pr": {
+              "mean": 35.05310774886201,
+              "minimum": 34.35249973734126,
+              "maximum": 35.972872043586115
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.2445136257165292,
+              "minimum": 0.058036817303934,
+              "maximum": 0.5117714879995905
+            },
+            "CaER": {
+              "mean": 0.765310971214314,
+              "minimum": 0.7043247453635669,
+              "maximum": 1.094879418033483
+            },
+            "CaM": {
+              "mean": 0.4352003965687993,
+              "minimum": 0.33852332722018785,
+              "maximum": 0.5846357748138084
+            },
+            "CaPr": {
+              "mean": 84.95344090320175,
+              "minimum": 84.11264444635249,
+              "maximum": 85.42932301607763
+            },
+            "Pr": {
+              "mean": 35.04655909683924,
+              "minimum": 34.57067698396389,
+              "maximum": 35.887355553687094
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.24080285751429906,
+              "minimum": 0.05803681757997747,
+              "maximum": 0.5117723883549962
+            },
+            "CaER": {
+              "mean": 0.7709632525571428,
+              "minimum": 0.7043247468612924,
+              "maximum": 1.0948794302039282
+            },
+            "CaM": {
+              "mean": 0.4348104308051033,
+              "minimum": 0.3385234750162443,
+              "maximum": 0.5846357736302378
+            },
+            "CaPr": {
+              "mean": 84.9361024090907,
+              "minimum": 84.11264467989098,
+              "maximum": 85.42932301622557
+            },
+            "Pr": {
+              "mean": 35.0638975909523,
+              "minimum": 34.57067698381952,
+              "maximum": 35.887355320150725
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.08721800230596619,
+              "minimum": 0.02722512699065182,
+              "maximum": 0.6299847693611994
+            },
+            "CaER": {
+              "mean": 1.0802635683002897,
+              "minimum": 0.7122853962795552,
+              "maximum": 1.7202333565995702
+            },
+            "CaM": {
+              "mean": 0.006449800736866709,
+              "minimum": 0.0028966472539641184,
+              "maximum": 0.49785945703574896
+            },
+            "CaPr": {
+              "mean": 69.87177920884747,
+              "minimum": 56.61762391319328,
+              "maximum": 84.8941352862919
+            },
+            "Pr": {
+              "mean": 50.12822079119724,
+              "minimum": 35.10586471375304,
+              "maximum": 63.38237608685182
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.044622304710938615,
+              "minimum": 0.020373136328521117,
+              "maximum": 0.6983872616113266
+            },
+            "CaER": {
+              "mean": 1.4284271909262445,
+              "minimum": 0.7053558390936707,
+              "maximum": 2.1890028362691814
+            },
+            "CaM": {
+              "mean": 1.9329818155247815,
+              "minimum": 0.0028120426331163157,
+              "maximum": 3.708249883771996
+            },
+            "CaPr": {
+              "mean": 47.6490640951576,
+              "minimum": 41.15126067761412,
+              "maximum": 56.61762391319328
+            },
+            "Pr": {
+              "mean": 72.35093590488619,
+              "minimum": 63.38237608685182,
+              "maximum": 78.8487393224287
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.04373759903576894,
+              "minimum": 0.019273787427243345,
+              "maximum": 0.72628459786524
+            },
+            "CaER": {
+              "mean": 1.6392329277998046,
+              "minimum": 0.7001066932512343,
+              "maximum": 2.371958008757238
+            },
+            "CaM": {
+              "mean": 3.774985798525957,
+              "minimum": 3.2048000810170603,
+              "maximum": 4.875273623562388
+            },
+            "CaPr": {
+              "mean": 39.438709921336,
+              "minimum": 36.72161025009291,
+              "maximum": 42.87972406995528
+            },
+            "Pr": {
+              "mean": 80.56129007870628,
+              "minimum": 77.12027593008793,
+              "maximum": 83.2783897499494
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.052953167476548865,
+              "minimum": 0.019256845526834484,
+              "maximum": 0.7418537210598705
+            },
+            "CaER": {
+              "mean": 1.6381545990223803,
+              "minimum": 0.7000290643341603,
+              "maximum": 2.3812278380065535
+            },
+            "CaM": {
+              "mean": 3.947172537088163,
+              "minimum": 3.751805962174849,
+              "maximum": 4.9304764811054005
+            },
+            "CaPr": {
+              "mean": 38.74506071375761,
+              "minimum": 36.49356150339027,
+              "maximum": 41.971216526546684
+            },
+            "Pr": {
+              "mean": 81.2549392862835,
+              "minimum": 78.02878347349515,
+              "maximum": 83.50643849664998
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.04765951321875067,
+              "minimum": 0.019256718568275356,
+              "maximum": 0.7436890202551211
+            },
+            "CaER": {
+              "mean": 1.5815905812922184,
+              "minimum": 0.7000284380225208,
+              "maximum": 2.3812361199413363
+            },
+            "CaM": {
+              "mean": 3.9492273017265913,
+              "minimum": 3.758301046313155,
+              "maximum": 4.930582666961064
+            },
+            "CaPr": {
+              "mean": 38.96839138038422,
+              "minimum": 36.493382208481265,
+              "maximum": 41.964827369362666
+            },
+            "Pr": {
+              "mean": 81.03160861965482,
+              "minimum": 78.03517263067708,
+              "maximum": 83.50661779155743
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.04639969208307153,
+              "minimum": 0.019256718214878777,
+              "maximum": 0.7404331892085408
+            },
+            "CaER": {
+              "mean": 1.6033836478854755,
+              "minimum": 0.7000283835021397,
+              "maximum": 2.381236722336878
+            },
+            "CaM": {
+              "mean": 3.9462441248047235,
+              "minimum": 3.7582049148947743,
+              "maximum": 4.930595482556452
+            },
+            "CaPr": {
+              "mean": 38.89441164283626,
+              "minimum": 36.493381281607824,
+              "maximum": 41.96481938309477
+            },
+            "Pr": {
+              "mean": 81.10558835720059,
+              "minimum": 78.03518061694147,
+              "maximum": 83.50661871842856
+            }
+          }
+        },
+        "copasi": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.2421505240271699,
+              "minimum": 0.0569010602125239,
+              "maximum": 0.5121961132696247
+            },
+            "CaER": {
+              "mean": 0.7688428911882905,
+              "minimum": 0.7041704092223315,
+              "maximum": 1.0955962769627976
+            },
+            "CaM": {
+              "mean": 0.4338964150039895,
+              "minimum": 0.29,
+              "maximum": 0.6049142860809432
+            },
+            "CaPr": {
+              "mean": 84.9468922512137,
+              "minimum": 84.02712795638475,
+              "maximum": 85.64750026265999
+            },
+            "Pr": {
+              "mean": 35.05310774879011,
+              "minimum": 34.35249973734008,
+              "maximum": 35.97287204361513
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.24451362570580654,
+              "minimum": 0.05803681731632039,
+              "maximum": 0.5117714838924264
+            },
+            "CaER": {
+              "mean": 0.765310971221097,
+              "minimum": 0.7043247453559887,
+              "maximum": 1.0948794179851002
+            },
+            "CaM": {
+              "mean": 0.43520039660687315,
+              "minimum": 0.33852332649550293,
+              "maximum": 0.584635774762619
+            },
+            "CaPr": {
+              "mean": 84.9534409030022,
+              "minimum": 84.11264444531109,
+              "maximum": 85.42932301607095
+            },
+            "Pr": {
+              "mean": 35.04655909700488,
+              "minimum": 34.5706769839364,
+              "maximum": 35.887355554696086
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.2408028575220394,
+              "minimum": 0.05803681759432766,
+              "maximum": 0.5117723837635803
+            },
+            "CaER": {
+              "mean": 0.7709632525584655,
+              "minimum": 0.7043247468528765,
+              "maximum": 1.094879430149427
+            },
+            "CaM": {
+              "mean": 0.43481043073996617,
+              "minimum": 0.33852347421135254,
+              "maximum": 0.5846357735658545
+            },
+            "CaPr": {
+              "mean": 84.93610240930501,
+              "minimum": 84.11264467873806,
+              "maximum": 85.42932301623233
+            },
+            "Pr": {
+              "mean": 35.06389759070153,
+              "minimum": 34.57067698377415,
+              "maximum": 35.8873553212692
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.08721800228753583,
+              "minimum": 0.02722512697927407,
+              "maximum": 0.6299847885533163
+            },
+            "CaER": {
+              "mean": 1.0802635684298065,
+              "minimum": 0.7122853962801585,
+              "maximum": 1.7202333570813866
+            },
+            "CaM": {
+              "mean": 0.006449800999064709,
+              "minimum": 0.0028966472539375624,
+              "maximum": 0.4978595001896309
+            },
+            "CaPr": {
+              "mean": 69.87177920488782,
+              "minimum": 56.61762391625671,
+              "maximum": 84.89413528384544
+            },
+            "Pr": {
+              "mean": 50.12822079511571,
+              "minimum": 35.10586471616101,
+              "maximum": 63.38237608374532
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.044622304888290505,
+              "minimum": 0.020373136314598073,
+              "maximum": 0.698387649938579
+            },
+            "CaER": {
+              "mean": 1.428427190888424,
+              "minimum": 0.7053558391662809,
+              "maximum": 2.1890028371654235
+            },
+            "CaM": {
+              "mean": 1.9329818135991708,
+              "minimum": 0.0028120426329990146,
+              "maximum": 3.7082498847765413
+            },
+            "CaPr": {
+              "mean": 47.64906408920455,
+              "minimum": 41.151260688945875,
+              "maximum": 56.61762391625671
+            },
+            "Pr": {
+              "mean": 72.35093591079837,
+              "minimum": 63.38237608374532,
+              "maximum": 78.84873931105655
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.043737598916492516,
+              "minimum": 0.019273787412375558,
+              "maximum": 0.7262853281466639
+            },
+            "CaER": {
+              "mean": 1.6392329267829693,
+              "minimum": 0.7001066931852532,
+              "maximum": 2.371958009976178
+            },
+            "CaM": {
+              "mean": 3.7749857991418154,
+              "minimum": 3.2047998072789725,
+              "maximum": 4.875273631838728
+            },
+            "CaPr": {
+              "mean": 39.43870990942432,
+              "minimum": 36.72161022716596,
+              "maximum": 42.87972404674495
+            },
+            "Pr": {
+              "mean": 80.5612900905778,
+              "minimum": 77.12027595325723,
+              "maximum": 83.27838977283557
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.05295316565216355,
+              "minimum": 0.019256845508171853,
+              "maximum": 0.7418545886997011
+            },
+            "CaER": {
+              "mean": 1.6381546056064114,
+              "minimum": 0.7000290642526764,
+              "maximum": 2.381227838750938
+            },
+            "CaM": {
+              "mean": 3.947172536810269,
+              "minimum": 3.751804910323198,
+              "maximum": 4.930476468456457
+            },
+            "CaPr": {
+              "mean": 38.74506067671746,
+              "minimum": 36.49356148154437,
+              "maximum": 41.9712165071395
+            },
+            "Pr": {
+              "mean": 81.25493932328509,
+              "minimum": 78.0287834928627,
+              "maximum": 83.50643851845808
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.047659514570212246,
+              "minimum": 0.019256718561380823,
+              "maximum": 0.743689131395456
+            },
+            "CaER": {
+              "mean": 1.581590580866907,
+              "minimum": 0.7000284380309687,
+              "maximum": 2.3812361208028268
+            },
+            "CaM": {
+              "mean": 3.9492273038031156,
+              "minimum": 3.758301269995943,
+              "maximum": 4.930582673575204
+            },
+            "CaPr": {
+              "mean": 38.968391358782384,
+              "minimum": 36.49338218691826,
+              "maximum": 41.964827356728215
+            },
+            "Pr": {
+              "mean": 81.03160864122097,
+              "minimum": 78.03517264327488,
+              "maximum": 83.50661781308558
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.04639969129989235,
+              "minimum": 0.019256718202053793,
+              "maximum": 0.7404348012448312
+            },
+            "CaER": {
+              "mean": 1.6033836466586813,
+              "minimum": 0.7000283835177333,
+              "maximum": 2.3812367233656317
+            },
+            "CaM": {
+              "mean": 3.9462441264205532,
+              "minimum": 3.7582044797373237,
+              "maximum": 4.930595481739146
+            },
+            "CaPr": {
+              "mean": 38.894411628411696,
+              "minimum": 36.493381259711136,
+              "maximum": 41.96481936047269
+            },
+            "Pr": {
+              "mean": 81.10558837159174,
+              "minimum": 78.03518063953071,
+              "maximum": 83.5066187402924
+            }
+          }
+        }
+      },
+      "elapsed_seconds": 2.334519536000016,
+      "record_id": "52dbf555695bb0be09c8c12a1df1dd64fab7e468be9f5efdb54004f5775ff4de",
+      "fingerprint": "2bf0ca3e3444dc6a3f3506e185c477e9587efb1c2c1f5fcc79fbb77ee39dbc85"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 2010.0,
+            "stop": 2110.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          },
+          "copasi": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        },
+        "copasi": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        }
+      },
+      "comparison": {
+        "passed": false,
+        "max_scaled_error": 109.70710210946429,
+        "max_absolute_error": 0.00021451044083675708,
+        "worst_observable": "CaM",
+        "worst_time": 1655.76,
+        "samples": 221001,
+        "observables": 5,
+        "per_observable_max_scaled_error": {
+          "Ca_cyt": 15.648318281884952,
+          "CaER": 2.6608801947950647,
+          "CaM": 109.70710210946429,
+          "CaPr": 0.038662462129866515,
+          "Pr": 0.015083901400980647
+        }
+      },
+      "windows": {
+        "roadrunner": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402691717,
+              "minimum": 0.056901060213266214,
+              "maximum": 0.5121961133104859
+            },
+            "CaER": {
+              "mean": 0.7688428911860452,
+              "minimum": 0.7041704092232469,
+              "maximum": 1.0955962769556564
+            },
+            "CaM": {
+              "mean": 0.43389641502401555,
+              "minimum": 0.29,
+              "maximum": 0.6049142860767626
+            },
+            "CaPr": {
+              "mean": 84.94689225115917,
+              "minimum": 84.02712795641462,
+              "maximum": 85.6475002626583
+            },
+            "Pr": {
+              "mean": 35.05310774886201,
+              "minimum": 34.35249973734126,
+              "maximum": 35.972872043586115
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.2445136257165292,
+              "minimum": 0.058036817303934,
+              "maximum": 0.5117714879995905
+            },
+            "CaER": {
+              "mean": 0.765310971214314,
+              "minimum": 0.7043247453635669,
+              "maximum": 1.094879418033483
+            },
+            "CaM": {
+              "mean": 0.4352003965687993,
+              "minimum": 0.33852332722018785,
+              "maximum": 0.5846357748138084
+            },
+            "CaPr": {
+              "mean": 84.95344090320175,
+              "minimum": 84.11264444635249,
+              "maximum": 85.42932301607763
+            },
+            "Pr": {
+              "mean": 35.04655909683924,
+              "minimum": 34.57067698396389,
+              "maximum": 35.887355553687094
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.24080285751429906,
+              "minimum": 0.05803681757997747,
+              "maximum": 0.5117723883549962
+            },
+            "CaER": {
+              "mean": 0.7709632525571428,
+              "minimum": 0.7043247468612924,
+              "maximum": 1.0948794302039282
+            },
+            "CaM": {
+              "mean": 0.4348104308051033,
+              "minimum": 0.3385234750162443,
+              "maximum": 0.5846357736302378
+            },
+            "CaPr": {
+              "mean": 84.9361024090907,
+              "minimum": 84.11264467989098,
+              "maximum": 85.42932301622557
+            },
+            "Pr": {
+              "mean": 35.0638975909523,
+              "minimum": 34.57067698381952,
+              "maximum": 35.887355320150725
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.08721800230596619,
+              "minimum": 0.02722512699065182,
+              "maximum": 0.6299847693611994
+            },
+            "CaER": {
+              "mean": 1.0802635683002897,
+              "minimum": 0.7122853962795552,
+              "maximum": 1.7202333565995702
+            },
+            "CaM": {
+              "mean": 0.006449800736866709,
+              "minimum": 0.0028966472539641184,
+              "maximum": 0.49785945703574896
+            },
+            "CaPr": {
+              "mean": 69.87177920884747,
+              "minimum": 56.61762391319328,
+              "maximum": 84.8941352862919
+            },
+            "Pr": {
+              "mean": 50.12822079119724,
+              "minimum": 35.10586471375304,
+              "maximum": 63.38237608685182
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.044622304710938615,
+              "minimum": 0.020373136328521117,
+              "maximum": 0.6983872616113266
+            },
+            "CaER": {
+              "mean": 1.4284271909262445,
+              "minimum": 0.7053558390936707,
+              "maximum": 2.1890028362691814
+            },
+            "CaM": {
+              "mean": 1.9329818155247815,
+              "minimum": 0.0028120426331163157,
+              "maximum": 3.708249883771996
+            },
+            "CaPr": {
+              "mean": 47.6490640951576,
+              "minimum": 41.15126067761412,
+              "maximum": 56.61762391319328
+            },
+            "Pr": {
+              "mean": 72.35093590488619,
+              "minimum": 63.38237608685182,
+              "maximum": 78.8487393224287
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.04373759903576894,
+              "minimum": 0.019273787427243345,
+              "maximum": 0.72628459786524
+            },
+            "CaER": {
+              "mean": 1.6392329277998046,
+              "minimum": 0.7001066932512343,
+              "maximum": 2.371958008757238
+            },
+            "CaM": {
+              "mean": 3.774985798525957,
+              "minimum": 3.2048000810170603,
+              "maximum": 4.875273623562388
+            },
+            "CaPr": {
+              "mean": 39.438709921336,
+              "minimum": 36.72161025009291,
+              "maximum": 42.87972406995528
+            },
+            "Pr": {
+              "mean": 80.56129007870628,
+              "minimum": 77.12027593008793,
+              "maximum": 83.2783897499494
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.052953167476548865,
+              "minimum": 0.019256845526834484,
+              "maximum": 0.7418537210598705
+            },
+            "CaER": {
+              "mean": 1.6381545990223803,
+              "minimum": 0.7000290643341603,
+              "maximum": 2.3812278380065535
+            },
+            "CaM": {
+              "mean": 3.947172537088163,
+              "minimum": 3.751805962174849,
+              "maximum": 4.9304764811054005
+            },
+            "CaPr": {
+              "mean": 38.74506071375761,
+              "minimum": 36.49356150339027,
+              "maximum": 41.971216526546684
+            },
+            "Pr": {
+              "mean": 81.2549392862835,
+              "minimum": 78.02878347349515,
+              "maximum": 83.50643849664998
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.022583079465838995,
+              "minimum": 0.01473148811304341,
+              "maximum": 0.7540974169743889
+            },
+            "CaER": {
+              "mean": 1.9392573202738788,
+              "minimum": 0.7000284380225208,
+              "maximum": 2.793275166121657
+            },
+            "CaM": {
+              "mean": 0.007643423620036737,
+              "minimum": 0.0028977894043188675,
+              "maximum": 4.227332109644238
+            },
+            "CaPr": {
+              "mean": 33.370509405776154,
+              "minimum": 27.18144900067028,
+              "maximum": 41.4666336699384
+            },
+            "Pr": {
+              "mean": 86.62949059426597,
+              "minimum": 78.53336633010102,
+              "maximum": 92.81855099937312
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.025529310287789812,
+              "minimum": 0.020608722436240665,
+              "maximum": 0.026988323184317656
+            },
+            "CaER": {
+              "mean": 3.1501422134206716,
+              "minimum": 2.793275166121657,
+              "maximum": 3.212480490565849
+            },
+            "CaM": {
+              "mean": 0.0025880309724662085,
+              "minimum": 0.002284832739710948,
+              "maximum": 0.002899393082188265
+            },
+            "CaPr": {
+              "mean": 25.75030567206157,
+              "minimum": 25.49999237070276,
+              "maximum": 27.18144900067028
+            },
+            "Pr": {
+              "mean": 94.24969432798174,
+              "minimum": 92.81855099937312,
+              "maximum": 94.5000076293405
+            }
+          },
+          "intervention_3": {
+            "Ca_cyt": {
+              "mean": 0.026989764424073664,
+              "minimum": 0.026988323184317656,
+              "maximum": 0.026991090799590025
+            },
+            "CaER": {
+              "mean": 3.2123717691740996,
+              "minimum": 3.212305044299492,
+              "maximum": 3.212444209962503
+            },
+            "CaM": {
+              "mean": 0.0020242375393181864,
+              "minimum": 0.0017842457958656061,
+              "maximum": 0.002284832739710948
+            },
+            "CaPr": {
+              "mean": 25.50218216864416,
+              "minimum": 25.500851465928726,
+              "maximum": 25.503407708740884
+            },
+            "Pr": {
+              "mean": 94.49781783139905,
+              "minimum": 94.49659229130233,
+              "maximum": 94.49914853411447
+            }
+          },
+          "pre_3": {
+            "Ca_cyt": {
+              "mean": 0.02699221554865347,
+              "minimum": 0.026991090799590025,
+              "maximum": 0.02699325136921198
+            },
+            "CaER": {
+              "mean": 3.212248458053263,
+              "minimum": 3.2121963449664332,
+              "maximum": 3.212305044299492
+            },
+            "CaM": {
+              "mean": 0.0015807329419435915,
+              "minimum": 0.0013933124972882415,
+              "maximum": 0.0017842457958656061
+            },
+            "CaPr": {
+              "mean": 25.50444698039243,
+              "minimum": 25.503407708740884,
+              "maximum": 25.505404078697815
+            },
+            "Pr": {
+              "mean": 94.49555301965077,
+              "minimum": 94.4945959213454,
+              "maximum": 94.49659229130233
+            }
+          },
+          "cue_3": {
+            "Ca_cyt": {
+              "mean": 0.026998892092969226,
+              "minimum": 0.02699325136921198,
+              "maximum": 0.02700205149541829
+            },
+            "CaER": {
+              "mean": 3.211986070694799,
+              "minimum": 3.211858983244184,
+              "maximum": 3.2121963449664332
+            },
+            "CaM": {
+              "mean": 0.0028981708040245746,
+              "minimum": 0.0013930023999688573,
+              "maximum": 0.0028999999282765436
+            },
+            "CaPr": {
+              "mean": 25.50767253809751,
+              "minimum": 25.505404078697815,
+              "maximum": 25.509613200399677
+            },
+            "Pr": {
+              "mean": 94.4923274619404,
+              "minimum": 94.4903867996327,
+              "maximum": 94.4945959213454
+            }
+          },
+          "post_3": {
+            "Ca_cyt": {
+              "mean": 0.027002772303473564,
+              "minimum": 0.02700111326261235,
+              "maximum": 0.027004447250470125
+            },
+            "CaER": {
+              "mean": 3.2117648425939276,
+              "minimum": 3.2116800048749887,
+              "maximum": 3.211858983244184
+            },
+            "CaM": {
+              "mean": 0.0025684981593778592,
+              "minimum": 0.002263873423519439,
+              "maximum": 0.002899282699821731
+            },
+            "CaPr": {
+              "mean": 25.511311242121604,
+              "minimum": 25.509613200399677,
+              "maximum": 25.512867416993803
+            },
+            "Pr": {
+              "mean": 94.48868875791072,
+              "minimum": 94.48713258303853,
+              "maximum": 94.4903867996327
+            }
+          }
+        },
+        "copasi": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402716056,
+              "minimum": 0.05690106021252166,
+              "maximum": 0.5121961132686316
+            },
+            "CaER": {
+              "mean": 0.7688428911883044,
+              "minimum": 0.7041704092223079,
+              "maximum": 1.0955962769627867
+            },
+            "CaM": {
+              "mean": 0.43389641500412895,
+              "minimum": 0.29,
+              "maximum": 0.6049142860813893
+            },
+            "CaPr": {
+              "mean": 84.94689225121328,
+              "minimum": 84.02712795638413,
+              "maximum": 85.64750026265989
+            },
+            "Pr": {
+              "mean": 35.05310774879161,
+              "minimum": 34.35249973734009,
+              "maximum": 35.97287204361622
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.24451362570580235,
+              "minimum": 0.058036817316334546,
+              "maximum": 0.5117714839043255
+            },
+            "CaER": {
+              "mean": 0.7653109712212057,
+              "minimum": 0.704324745356025,
+              "maximum": 1.0948794179854051
+            },
+            "CaM": {
+              "mean": 0.43520039660662646,
+              "minimum": 0.3385233264978752,
+              "maximum": 0.5846357747626233
+            },
+            "CaPr": {
+              "mean": 84.95344090300428,
+              "minimum": 84.11264444531712,
+              "maximum": 85.42932301607233
+            },
+            "Pr": {
+              "mean": 35.046559097005336,
+              "minimum": 34.570676983937325,
+              "maximum": 35.88735555469168
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.24080285752198718,
+              "minimum": 0.05803681759426625,
+              "maximum": 0.511772383779824
+            },
+            "CaER": {
+              "mean": 0.7709632525584973,
+              "minimum": 0.7043247468529271,
+              "maximum": 1.0948794301496598
+            },
+            "CaM": {
+              "mean": 0.43481043074036013,
+              "minimum": 0.3385234742150026,
+              "maximum": 0.5846357735665336
+            },
+            "CaPr": {
+              "mean": 84.93610240930641,
+              "minimum": 84.11264467874032,
+              "maximum": 85.4293230162341
+            },
+            "Pr": {
+              "mean": 35.06389759070423,
+              "minimum": 34.57067698377683,
+              "maximum": 35.88735532126978
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.08721800228777742,
+              "minimum": 0.02722512697931343,
+              "maximum": 0.6299847885035816
+            },
+            "CaER": {
+              "mean": 1.080263568429598,
+              "minimum": 0.7122853962801541,
+              "maximum": 1.7202333570797554
+            },
+            "CaM": {
+              "mean": 0.006449800998279118,
+              "minimum": 0.002896647253937593,
+              "maximum": 0.4978595000832691
+            },
+            "CaPr": {
+              "mean": 69.87177920490747,
+              "minimum": 56.61762391626518,
+              "maximum": 84.89413528385519
+            },
+            "Pr": {
+              "mean": 50.12822079510118,
+              "minimum": 35.10586471615571,
+              "maximum": 63.38237608374181
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.0446223048886155,
+              "minimum": 0.020373136314641292,
+              "maximum": 0.698387649305568
+            },
+            "CaER": {
+              "mean": 1.4284271908878567,
+              "minimum": 0.7053558391661522,
+              "maximum": 2.1890028371621435
+            },
+            "CaM": {
+              "mean": 1.932981813600268,
+              "minimum": 0.002812042632999298,
+              "maximum": 3.7082498847712215
+            },
+            "CaPr": {
+              "mean": 47.64906408925215,
+              "minimum": 41.15126068896537,
+              "maximum": 56.61762391626518
+            },
+            "Pr": {
+              "mean": 72.35093591075594,
+              "minimum": 63.38237608374181,
+              "maximum": 78.848739311042
+            }
+          },
+          "intervention_2": {
+            "Ca_cyt": {
+              "mean": 0.04373759891662972,
+              "minimum": 0.01927378741242054,
+              "maximum": 0.7262853264468153
+            },
+            "CaER": {
+              "mean": 1.6392329267861439,
+              "minimum": 0.7001066931854097,
+              "maximum": 2.371958009972044
+            },
+            "CaM": {
+              "mean": 3.774985799138076,
+              "minimum": 3.2047998077582323,
+              "maximum": 4.875273631817676
+            },
+            "CaPr": {
+              "mean": 39.43870990947574,
+              "minimum": 36.72161022724804,
+              "maximum": 42.879724046823135
+            },
+            "Pr": {
+              "mean": 80.56129009053144,
+              "minimum": 77.12027595318419,
+              "maximum": 83.27838977275871
+            }
+          },
+          "pre_2": {
+            "Ca_cyt": {
+              "mean": 0.05295316565698234,
+              "minimum": 0.019256845508229203,
+              "maximum": 0.7418545862697551
+            },
+            "CaER": {
+              "mean": 1.6381546055885718,
+              "minimum": 0.7000290642529006,
+              "maximum": 2.3812278387481975
+            },
+            "CaM": {
+              "mean": 3.947172536810183,
+              "minimum": 3.751804912713557,
+              "maximum": 4.930476468490335
+            },
+            "CaPr": {
+              "mean": 38.74506067683326,
+              "minimum": 36.49356148162008,
+              "maximum": 41.97121650720682
+            },
+            "Pr": {
+              "mean": 81.25493932317539,
+              "minimum": 78.02878349280103,
+              "maximum": 83.50643851838865
+            }
+          },
+          "cue_2": {
+            "Ca_cyt": {
+              "mean": 0.022583074796652315,
+              "minimum": 0.014731487606578173,
+              "maximum": 0.754116995496146
+            },
+            "CaER": {
+              "mean": 1.9392572932919396,
+              "minimum": 0.700028438030942,
+              "maximum": 2.793275044047299
+            },
+            "CaM": {
+              "mean": 0.007643421923348942,
+              "minimum": 0.0028977894040689515,
+              "maximum": 4.227332341807486
+            },
+            "CaPr": {
+              "mean": 33.370508760285,
+              "minimum": 27.181448395458343,
+              "maximum": 41.46663278303724
+            },
+            "Pr": {
+              "mean": 86.62949123972601,
+              "minimum": 78.533367216972,
+              "maximum": 92.81855160455251
+            }
+          },
+          "post_2": {
+            "Ca_cyt": {
+              "mean": 0.025529307726507713,
+              "minimum": 0.020608720384809653,
+              "maximum": 0.026988321212239215
+            },
+            "CaER": {
+              "mean": 3.150142248051678,
+              "minimum": 2.793275044047299,
+              "maximum": 3.2124805838708723
+            },
+            "CaM": {
+              "mean": 0.0025880309935974286,
+              "minimum": 0.0022848327769145835,
+              "maximum": 0.0028993930822188456
+            },
+            "CaPr": {
+              "mean": 25.750304440453586,
+              "minimum": 25.49999090504976,
+              "maximum": 27.181448395458343
+            },
+            "Pr": {
+              "mean": 94.24969555955721,
+              "minimum": 92.81855160455251,
+              "maximum": 94.50000909496106
+            }
+          },
+          "intervention_3": {
+            "Ca_cyt": {
+              "mean": 0.02698976245191278,
+              "minimum": 0.026988321212239215,
+              "maximum": 0.026991088827337365
+            },
+            "CaER": {
+              "mean": 3.212371862597882,
+              "minimum": 3.2123051377307323,
+              "maximum": 3.212444303377612
+            },
+            "CaM": {
+              "mean": 0.002024237585187398,
+              "minimum": 0.0017842458486523598,
+              "maximum": 0.0022848327769145835
+            },
+            "CaPr": {
+              "mean": 25.502180701176975,
+              "minimum": 25.500849998530814,
+              "maximum": 25.503406241216297
+            },
+            "Pr": {
+              "mean": 94.49781929883383,
+              "minimum": 94.49659375879456,
+              "maximum": 94.49915000147998
+            }
+          },
+          "pre_3": {
+            "Ca_cyt": {
+              "mean": 0.026992213576333225,
+              "minimum": 0.026991088827337365,
+              "maximum": 0.02699324939683435
+            },
+            "CaER": {
+              "mean": 3.212248551490326,
+              "minimum": 3.212196438408629,
+              "maximum": 3.2123051377307323
+            },
+            "CaM": {
+              "mean": 0.0015807329987891979,
+              "minimum": 0.0013933125570419146,
+              "maximum": 0.0017842458486523598
+            },
+            "CaPr": {
+              "mean": 25.504445512828372,
+              "minimum": 25.503406241216297,
+              "maximum": 25.505402611101648
+            },
+            "Pr": {
+              "mean": 94.49555448718249,
+              "minimum": 94.4945973889092,
+              "maximum": 94.49659375879456
+            }
+          },
+          "cue_3": {
+            "Ca_cyt": {
+              "mean": 0.02699889011967408,
+              "minimum": 0.02699324939683435,
+              "maximum": 0.027002049516129188
+            },
+            "CaER": {
+              "mean": 3.211986164182635,
+              "minimum": 3.211859076748232,
+              "maximum": 3.212196438408629
+            },
+            "CaM": {
+              "mean": 0.0028981708041006123,
+              "minimum": 0.0013930024597259092,
+              "maximum": 0.0028999999282764907
+            },
+            "CaPr": {
+              "mean": 25.50767107024443,
+              "minimum": 25.505402611101648,
+              "maximum": 25.509611732405908
+            },
+            "Pr": {
+              "mean": 94.4923289297639,
+              "minimum": 94.49038826759872,
+              "maximum": 94.4945973889092
+            }
+          },
+          "post_3": {
+            "Ca_cyt": {
+              "mean": 0.0270027703299738,
+              "minimum": 0.027001111289200543,
+              "maximum": 0.02700444527682376
+            },
+            "CaER": {
+              "mean": 3.2117649361089535,
+              "minimum": 3.211680098400693,
+              "maximum": 3.211859076748232
+            },
+            "CaM": {
+              "mean": 0.002568498175809697,
+              "minimum": 0.002263873453699024,
+              "maximum": 0.0028992826998585942
+            },
+            "CaPr": {
+              "mean": 25.511309774018432,
+              "minimum": 25.509611732405908,
+              "maximum": 25.512865948793074
+            },
+            "Pr": {
+              "mean": 94.48869022598618,
+              "minimum": 94.48713405121153,
+              "maximum": 94.49038826759872
+            }
+          }
+        }
+      },
+      "elapsed_seconds": 2.998918365999998,
+      "record_id": "904862453114a9164da8902d5c9bb524c415878517e7421ec9c895469d634c1e",
+      "fingerprint": "2bf0ca3e3444dc6a3f3506e185c477e9587efb1c2c1f5fcc79fbb77ee39dbc85"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Pr": 0.3435249973734137
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "CaM": 0.0029
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 1410.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          },
+          "copasi": {
+            "rtol": 1e-13,
+            "atol": 1e-15
+          }
+        }
+      },
+      "sample_count": 141001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-13,
+              "atol": 1e-15
+            },
+            "status": "completed"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        },
+        "copasi": {
+          "rtol": 1e-13,
+          "atol": 1e-15
+        }
+      },
+      "comparison": {
+        "passed": false,
+        "max_scaled_error": 77.16735870198517,
+        "max_absolute_error": 0.00017498651682323896,
+        "worst_observable": "CaM",
+        "worst_time": 1365.52,
+        "samples": 141001,
+        "observables": 5,
+        "per_observable_max_scaled_error": {
+          "Ca_cyt": 12.455537799525455,
+          "CaER": 1.7607932485199242,
+          "CaM": 77.16735870198517,
+          "CaPr": 0.01970584475629987,
+          "Pr": 0.008666021157318744
+        }
+      },
+      "windows": {
+        "roadrunner": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402691717,
+              "minimum": 0.056901060213266214,
+              "maximum": 0.5121961133104859
+            },
+            "CaER": {
+              "mean": 0.7688428911860452,
+              "minimum": 0.7041704092232469,
+              "maximum": 1.0955962769556564
+            },
+            "CaM": {
+              "mean": 0.43389641502401555,
+              "minimum": 0.29,
+              "maximum": 0.6049142860767626
+            },
+            "CaPr": {
+              "mean": 84.94689225115917,
+              "minimum": 84.02712795641462,
+              "maximum": 85.6475002626583
+            },
+            "Pr": {
+              "mean": 35.05310774886201,
+              "minimum": 34.35249973734126,
+              "maximum": 35.972872043586115
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.530073990425004,
+              "minimum": 0.2565836957146409,
+              "maximum": 0.5869190753032177
+            },
+            "CaER": {
+              "mean": 0.7645753343564599,
+              "minimum": 0.7085112518037373,
+              "maximum": 0.7973497673451322
+            },
+            "CaM": {
+              "mean": 8.034114611179278,
+              "minimum": 0.5388987655465995,
+              "maximum": 13.446012282555788
+            },
+            "CaPr": {
+              "mean": 54.2751662274754,
+              "minimum": 32.43963272513143,
+              "maximum": 84.67443859203725
+            },
+            "Pr": {
+              "mean": 0.40204072421446113,
+              "minimum": 0.3435280427689271,
+              "maximum": 35.33200724379098
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.5929749765538475,
+              "minimum": 0.5869190753032177,
+              "maximum": 0.5939697719604843
+            },
+            "CaER": {
+              "mean": 0.8013424843928205,
+              "minimum": 0.7973497673451322,
+              "maximum": 0.8020003865529441
+            },
+            "CaM": {
+              "mean": 14.373272976978948,
+              "minimum": 13.446012282555788,
+              "maximum": 14.527226368211027
+            },
+            "CaPr": {
+              "mean": 28.70856317799743,
+              "minimum": 28.089123209021984,
+              "maximum": 32.43963272513143
+            },
+            "Pr": {
+              "mean": 4.104944046473692,
+              "minimum": 0.37387449933967,
+              "maximum": 4.724384015449168
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.11732516347260799,
+              "minimum": 0.011548971889145075,
+              "maximum": 0.7188782172714657
+            },
+            "CaER": {
+              "mean": 1.2166968942030358,
+              "minimum": 0.7018026079694608,
+              "maximum": 2.3696545320100295
+            },
+            "CaM": {
+              "mean": 0.018429003417327245,
+              "minimum": 0.002897945332867481,
+              "maximum": 14.527232547236078
+            },
+            "CaPr": {
+              "mean": 21.87680277193862,
+              "minimum": 14.679939955104858,
+              "maximum": 28.089123209021984
+            },
+            "Pr": {
+              "mean": 10.9367044525323,
+              "minimum": 4.724384015449168,
+              "maximum": 18.133567269365543
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.04343395464495054,
+              "minimum": 0.009502212349253964,
+              "maximum": 0.8195173947515249
+            },
+            "CaER": {
+              "mean": 1.958508771322928,
+              "minimum": 0.6992540851467599,
+              "maximum": 3.057384715268922
+            },
+            "CaM": {
+              "mean": 0.4965915069748104,
+              "minimum": 0.002604477179771175,
+              "maximum": 2.093645085618731
+            },
+            "CaPr": {
+              "mean": 12.40019137510412,
+              "minimum": 9.990511815993179,
+              "maximum": 14.968801228598037
+            },
+            "Pr": {
+              "mean": 20.413315849366228,
+              "minimum": 17.844705995872182,
+              "maximum": 22.822995408477233
+            }
+          }
+        },
+        "copasi": {
+          "prefix": {
+            "Ca_cyt": {
+              "mean": 0.24215052402715695,
+              "minimum": 0.056901060212528484,
+              "maximum": 0.5121961132683795
+            },
+            "CaER": {
+              "mean": 0.7688428911883028,
+              "minimum": 0.7041704092223239,
+              "maximum": 1.0955962769627636
+            },
+            "CaM": {
+              "mean": 0.433896415004163,
+              "minimum": 0.29,
+              "maximum": 0.6049142860810598
+            },
+            "CaPr": {
+              "mean": 84.94689225121215,
+              "minimum": 84.02712795638497,
+              "maximum": 85.64750026265988
+            },
+            "Pr": {
+              "mean": 35.05310774879169,
+              "minimum": 34.35249973734007,
+              "maximum": 35.97287204361476
+            }
+          },
+          "intervention_1": {
+            "Ca_cyt": {
+              "mean": 0.5300739904261985,
+              "minimum": 0.25658369517803165,
+              "maximum": 0.5869190753046983
+            },
+            "CaER": {
+              "mean": 0.7645753343581794,
+              "minimum": 0.708511251805098,
+              "maximum": 0.7973497673462508
+            },
+            "CaM": {
+              "mean": 8.03411461150525,
+              "minimum": 0.5388987665720145,
+              "maximum": 13.446012282741362
+            },
+            "CaPr": {
+              "mean": 54.275166226138936,
+              "minimum": 32.43963272436215,
+              "maximum": 84.67443858991977
+            },
+            "Pr": {
+              "mean": 0.4020407242197886,
+              "minimum": 0.34352804276915566,
+              "maximum": 35.3320072455405
+            }
+          },
+          "pre_1": {
+            "Ca_cyt": {
+              "mean": 0.5929749765550759,
+              "minimum": 0.5869190753046983,
+              "maximum": 0.5939697719616733
+            },
+            "CaER": {
+              "mean": 0.8013424843936311,
+              "minimum": 0.7973497673462508,
+              "maximum": 0.8020003865537291
+            },
+            "CaM": {
+              "mean": 14.373272977139786,
+              "minimum": 13.446012282741362,
+              "maximum": 14.527226368366874
+            },
+            "CaPr": {
+              "mean": 28.708563177328614,
+              "minimum": 28.089123208373255,
+              "maximum": 32.43963272436215
+            },
+            "Pr": {
+              "mean": 4.104944046374814,
+              "minimum": 0.3738744993412343,
+              "maximum": 4.724384015330169
+            }
+          },
+          "cue_1": {
+            "Ca_cyt": {
+              "mean": 0.11732516767441707,
+              "minimum": 0.011548971858773049,
+              "maximum": 0.7188829543873562
+            },
+            "CaER": {
+              "mean": 1.2166968792134563,
+              "minimum": 0.7018026079695141,
+              "maximum": 2.3696545359426655
+            },
+            "CaM": {
+              "mean": 0.01842900702340929,
+              "minimum": 0.0028979454415675276,
+              "maximum": 14.527232547391916
+            },
+            "CaPr": {
+              "mean": 21.87680289126927,
+              "minimum": 14.679940096208577,
+              "maximum": 28.089123208373255
+            },
+            "Pr": {
+              "mean": 10.936704332434024,
+              "minimum": 4.724384015330169,
+              "maximum": 18.13356712749487
+            }
+          },
+          "post_1": {
+            "Ca_cyt": {
+              "mean": 0.04343394945799201,
+              "minimum": 0.009502212318345636,
+              "maximum": 0.819537918819262
+            },
+            "CaER": {
+              "mean": 1.9585087804381502,
+              "minimum": 0.6992540851445453,
+              "maximum": 3.057384721377023
+            },
+            "CaM": {
+              "mean": 0.4965914883285879,
+              "minimum": 0.002604477235664444,
+              "maximum": 2.0936450960189013
+            },
+            "CaPr": {
+              "mean": 12.400191375265639,
+              "minimum": 9.990511752918014,
+              "maximum": 14.968801160454184
+            },
+            "Pr": {
+              "mean": 20.413315848437836,
+              "minimum": 17.844706063249298,
+              "maximum": 22.822995470785713
+            }
+          }
+        }
+      },
+      "elapsed_seconds": 2.0225533089999885,
+      "record_id": "bd447090a4a91a066b290fd6af6fd186c20ced254fb882e40458da3b72bb671e",
+      "fingerprint": "2bf0ca3e3444dc6a3f3506e185c477e9587efb1c2c1f5fcc79fbb77ee39dbc85"
+    }
+  ]
+}
