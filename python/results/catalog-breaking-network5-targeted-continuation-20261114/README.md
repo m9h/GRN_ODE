@@ -12,6 +12,10 @@ installed packages. Partition 13 restores 90 branches and one passing case;
 partition 15 restores 43 branches. `verification.json` records the exact
 artifact identities, checksums, selections and preparation results.
 
+The dispatched jobs are [partition 13](https://github.com/m9h/GRN_ODE/actions/runs/43560384864)
+and [partition 15](https://github.com/m9h/GRN_ODE/actions/runs/43560386302).
+`dispatch.json` records their exact producer revision and job identities.
+
 The continuations keep the original 16-partition scheme and seven selected
 cases. One of those cases is already recorded as passed; the six other cases
 still require completion and audit. Only indices 13 and 15 are restarted.
