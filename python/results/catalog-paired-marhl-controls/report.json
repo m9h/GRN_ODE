@@ -1,0 +1,152 @@
+{
+  "purpose": "Compute every remaining control arm for the two unresolved Marhl cases.\n\nThe three original failed branches have separate full precision diagnostics.\nThis selects their fifteen other required branches, preserving all twelve arms\nper case. It saves full arrays for two independent Taylor implementations at two\nprecisions and for RoadRunner. Case recovery requires a separate combined audit.\n",
+  "plan_sha256": "ba472b05e3d23b5a14aa22f71866f8060555c3f2f3b242f0162804c77a6d77cb",
+  "requests": {
+    "taylor128": {
+      "precision": 128,
+      "tolerance": "1e-30"
+    },
+    "taylor192": {
+      "precision": 192,
+      "tolerance": "1e-45"
+    },
+    "mpmath128": {
+      "precision": 128,
+      "tolerance": "1e-30",
+      "degree": 32
+    },
+    "mpmath192": {
+      "precision": 192,
+      "tolerance": "1e-45",
+      "degree": 48
+    },
+    "roadrunner": {
+      "rtol": 1e-13,
+      "atol": 1e-15
+    }
+  },
+  "acceptance": {
+    "rtol": 2e-05,
+    "atol": 1e-07
+  },
+  "sample_grid_sha256": "c8915978ac88fb2578eb51e1b0d1ced4d38ef1b5c09fc94ebbf6fd2e94a4f2d0",
+  "samples": 30001,
+  "implementation_sha256": {
+    "scripts/diagnose_marhl_controls.py": "2219bf95959e29a169ddebe54e573e78e01adf0f2d02e224401ee019eaf8d250",
+    "scripts/recover_scipy_paired_cases.py": "375753f37e775ee0f89eed17ae1a32a985257ca9eca0756ac6bf0cfa252be605",
+    "grn_memory/marhl_mpmath.py": "3bc6408a7762fdc665758b06f49d83668af226791f878a75e07a2b694d31ede2",
+    "grn_memory/taylor_reference.py": "04a7ff10ca6d17d0650f7324c6bbd54ecc9a8ba120d7b7d846c01a279aeeb321",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f"
+  },
+  "versions": {
+    "heyoka": "7.13.2",
+    "mpmath": "1.4.1",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "libroadrunner": "2.11.0",
+    "python-libsbml": "5.21.2"
+  },
+  "python": "3.12.16",
+  "case_recovery_claimed": false,
+  "different_integrator_family_claimed": false,
+  "fingerprint": "2b945b6fc5cc8de45dbc1f0ccb68d062bba4c34f3ce22e1f72d4aa1cd3ab351f",
+  "status": "completed",
+  "expected_branches": 15,
+  "selected_branch_ids": [
+    "0306e8e814e137b827a5a7e0dba005027ce590b77205c92de9efb50d30a1899a",
+    "0bf694bf6aa974a5b3521437a49a5cbb4f7d35c8b35d503683da7f02f4156d74",
+    "234f67ed5fcddab15b570880c46eeb2963510ab038676901fd61f5a809fd24df",
+    "2aa7a7ba12ce3c08f76b861ed5c32a2e5e5deb5f68135fa9292af787aa236248",
+    "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+    "323cffebddfc2c57ab379a01f34ee0942953912ff3fc5b146dbd7f0a9e03a1e4",
+    "3ca2762665e9a12cd615eaae7c4e4ed6af9d508562168d0c6dfaa2ca712e5903",
+    "40982d81cbb8f212898526f619170a21fd46e4a8b88235ecad113d899f0a51fb",
+    "51bb4465abeff0f6f6635676516fd13d6234181462a2015373cb4a7d9d153374",
+    "6f1c62108a7f553c90a07d61c3a4807acb16e4977462550819c89e5c1a59e9f6",
+    "82b705b7d719297431df096e4996e572f343f6c44e4151035881a37c3d9efb91",
+    "9166aa882427c3badcfaa8e339e5d7674696e3c2739c1724b5c993484c01a448",
+    "9ec1e36ea8d2e3048484b0908734c4f70f70856e883f1aff8152979eec5fe545",
+    "a62145387ee2f3442c39b7c7b07854f2dda379dfd94456f3c22f500c71e0b285",
+    "c96d82ddfb3f362959877972be7f1a76c7f139d94d895053c092d188617cfc1c"
+  ],
+  "branches": [
+    {
+      "branch_id": "0306e8e814e137b827a5a7e0dba005027ce590b77205c92de9efb50d30a1899a",
+      "file": "0306e8e814e137b827a5a7e0dba005027ce590b77205c92de9efb50d30a1899a.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "0bf694bf6aa974a5b3521437a49a5cbb4f7d35c8b35d503683da7f02f4156d74",
+      "file": "0bf694bf6aa974a5b3521437a49a5cbb4f7d35c8b35d503683da7f02f4156d74.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "234f67ed5fcddab15b570880c46eeb2963510ab038676901fd61f5a809fd24df",
+      "file": "234f67ed5fcddab15b570880c46eeb2963510ab038676901fd61f5a809fd24df.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "2aa7a7ba12ce3c08f76b861ed5c32a2e5e5deb5f68135fa9292af787aa236248",
+      "file": "2aa7a7ba12ce3c08f76b861ed5c32a2e5e5deb5f68135fa9292af787aa236248.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074",
+      "file": "30bf95e7afa1537469c85b2cb2a37d0dc41c90079ffde21ff367a3a9d1f11074.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "323cffebddfc2c57ab379a01f34ee0942953912ff3fc5b146dbd7f0a9e03a1e4",
+      "file": "323cffebddfc2c57ab379a01f34ee0942953912ff3fc5b146dbd7f0a9e03a1e4.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "3ca2762665e9a12cd615eaae7c4e4ed6af9d508562168d0c6dfaa2ca712e5903",
+      "file": "3ca2762665e9a12cd615eaae7c4e4ed6af9d508562168d0c6dfaa2ca712e5903.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "40982d81cbb8f212898526f619170a21fd46e4a8b88235ecad113d899f0a51fb",
+      "file": "40982d81cbb8f212898526f619170a21fd46e4a8b88235ecad113d899f0a51fb.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "51bb4465abeff0f6f6635676516fd13d6234181462a2015373cb4a7d9d153374",
+      "file": "51bb4465abeff0f6f6635676516fd13d6234181462a2015373cb4a7d9d153374.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "6f1c62108a7f553c90a07d61c3a4807acb16e4977462550819c89e5c1a59e9f6",
+      "file": "6f1c62108a7f553c90a07d61c3a4807acb16e4977462550819c89e5c1a59e9f6.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "82b705b7d719297431df096e4996e572f343f6c44e4151035881a37c3d9efb91",
+      "file": "82b705b7d719297431df096e4996e572f343f6c44e4151035881a37c3d9efb91.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "9166aa882427c3badcfaa8e339e5d7674696e3c2739c1724b5c993484c01a448",
+      "file": "9166aa882427c3badcfaa8e339e5d7674696e3c2739c1724b5c993484c01a448.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "9ec1e36ea8d2e3048484b0908734c4f70f70856e883f1aff8152979eec5fe545",
+      "file": "9ec1e36ea8d2e3048484b0908734c4f70f70856e883f1aff8152979eec5fe545.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "a62145387ee2f3442c39b7c7b07854f2dda379dfd94456f3c22f500c71e0b285",
+      "file": "a62145387ee2f3442c39b7c7b07854f2dda379dfd94456f3c22f500c71e0b285.json",
+      "status": "high_precision_agreement"
+    },
+    {
+      "branch_id": "c96d82ddfb3f362959877972be7f1a76c7f139d94d895053c092d188617cfc1c",
+      "file": "c96d82ddfb3f362959877972be7f1a76c7f139d94d895053c092d188617cfc1c.json",
+      "status": "high_precision_agreement"
+    }
+  ],
+  "started_at": "2026-11-12T19:07:04.575852+00:00",
+  "finished_at": "2026-11-13T23:19:42.243893+00:00"
+}

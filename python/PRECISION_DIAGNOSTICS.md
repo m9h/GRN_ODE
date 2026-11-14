@@ -158,8 +158,9 @@ The untreated baseline agrees across all implementations. The largest scaled
 discrepancies among the four high-precision trajectories are 0, `3.11e-11`
 and `1.04e-11` for the three branches in the table above. All 30,001 samples
 and 998 resets per stimulated branch are retained. The saved mpmath arrays
-are included with the report. The fifteen remaining control arms are still
-being computed, so this result does not recover either complete Marhl case.
+are included with the report. This three-branch result alone does not recover
+either complete case; the completed fifteen-control computation and combined
+case audit are described below.
 
 The [separate array auditor](scripts/audit_marhl_mpmath.py) first re-audits the
 published Heyoka/RoadRunner reference, then verifies every mpmath observation,
@@ -239,5 +240,13 @@ where pointwise-agreeing values nevertheless yield different controlled labels.
 They also check that newly conflicting shared arms invalidate the carried-forward
 count while unrelated original passes remain separate.
 Their temporary fixtures deliberately contain invented trajectories and are
-not simulation evidence. The auditor's availability does not change current
-case coverage while the required computations are running.
+not simulation evidence.
+
+The [completed full-array case audit](results/catalog-paired-marhl-case-recovery/README.md)
+now validates all 18 required trajectories and both complete cases. All six
+high-precision comparisons pass for every arm, and both 192-bit implementations
+produce the same controlled classifications. Three arms retain their native
+RoadRunner disagreement. No previously passing case shares a newly conflicting
+arm, so Marhl reaches 26/26 validated paired cases and the combined catalog
+reaches 4,205/4,208 in 34 fully passing models. The two implementations both use
+Taylor methods; the audit makes no different-integrator-family claim.

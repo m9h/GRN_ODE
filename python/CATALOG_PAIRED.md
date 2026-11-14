@@ -18,10 +18,13 @@ this original report.
 
 Combining the original passing cases with the separately audited
 [François recovery](results/catalog-paired-francois-full-recovery/audit.json),
-[Vilar recovery](results/catalog-paired-scipy-vilar-cases/audit.json) and
-[Rohwer recovery](results/catalog-paired-scipy-rohwer-cases/audit.json) now gives
-**4,203 of 4,208 validated cases**. All cases validate in 33 of the 35 models.
-The five remaining cases are two Marhl cases and three Vilar cases with
+[Vilar recovery](results/catalog-paired-scipy-vilar-cases/audit.json),
+[Rohwer recovery](results/catalog-paired-scipy-rohwer-cases/audit.json) and
+[complete Marhl high-precision recovery](results/catalog-paired-marhl-case-recovery/README.md)
+now gives **4,205 of 4,208 validated cases**. All cases validate in 34 of the
+35 models. Marhl's two cases use independent Heyoka and mpmath implementations
+with precision refinement; both use Taylor methods, and the native-solver
+disagreements remain documented. The three remaining cases are Vilar cases with
 completed trajectory mismatches. The table below retains the original screen's
 results, before those follow-up recoveries.
 
