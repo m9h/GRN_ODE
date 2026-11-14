@@ -722,6 +722,12 @@ hash after packaging. [Download and audit instructions](results/catalog-breaking
 describe the recorded-comparison audit and its limits. The separate local run
 continues with its original source and environment.
 
+The [all-35 coverage index](results/catalog-breaking-coverage-20261114/README.md)
+reconciles complete-model audit records with every original model and candidate
+inventory. It preserves failed originals alongside full recoveries and excludes
+branch-only diagnostics from model-validation counts. Four passing models have
+no eligible breaking cases under the declared selection.
+
 ### Complete Ueda search with numerical mismatches
 
 Network 11, the Ueda circadian-clock model (BioModel 22), now has
