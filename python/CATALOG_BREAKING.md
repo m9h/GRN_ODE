@@ -485,6 +485,15 @@ a trajectory mismatch on Linux. Matching window-based labels do not establish
 agreement of the complete trajectories. Both original results are retained;
 neither establishes full numerical validation of this model.
 
+The [full-array Marhl diagnostic](results/catalog-breaking-marhl30-radau-20261114/README.md)
+now targets all 30 failed Linux branch records (29 distinct specifications)
+across the original four partitions. It preserves the complete grids and reset
+schedules, runs RoadRunner and Radau at two tolerances each, and saves raw arrays
+for independent comparison. The planned work is 120 integrations and 180
+pairwise comparisons. The original four-partition audit and failure capture
+reproduce; 22 diagnostic/auditor tests pass through uv. This running diagnostic
+does not yet recover any of the 12 failed cases or validate their full controls.
+
 Networks 28 and 29 first reached their five-hour partition budgets with
 103 and 133 recorded case results respectively; 89 and 133 of those passed.
 Their [first checkpoint continuation](https://github.com/m9h/GRN_ODE/actions/runs/43155055643)
