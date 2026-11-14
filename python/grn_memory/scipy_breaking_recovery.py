@@ -152,10 +152,14 @@ def prepare_inventory(evidence_path, case_plan_path, source_revision, branch_arc
                 roles[role] = bid
             trials[name] = {"breakers": breakers, "branches": roles}
         cases[key] = {"original_plan": plan, "shared_source_eligibility": eligible, "potential_trials": trials}
-    require(used == set(branches) == set(specs),
-            "Captured controls do not cover every possible conditional continuation")
-    require(all(branches[bid]["specification"] == spec for bid, spec in specs.items()),
+    # The original search can stop before a potential later trial. Preserve
+    # every original arm, but compute the additional candidate arms needed to
+    # replay the search when the refined trajectories change its decisions.
+    require(used == set(branches) and set(branches) <= set(specs),
+            "Captured controls differ from the original conditional search")
+    require(all(branch["specification"] == specs[bid] for bid, branch in branches.items()),
             "Reconstructed original branch specification differs")
+    newly_required = sorted(set(specs) - set(branches))
     baseline = {"reset_trains": [], "stop": 2210., "integration_settings": deepcopy(config["integration_settings"])}
     baseline_id = fingerprint(baseline)
     specs[baseline_id] = baseline
@@ -171,5 +175,6 @@ def prepare_inventory(evidence_path, case_plan_path, source_revision, branch_arc
                  "full_untreated_control": baseline_id, "expected_branches": len(specs),
                  "expected_model_cases": len(plans),
                  "original_case_branches": len(branches), "case_recovery_claimed": False,
+                 "newly_required_branch_ids": newly_required,
                  "conditional_search_must_be_recomputed": True}
     return inventory, path, info, grid

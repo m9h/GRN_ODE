@@ -31,6 +31,50 @@ def test_real_inventory_includes_all_possible_trials_and_full_baseline(inventory
     assert control["reset_trains"] == [] and control["stop"] == 2210.
     assert inventory["case_recovery_claimed"] is False
     assert inventory["conditional_search_must_be_recomputed"] is True
+    assert inventory["newly_required_branch_ids"] == []
+
+
+@pytest.fixture(scope="module")
+def ueda_inventory():
+    base = ROOT / "results/catalog-breaking-ueda11-case-plan-20261114"
+    return prepare_inventory(base / "source-evidence.json", base / "original-case-plan.json",
+                             "70a3afad61357e94873ff62a7300c099b4c7ae3e")[0]
+
+
+def test_early_original_stop_does_not_truncate_ueda_recovery_search(ueda_inventory):
+    base = ROOT / "results/catalog-breaking-ueda11-case-plan-20261114"
+    captured = json.loads((base / "original-case-plan.json").read_text())
+    assert sorted(len(c["case"]["trials"]) for c in captured["cases"].values()) == [16, 16, 16, 18]
+    assert len(ueda_inventory["cases"]) == 4
+    assert all(len(c["potential_trials"]) == 18 for c in ueda_inventory["cases"].values())
+    assert ueda_inventory["original_case_branches"] == 298
+    assert ueda_inventory["expected_branches"] == len(ueda_inventory["branches"]) == 323
+    assert len(ueda_inventory["newly_required_branch_ids"]) == 24
+    expected = (set(ueda_inventory["branches"]) - set(captured["selected_branches"])
+                - {ueda_inventory["full_untreated_control"]})
+    assert set(ueda_inventory["newly_required_branch_ids"]) == expected
+    assert all(ueda_inventory["branches"][bid]["stop"] == 2210. for bid in expected)
+    assert ueda_inventory["case_recovery_claimed"] is False
+
+
+@pytest.mark.parametrize("change", ["remove_original_control", "remove_original_case", "change_original_reset"])
+def test_early_stop_support_still_requires_unchanged_original_evidence(tmp_path, change):
+    base = ROOT / "results/catalog-breaking-ueda11-case-plan-20261114"
+    captured = json.loads((base / "original-case-plan.json").read_text())
+    if change == "remove_original_control":
+        bid = next(k for k, b in captured["selected_branches"].items() if b["original_passed"])
+        del captured["selected_branches"][bid]
+        captured["required_branch_count"] -= 1
+    elif change == "remove_original_case":
+        del captured["cases"][next(iter(captured["cases"]))]
+    else:
+        branch = next(b for b in captured["selected_branches"].values() if b["specification"]["reset_trains"])
+        branch["specification"]["reset_trains"][0]["start"] += .1
+    path = tmp_path / "case-plan.json"
+    path.write_text(json.dumps(captured))
+    with pytest.raises(ValueError):
+        prepare_inventory(base / "source-evidence.json", path, "70a3afad61357e94873ff62a7300c099b4c7ae3e",
+                          base / "source-branches.jsonl.gz")
 
 
 def test_original_eligibility_conflict_cannot_be_silently_assigned_to_radau(inventory):
