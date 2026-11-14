@@ -18,19 +18,20 @@ def write(path,value):
     path.write_text(json.dumps(value))
 
 
-@pytest.fixture(scope='module')
-def synthetic(tmp_path_factory):
+@pytest.fixture(scope='module',params=['roadrunner','copasi'])
+def synthetic(tmp_path_factory,request):
+    engine=request.param
     directory=tmp_path_factory.mktemp('synthetic-breaking-array-audit')
     source=json.loads(SOURCE.read_text());bid=source['failed_branches'][0]['record_id']
     _,_,info,grid,branches=producer.prepare(SOURCE,[bid]);original=branches[bid];spec=original['specification']
-    settings=producer.requests(SimpleNamespace(reference_rtol=1e-13,reference_atol=1e-15,rtol=1e-10,atol=1e-12))
+    settings=producer.requests(SimpleNamespace(reference_engine=engine,reference_rtol=1e-13,reference_atol=1e-15,rtol=1e-10,atol=1e-12))
     sources=auditor.source_hashes();sources.update({n:auditor.digest(auditor.ROOT/n) for n in auditor.SOURCES})
     shutil.copyfile(SOURCE,directory/'source-evidence.json')
     report={'purpose':__doc__,'model_id':source['original_report']['biomodel_id'],'model_sha256':info['sha256'],
             'source_evidence_sha256':auditor.digest(SOURCE),'source_report_sha256':source['original_report_sha256'],
-            'source_fingerprint':source['original_report']['fingerprint'],'requests':settings,
+            'source_fingerprint':source['original_report']['fingerprint'],'requests':settings,'reference_engine':engine,
             'acceptance':{'rtol':2e-5,'atol':1e-7},'implementation_sha256':sources,
-            'versions':{p:'synthetic-test-fixture' for p in auditor.PACKAGES},
+            'versions':{p:'synthetic-test-fixture' for p in producer.native_packages(engine)},
             'sample_grid_sha256':auditor.hashlib.sha256(grid.tobytes()).hexdigest(),
             'selected_branch_ids':[bid],'case_recovery_claimed':False,
             'expected_branches':1,'status':'completed','confirmed_branches':1}
@@ -71,8 +72,9 @@ def checks(directory,record):
     with np.load(directory/first['file'],allow_pickle=False) as data:
         times=data['times'].copy();names=list(data['observables'])
     traces={k:auditor.trajectory(directory,record['record_id'],k,v,times,names) for k,v in record['traces'].items()}
+    labels=list(record['integrations'])
     return {a+'_vs_'+b:auditor.comparison(traces[a],traces[b],rtol=2e-5,atol=1e-7)
-            for i,a in enumerate(auditor.LABELS) for b in auditor.LABELS[i+1:] if a in traces and b in traces}
+            for i,a in enumerate(labels) for b in labels[i+1:] if a in traces and b in traces}
 
 
 def change_record(directory,mutate,status=None):
@@ -91,7 +93,8 @@ def test_complete_selected_branch_does_not_claim_all_failures_or_cases(synthetic
     assert not result['case_recovery_claimed'] and not result['full_model_coverage_claimed']
     branch=result['branches'][0]
     assert branch['samples']==221001 and branch['resets']==10500
-    assert len(branch['comparisons'])==6 and set(branch['windows'])==set(auditor.LABELS)
+    native=result['reference_engine']
+    assert len(branch['comparisons'])==6 and set(branch['windows'])=={native,native+'_refined','scipy','scipy_refined'}
     assert len(branch['windows']['scipy_refined'])==13
 
 
@@ -124,6 +127,16 @@ def test_truncated_array_is_rejected_with_updated_digest(editable):
     with pytest.raises(ValueError,match='observation inventory'):auditor.audit(editable)
 
 
+def test_lower_precision_array_is_rejected_even_with_updated_digest(editable):
+    def mutate(record):
+        saved=record['traces']['scipy_refined'];path=editable/saved['file']
+        with np.load(path,allow_pickle=False) as data:arrays={k:data[k].copy() for k in data.files}
+        arrays['values']=arrays['values'].astype(np.float32)
+        np.savez_compressed(path,**arrays);saved['sha256']=auditor.digest(path)
+    change_record(editable,mutate)
+    with pytest.raises(ValueError,match='binary64'):auditor.audit(editable)
+
+
 def test_final_sample_is_checked_and_valid_mismatch_stays_failed(editable):
     def mutate(record):
         saved=record['traces']['scipy_refined'];path=editable/saved['file']
@@ -137,7 +150,7 @@ def test_final_sample_is_checked_and_valid_mismatch_stays_failed(editable):
     change_record(editable,correct,status='mismatch')
     result=auditor.audit(editable)
     assert result['confirmed_branches']==0 and not result['all_selected_branches_confirmed']
-    comparison=result['branches'][0]['comparisons']['roadrunner_vs_scipy_refined']
+    comparison=result['branches'][0]['comparisons'][result['reference_engine']+'_vs_scipy_refined']
     assert not comparison['passed'] and comparison['worst_time']==2210.
 
 
@@ -155,3 +168,21 @@ def test_case_recovery_claim_is_rejected_even_with_matching_fingerprint(editable
     report['fingerprint']=auditor.fingerprint({k:report[k] for k in auditor.META_KEYS})
     write(editable/'report.json',report)
     with pytest.raises(ValueError,match='cannot claim case recovery'):auditor.audit(editable)
+
+
+def test_reference_cannot_be_relabelled_even_with_updated_fingerprint(editable):
+    report=auditor.read(editable/'report.json')
+    report['reference_engine']='copasi' if report['reference_engine']=='roadrunner' else 'roadrunner'
+    report['versions']={p:'synthetic-test-fixture' for p in producer.native_packages(report['reference_engine'])}
+    report['fingerprint']=auditor.fingerprint({k:report[k] for k in auditor.META_KEYS})
+    write(editable/'report.json',report)
+    with pytest.raises(ValueError,match='request inventory'):auditor.audit(editable)
+
+
+def test_copasi_version_evidence_is_required(editable):
+    report=auditor.read(editable/'report.json')
+    if report['reference_engine']!='copasi':pytest.skip('COPASI-specific environment check')
+    report['versions'].pop('copasi-basico')
+    report['fingerprint']=auditor.fingerprint({k:report[k] for k in auditor.META_KEYS})
+    write(editable/'report.json',report)
+    with pytest.raises(ValueError,match='environment inventory'):auditor.audit(editable)

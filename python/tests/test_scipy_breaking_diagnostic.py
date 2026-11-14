@@ -48,6 +48,48 @@ def test_refinement_preserves_tiny_absolute_tolerances():
         diagnostic.requests(SimpleNamespace(reference_rtol=0.,reference_atol=1e-19,rtol=1e-10,atol=1e-20))
 
 
+def test_copasi_is_an_explicit_reference_with_its_own_versions():
+    args=SimpleNamespace(reference_engine='copasi',reference_rtol=1e-13,reference_atol=1e-19,
+                         rtol=1e-11,atol=1e-13)
+    settings=diagnostic.requests(args)
+    assert list(settings)==['copasi','copasi_refined','scipy','scipy_refined']
+    assert settings['copasi_refined']=={'rtol':5e-14,'atol':5e-20}
+    assert {'python-copasi','copasi-basico'}<=diagnostic.native_packages('copasi')
+    args.reference_engine='unknown'
+    with pytest.raises(ValueError,match='native reference'):diagnostic.requests(args)
+
+
+@pytest.mark.parametrize('engine',['roadrunner','copasi'])
+def test_native_choice_reaches_adapter_and_cannot_change_on_resume(tmp_path,monkeypatch,engine):
+    # Synthetic tiny fixture tests dispatch and cache identity, not model outcomes.
+    import pandas as pd
+    evidence=tmp_path/'source.json';evidence.write_text('{}')
+    output=tmp_path/'output';output.mkdir()
+    times=np.array([0.,1.]);names=['synthetic'];bid='synthetic-branch'
+    spec={'stop':1.,'reset_trains':[],
+          'integration_settings':{e:{'rtol':1e-12,'atol':1e-14} for e in ('roadrunner','copasi')}}
+    original={'biomodel_id':'synthetic','fingerprint':'synthetic-original'}
+    monkeypatch.setattr(diagnostic,'prepare',lambda *a:({'original_report':original,'original_report_sha256':'test'},
+                        tmp_path/'model.xml',{'sha256':'test','observables':names},times,{bid:{'specification':spec}}))
+    monkeypatch.setattr(diagnostic,'source_hashes',lambda:{})
+    monkeypatch.setattr(diagnostic,'version',lambda name:'synthetic-test-fixture')
+    calls=[]
+    def native(path,times,trains,chosen,**settings):
+        calls.append(chosen);return pd.DataFrame({'time':times,'synthetic':[1.,1.]})
+    monkeypatch.setattr(diagnostic,'protocol_trajectory',native)
+    def stopped(*a,**kw):raise RuntimeError('Synthetic Radau failure; no model integration performed')
+    monkeypatch.setattr(diagnostic,'scipy_protocol_trajectory',stopped)
+    args=SimpleNamespace(evidence=evidence,output=output,branch=[],resume=False,reference_engine=engine,
+                         reference_rtol=1e-13,reference_atol=1e-15,rtol=1e-11,atol=1e-13)
+    diagnostic.diagnose(args)
+    assert calls==[engine,engine]
+    report=json.loads((output/'report.json').read_text())
+    assert report['reference_engine']==engine and report['confirmed_branches']==0
+    args.resume=True;args.reference_engine='copasi' if engine=='roadrunner' else 'roadrunner'
+    with pytest.raises(ValueError,match='Resume requires unchanged'):diagnostic.diagnose(args)
+    assert calls==[engine,engine]
+
+
 @pytest.fixture
 def saved(tmp_path):
     # Explicitly synthetic miniature array: this only tests resume validation.

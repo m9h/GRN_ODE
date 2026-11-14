@@ -1,4 +1,4 @@
-"""Independently recompute saved Radau/RoadRunner breaking comparisons.
+"""Independently recompute saved Radau/native-reference breaking comparisons.
 
 This verifies full arrays and reset evidence without rerunning integration.
 It produces window summaries for later case auditing, but neither recovers
@@ -26,12 +26,12 @@ from grn_memory.catalog_repeated import summarize
 from grn_memory.catalog_runner import fingerprint
 from grn_memory.catalog_validation import comparison
 from grn_memory.native_protocols import ResetTrain
-from scripts.diagnose_scipy_breaking import prepare
+from scripts.diagnose_scipy_breaking import prepare, native_packages
 
 
 META_KEYS=('model_id','model_sha256','source_evidence_sha256','source_report_sha256','source_fingerprint',
            'requests','acceptance','implementation_sha256','versions','sample_grid_sha256',
-           'selected_branch_ids','case_recovery_claimed')
+           'selected_branch_ids','case_recovery_claimed','reference_engine')
 LABELS=('roadrunner','roadrunner_refined','scipy','scipy_refined')
 SOURCES=('scripts/diagnose_scipy_breaking.py','grn_memory/scipy_reference.py','grn_memory/jax_protocols.py',
          'grn_memory/catalog_repeated.py','grn_memory/catalog_breaking.py',
@@ -52,6 +52,9 @@ def trajectory(directory,bid,label,saved,times,names):
     path=directory/saved['file']
     require(digest(path)==saved['sha256'],'Trajectory digest differs')
     with np.load(path,allow_pickle=False) as data:
+        require(set(data.files)=={'times','values','observables'}
+                and data['times'].dtype==np.float64 and data['values'].dtype==np.float64,
+                'Complete binary64 trajectory arrays are required')
         require(np.array_equal(data['times'],times) and list(data['observables'])==names,
                 'Original observation inventory differs')
         require(data['values'].shape==(len(times),len(names)) and np.isfinite(data['values']).all(),
@@ -65,6 +68,9 @@ def audit(directory):
     require(report['status']=='completed','Diagnostic is still running')
     require(fingerprint({k:report[k] for k in META_KEYS})==report['fingerprint'],'Diagnostic fingerprint differs')
     require(report['case_recovery_claimed'] is False,'Branch diagnostic cannot claim case recovery')
+    native=report['reference_engine']
+    require(native in ('roadrunner','copasi'),'Unknown native reference engine')
+    labels=(native,native+'_refined','scipy','scipy_refined')
     source=directory/'source-evidence.json'
     require(digest(source)==report['source_evidence_sha256'],'Captured source evidence differs')
     ids=report['selected_branch_ids']
@@ -81,10 +87,10 @@ def audit(directory):
             and report['acceptance']=={'rtol':2e-5,'atol':1e-7},'Original grid or acceptance differs')
     sources=source_hashes();sources.update({n:digest(ROOT/n) for n in SOURCES})
     require(report['implementation_sha256']==sources,'Implementation source differs')
-    require(set(report['versions'])==PACKAGES and all(isinstance(v,str) and v for v in report['versions'].values()),
+    require(set(report['versions'])==native_packages(native) and all(isinstance(v,str) and v for v in report['versions'].values()),
             'Producer environment inventory is incomplete')
-    requests=report['requests'];require(set(requests)==set(LABELS),'Integration request inventory differs')
-    for engine,factor in (('roadrunner',2),('scipy',10)):
+    requests=report['requests'];require(set(requests)==set(labels),'Integration request inventory differs')
+    for engine,factor in ((native,2),('scipy',10)):
         expected_keys={'rtol','atol','method'} if engine=='scipy' else {'rtol','atol'}
         for label in (engine,engine+'_refined'):
             require(set(requests[label])==expected_keys,'Integration settings inventory differs')
@@ -102,9 +108,9 @@ def audit(directory):
         require(record['record_id']==bid and record['fingerprint']==report['fingerprint']
                 and record['specification']==spec and record['case_recovery_claimed'] is False,
                 'Original branch identity or scope differs')
-        require(all(requests['roadrunner'][k]<spec['integration_settings']['roadrunner'][k] for k in ('rtol','atol')),
-                'RoadRunner settings do not refine the original request')
-        require(set(record['integrations'])==set(LABELS),'All four integration outcomes are required')
+        require(all(requests[native][k]<spec['integration_settings'][native][k] for k in ('rtol','atol')),
+                'Native settings do not refine the original request')
+        require(set(record['integrations'])==set(labels),'All four integration outcomes are required')
         completed={k for k,v in record['integrations'].items() if v.get('completed') is True}
         require(set(record['traces'])==completed,'Trajectory inventory differs from completed integrations')
         trains=[ResetTrain(**t) for t in spec['reset_trains']]
@@ -132,7 +138,7 @@ def audit(directory):
                         'Reset or segment coverage is incomplete')
             traces[label]=trajectory(directory,bid,label,record['traces'][label],times,info['observables'])
         checks={a+'_vs_'+b:comparison(traces[a],traces[b],**report['acceptance'])
-                for i,a in enumerate(LABELS) for b in LABELS[i+1:] if a in traces and b in traces}
+                for i,a in enumerate(labels) for b in labels[i+1:] if a in traces and b in traces}
         require(checks==record['comparisons'],'Saved pointwise comparisons do not reproduce')
         status=('incomplete' if len(checks)!=6 else 'confirmed' if all(c['passed'] for c in checks.values()) else 'mismatch')
         require(row['status']==record['status']==status,'Diagnostic outcome differs')
@@ -142,6 +148,7 @@ def audit(directory):
     confirmed=sum(b['status']=='confirmed' for b in audited)
     require(report['confirmed_branches']==confirmed,'Confirmed branch count differs')
     return {'purpose':__doc__,'model_id':report['model_id'],'model_sha256':info['sha256'],
+            'reference_engine':native,
             'report_sha256':digest(report_path),'source_evidence_sha256':digest(source),
             'audit_script_sha256':digest(Path(__file__)),'selected_branch_count':len(ids),
             'complete_captured_failure_coverage':set(ids)=={b['record_id'] for b in evidence['failed_branches']},

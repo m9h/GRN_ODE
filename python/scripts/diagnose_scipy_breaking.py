@@ -1,4 +1,4 @@
-"""Check complete breaking branches with Radau and native RoadRunner refinements.
+"""Check complete breaking branches with Radau and a declared native reference.
 
 Preserve each captured branch's entire grid and reset schedule, saving all raw
 arrays. These branch diagnostics do not recover complete cases or recompute
@@ -33,6 +33,21 @@ from grn_memory.scipy_reference import scipy_protocol_trajectory
 
 
 ACCEPTANCE={'rtol':2e-5,'atol':1e-7}
+PACKAGES={'jax','jaxlib','jaxkineticmodel','diffrax','equinox','scipy',
+          'numpy','pandas','libroadrunner','python-libsbml'}
+
+
+def native_engine(args):
+    engine=getattr(args,'reference_engine','roadrunner')
+    if engine not in ('roadrunner','copasi'):
+        raise ValueError('Choose RoadRunner or COPASI as the native reference')
+    return engine
+
+
+def native_packages(engine):
+    if engine not in ('roadrunner','copasi'):
+        raise ValueError('Unknown native reference engine')
+    return PACKAGES | ({'python-copasi','copasi-basico'} if engine=='copasi' else set())
 
 
 def digest(path):
@@ -40,9 +55,10 @@ def digest(path):
 
 
 def requests(args):
+    engine=native_engine(args)
     divided=lambda value,factor:float(Decimal(str(value))/factor)
-    result={'roadrunner':{'rtol':args.reference_rtol,'atol':args.reference_atol},
-            'roadrunner_refined':{'rtol':divided(args.reference_rtol,2),'atol':divided(args.reference_atol,2)},
+    result={engine:{'rtol':args.reference_rtol,'atol':args.reference_atol},
+            engine+'_refined':{'rtol':divided(args.reference_rtol,2),'atol':divided(args.reference_atol,2)},
             'scipy':{'method':'Radau','rtol':args.rtol,'atol':args.atol},
             'scipy_refined':{'method':'Radau','rtol':divided(args.rtol,10),'atol':divided(args.atol,10)}}
     if any(not np.isfinite(row[k]) or row[k]<=0 for row in result.values() for k in ('rtol','atol')):
@@ -92,7 +108,9 @@ def load_saved(path,saved,times,names,evidence,label,request,trains,model_sha):
                 and evidence['last_interval']==[resets[-1] if resets else 0.,float(times[-1])]):
             raise ValueError('Complete Radau reset, precision and clock evidence is required')
     with np.load(path,allow_pickle=False) as data:
-        if not (np.array_equal(data['times'],times) and list(data['observables'])==names
+        if not (set(data.files)=={'times','values','observables'}
+                and data['times'].dtype==np.float64 and data['values'].dtype==np.float64
+                and np.array_equal(data['times'],times) and list(data['observables'])==names
                 and data['values'].shape==(len(times),len(names)) and np.isfinite(data['values']).all()):
             raise ValueError('Complete original trajectory array is required')
         trace=pd.DataFrame(data['values'],columns=names);trace.insert(0,'time',times)
@@ -101,11 +119,11 @@ def load_saved(path,saved,times,names,evidence,label,request,trains,model_sha):
 
 def diagnose(args):
     evidence,path,info,grid,branches=prepare(args.evidence,args.branch)
-    settings=requests(args)
+    settings=requests(args);engine=native_engine(args)
     for original in branches.values():
-        native=original['specification']['integration_settings']['roadrunner']
-        if any(settings['roadrunner'][k]>=native[k] for k in ('rtol','atol')):
-            raise ValueError('Both RoadRunner tolerances must refine the original request')
+        native=original['specification']['integration_settings'][engine]
+        if any(settings[engine][k]>=native[k] for k in ('rtol','atol')):
+            raise ValueError('Both native tolerances must refine the original request')
     sources=source_hashes()
     sources.update({name:digest(ROOT/name) for name in ('scripts/diagnose_scipy_breaking.py',
                     'grn_memory/scipy_reference.py','grn_memory/jax_protocols.py','grn_memory/catalog_repeated.py',
@@ -113,9 +131,8 @@ def diagnose(args):
     metadata={'model_id':evidence['original_report']['biomodel_id'],'model_sha256':info['sha256'],
               'source_evidence_sha256':digest(args.evidence),'source_report_sha256':evidence['original_report_sha256'],
               'source_fingerprint':evidence['original_report']['fingerprint'],
-              'requests':settings,'acceptance':ACCEPTANCE,'implementation_sha256':sources,
-              'versions':{p:version(p) for p in ('jax','jaxlib','jaxkineticmodel','diffrax','equinox','scipy',
-                                              'numpy','pandas','libroadrunner','python-libsbml')},
+              'reference_engine':engine,'requests':settings,'acceptance':ACCEPTANCE,'implementation_sha256':sources,
+              'versions':{p:version(p) for p in sorted(native_packages(engine))},
               'sample_grid_sha256':hashlib.sha256(grid.tobytes()).hexdigest(),
               'selected_branch_ids':sorted(branches),'case_recovery_claimed':False}
     signature=fingerprint(metadata);destination=args.output/'report.json'
@@ -151,7 +168,7 @@ def diagnose(args):
                     trajectory=scipy_protocol_trajectory(path,times,trains,**request,evidence=outcome,progress=progress)
                     outcome['observables']=list(trajectory.columns[1:])
                 else:
-                    trajectory=protocol_trajectory(path,times,trains,'roadrunner',**request)
+                    trajectory=protocol_trajectory(path,times,trains,engine,**request)
                     outcome.update(completed=True,sample_count=len(times),observables=list(trajectory.columns[1:]))
                 if not np.array_equal(trajectory.time.to_numpy(),times):raise ValueError('Observation times differ')
                 np.savez_compressed(array_path,times=times,values=trajectory.iloc[:,1:].to_numpy(),
@@ -185,6 +202,8 @@ if __name__=='__main__':
     parser.add_argument('--atol',type=float,default=1e-12)
     parser.add_argument('--reference-rtol',type=float,default=1e-13)
     parser.add_argument('--reference-atol',type=float,default=1e-15)
+    parser.add_argument('--reference-engine',choices=('roadrunner','copasi'),default='roadrunner',
+                        help='Explicit native reference; never switched automatically after a mismatch')
     parser.add_argument('--resume',action='store_true')
     args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=True)
     with (args.output/'.diagnostic.lock').open('a') as lock:
