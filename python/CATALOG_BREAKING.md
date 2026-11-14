@@ -760,9 +760,16 @@ A separate [full-array Radau/RoadRunner plan](results/catalog-breaking-ueda11-di
 covers all 24 original mismatch branches, with 96 integrations and 144 pairwise
 comparisons. RoadRunner requests are `1e-14/1e-16` and `5e-15/5e-17`; Radau
 requests are `1e-11/1e-13` and `1e-12/1e-14`. All retain 221,001 observations
-per trajectory and unchanged acceptance thresholds. The computation is running.
-Full case recovery still requires complete controls and conditional-search
-validation; no additional passing cases are claimed.
+per trajectory and unchanged acceptance thresholds. The [completed full-array
+audit](results/catalog-breaking-scipy-ueda11/README.md) independently recomputes
+all 144 comparisons and confirms all 24 trajectories. The complete arrays are
+preserved in the [diagnostic release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-ueda-radau-20261114).
+The [complete-case inventory](https://github.com/m9h/GRN_ODE/blob/aa1a49a212981dda484a5fb1529f337f7badb058/python/results/catalog-breaking-ueda11-case-plan-20261114/README.md)
+retains all 298 original case trajectories, adds 24 possible later trajectories
+that the original conditional search did not reach, and includes the full
+untreated control. This separate 323-trajectory computation has started;
+67 regression tests pass. Full case recovery still requires every control and
+conditional-search validation; Ueda remains at 298/302 passing cases.
 
 The [local evidence and diagnostic release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-ueda-diagnostics-20261113)
 preserves all 138 original local archives, checked against their source hashes

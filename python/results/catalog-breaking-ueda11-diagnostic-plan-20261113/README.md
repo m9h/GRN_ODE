@@ -13,10 +13,11 @@ arrays from RoadRunner at `1e-14/1e-16` and `5e-15/5e-17`, and Radau at
 over 0–2210, every species and every original reset. The comparison acceptance
 stays `rtol=2e-5, atol=1e-7`.
 
-The inventory requires 96 integrations and 144 pairwise comparisons. The
-computation is running; the plan is not a result or a case recovery. A passing
-branch diagnostic still needs the corresponding controls and complete
-conditional search before a case can be recovered.
+The inventory requires 96 integrations and 144 pairwise comparisons. All have
+now completed and passed the independent [full-array audit](../catalog-breaking-scipy-ueda11/README.md).
+A passing branch diagnostic still needs the corresponding controls and complete
+conditional search before a case can be recovered; the original model result
+remains 298/302 validated cases.
 
 Reproduce from `python/` in a fresh output directory:
 
