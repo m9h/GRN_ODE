@@ -769,10 +769,17 @@ preserves all 138 original local archives, checked against their source hashes
 after packaging. Reports, the complete run comparison, native refinement
 records, verification and the full-array diagnostic plan are tracked in Git.
 
-Published terminal breaking reports now cover **27 distinct models**, with
-**22 passing full numerical validation** after the separate recoveries.
+The [complete local De Caluwe clock audit](results/catalog-breaking-decaluwe20-local-20261114/README.md)
+adds all 484 network-20 cases, 4,704 conditional trials and 18,579 distinct
+branches. Every numerical comparison passes, with no solver retries or
+unresolved conditional decisions. Its release preserves the model report and
+all 191 compressed evidence archives; the audit recomputes case classifications
+from saved window summaries, not from raw trajectories.
+
+Published terminal breaking reports now cover **28 distinct models**, with
+**23 passing full numerical validation** after the separate recoveries.
 Reduced Goldbeter, Fuss, Ueda, Ciliberto and Marhl retain numerical failures.
-Eight searches remain unfinished: networks **2, 5, 15, 20, 25, 29, 32
+Seven searches remain unfinished: networks **2, 5, 15, 25, 29, 32
 and 35**. All-35 completion and whole-catalog frequency comparisons remain
 pending. Passing validation does not imply that every intervention establishes
 a resolved memory effect.

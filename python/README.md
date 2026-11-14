@@ -31,7 +31,7 @@ are audited separately from validation success. Separate audited recoveries
 raise combined validation to 4,205/4,208 cases across 34 fully passing models,
 including [Marhl's full high-precision case audit](results/catalog-paired-marhl-case-recovery/README.md).
 The [three-trial breaking screen](CATALOG_BREAKING.md) has terminal results for
-27 models, with 22 fully passing numerical validation; eight complete searches
+28 models, with 23 fully passing numerical validation; seven complete searches
 remain unfinished.
 
 ## Run it
