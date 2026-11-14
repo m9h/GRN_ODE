@@ -100,7 +100,14 @@ within-engine refinements also pass. This diagnostic preserves schedules and
 sample counts, but saves comparison records and window summaries rather than
 raw arrays. Its verification checks provenance and recorded outcomes; it does
 not recompute pointwise errors. The full-case recovery below now supplies
-validation at the refined settings. The separate Fuss diagnostic is running.
+validation at the refined settings. The separate
+[Fuss refinement diagnostic](results/catalog-breaking-fuss8-refinement/README.md)
+has now completed all 1,980 integrations for its 330 failed branches, but
+confirms none. COPASI's two self-refinement comparisons pass for every branch;
+RoadRunner's two self-refinement comparisons and all cross-engine comparisons
+fail. The unchanged result remains 314/332 passing cases. Its independent
+verification checks complete failure coverage and recorded comparisons; raw
+arrays were not retained by this producer, and no case recovery is claimed.
 
 A [fresh sixteen-partition Leloup recovery](https://github.com/m9h/GRN_ODE/actions/runs/43370464101)
 now passes [all 216 cases](results/catalog-breaking-linux-12/audit.json),
