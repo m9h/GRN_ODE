@@ -29,12 +29,47 @@ comparisons must pass the unchanged acceptance rule `(2e-5,1e-7)`. Full
 binary64 arrays are saved; the independent auditor recomputes all comparisons
 and rejects missing samples, changed solver identities and incomplete resets.
 
-This is a selected-branch diagnostic, not a complete 330-branch rerun or a case
-recovery. A successful pilot would support the subsequent full control and
-conditional-search validation. It does not change the original 314/332 case
-result, and a failed result will remain recorded.
+## Completed result
 
-## Reproduce
+All three selected branches pass all six comparisons: 18/18 comparisons across
+12 complete saved trajectories. Each trajectory retains all 221,001 observations.
+COPASI and Radau agree with one another and with their own tighter runs on these
+three protocols. This supports using this explicit reference configuration for
+the next full control and conditional-search validation.
+
+Only three of the 330 unresolved native branch records were selected. No complete
+case has been recovered, and the original 314/332 case result remains unchanged.
+Agreement at two tolerance settings is numerical evidence, not proof of an exact
+solution or of the paper's interpretation of learning.
+
+## Audit the released arrays
+
+The [data release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-fuss-radau-20261116)
+contains `catalog-breaking-fuss-radau-pilot-20261114.tar.gz` and `SHA256SUMS`.
+The archive includes the original reports, all 12 NPZ trajectories, source
+evidence, the predeclared selection plan, the saved audit and per-file checksums.
+Use the release tag's checkout; its numerical implementation matches producer
+revision `fa8ee594ffeb04d52a632d391a20c9f0093ab91d`.
+
+From that checkout's `python/` directory:
+
+```bash
+gh release download kinetics-fuss-radau-20261116 --repo m9h/GRN_ODE --dir /tmp/fuss-radau-release
+(cd /tmp/fuss-radau-release && shasum -a 256 -c SHA256SUMS)
+tar -xzf /tmp/fuss-radau-release/catalog-breaking-fuss-radau-pilot-20261114.tar.gz -C /tmp/fuss-radau-release
+(cd /tmp/fuss-radau-release/catalog-breaking-fuss-radau-pilot-20261114 && shasum -a 256 -c SHA256SUMS)
+uv sync --locked --extra jaxkineticmodel
+uv run --locked --extra jaxkineticmodel python scripts/audit_scipy_breaking.py \
+  --input /tmp/fuss-radau-release/catalog-breaking-fuss-radau-pilot-20261114 \
+  --output /tmp/fuss-radau-release/recomputed-audit.json
+cmp /tmp/fuss-radau-release/recomputed-audit.json /tmp/fuss-radau-release/catalog-breaking-fuss-radau-pilot-20261114/audit.json
+```
+
+This recomputes the comparisons from the released arrays without integrations.
+The auditor verifies source and model hashes, all observations, observables,
+reset counts, solver identities, precision, tolerances and recorded outcomes.
+
+## Repeat the integrations
 
 Download and extract `catalog-breaking-fuss8-refinement-20261114.tar.gz` from
 the [complete native diagnostic release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-fuss-refinement-20261114).
