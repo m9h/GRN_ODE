@@ -1,6 +1,23 @@
 name: Complete Radau native case controls
 
 on:
+  push:
+    branches: ['**']
+    paths:
+      - '.github/workflows/scipy-case-controls.yml'
+      - 'python/grn_memory/scipy_case_partitions.py'
+      - 'python/grn_memory/scipy_breaking_recovery.py'
+      - 'python/scripts/*scipy_case*.py'
+      - 'python/scripts/*scipy_breaking*.py'
+      - 'python/tests/test_scipy*.py'
+  pull_request:
+    paths:
+      - '.github/workflows/scipy-case-controls.yml'
+      - 'python/grn_memory/scipy_case_partitions.py'
+      - 'python/grn_memory/scipy_breaking_recovery.py'
+      - 'python/scripts/*scipy_case*.py'
+      - 'python/scripts/*scipy_breaking*.py'
+      - 'python/tests/test_scipy*.py'
   workflow_dispatch:
     inputs:
       operation:
@@ -20,6 +37,10 @@ on:
 permissions:
   contents: read
   actions: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
 
 jobs:
   validation:
@@ -43,14 +64,14 @@ jobs:
         name: Validate original partition indices
         env:
           REQUESTED_INDICES: ${{ inputs.partition_indices }}
-          PARENT_RUN: ${{ inputs.resume_run }}
+          PARENT_RUN: ${{ inputs.resume_run || '0' }}
         run: |
           uv run --locked --extra test --extra jaxkineticmodel --extra delay python - <<'PY'
           import json, os, re
           from pathlib import Path
           from grn_memory.scipy_case_partitions import load_experiment, selected_branches
           plan, inventory, *_ = load_experiment(Path('results/catalog-breaking-fuss-full-case-plan-20261116'))
-          indices = json.loads(os.environ['REQUESTED_INDICES'])
+          indices = json.loads(os.environ['REQUESTED_INDICES']) if os.environ['REQUESTED_INDICES'] else list(range(plan['shard_count']))
           assert isinstance(indices, list) and indices and len(indices) == len(set(indices))
           assert all(type(i) is int for i in indices)
           for index in indices:
