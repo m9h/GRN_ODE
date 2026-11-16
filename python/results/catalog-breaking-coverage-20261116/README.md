@@ -28,6 +28,38 @@ The four passing models 6, 14, 17, and 33 have no eligible breaking cases under
 the original calibration. Their untreated controls pass; this does not provide
 positive evidence of memory breaking.
 
+## What the passing computations demonstrate
+
+Numerical agreement does not mean every intervention shows a history effect.
+The two newly passing model audits give these controlled classifications:
+
+| Response-by-trial classification | Edelstein (2) | Markevich (15) |
+| --- | ---: | ---: |
+| No resolved history effect at rechallenge | 50,041 | 7,427 |
+| No resolved breaker effect on history | 817 | 224 |
+| History effect changed without half restoration | 2,115 | 1,446 |
+| History effect amplified | 414 | 3,024 |
+| Half-restoration threshold unresolved | 1,515 | 1,185 |
+| History effect reduced by half | 2,169 | 5,977 |
+| History effect reversed | 362 | 2,268 |
+| **Total response-by-trial classifications** | **57,433** | **21,551** |
+
+`response-summary.json` binds these sums to the complete audits. A response is
+classified using the difference between trained and matched control histories,
+before and after the breaker, with a numerical resolution margin. A numerically
+validated trajectory can still leave the half-restoration threshold unresolved.
+The literal MATLAB direction labels disagree between engines in 18 Edelstein
+and two Markevich response-trials, while the controlled classifications agree.
+
+For a concrete comparison, Edelstein's `ALL__down--AL__down` case has seven
+responses with no resolved history effect. Markevich's `MAPKK__down--MKP3__down`
+case spans 20 conditional trials and 73 response-trials: 65 have no resolved
+history effect, four meet the half-restoration criterion, one reverses, and
+three change without half restoration. These are demonstrations of controlled
+history dependence in particular model interventions. The repeated species and
+histories are not independent samples, and the counts are not a prevalence
+estimate of cognition or a direct replication of the paper's population claim.
+
 ## What was verified
 
 For the four newly collected Linux models, the continuation auditor checked
