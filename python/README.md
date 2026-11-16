@@ -30,9 +30,15 @@ or numerically unresolved. Complete attempted coverage and original evidence
 are audited separately from validation success. Separate audited recoveries
 raise combined validation to 4,205/4,208 cases across 34 fully passing models,
 including [Marhl's full high-precision case audit](results/catalog-paired-marhl-case-recovery/README.md).
-The [three-trial breaking screen](CATALOG_BREAKING.md) has terminal results for
-28 models, with 23 fully passing numerical validation; seven complete searches
-remain unfinished.
+The [three-trial breaking screen](CATALOG_BREAKING.md) has terminal initial
+inventories for 33 models, with 25 fully passing whole-model numerical audits;
+Tyson and Cellière remain unfinished. See the
+[coverage release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-coverage-20261116)
+for the combined evidence and retained platform differences.
+The [Marhl breaking diagnostic](results/catalog-breaking-marhl30-radau-20261114/README.md)
+publishes all 120 full trajectories for the 30 failed branch records. Three
+records pass all comparisons; the remaining 27 mismatches are retained.
+These diagnostics do not recover complete cases or change the whole-model count.
 
 ## Run it
 
