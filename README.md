@@ -29,12 +29,19 @@ all 538 cases across all 35, including matched isolated-pulse controls.
 The [paired-learning screen](python/CATALOG_PAIRED.md) has evaluated all 4,208
 cases: 4,166 pass and 42 remain failed or numerically unresolved. The original
 results and complete coverage audit are published. Separate audited recoveries
-raise combined validation to 4,203/4,208 cases across 33 fully passing models.
-The [three-trial breaking screen](python/CATALOG_BREAKING.md) has terminal
-results for 27 models, with 22 fully passing numerical validation; eight complete
-searches remain unfinished. These catalog
+raise combined validation to 4,205/4,208 cases across 34 fully passing models.
+The [three-trial breaking screen](python/CATALOG_BREAKING.md) now has
+[34 completed initial inventories and 26 passing whole-model audits](https://github.com/m9h/GRN_ODE/blob/f45fed315f63c19f66690dffe676caf1681fe011/python/results/catalog-breaking-celliere29-20261116/README.md).
+Cellière passes all 1,088 cases; Tyson is the only unfinished initial inventory.
+Eight completed inventories retain numerical failures. These catalog
 protocols preserve native events, rule variables and delay history and separate
 unresolved or physically invalid responses from interpretable effects.
+
+This branch adds the [complete Fuss case-control workflow](python/results/catalog-breaking-fuss-full-case-plan-20261116/README.md):
+all 18 originally failed cases, 1,309 full trajectories and 5,236 COPASI/Radau
+integrations across 32 fixed partitions. Checkpoints preserve completed arrays;
+a separate auditor recomputes every comparison and both conditional searches.
+This is an execution plan, not a claim that the cases have already recovered.
 
 ![Associative recall with a sham-probe control](python/results/associative_recall.png)
 

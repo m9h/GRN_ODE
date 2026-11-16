@@ -29,14 +29,19 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def common_eligibility(plan):
+def labels_for(engine):
+    require(engine in ("roadrunner", "copasi"), "Unknown native reference engine")
+    return (engine, engine + "_refined", "scipy", "scipy_refined")
+
+
+def common_eligibility(plan, labels=LABELS):
     """Transfer only source eligibility on which both original engines agree."""
     result = {}
     for response, values in plan["responses"].items():
         require(set(values) == {"roadrunner", "copasi"}
                 and values["roadrunner"] == values["copasi"],
                 "Original engine eligibility differs; no unambiguous transfer is supported")
-        result[response] = {label: deepcopy(values["roadrunner"]) for label in LABELS}
+        result[response] = {label: deepcopy(values["roadrunner"]) for label in labels}
     return result
 
 

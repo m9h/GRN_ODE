@@ -128,6 +128,23 @@ def test_source_eligibility_disagreement_is_not_reassigned(cube):
         evaluate(cube)
 
 
+def test_copasi_case_replay_requires_both_refinements_and_later_controls(cube):
+    from grn_memory.scipy_breaking_recovery import labels_for
+    labels = labels_for("copasi")
+    for branch in cube[3].values():
+        branch["windows"] = {k.replace("roadrunner", "copasi"): v for k, v in branch["windows"].items()}
+    result = audit.evaluate_case(*cube[:4], True, labels)
+    assert result["passed"]
+    assert result["primary_search"]["engines"] == ["copasi", "scipy"]
+    assert result["refined_search"]["engines"] == ["copasi_refined", "scipy_refined"]
+    assert len(result["primary_search"]["trials"]) == 4
+    del cube[3][cube[4]["third__D__up"]["history_cue"]]["windows"]["copasi_refined"]
+    result = audit.evaluate_case(*cube[:4], True, labels)
+    assert not result["passed"]
+    # Both third-trial candidates share this history-only control.
+    assert result["refined_search"]["unresolved_conditional_decisions"] == ["third__C__up", "third__D__up"]
+
+
 @pytest.mark.parametrize("field,value", [("x64", False), ("absolute_time_preserved", False),
     ("backend", "unknown"), ("rhs_backend", "unknown"), ("jacobian", "finite-difference"),
     ("performed_resets", 998), ("completed_segments", 999), ("method", "BDF"),

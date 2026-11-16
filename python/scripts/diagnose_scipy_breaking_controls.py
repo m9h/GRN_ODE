@@ -29,7 +29,7 @@ from grn_memory.catalog_runner import fingerprint
 from grn_memory.catalog_validation import comparison
 from grn_memory.native_protocols import ResetTrain, protocol_trajectory
 from grn_memory.scipy_reference import scipy_protocol_trajectory
-from grn_memory.scipy_breaking_recovery import ACCEPTANCE, LABELS, digest, prepare_inventory
+from grn_memory.scipy_breaking_recovery import ACCEPTANCE, LABELS, digest, labels_for, prepare_inventory
 from scripts.audit_scipy_breaking import audit as audit_failed_branches, PACKAGES, SOURCES
 from scripts.diagnose_scipy_breaking import load_saved
 
@@ -47,9 +47,16 @@ def validate_resume(report, signature):
     require(report["fingerprint"] == signature, "Resume requires unchanged source, inventory and environment")
 
 
-def compute_branch(bid, spec, directory, metadata, grid, path, info, *, resume=False, imported=None):
+class TimeBudgetReached(TimeoutError):
+    """Stop between integrations, retaining every completed trajectory."""
+
+
+def compute_branch(bid, spec, directory, metadata, grid, path, info, *, resume=False, imported=None, deadline=None):
     signature = metadata["fingerprint"]
     requests = metadata["requests"]
+    engine = metadata.get("reference_engine", "roadrunner")
+    labels = labels_for(engine)
+    require(set(requests) == set(labels), "All four declared requests are required")
     times = grid[grid <= spec["stop"]]
     trains = [ResetTrain(**t) for t in spec["reset_trains"]]
     record_path = directory / (bid + ".json")
@@ -67,21 +74,26 @@ def compute_branch(bid, spec, directory, metadata, grid, path, info, *, resume=F
         record["integrations"] = deepcopy(prior["integrations"])
         record["traces"] = deepcopy(prior["traces"])
         record["reused_from"] = provenance
-        for label in LABELS:
+        for label in labels:
             saved = prior["traces"][label]
             require(saved["file"] == bid + "-" + label + ".npz", "Imported trajectory path differs")
             shutil.copyfile(source / saved["file"], directory / saved["file"])
-    require(set(record["integrations"]) <= set(LABELS)
+    require(set(record["integrations"]) <= set(labels)
             and set(record["traces"]) == {k for k, v in record["integrations"].items() if v.get("completed") is True},
             "Cached trajectory inventory differs from completed integrations")
     traces = {}
-    for label in LABELS:
+    for label in labels:
         request = requests[label]
         array_path = directory / (bid + "-" + label + ".npz")
         if record["integrations"].get(label, {}).get("completed") and label in record["traces"]:
+            if not label.startswith("scipy") and "reference_engine" in metadata:
+                require(record["integrations"][label].get("native_engine") == engine,
+                        "Cached native implementation differs")
             traces[label] = load_saved(array_path, record["traces"][label], times, info["observables"],
                                        record["integrations"][label], label, request, trains, info["sha256"])
             continue
+        if deadline is not None and time.monotonic() >= deadline:
+            raise TimeBudgetReached("Integration budget reached; completed arrays are preserved")
         if label in record["integrations"]:
             record.setdefault("previous_incomplete_attempts", {}).setdefault(label, []).append(
                 deepcopy(record["integrations"][label]))
@@ -99,11 +111,14 @@ def compute_branch(bid, spec, directory, metadata, grid, path, info, *, resume=F
                 trace = scipy_protocol_trajectory(path, times, trains, **request, evidence=outcome, progress=progress)
                 outcome["observables"] = list(trace.columns[1:])
             else:
-                trace = protocol_trajectory(path, times, trains, "roadrunner", **request)
-                outcome.update(completed=True, sample_count=len(times), observables=list(trace.columns[1:]))
+                trace = protocol_trajectory(path, times, trains, engine, **request)
+                outcome.update(completed=True, sample_count=len(times), observables=list(trace.columns[1:]),
+                               native_engine=engine)
             require(np.array_equal(trace.time.to_numpy(), times), "Observation times differ")
-            np.savez_compressed(array_path, times=times, values=trace.iloc[:, 1:].to_numpy(),
+            temporary = array_path.with_name(array_path.stem + ".pending.npz")
+            np.savez_compressed(temporary, times=times, values=trace.iloc[:, 1:].to_numpy(),
                                 observables=np.asarray(list(trace.columns[1:])))
+            temporary.replace(array_path)
             record["traces"][label] = {"file": array_path.name, "sha256": digest(array_path)}
             traces[label] = load_saved(array_path, record["traces"][label], times, info["observables"],
                                        outcome, label, request, trains, info["sha256"])
@@ -113,7 +128,7 @@ def compute_branch(bid, spec, directory, metadata, grid, path, info, *, resume=F
         outcome["seconds"] = time.monotonic() - began
         write_json(record_path, record)
     record["comparisons"] = {a + "_vs_" + b: comparison(traces[a], traces[b], **ACCEPTANCE)
-                              for i, a in enumerate(LABELS) for b in LABELS[i+1:] if a in traces and b in traces}
+                              for i, a in enumerate(labels) for b in labels[i+1:] if a in traces and b in traces}
     record["status"] = ("incomplete" if len(record["comparisons"]) != 6 else
                          "confirmed" if all(c["passed"] for c in record["comparisons"].values()) else "mismatch")
     write_json(record_path, record)

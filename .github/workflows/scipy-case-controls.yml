@@ -1,0 +1,114 @@
+name: Complete Radau native case controls
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [test, compute]
+        default: test
+        description: Validate the workflow or compute the declared full case inventory
+      partition_indices:
+        type: string
+        default: '[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]'
+        description: Original partition indices; this never changes the full experiment scope
+      resume_run:
+        type: string
+        default: '0'
+        description: Completed parent workflow run, or zero for a fresh execution
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      indices: ${{ steps.selection.outputs.indices }}
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel --extra delay
+      - id: selection
+        name: Validate original partition indices
+        env:
+          REQUESTED_INDICES: ${{ inputs.partition_indices }}
+          PARENT_RUN: ${{ inputs.resume_run }}
+        run: |
+          uv run --locked --extra test --extra jaxkineticmodel --extra delay python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          from grn_memory.scipy_case_partitions import load_experiment, selected_branches
+          plan, inventory, *_ = load_experiment(Path('results/catalog-breaking-fuss-full-case-plan-20261116'))
+          indices = json.loads(os.environ['REQUESTED_INDICES'])
+          assert isinstance(indices, list) and indices and len(indices) == len(set(indices))
+          assert all(type(i) is int for i in indices)
+          for index in indices:
+              selected_branches(inventory, plan['shard_count'], index)
+          assert re.fullmatch(r'0|[1-9][0-9]*', os.environ['PARENT_RUN'])
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('indices=' + json.dumps(indices, separators=(',', ':')) + '\n')
+          PY
+      - name: Test complete inventory, numerical controls and archived evidence
+        run: uv run --locked --extra test --extra jaxkineticmodel --extra delay python -m pytest -q
+  compute:
+    if: ${{ inputs.operation == 'compute' }}
+    needs: validation
+    name: scipy-case-partition-${{ matrix.index }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        index: ${{ fromJSON(needs.validation.outputs.indices) }}
+    defaults:
+      run:
+        working-directory: python
+    env:
+      PARTITION_INDEX: ${{ matrix.index }}
+      PARENT_RUN: ${{ inputs.resume_run }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel --extra delay
+      - name: Verify all parent checkpoints before any integration
+        if: ${{ inputs.resume_run != '0' }}
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel --extra delay python scripts/restore_scipy_case_partition.py
+          --run "$PARENT_RUN" --shard-index "$PARTITION_INDEX"
+          --inputs results/catalog-breaking-fuss-full-case-plan-20261116
+          --output "results/scipy-case-parts/partition-$PARTITION_INDEX"
+      - name: Compute every selected full trajectory with preserved checkpoints
+        run: |
+          resume=()
+          if [ "$PARENT_RUN" != 0 ]; then resume=(--resume); fi
+          timeout --signal=TERM --kill-after=60s 17400s \
+            uv run --locked --extra test --extra jaxkineticmodel --extra delay python scripts/run_scipy_case_partition.py \
+            --inputs results/catalog-breaking-fuss-full-case-plan-20261116 \
+            --output "results/scipy-case-parts/partition-$PARTITION_INDEX" \
+            --shard-index "$PARTITION_INDEX" --budget-seconds 16800 "${resume[@]}"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: scipy-cases-BIOMD0000000069-partition-${{ matrix.index }}-attempt-${{ github.run_attempt }}
+          path: python/results/scipy-case-parts/partition-${{ matrix.index }}/
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 90

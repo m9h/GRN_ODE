@@ -44,9 +44,9 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
-def replay_case(plan, reference, config, branches, engines):
+def replay_case(plan, reference, config, branches, engines, labels=LABELS):
     """Recompute the source algorithm's exact path for one declared solver pair."""
-    source = common_eligibility(plan)
+    source = common_eligibility(plan, labels)
     trials, used, unknown = {}, set(), []
 
     def evaluate(name, breakers, responses):
@@ -56,14 +56,14 @@ def replay_case(plan, reference, config, branches, engines):
         require(set(roles.values()) <= branches.keys(), "Required case control is missing")
         used.update(roles.values())
         cells = {role: branches[bid] for role, bid in roles.items()}
-        available = [label for label in LABELS if all(label in b["windows"] for b in cells.values())]
+        available = [label for label in labels if all(label in b["windows"] for b in cells.values())]
         scores = {label: trial_scores(cells, label, responses, source, k) for label in available}
-        disagreements = [r for r in responses if len(available) == len(LABELS)
-                         and len({fingerprint(classification_key(scores[e][r])) for e in LABELS}) != 1]
+        disagreements = [r for r in responses if len(available) == len(labels)
+                         and len({fingerprint(classification_key(scores[e][r])) for e in labels}) != 1]
         record = {"trial": k, "breakers": breakers, "responses": responses, "branches": roles,
-                  "scores": scores, "missing_score_engines": sorted(set(LABELS) - set(available)),
+                  "scores": scores, "missing_score_engines": sorted(set(labels) - set(available)),
                   "controlled_classification_disagreements": disagreements,
-                  "passed": len(available) == len(LABELS) and not disagreements
+                  "passed": len(available) == len(labels) and not disagreements
                             and all(b["status"] == "confirmed" for b in cells.values())}
         trials[name] = record
         if not set(engines) <= scores.keys():
@@ -86,9 +86,9 @@ def replay_case(plan, reference, config, branches, engines):
             "passed": not unknown and all(t["passed"] for t in trials.values())}
 
 
-def evaluate_case(plan, reference, config, branches, baseline_passed):
-    primary = replay_case(plan, reference, config, branches, PRIMARY)
-    refined = replay_case(plan, reference, config, branches, REFINED)
+def evaluate_case(plan, reference, config, branches, baseline_passed, labels=LABELS):
+    primary = replay_case(plan, reference, config, branches, (labels[0], labels[2]), labels)
+    refined = replay_case(plan, reference, config, branches, (labels[1], labels[3]), labels)
     potential = {fingerprint(spec) for breakers in potential_trials(plan, reference).values()
                  for spec in trial_specifications(plan, breakers, reference, config).values()}
     require(potential <= branches.keys(), "An original or possible conditional control is missing")

@@ -92,11 +92,27 @@ def test_precision_convergence_cannot_be_reported_as_native_agreement(editable):
         auditor.audit(editable)
 
 
-def test_missing_historical_provenance_does_not_relax_source_check(editable):
+def test_missing_historical_provenance_does_not_relax_source_check(editable, monkeypatch):
     (editable / "source-provenance.json").unlink()
+    # Exercise a genuinely changed checkout even when this branch happens to
+    # contain the exact archived producer. Do not rely on branch ancestry.
+    original_digest = auditor.digest
+    changed_source = auditor.ROOT / "scripts/diagnose_taylor_paired.py"
+    monkeypatch.setattr(auditor, "digest", lambda path: "0" * 64 if path == changed_source else original_digest(path))
     with pytest.raises(ValueError, match="Diagnostic implementation differs"):
         auditor.audit(editable)
     result = auditor.audit(editable, source_revision="4a43d8d3ed3ad777aab173eaa672306691ce9d6d")
+    assert result["full_protocol_branches"] == 3
+
+
+def test_exact_current_sources_are_valid_without_historical_sidecar(editable, monkeypatch):
+    (editable / "source-provenance.json").unlink()
+    report = json.loads((editable / "report.json").read_text())
+    source_hashes = {auditor.ROOT / name: sha for name, sha in report["implementation_sha256"].items()}
+    original_digest = auditor.digest
+    monkeypatch.setattr(auditor, "digest", lambda path: source_hashes[path] if path in source_hashes else original_digest(path))
+    result = auditor.audit(editable)
+    assert result["source_verification"]["mode"] == "working_tree"
     assert result["full_protocol_branches"] == 3
 
 

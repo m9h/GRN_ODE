@@ -166,3 +166,82 @@ def test_corrupt_or_changed_cache_is_rejected(tmp_path, synthetic, change):
     p.write_text(json.dumps(record))
     with pytest.raises(ValueError):
         compute(tmp_path, synthetic, resume=True)
+
+
+def use_copasi(fixture):
+    metadata = fixture[0]
+    metadata["reference_engine"] = "copasi"
+    metadata["requests"] = {k.replace("roadrunner", "copasi"): v for k, v in metadata["requests"].items()}
+
+
+def test_declared_copasi_reference_is_actually_dispatched(tmp_path, synthetic, monkeypatch):
+    use_copasi(synthetic)
+    called = []
+    old = producer.protocol_trajectory
+    def native(path, times, trains, engine, **request):
+        called.append(engine)
+        return old(path, times, trains, engine, **request)
+    monkeypatch.setattr(producer, "protocol_trajectory", native)
+    assert compute(tmp_path, synthetic)["status"] == "confirmed"
+    assert called == ["copasi", "copasi"]
+    record = producer.read(tmp_path / "synthetic.json")
+    assert set(record["traces"]) == {"copasi", "copasi_refined", "scipy", "scipy_refined"}
+    assert record["integrations"]["copasi"]["native_engine"] == "copasi"
+    assert not list(tmp_path.glob("*.pending.npz"))
+    record["integrations"]["copasi"]["native_engine"] = "roadrunner"
+    (tmp_path / "synthetic.json").write_text(json.dumps(record))
+    with pytest.raises(ValueError, match="native implementation differs"):
+        compute(tmp_path, synthetic, resume=True)
+
+
+def test_budget_preserves_completed_array_and_resume_does_not_recompute_it(tmp_path, synthetic, monkeypatch):
+    use_copasi(synthetic)
+    clock = [0.]
+    called = []
+    old = producer.protocol_trajectory
+    def native(path, times, trains, engine, **request):
+        called.append(request)
+        clock[0] += 2
+        return old(path, times, trains, engine, **request)
+    monkeypatch.setattr(producer.time, "monotonic", lambda: clock[0])
+    monkeypatch.setattr(producer, "protocol_trajectory", native)
+    with pytest.raises(producer.TimeBudgetReached):
+        compute(tmp_path, synthetic, deadline=1.)
+    before = producer.read(tmp_path / "synthetic.json")
+    assert set(before["traces"]) == {"copasi"}
+    assert compute(tmp_path, synthetic, resume=True)["status"] == "confirmed"
+    after = producer.read(tmp_path / "synthetic.json")
+    assert before["traces"]["copasi"] == after["traces"]["copasi"]
+    assert len(called) == 2  # One primary before interruption, one refined after it.
+
+
+def test_partition_auditor_recomputes_last_sample_even_if_file_hashes_are_updated(tmp_path, synthetic, monkeypatch):
+    from scripts.audit_scipy_case_partitions import audit_record
+    from grn_memory.scipy_breaking_recovery import digest
+    synthetic = (synthetic[0], np.arange(0., 2211., 10.), *synthetic[2:])
+    use_copasi(synthetic)
+    old = synthetic[-1]
+    def scipy(*args, **kw):
+        trace = old(*args, **kw)
+        kw["evidence"].update(backend="scipy.solve_ivp", rhs_backend="Jaxkineticmodel", jacobian="jax.jacfwd")
+        return trace
+    monkeypatch.setattr(producer, "scipy_protocol_trajectory", scipy)
+    entry = compute(tmp_path, synthetic)
+    metadata, grid, spec, info, _ = synthetic
+    report = {"metadata": {"experiment": metadata, "fingerprint": metadata["fingerprint"], "shard_index": 0}}
+    inventory = {"branches": {"synthetic": spec}}
+    audited, _ = audit_record(tmp_path, entry, report, inventory, grid, info)
+    assert audited["status"] == "confirmed"
+    record_path = tmp_path / "synthetic.json"
+    record = producer.read(record_path)
+    saved = record["traces"]["scipy_refined"]
+    array = tmp_path / saved["file"]
+    with np.load(array, allow_pickle=False) as source:
+        data = {k: source[k].copy() for k in source.files}
+    data["values"][-1, 0] = 2.
+    np.savez_compressed(array, **data)
+    saved["sha256"] = digest(array)
+    record_path.write_text(json.dumps(record))
+    entry["sha256"] = digest(record_path)
+    with pytest.raises(ValueError, match="every saved observation"):
+        audit_record(tmp_path, entry, report, inventory, grid, info)
