@@ -40,6 +40,11 @@ on:
         required: false
         default: ''
         type: string
+      partition_indices:
+        description: 'Optional JSON array of original partition indices; blank retains the full model inventory'
+        required: false
+        default: ''
+        type: string
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
   cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
@@ -47,6 +52,8 @@ jobs:
   precision-checkpoints:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    outputs:
+      partitions: ${{ steps.partition_selection.outputs.partitions }}
     defaults:
       run:
         working-directory: python
@@ -55,6 +62,26 @@ jobs:
       OMP_NUM_THREADS: 1
     steps:
       - uses: actions/checkout@v4
+      - name: Validate the original partition selection
+        id: partition_selection
+        env:
+          SELECTED_MODEL: ${{ inputs.model || '35' }}
+          SELECTED_PARTITIONS: ${{ inputs.partition_indices }}
+        run: |
+          import json, os
+          model = int(os.environ['SELECTED_MODEL'])
+          if model not in (35, 39):
+              raise ValueError('Unsupported model')
+          count = 17 if model == 35 else 4
+          requested = os.environ.get('SELECTED_PARTITIONS', '').strip()
+          selected = json.loads(requested) if requested else list(range(count))
+          if (not isinstance(selected, list) or not selected
+                  or any(type(index) is not int or not 0 <= index < count for index in selected)
+                  or len(set(selected)) != len(selected)):
+              raise ValueError('Select unique original partition indices within the model inventory')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
+              stream.write('partitions=' + json.dumps(sorted(selected)) + '\n')
+        shell: python
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.12'
@@ -81,7 +108,7 @@ jobs:
       fail-fast: false
       max-parallel: 16
       matrix:
-        partition: ${{ fromJSON(inputs.model == '39' && '[0,1,2,3]' || '[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]') }}
+        partition: ${{ fromJSON(needs.precision-checkpoints.outputs.partitions) }}
     defaults:
       run:
         working-directory: python
