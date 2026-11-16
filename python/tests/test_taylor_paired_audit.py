@@ -37,6 +37,10 @@ def test_all_precision_convergence_retains_native_disagreement():
     assert result["baseline_status"] == "confirmed"
     assert not result["case_recovery_claimed"]
     assert all(row["samples"] == 30001 and row["resets"] == 998 for row in result["summaries"][1:])
+    provenance = result["source_verification"]
+    assert provenance["mode"] == "git"
+    assert provenance["revision"] == "4a43d8d3ed3ad777aab173eaa672306691ce9d6d"
+    assert provenance["historical_auditor_sha256"] == "298efefee1aab30bcc828eec2f13b8fcaf858245493d3027a0409190fd94badb"
 
 
 def test_incomplete_run_cannot_pass(editable):
@@ -86,3 +90,32 @@ def test_precision_convergence_cannot_be_reported_as_native_agreement(editable):
     change(first_record(editable), lambda row: row.update(native_agreement=True))
     with pytest.raises(ValueError, match="Diagnostic outcome differs"):
         auditor.audit(editable)
+
+
+def test_missing_historical_provenance_does_not_relax_source_check(editable):
+    (editable / "source-provenance.json").unlink()
+    with pytest.raises(ValueError, match="Diagnostic implementation differs"):
+        auditor.audit(editable)
+    result = auditor.audit(editable, source_revision="4a43d8d3ed3ad777aab173eaa672306691ce9d6d")
+    assert result["full_protocol_branches"] == 3
+
+
+@pytest.mark.parametrize("change", ["revision", "hash", "inventory"])
+def test_historical_provenance_corruption_is_rejected(editable, change):
+    path = editable / "source-provenance.json"
+    provenance = json.loads(path.read_text())
+    if change == "revision":
+        provenance["matching_source_revision"] = "09c5285fc1e7ec5a6aa99e19d2608729309e0089"
+    elif change == "hash":
+        provenance["implementation_sha256"]["grn_memory/taylor_reference.py"] = "0"*64
+    else:
+        provenance["implementation_sha256"].pop("scripts/diagnose_taylor_paired.py")
+    path.write_text(json.dumps(provenance))
+    with pytest.raises(ValueError, match="implementation differs|provenance differs"):
+        auditor.audit(editable)
+
+
+def test_historical_source_requires_full_commit_id(editable):
+    (editable / "source-provenance.json").unlink()
+    with pytest.raises(ValueError, match="full historical source revision"):
+        auditor.audit(editable, source_revision="HEAD")

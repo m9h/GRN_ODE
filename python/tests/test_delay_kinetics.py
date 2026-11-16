@@ -34,7 +34,11 @@ values = compiled_delay([y(0, t-1)], times, [1], 1, step=.001)
 expected = 1+times+np.maximum(times-1, 0)**2/2+np.maximum(times-2, 0)**3/6
 np.testing.assert_allclose(values[:, 0], expected, rtol=1e-7, atol=1e-9)
 '''
-    result = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=60)
+    # Native libraries can change the process locale to ASCII. Compiler output
+    # may still contain UTF-8 punctuation; decoding diagnostics must not turn a
+    # successful delay integration into a test failure.
+    result = subprocess.run([sys.executable, "-c", code], capture_output=True,
+                            encoding="utf-8", errors="replace", timeout=60)
     assert result.returncode == 0, result.stdout + result.stderr
 
 

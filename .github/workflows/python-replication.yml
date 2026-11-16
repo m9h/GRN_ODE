@@ -402,6 +402,8 @@ jobs:
       MPLCONFIGDIR: /tmp/grn-mpl
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -411,7 +413,7 @@ jobs:
           cache-dependency-glob: python/uv.lock
       # RoadRunner's Linux wheel links libpython; use setup-python's shared build.
       - run: uv sync --python python --locked --extra test
-      - run: uv run --locked python -m pytest -q
+      - run: uv run --locked --extra test python -m pytest -q
       - run: uv run --locked python -m grn_memory.suite --no-traces
       - uses: actions/upload-artifact@v4
         if: always()
@@ -434,6 +436,8 @@ jobs:
       OMP_NUM_THREADS: '1'
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

@@ -39,6 +39,9 @@ The [Fuss Radau/COPASI pilot](results/catalog-breaking-fuss-radau-plan-20261114/
 adds full-array confirmation of three selected branches and downloadable data.
 It does not recover a complete case or change the whole-model pass count.
 
+See [CI and historical evidence validation](CI_VALIDATION.md) for the native and
+JAX test environments and for auditing archived results after source changes.
+
 ## Run it
 
 Python 3.12 and [uv](https://docs.astral.sh/uv/) are required for the commands below.

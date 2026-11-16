@@ -161,3 +161,30 @@ def test_changed_reference_provenance_is_rejected(editable):
     change(first_record(editable),lambda r:r.update(reference_record_sha256='wrong'))
     with pytest.raises(ValueError,match='Reference branch provenance'):
         auditor.audit(editable)
+
+
+def test_real_archived_reference_audit_is_recomputed_without_relabeling():
+    directory = auditor.ROOT / 'results/catalog-paired-mpmath-marhl'
+    paths = [directory / 'report.json', directory / 'reference-audit.json', REFERENCE / 'report.json']
+    before = {p: p.read_bytes() for p in paths}
+    result = auditor.audit(directory)
+    assert result['high_precision_agreeing_branches'] == 3
+    assert result['native_agreeing_branches'] == 0
+    assert {p: p.read_bytes() for p in paths} == before
+
+
+@pytest.mark.parametrize('change', ['unknown_auditor', 'comparison'])
+def test_resigned_reference_audit_cannot_change_source_or_science(editable, change):
+    path = editable / 'reference-audit.json'
+    saved = json.loads(path.read_text())
+    if change == 'unknown_auditor':
+        saved['audit_script_sha256'] = '0'*64
+    else:
+        saved['native_agreeing_branches'] = 3
+    write(path, saved)
+    change_report = json.loads((editable / 'report.json').read_text())
+    change_report['reference_audit_sha256'] = fingerprint(saved)
+    change_report['fingerprint'] = fingerprint({k:change_report[k] for k in auditor.META_KEYS})
+    write(editable / 'report.json', change_report)
+    with pytest.raises(ValueError, match='Saved reference auditor source|Saved reference audit differs'):
+        auditor.audit(editable)

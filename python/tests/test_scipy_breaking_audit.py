@@ -7,6 +7,11 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
+# The auditor verifies the installed RHS implementation's source bytes. The
+# dedicated Jaxkineticmodel CI job installs this optional backend and runs these
+# checks; the native-only environment cannot supply its implementation hashes.
+pytest.importorskip("jaxkineticmodel")
+
 from scripts import audit_scipy_breaking as auditor
 from scripts import diagnose_scipy_breaking as producer
 
