@@ -1,5 +1,10 @@
 # Breaking-screen coverage: 16 November 2026 UTC
 
+This earlier snapshot is superseded by the
+[complete Cellière audit](../catalog-breaking-celliere29-20261116/README.md):
+34 initial inventories are now complete and 26 whole-model audits pass.
+The evidence and counts below retain this earlier snapshot.
+
 The original 35-model inventory now has **33 complete initial-case inventories**
 and **25 passing whole-model audits**. Networks 5 (Tyson, six variables) and 29
 (Cellière, TGF-β signalling) still have unfinished partitions. The total remains

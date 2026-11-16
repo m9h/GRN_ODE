@@ -29,10 +29,11 @@ all 538 cases across all 35, including matched isolated-pulse controls.
 The [paired-learning screen](python/CATALOG_PAIRED.md) has evaluated all 4,208
 cases: 4,166 pass and 42 remain failed or numerically unresolved. The original
 results and complete coverage audit are published. Separate audited recoveries
-raise combined validation to 4,203/4,208 cases across 33 fully passing models.
-The [three-trial breaking screen](python/CATALOG_BREAKING.md) has terminal
-results for 27 models, with 22 fully passing numerical validation; eight complete
-searches remain unfinished. These catalog
+raise combined validation to 4,205/4,208 cases across 34 fully passing models.
+The [three-trial breaking screen](python/CATALOG_BREAKING.md) now has
+[34 complete initial-case inventories and 26 passing whole-model audits](python/results/catalog-breaking-celliere29-20261116/README.md).
+Cellière passes all 1,088 cases; Tyson is the only unfinished initial inventory.
+Eight completed inventories retain numerical failures. These catalog
 protocols preserve native events, rule variables and delay history and separate
 unresolved or physically invalid responses from interpretable effects.
 

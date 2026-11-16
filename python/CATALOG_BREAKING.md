@@ -1,5 +1,11 @@
 # Intervening on acquired response histories
 
+**Latest complete-model evidence (16 November 2026 UTC):**
+[34 initial inventories are complete and 26 whole-model audits pass](results/catalog-breaking-celliere29-20261116/README.md).
+Cellière now passes all 1,088 cases and 34,816 conditional trials; Tyson is the
+only unfinished initial inventory. Eight completed inventories retain numerical
+failures. The dated sections below preserve the earlier evidence history.
+
 This stage extends the original MATLAB breaking-intervention search across the
 35-model catalog. The selected-case [final pilot](results/catalog-breaking-pilot-final/report.json)
 passes **119 branches across 24 conditional trials**, covering three initial
