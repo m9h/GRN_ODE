@@ -21,6 +21,7 @@ from grn_memory.catalog_memory import write_json
 from grn_memory.catalog_runner import fingerprint
 from grn_memory.catalog_validation import comparison
 from grn_memory.native_protocols import ResetTrain, sample_times
+from scripts import audit_taylor_paired
 from scripts.audit_taylor_paired import audit as audit_reference
 
 
@@ -73,10 +74,24 @@ def audit(directory, reference=None):
     for name, sha in report['implementation_sha256'].items():
         require(digest(ROOT/name) == sha, 'Implementation source differs: '+name)
     reference_result = audit_reference(reference)
+    saved_reference_audit = json.loads((directory/'reference-audit.json').read_text())
     require(report['reference_report_sha256'] == digest(reference/'report.json')
-            and report['reference_audit_sha256'] == fingerprint(reference_result), 'Reference provenance differs')
-    require(json.loads((directory/'reference-audit.json').read_text()) == reference_result,
-            'Saved reference audit differs')
+            and report['reference_audit_sha256'] == fingerprint(saved_reference_audit), 'Reference provenance differs')
+    allowed_auditors = {digest(Path(audit_taylor_paired.__file__))}
+    historical = reference_result['source_verification'].get('historical_auditor_sha256')
+    if historical:
+        allowed_auditors.add(historical)
+    require(saved_reference_audit.get('audit_script_sha256') in allowed_auditors,
+            'Saved reference auditor source differs')
+    # Preserve the original reference audit and verify its actual source version.
+    # Recompute every scientific field using today's reader; only the reader's
+    # identity and additional source-verification metadata may differ.
+    identity_fields = {'audit_script_sha256', 'source_verification'}
+    require({k:v for k,v in saved_reference_audit.items() if k not in identity_fields}
+            == {k:v for k,v in reference_result.items() if k not in identity_fields}, 'Saved reference audit differs')
+    if 'source_verification' in saved_reference_audit:
+        require(saved_reference_audit['source_verification'] == reference_result['source_verification'],
+                'Saved reference source verification differs')
     source = json.loads((reference/'report.json').read_text())
     originals = {row['branch_id']: row for row in source['branches']}
     require(source['model_id'] == MODEL and report['expected_branches'] == len(originals) == 3,

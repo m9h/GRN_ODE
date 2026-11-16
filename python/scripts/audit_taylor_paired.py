@@ -5,6 +5,8 @@ import gzip
 import hashlib
 import json
 from pathlib import Path
+import re
+import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,7 +26,47 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def audit(directory):
+SOURCES = {"grn_memory/taylor_reference.py", "grn_memory/native_protocols.py",
+           "grn_memory/catalog_validation.py", "scripts/diagnose_taylor_paired.py"}
+
+
+def historical_digest(revision, name):
+    require(bool(re.fullmatch(r"[0-9a-f]{40}", revision)), "A full historical source revision is required")
+    require(name in SOURCES | {"scripts/audit_taylor_paired.py"}, "Unexpected historical source path")
+    result = subprocess.run(["git", "show", revision + ":python/" + name], cwd=ROOT, capture_output=True)
+    require(result.returncode == 0,
+            "Historical source is unavailable; fetch the full repository history: " + revision)
+    return hashlib.sha256(result.stdout).hexdigest()
+
+
+def verify_sources(directory, report, source_revision=None):
+    """Verify historical bytes explicitly; never rewrite the recorded hashes."""
+    recorded = report["implementation_sha256"]
+    require(set(recorded) == SOURCES, "Diagnostic implementation inventory differs")
+    sidecar = directory / "source-provenance.json"
+    if sidecar.exists():
+        provenance = json.loads(sidecar.read_text())
+        require(provenance["schema"] == 1 and provenance["implementation_sha256"] == recorded,
+                "Historical source provenance differs")
+        require(source_revision is None or source_revision == provenance["matching_source_revision"],
+                "Explicit source revision conflicts with recorded provenance")
+        source_revision = provenance["matching_source_revision"]
+    for name, sha in recorded.items():
+        actual = historical_digest(source_revision, name) if source_revision else digest(ROOT / name)
+        require(actual == sha, "Diagnostic implementation differs: " + name)
+    # These helpers define how the independent reader reconstructs reset times
+    # and comparisons. Changed semantics require a separate reviewed auditor.
+    for name in ("grn_memory/native_protocols.py", "grn_memory/catalog_validation.py"):
+        require(digest(ROOT / name) == recorded[name], "Audit interpretation source differs: " + name)
+    result = {"mode": "git" if source_revision else "working_tree", "revision": source_revision,
+              "implementation_sha256": recorded}
+    if source_revision:
+        result["historical_auditor_sha256"] = historical_digest(source_revision, "scripts/audit_taylor_paired.py")
+    return result
+
+
+def audit(directory, source_revision=None):
+    directory = Path(directory)
     report_path = directory/"report.json"
     report = json.loads(report_path.read_text())
     require(report["status"] == "completed", "Diagnostic is still running")
@@ -40,8 +82,7 @@ def audit(directory):
     require(digest(source) == report["source_report_sha256"] and digest(archive) == report["source_archive_sha256"],
             "Original evidence differs")
     require(original["fingerprint"] == report["source_fingerprint"], "Original fingerprint differs")
-    for name, sha in report["implementation_sha256"].items():
-        require(digest(ROOT/name) == sha, "Diagnostic implementation differs: "+name)
+    source_verification = verify_sources(directory, report, source_revision)
     with gzip.open(archive, "rt") as stream:
         branches = {b["branch_id"]: b for line in stream if (b := json.loads(line)) and not b["passed"]}
     require(report["expected_branches"] == len(branches) == len(report["branches"]), "Branch inventory is incomplete")
@@ -103,15 +144,17 @@ def audit(directory):
             "precision_converged_branches": sum(s["status"] != "precision_unresolved" for s in summaries[1:]),
             "native_agreeing_branches": sum(s["status"] == "confirmed" for s in summaries[1:]),
             "baseline_status": summaries[0]["status"], "case_recovery_claimed": False,
-            "summaries": summaries, "audit_script_sha256": digest(Path(__file__))}
+            "summaries": summaries, "audit_script_sha256": digest(Path(__file__)),
+            "source_verification": source_verification}
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--source-revision", help="Explicit historical revision matching every recorded implementation hash")
     args = parser.parse_args()
-    result = audit(args.input)
+    result = audit(args.input, args.source_revision)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     write_json(args.output, result)
     print(json.dumps({k: result[k] for k in ("model_id", "full_protocol_branches", "precision_converged_branches",

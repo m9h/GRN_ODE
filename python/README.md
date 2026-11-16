@@ -34,6 +34,8 @@ are audited separately from validation success. The
 The ongoing precision diagnostics have a separate
 [checkpoint and continuation guide](TAYLOR_CHECKPOINTS.md), including uv commands,
 validation tests and preservation of the original Vilar protocol during long runs.
+See [CI and historical evidence validation](CI_VALIDATION.md) for the native and
+JAX test environments and for auditing archived results after source changes.
 
 ## Run it
 
