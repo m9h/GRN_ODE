@@ -31,7 +31,8 @@ def toy(tmp_path, monkeypatch):
               dict(start=.4, stop=1.2, values={"B": 4.}, interval=.4, include_start=True, include_stop=True)]
     info = inspect_model(path)
     core = {"schema": 1, "model_id": "BIOMD0000000035", "model_sha256": info["sha256"],
-            "original_failed_branches": ["a"*64], "requests": deepcopy(runner.REQUESTS)}
+            "original_failed_branches": ["a"*64], "requests": deepcopy(runner.REQUESTS),
+            "implementation_sha256": {name: runner.digest(runner.ROOT / name) for name in runner.SOURCES}}
     def problem(model, index, count):
         runner.require(model == 35 and count == 2 and index in (0, 1), "Invalid toy partition")
         selection = {"index": index, "count": count, "branch_id": "a"*64 if index else "untreated_baseline",

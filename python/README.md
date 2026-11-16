@@ -31,6 +31,10 @@ are audited separately from validation success. The
 [three-trial breaking screen](CATALOG_BREAKING.md) is running after a successful
 119-branch pilot; its full-catalog results remain pending.
 
+The ongoing precision diagnostics have a separate
+[checkpoint and continuation guide](TAYLOR_CHECKPOINTS.md), including uv commands,
+validation tests and preservation of the original Vilar protocol during long runs.
+
 ## Run it
 
 Python 3.12 and [uv](https://docs.astral.sh/uv/) are required for the commands below.

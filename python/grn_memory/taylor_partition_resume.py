@@ -43,8 +43,8 @@ class GitHub:
                            check=True, stdout=stream, stderr=subprocess.PIPE)
 
 
-def validate_checkpoint(path, info, times, selection, label):
-    """Check exact state, observation prefix and schedule counters, with no JIT."""
+def checkpoint_context(info, times, selection, label):
+    """Reconstruct the checkpoint identity and protocol, without integration."""
     import heyoka as hy
     import libsbml
     import platform
@@ -65,6 +65,7 @@ def validate_checkpoint(path, info, times, selection, label):
     identity = {"model_sha256": info["sha256"], "precision_bits": precision, "tolerance": tolerance,
                 "observables": info["observables"], "times_sha256": selection["times_sha256"], "samples": len(times),
                 "trains": trains, "high_accuracy": True, "compact_mode": True,
+                "checkpoint_steps": 1_000_000,
                 "numeric_inputs": "binary64 values promoted exactly",
                 "sources": {"adapter": digest(adapter.__file__), "checkpoints": digest(checkpoints.__file__)},
                 "environment": {"heyoka": hy.__version__, "numpy": np.__version__,
@@ -75,6 +76,12 @@ def validate_checkpoint(path, info, times, selection, label):
                 "high_accuracy": True, "numeric_inputs": identity["numeric_inputs"], "absolute_time_preserved": True,
                 "expected_resets": len(events), "expected_train_reset_counts": counts,
                 "expected_segments": len(edges)-1, "sample_count": len(times), "observables": info["observables"]}
+    return identity, edges, events, expected, real
+
+
+def validate_checkpoint(path, info, times, selection, label):
+    """Check exact state, observation prefix and schedule counters, with no JIT."""
+    identity, edges, events, expected, real = checkpoint_context(info, times, selection, label)
     _, observations, evidence = checkpoints.load(path, identity, times, edges, events, expected, real)
     return {"sha256": digest(path), "completed_segments": evidence["completed_segments"],
             "saved_samples": len(observations), "completed": evidence["completed"]}
@@ -84,6 +91,8 @@ def validate_evidence(directory, model, index, count):
     _, info, times, core, selection = problem(model, index, count)
     report = json.loads((directory / "report.json").read_text())
     verify_report_identity(report, core, selection)
+    from .taylor_checkpoint_migration import verify_migration
+    verify_migration(directory, report)
     require(report["environment"] == environment(), "Resume environment differs")
     require(report["status"] in ("running", "completed", "checkpointed", "budget_exhausted", "integration_failed"),
             "Unknown partition state")
@@ -107,6 +116,8 @@ def validate_evidence(directory, model, index, count):
 def extract(archive, output):
     """Only the workflow's explicit report/array layout may be restored."""
     allowed = {"execution.json", "evidence/report.json", "evidence/restore-provenance.json", "evidence/audit.json"}
+    allowed.update("evidence/" + name for name in ("checkpoint-migration.json", "legacy-report.json",
+                   "legacy-taylor128-checkpoint.npz", "segment-start-checkpoint.npz"))
     allowed.update("evidence/" + label + ".npz" for label in REQUESTS)
     allowed.update("evidence/" + label + "-checkpoint.npz" for label in ("taylor128", "taylor192"))
     with zipfile.ZipFile(archive) as stream:
@@ -120,7 +131,7 @@ def extract(archive, output):
         stream.extractall(output)
 
 
-def restore(github, run_id, model, index, count, output):
+def restore(github, run_id, model, index, count, output, *, migrate_segments=False):
     """Publish a restored directory only after archive and numerical checks pass."""
     require(type(run_id) is int and run_id > 0, "Positive parent workflow run ID required")
     output = Path(output)
@@ -157,6 +168,9 @@ def restore(github, run_id, model, index, count, output):
         require(execution.get("source_provenance") == {"source_revision": run["head_sha"],
                 "implementation_files_differing_from_revision": []}, "Artifact numerical sources differ from the producer commit")
         source = staging / "unpacked/evidence"
+        if migrate_segments:
+            from .taylor_checkpoint_migration import migrate
+            migrate(source, model, index, count)
         validation = validate_evidence(source, model, index, count)
         history_path = source / "restore-provenance.json"
         history = json.loads(history_path.read_text())["history"] if history_path.exists() else []

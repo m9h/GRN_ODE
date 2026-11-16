@@ -28,6 +28,8 @@ def audit(directories, *, allow_partial=False):
         model = int(report["core"]["model_id"].removeprefix("BIOMD"))
         _, info, times, core, selection = problem(model, selected["index"], selected["count"])
         verify_report_identity(report, core, selection)
+        from grn_memory.taylor_checkpoint_migration import verify_migration
+        verify_migration(directory, report)
         require(selection["index"] not in seen, "Duplicate partition")
         seen.add(selection["index"])
         if common_core is None:

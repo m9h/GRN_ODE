@@ -36,6 +36,7 @@ REQUESTS = {"taylor128": {"precision": 128, "tolerance": "1e-30"},
 ACCEPTANCE = {"rtol": 2e-5, "atol": 1e-7}
 PAIRS = (("taylor128", "taylor192"), ("taylor128", "roadrunner"), ("taylor192", "roadrunner"))
 SOURCES = ("grn_memory/taylor_partitions.py", "grn_memory/taylor_reference.py",
+           "grn_memory/taylor_checkpoint_migration.py",
            "grn_memory/taylor_checkpoints.py", "grn_memory/native_protocols.py",
            "grn_memory/catalog_validation.py", "grn_memory/catalog_memory.py",
            "scripts/run_taylor_checkpoint_partition.py")
@@ -223,6 +224,8 @@ def _run(path, info, times, core, selection, output, resume, max_seconds):
         require(resume, "Existing partition requires explicit resume")
         report = json.loads(destination.read_text())
         verify_report_identity(report, core, selection)
+        from .taylor_checkpoint_migration import verify_migration
+        verify_migration(output, report)
         require(report["environment"] == runtime, "Resume environment differs")
     else:
         require(not resume, "Requested partition report is missing")
@@ -258,9 +261,10 @@ def _run(path, info, times, core, selection, output, resume, max_seconds):
         began = time.monotonic()
         checkpoint = output / (label + "-checkpoint.npz")
         def progress(row):
-            if row["completed_segments"] % 100 == 0:
+            if row.get("active_segment") or row["completed_segments"] % 100 == 0:
                 write_json(destination, report)
-                print(selection["branch_id"][:12], label, row["completed_segments"], row["last_interval"], flush=True)
+                print(selection["branch_id"][:12], label, row["completed_segments"],
+                      row.get("active_segment", row.get("last_interval")), flush=True)
         try:
             if label == "roadrunner":
                 trace = protocol_trajectory(path, times, [ResetTrain(**t) for t in selection["reset_trains"]], label, **request)

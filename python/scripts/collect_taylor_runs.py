@@ -24,6 +24,7 @@ from grn_memory.catalog_memory import write_json
 from grn_memory.taylor_checkpoints import signature
 from grn_memory.taylor_partitions import REQUESTS, digest, load_trace, now, problem, require, verify_report_identity
 from grn_memory.taylor_partition_resume import GitHub, extract
+from grn_memory.taylor_checkpoint_migration import verify_migration
 from scripts import audit_taylor_partitions as auditor
 
 PARTITIONS = {35: 17, 39: 4}
@@ -58,6 +59,7 @@ def download_partition(github, artifact, job, run, model, index, directory):
     report = json.loads((evidence / "report.json").read_text())
     _, info, times, core, selection = problem(model, index, PARTITIONS[model])
     verify_report_identity(report, core, selection)
+    verify_migration(evidence, report)
     require(report["status"] in ("running", "completed", "checkpointed", "budget_exhausted", "integration_failed")
             and set(report["traces"]) <= set(REQUESTS) and set(report["integrations"]) <= set(REQUESTS),
             "Unexpected partition state or integration inventory")

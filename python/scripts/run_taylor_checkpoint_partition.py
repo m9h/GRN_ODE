@@ -15,7 +15,7 @@ if __name__ == "__main__":
     parser.add_argument("--partition-count", type=int, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--max-seconds", type=float, default=14400., help="Cooperative wall budget at protocol boundaries")
+    parser.add_argument("--max-seconds", type=float, default=14400., help="Cooperative wall budget checked after step chunks")
     args = parser.parse_args()
     report = run_partition(args.model, args.partition_index, args.partition_count, args.output,
                            resume=args.resume, max_seconds=args.max_seconds)

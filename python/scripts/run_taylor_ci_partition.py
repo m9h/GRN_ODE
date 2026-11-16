@@ -33,7 +33,10 @@ def execute(args, github=None):
         if args.resume_run is not None:
             github = github or GitHub(os.environ["GITHUB_REPOSITORY"])
             record["restoration"] = restore(github, args.resume_run, args.model, args.partition_index,
-                                            args.partition_count, output / "evidence")
+                                            args.partition_count, output / "evidence",
+                                            migrate_segments=getattr(args, "migrate_segments", False))
+        else:
+            require(not getattr(args, "migrate_segments", False), "Migration requires a parent run")
         record["status"] = "running"
         write_json(output / "execution.json", record)
         report = run_partition(args.model, args.partition_index, args.partition_count, output / "evidence",
@@ -56,5 +59,7 @@ if __name__ == "__main__":
     parser.add_argument("--partition-count", type=int, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--resume-run", type=int)
+    parser.add_argument("--migrate-segments", action="store_true",
+                        help="Explicitly migrate the pinned legacy unfinished Taylor128 checkpoint")
     parser.add_argument("--max-seconds", type=float, default=14400.)
     raise SystemExit(execute(parser.parse_args()))

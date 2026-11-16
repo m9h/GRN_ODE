@@ -104,15 +104,20 @@ def _model(path, precision):
 
 
 def taylor_trajectory(path, times, trains=(), *, precision=128, tolerance="1e-30", evidence=None, progress=None,
-                      checkpoint=None, resume=False, checkpoint_every=10, stop_after_segments=None, max_seconds=None):
-    """Integrate a full protocol, optionally saving exact state between segments.
+                      checkpoint=None, resume=False, checkpoint_every=10, checkpoint_steps=1_000_000,
+                      stop_after_segments=None, max_seconds=None):
+    """Integrate a full protocol, saving exact state within long segments.
 
-Checkpoint stops are cooperative and occur after a complete segment. A single
-long interval can exceed the requested wall budget. ``stop_after_segments``
-counts segments computed by this invocation, including after a resume.
+With a checkpoint, save at most ``checkpoint_steps`` adaptive steps apart within
+a segment. Wall budgets are checked after each chunk, so a single native chunk
+can exceed the budget. ``stop_after_segments`` counts completed segments in this
+invocation. Restarting a grid may introduce a tiny native clock-alignment step;
+both components of the clock and the full state are preserved in the checkpoint.
     """
     if type(checkpoint_every) is not int or checkpoint_every < 1:
         raise ValueError("Checkpoint interval must be a positive integer")
+    if type(checkpoint_steps) is not int or checkpoint_steps < 1:
+        raise ValueError("Checkpoint step interval must be a positive integer")
     if stop_after_segments is not None and (type(stop_after_segments) is not int or stop_after_segments < 1):
         raise ValueError("Segment budget must be a positive integer")
     if max_seconds is not None and (not math.isfinite(max_seconds) or max_seconds <= 0):
@@ -129,11 +134,12 @@ counts segments computed by this invocation, including after a resume.
     with lock:
         return _taylor_trajectory(path, times, trains, precision=precision, tolerance=tolerance,
             evidence=evidence, progress=progress, checkpoint=checkpoint, resume=resume,
-            checkpoint_every=checkpoint_every, stop_after_segments=stop_after_segments, max_seconds=max_seconds)
+            checkpoint_every=checkpoint_every, checkpoint_steps=checkpoint_steps,
+            stop_after_segments=stop_after_segments, max_seconds=max_seconds)
 
 
 def _taylor_trajectory(path, times, trains, *, precision, tolerance, evidence, progress,
-                       checkpoint, resume, checkpoint_every, stop_after_segments, max_seconds):
+                       checkpoint, resume, checkpoint_every, checkpoint_steps, stop_after_segments, max_seconds):
     """Integrate all requested samples, preserving state at external resets.
 
 ``trains`` contains dictionaries with the same explicit timing fields as
@@ -199,6 +205,7 @@ output use the requested precision throughout.
         identity = {"model_sha256": evidence["model_sha256"], "precision_bits": precision, "tolerance": str(tol),
             "observables": names, "times_sha256": hashlib.sha256(times.tobytes()).hexdigest(), "samples": len(times),
             "trains": json.loads(json.dumps(trains)), "high_accuracy": True, "compact_mode": True,
+            "checkpoint_steps": checkpoint_steps,
             "numeric_inputs": evidence["numeric_inputs"],
             "sources": {name: hashlib.sha256(Path(file).read_bytes()).hexdigest() for name, file in
                         (("adapter", __file__), ("checkpoints", checkpoints.__file__))},
@@ -216,34 +223,70 @@ output use the requested precision throughout.
             return names, states
     integrator = hy.taylor_adaptive(equations, initial, fp_type=hy.real, prec=precision,
                                     tol=tol, high_accuracy=True, compact_mode=True)
-    integrator.time = real(float(edges[resumed_segments]))
+    active = evidence.get("active_segment")
+    if active is None:
+        integrator.time = real(float(edges[resumed_segments]))
+    else:
+        clock = tuple(real(value) for value in active["dtime"])
+        integrator.dtime = clock
+        if integrator.dtime != clock:
+            raise ValueError("Restoring the checkpoint changed its compensated clock")
     for start, end in zip(edges[resumed_segments:-1], edges[resumed_segments+1:]):
-        if start in events:
+        if active is None and start in events:
             for name, value in events[start]["values"].items():
                 integrator.state[indices[name]] = real(value)
             evidence["performed_resets"] += 1
             for index in events[start]["trains"]:
                 evidence["train_reset_counts"][index] += 1
-        first = np.searchsorted(times, start)
+        first = active["saved_samples"] if active is not None else np.searchsorted(times, start)
         last = np.searchsorted(times, end, side="right" if end == times[-1] else "left")
-        requested = times[first:last]
-        grid = np.unique(np.r_[start, requested, end])
-        # propagate_grid can internally step past its final observation. The
-        # final dense-output state is the exact segment endpoint for the reset.
-        output = integrator.propagate_grid(np.asarray([real(float(t)) for t in grid], dtype=hy.real))
-        if output[0] != hy.taylor_outcome.time_limit or output[5].shape != (len(grid), len(names)):
-            raise RuntimeError("Taylor integration did not complete its observation grid")
-        values = np.asarray(output[5], dtype=float)
-        if not np.isfinite(values).all():
-            raise RuntimeError("Nonfinite Taylor observation")
-        states[first:last] = values[np.searchsorted(grid, requested)]
+        while True:
+            requested = [real(float(t)) for t in times[first:last]]
+            # The initial point is required by Heyoka but is normally not an
+            # observation. Never round a partial segment's time to binary64.
+            grid = np.unique(np.asarray([integrator.time, *requested, real(float(end))], dtype=hy.real))
+            output = integrator.propagate_grid(grid, max_steps=checkpoint_steps if checkpoint is not None else 0)
+            if output[0] not in (hy.taylor_outcome.time_limit, hy.taylor_outcome.step_limit):
+                raise RuntimeError("Taylor integration did not complete its observation grid")
+            values = np.asarray(output[5], dtype=float)
+            if (values.ndim != 2 or values.shape[1] != len(names) or not 1 <= len(values) <= len(grid)
+                    or not np.isfinite(values).all()):
+                raise RuntimeError("Incomplete or nonfinite Taylor observation")
+            positions = np.searchsorted(grid, requested)
+            reached = int(np.count_nonzero(positions < len(values)))
+            states[first:first+reached] = values[positions[:reached]]
+            first += reached
+            evidence["integration_steps"] += int(output[3])
+            stopping = max_seconds is not None and time.monotonic() - began >= max_seconds
+            if len(values) == len(grid):
+                # A step limit can coincide with the step covering the last
+                # grid point. Its full finite dense-output array is complete.
+                if first != last:
+                    raise RuntimeError("Taylor segment completion evidence differs")
+                break
+            if checkpoint is None or output[0] != hy.taylor_outcome.step_limit or output[3] <= 0:
+                raise RuntimeError("Taylor integration stopped without a resumable step limit")
+            clock = [str(value) for value in integrator.dtime]
+            if tuple(real(value) for value in clock) != integrator.dtime:
+                raise ValueError("Decimal checkpoint does not preserve exact internal clock")
+            evidence["active_segment"] = {"index": evidence["completed_segments"],
+                "interval": [float(start), float(end)], "dtime": clock, "saved_samples": int(first)}
+            checkpoints.save(checkpoint, identity, integrator.state, states[:first], evidence, real)
+            if progress is not None:
+                progress(evidence)
+            if stopping:
+                raise checkpoints.TaylorCheckpointStop(
+                    f"Saved Taylor checkpoint inside segment {evidence['completed_segments']} at {clock[0]}")
+        # propagate_grid can step past its final observation. Rewind to its
+        # exact dense-output endpoint before applying the next external reset.
         integrator.state[:] = output[5][-1]
         integrator.time = real(float(end))
-        evidence["integration_steps"] += int(output[3])
+        evidence.pop("active_segment", None)
+        active = None
         evidence["completed_segments"] += 1
         evidence["last_interval"] = [float(start), float(end)]
-        stopping = ((stop_after_segments is not None and evidence["completed_segments"] - resumed_segments >= stop_after_segments)
-                    or (max_seconds is not None and time.monotonic() - began >= max_seconds))
+        stopping = stopping or (stop_after_segments is not None
+                                and evidence["completed_segments"] - resumed_segments >= stop_after_segments)
         if checkpoint is not None and end != times[-1] and (stopping or evidence["completed_segments"] % checkpoint_every == 0):
             checkpoints.save(checkpoint, identity, integrator.state, states[:last], evidence, real)
         if progress is not None:
