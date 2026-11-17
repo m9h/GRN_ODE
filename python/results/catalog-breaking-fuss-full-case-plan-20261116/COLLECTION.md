@@ -39,3 +39,25 @@ four integrations agree still cannot recover a case by itself. Only when all
 case auditor replay all 18 selected cases and their controls into `audit.json`.
 The 314 previously passing cases are outside this recovery experiment, so its
 output alone cannot establish whole-model recovery.
+
+## Initial checkpoint result, 17 November 2026
+
+The first full run ended with all 32 artifacts collected and verified, with no
+missing artifacts or collection errors. `initial-checkpoint-summary.json` records
+their run/job identities, original ZIP hashes, report hashes and saved array
+hashes. The original ZIPs total 2,984,867,566 bytes. Collection reproduced all six
+comparisons for each of 49 complete trajectories; all 294 comparisons pass,
+including the full untreated baseline. In total, 274 of the required 5,236
+integration arrays are complete and verified. The other saved arrays belong to
+partially completed four-integration trajectories.
+
+All 32 partition inventories remain incomplete. Six producers stopped cleanly
+at a checkpoint; 26 were interrupted while an integration was running and retain
+that earlier report status. These are execution limits, not completed negative
+case results. No case has been recovered. The continuation
+[run 44142019165](https://github.com/m9h/GRN_ODE/actions/runs/44142019165)
+resumes every original partition from run 43925538098 using the unchanged
+producer revision, protocols, tolerances and acceptance criteria. A completed
+integration is reused only after its source, metadata, protocol and array bytes
+have been verified. Work inside an interrupted integration must currently be
+repeated; this makes the long Radau integrations a scheduling bottleneck.
