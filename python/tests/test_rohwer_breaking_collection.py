@@ -367,4 +367,3 @@ def test_pending_jobs_never_claim_completion(tmp_path, monkeypatch):
     assert result['pending_indices'] == list(range(32)) and not result['collection_errors']
     assert result['confirmed_branches'] == result['verified_arrays'] == 0
     assert not result['complete_selected_diagnostics'] and not result['all_750_branches_confirmed']
-
