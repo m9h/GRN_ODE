@@ -4,6 +4,7 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import sys
 import zipfile
 
 import pytest
@@ -159,3 +160,62 @@ def test_finished_model_with_numerical_failures_remains_failed(tmp_path):
     assert result["status"] == "numerical_disagreement"
     assert result["complete_case_coverage"] and result["passed_cases"] == 116 and result["cases"] == 118
     assert not result["all_numerical_validations_passed"]
+
+
+def watch_fixture(monkeypatch, tmp_path, runs, states):
+    arguments = ["collect_breaking_runs.py", "--watch", "--interval", "1", "--output", str(tmp_path)]
+    for run in runs:
+        arguments += ["--run", str(run)]
+    monkeypatch.setattr(sys, "argv", arguments)
+    calls, sleeps = [], []
+    def collect(_github, run, _output):
+        calls.append(run)
+        # Exhaustion means a terminal run was polled again unexpectedly.
+        state = states[run].pop(0)
+        if isinstance(state, Exception):
+            raise state
+        return state
+    monkeypatch.setattr(collector, "collect_run", collect)
+    def sleep(interval):
+        sleeps.append(interval)
+        assert len(sleeps) <= 3, "Collector did not exit"
+    monkeypatch.setattr(collector.time, "sleep", sleep)
+    return calls, sleeps
+
+
+def partial_run(status="completed", errors=None):
+    return {"github_status": status, "collection_errors": errors or [],
+            "networks": {5: {"status": "waiting_for_partitions", "complete_case_coverage": False,
+                             "all_numerical_validations_passed": False}}}
+
+
+def test_watch_exits_on_terminal_partial_inventory_without_promoting_model(tmp_path, monkeypatch):
+    calls, sleeps = watch_fixture(monkeypatch, tmp_path, [1], {1: [partial_run()]})
+    assert collector.main() == 0
+    assert calls == [1] and sleeps == []
+    saved = json.loads((tmp_path / "status.json").read_text())
+    assert not saved["runs"][0]["networks"]["5"]["complete_case_coverage"]
+
+
+def test_watch_retains_completed_attempt_while_another_run_is_live(tmp_path, monkeypatch):
+    calls, sleeps = watch_fixture(monkeypatch, tmp_path, [1, 2], {
+        1: [partial_run()], 2: [partial_run("in_progress"), partial_run()]})
+    assert collector.main() == 0
+    assert calls == [1, 2, 2] and sleeps == [1]
+
+
+def test_watch_retries_transient_terminal_download_error(tmp_path, monkeypatch):
+    calls, sleeps = watch_fixture(monkeypatch, tmp_path, [1], {
+        1: [partial_run(errors=[{"error": "temporary download failure"}]), partial_run()]})
+    assert collector.main() == 0
+    assert calls == [1, 1] and sleeps == [1]
+
+
+@pytest.mark.parametrize("error", [partial_run(errors=[{"error": "bad ZIP hash"}]),
+                                  RuntimeError("API unavailable")])
+def test_watch_preserves_error_and_stops_after_three_failed_polls(tmp_path, monkeypatch, error):
+    calls, sleeps = watch_fixture(monkeypatch, tmp_path, [1], {1: [error, error, error]})
+    assert collector.main() == 1
+    assert calls == [1, 1, 1] and sleeps == [1, 1]
+    saved = json.loads((tmp_path / "status.json").read_text())
+    assert collector.has_collection_error(saved["runs"])

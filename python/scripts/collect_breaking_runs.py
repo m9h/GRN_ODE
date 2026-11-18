@@ -3,6 +3,9 @@
 This performs no numerical integration, workflow dispatch or retry. Failed and
 timed-out computations retain their evidence and an explicit incomplete status.
 Each workflow attempt and artifact has a separate immutable download directory.
+Watch mode exits after the selected runs finish and their artifacts are collected,
+including when the numerical inventories remain incomplete. Three consecutive
+collection-error polls stop with a failure status instead of polling forever.
 """
 
 import argparse
@@ -38,7 +41,7 @@ class GitHub:
 
     def api(self, endpoint):
         result = subprocess.run(["gh", "api", f"repos/{self.repository}/{endpoint}"],
-                                check=True, capture_output=True, text=True)
+                                check=True, capture_output=True, text=True, encoding="utf-8")
         return json.loads(result.stdout)
 
     def download(self, artifact_id, output):
@@ -189,6 +192,12 @@ def collect_run(github, run_id, root):
     return result
 
 
+def has_collection_error(summaries):
+    return any("error" in row or row.get("collection_errors")
+               or any(n["status"] == "audit_error" for n in row.get("networks", {}).values())
+               for row in summaries)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repository", default="m9h/GRN_ODE")
@@ -202,11 +211,15 @@ def main():
     args.output = args.output.resolve()
     args.output.mkdir(parents=True, exist_ok=True)
     github, previous = GitHub(args.repository), None
+    terminal, failed_polls = {}, 0
     with (args.output/".collector.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         while True:
             summaries = []
             for run_id in args.run:
+                if run_id in terminal:
+                    summaries.append(terminal[run_id])
+                    continue
                 try:
                     result = collect_run(github, run_id, args.output)
                     summaries.append({"run": run_id, "github_status": result["github_status"],
@@ -215,14 +228,19 @@ def main():
                         "collection_errors": result["collection_errors"]})
                 except Exception as error:
                     summaries.append({"run": run_id, "error": f"{type(error).__name__}: {error}"})
+                row = summaries[-1]
+                if row.get("github_status") == "completed" and not has_collection_error([row]):
+                    # Pin this completed attempt while other selected runs finish.
+                    # The independent final model auditor rechecks its retained ZIP.
+                    terminal[run_id] = row
             write_json(args.output/"status.json", {"checked_at": datetime.now(timezone.utc).isoformat(), "runs": summaries})
             if summaries != previous:
                 print(json.dumps(summaries), flush=True)
                 previous = summaries
-            if not args.watch:
-                return int(any("error" in s or s.get("collection_errors")
-                               or any(n["status"] == "audit_error" for n in s.get("networks", {}).values())
-                               for s in summaries))
+            errors = has_collection_error(summaries)
+            failed_polls = failed_polls + 1 if errors else 0
+            if not args.watch or len(terminal) == len(args.run) or failed_polls >= 3:
+                return int(errors)
             time.sleep(args.interval)
 
 
