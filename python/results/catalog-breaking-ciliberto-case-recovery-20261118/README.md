@@ -1,5 +1,11 @@
 # Ciliberto selected-case evidence repair
 
+**Completed 18 November:** the [new full audit](COMPLETED_AUDIT.md) recovers both
+selected cases from all 215 branches and 860 saved trajectories, including a
+passing untreated baseline. All 18 fixed replacements have been verified and
+assembled with the preserved original evidence. The separate whole-model
+result is unchanged; publication of the full trajectory package is pending.
+
 The original producer finished all 215 control branches for two selected cases
 on 14 November. Its unchanged report has SHA-256
 `bc0559d9ce685676c45c8b6162f98236b1e35a7b878ba32ac165666eb893f342`.
@@ -54,11 +60,10 @@ uv run --locked --extra test --extra jaxkineticmodel python scripts/recompute_ci
 
 The cloud workflow keeps four replacement jobs concurrent and retains every
 original time horizon. The nine paused local numerical workers are not used.
-After collection, all replacements, exact restored imports and unaffected
-original branches must be assembled with their provenance and independently
-audited across the full 215-branch inventory. The auditor must recompute every
-comparison, window summary, conditional path and controlled classification.
-Only that complete audit can establish recovery of these two selected cases.
+All replacements, exact restored imports and unaffected original branches have
+now been assembled with their provenance and independently audited across the
+full 215-branch inventory. The auditor recomputed every comparison, window
+summary, conditional path and controlled classification; both selected cases pass.
 The separate original full-model result remains 548/622 passing cases with 74
 failures; these selected calculations cannot be added to that count ad hoc.
 

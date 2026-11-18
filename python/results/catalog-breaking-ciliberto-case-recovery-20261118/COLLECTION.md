@@ -1,5 +1,10 @@
 # Collect every fixed replacement and re-audit both complete cases
 
+The [completed audit](COMPLETED_AUDIT.md) now passes both selected cases from all
+215 branches and 860 trajectories. The instructions below describe the verified
+collection and assembly procedure; the initial pending snapshot is retained as
+a historical tooling check.
+
 The [collection plan](collection-plan.json) binds all 18 replacement branches to
 one immutable GitHub run, attempt, source revision and set of job IDs. Its scope
 remains the original **215 branches and two selected cases**. The collector does
@@ -81,5 +86,5 @@ them.
 The surviving full dataset and replacement results have not yet been published
 as a complete downloadable package. Final publication still requires the
 unaffected arrays, restored import, all replacement ZIPs, API snapshots and the
-complete-case audit. No selected-case recovery is claimed by this tooling or
-the pending-state smoke check.
+complete-case audit. The completed audit establishes two selected-case recoveries;
+the initial pending-state smoke check makes no such claim.
