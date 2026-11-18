@@ -1,0 +1,39 @@
+name: Marhl complete control inventory
+
+on:
+  push:
+    paths:
+      - '.github/workflows/marhl-full-controls.yml'
+      - 'python/scripts/prepare_marhl_full_controls.py'
+      - 'python/tests/test_marhl_full_controls.py'
+      - 'python/results/catalog-breaking-marhl-full-controls-20261118/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test
+      - name: Test full potential scope and rejection of changed evidence
+        run: >-
+          uv run --locked --extra test python -m pytest -q
+          tests/test_marhl_full_controls.py tests/test_scipy_breaking_case_audit.py
+          tests/test_breaking_audit.py tests/test_breaking_shards.py
+      - name: Reproduce every original record and the complete inventory without integration
+        run: >-
+          uv run --locked --extra test python scripts/prepare_marhl_full_controls.py check
+          --inventory results/catalog-breaking-marhl-full-controls-20261118/inventory.json
