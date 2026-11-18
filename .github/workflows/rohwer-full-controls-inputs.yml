@@ -1,0 +1,47 @@
+name: Rohwer complete case-control inputs
+
+on:
+  push:
+    paths:
+      - '.github/workflows/rohwer-full-controls-inputs.yml'
+      - 'python/scripts/prepare_rohwer_full_controls.py'
+      - 'python/tests/test_rohwer_full_controls.py'
+      - 'python/results/catalog-breaking-rohwer-full-controls-20261118/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Test full scope, preserved original records and source eligibility
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_rohwer_full_controls.py tests/test_rohwer_breaking_diagnostics.py
+          tests/test_scipy_breaking_case_audit.py
+      - name: Download pinned full-control inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release download kinetics-rohwer-full-controls-20261118
+          --repo m9h/GRN_ODE --dir results/rohwer-full-controls-download
+      - name: Reproduce all original cases and complete potential-control scope
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/prepare_rohwer_full_controls.py check
+          --inputs results/rohwer-full-controls-download
+          --manifest-sha256 dd1f300d0fc760743a39d6360cb0aae19ff0ee69a3f6b991aada12493045fe0f
+          --check-runtime
