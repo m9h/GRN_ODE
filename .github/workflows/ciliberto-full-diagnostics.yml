@@ -1,0 +1,87 @@
+name: Ciliberto remaining failed-branch diagnostics
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ciliberto-full-diagnostics.yml'
+      - 'python/scripts/run_ciliberto_full_diagnostics.py'
+      - 'python/tests/test_ciliberto_full_diagnostics.py'
+      - 'python/results/catalog-breaking-ciliberto-full-diagnostics-20261118/**'
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [test, compute]
+        default: test
+        description: Validate inputs or diagnose all 260 remaining original failed branches
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Verify all original failures, published reuse and frozen numerical code
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/run_ciliberto_full_diagnostics.py
+          check --inputs results/catalog-breaking-ciliberto-full-diagnostics-20261118
+          --plan-sha256 7a4f5cc4076de6d47a457220a8321d4b6849433c8eef599736c9c0a3f391f3c2
+      - name: Test full selection, retained failures and independent array auditing
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_ciliberto_full_diagnostics.py tests/test_ciliberto_full_inventory.py
+          tests/test_scipy_breaking_diagnostic.py tests/test_scipy_breaking_audit.py
+          tests/test_scipy_breaking_case_audit.py
+  compute:
+    if: ${{ inputs.operation == 'compute' }}
+    needs: validation
+    name: ciliberto-failed-branches-${{ matrix.index }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+    defaults:
+      run:
+        working-directory: python
+    env:
+      PARTITION_INDEX: ${{ matrix.index }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Compute and independently audit every complete selected branch
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/run_ciliberto_full_diagnostics.py
+          compute --inputs results/catalog-breaking-ciliberto-full-diagnostics-20261118
+          --plan-sha256 7a4f5cc4076de6d47a457220a8321d4b6849433c8eef599736c9c0a3f391f3c2
+          --index "$PARTITION_INDEX" --budget 19200
+          --output "results/ciliberto-full-diagnostics/partition-$PARTITION_INDEX"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: ciliberto-breaking-BIOMD0000000697-partition-${{ matrix.index }}-attempt-${{ github.run_attempt }}
+          path: python/results/ciliberto-full-diagnostics/partition-${{ matrix.index }}/
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 90
