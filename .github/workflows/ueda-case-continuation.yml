@@ -7,7 +7,9 @@ on:
       - '.github/workflows/ueda-case-continuation.yml'
       - 'python/scripts/*ueda_continuation.py'
       - 'python/scripts/continue_ueda_cases.py'
+      - 'python/scripts/collect_ueda_continuation.py'
       - 'python/tests/test_ueda_cloud_continuation.py'
+      - 'python/tests/test_ueda_cloud_collection.py'
       - 'python/results/catalog-breaking-ueda-continuation-20261118/**'
   workflow_dispatch:
     inputs:
@@ -47,7 +49,7 @@ jobs:
           uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
           tests/test_ueda_cloud_continuation.py tests/test_scipy_breaking_diagnostic.py
           tests/test_scipy_breaking_audit.py tests/test_scipy_breaking_controls.py
-          tests/test_scipy_breaking_case_audit.py
+          tests/test_scipy_breaking_case_audit.py tests/test_ueda_cloud_collection.py
   compute:
     if: ${{ inputs.operation == 'compute' }}
     needs: validation
