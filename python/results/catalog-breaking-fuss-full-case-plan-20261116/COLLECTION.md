@@ -78,3 +78,18 @@ four-integration trajectories pass all 348 pairwise comparisons. These counts
 describe only the collected continuation partitions; they are not a union chosen
 from passing trajectories across runs. No partition is complete, and no selected
 case or whole model has been promoted.
+
+## Prepared scheduling change
+
+[Revision 1e09feb](https://github.com/m9h/GRN_ODE/tree/1e09feb192eed1c7be6e59f5771518e49906f026)
+prepares future continuations with sixteen concurrent partitions and forty more
+minutes per job. `scheduling-source-verification-20261118.json` verifies that all
+47 bound implementation files and the execution plan retain their original
+bytes, and that existing Linux checkpoint metadata still validates against that
+implementation. Exact runtime equality will be checked again on the Linux
+runner before resuming any integration. A local preflight exited at its tiny
+time budget with zero integrations and the original 1,309-trajectory inventory
+intact; workflow lint also passes. This revision has not been used to dispatch
+new numerical work yet, and the current cloud run continues on its original
+revision. The next continuation must wait for its complete parent run and pass
+the full test gate.
