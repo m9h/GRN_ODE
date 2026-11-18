@@ -5,10 +5,13 @@ that the four selected cases have recovered. The full experiment still requires
 323 distinct branches; 170 currently have complete preserved or published
 evidence, while 153 remain assigned to the fixed cloud computation.
 
-The local-package reproduction passed: all three preparation outputs match
-byte for byte, as recorded in `local-package-reproduction.json`. The draft
-release upload and fresh release-download check are still in progress; the
-release will be published only after the fresh-download check passes.
+Both the local-package and fresh release-download reproductions passed: all
+three preparation outputs match byte for byte. The proofs are recorded in
+`local-package-reproduction.json` and `fresh-download-reproduction.json`.
+All thirteen uploaded files, including the manifest, also match GitHub's
+reported sizes and SHA-256 digests. Download the
+[evidence release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-ueda-preservation-20261118)
+and follow the offline reproduction steps below.
 
 ## Contents and scientific scope
 
