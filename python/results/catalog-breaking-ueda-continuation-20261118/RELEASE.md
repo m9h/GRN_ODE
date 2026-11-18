@@ -5,8 +5,10 @@ that the four selected cases have recovered. The full experiment still requires
 323 distinct branches; 170 currently have complete preserved or published
 evidence, while 153 remain assigned to the fixed cloud computation.
 
-Publication checks are in progress. The package must pass both local extraction
-and fresh release-download reproduction before its release is published.
+The local-package reproduction passed: all three preparation outputs match
+byte for byte, as recorded in `local-package-reproduction.json`. The draft
+release upload and fresh release-download check are still in progress; the
+release will be published only after the fresh-download check passes.
 
 ## Contents and scientific scope
 
