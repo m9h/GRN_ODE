@@ -79,7 +79,23 @@ describe only the collected continuation partitions; they are not a union chosen
 from passing trajectories across runs. No partition is complete, and no selected
 case or whole model has been promoted.
 
-## Prepared scheduling change
+## Verified complete continuation checkpoint, 18 November 2026
+
+The entire parent run 44142019165 is now terminal. All 32 original ZIPs and
+their extracted data pass offline collection with no missing artifacts or
+collection errors. [The complete progress record](continuation-progress-complete-20261118.json)
+verifies **528 complete integration arrays**, including all **274 first-pass
+arrays unchanged** and **254 newly completed arrays**. The **112 complete
+four-integration branches** pass all **672 pairwise comparisons**. The full
+untreated baseline remains included. These are all saved completed branches
+in the fixed parent inventory, without selection by numerical outcome.
+
+Three producers stopped cleanly at their checkpoint budget; 29 were interrupted
+during an integration. All 32 inventories remain incomplete. No selected case
+or whole model is recovered. [The terminal collection status](continuation-complete-status-20261118.json)
+and [API snapshot](continuation-terminal-api-20261118) preserve the evidence.
+
+## Validated scheduling change and next continuation
 
 [Revision 1e09feb](https://github.com/m9h/GRN_ODE/tree/1e09feb192eed1c7be6e59f5771518e49906f026)
 prepares future continuations with sixteen concurrent partitions and forty more
@@ -89,7 +105,9 @@ bytes, and that existing Linux checkpoint metadata still validates against that
 implementation. Exact runtime equality will be checked again on the Linux
 runner before resuming any integration. A local preflight exited at its tiny
 time budget with zero integrations and the original 1,309-trajectory inventory
-intact; workflow lint also passes. This revision has not been used to dispatch
-new numerical work yet, and the current cloud run continues on its original
-revision. The next continuation must wait for its complete parent run and pass
-the full test gate.
+intact; workflow lint also passes. The Linux full-suite gate and ordinary CI
+passed on this revision. After the complete parent inventory was verified,
+[run 44385665111](https://github.com/m9h/GRN_ODE/actions/runs/44385665111) was dispatched
+for all 32 original partitions with parent run 44142019165. It must pass its
+full test gate and verify exact parent/runtime compatibility before integration.
+This changes scheduling only; the experiment scope and numerical requests remain fixed.
