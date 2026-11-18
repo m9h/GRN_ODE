@@ -81,3 +81,10 @@ must pass separately before the cloud computations run.
 The local stopped workers are not used. Full artifact collection, fixed-run
 assembly and the later complete-case audit remain necessary before any recovery
 can be reported. The original whole-model result remains 548/622.
+
+The [offline collection guide](COLLECTION.md) describes the fixed-run collector,
+including verification of original ZIPs, full trajectory arrays and interrupted
+checkpoints. Its 43 collection tests and 90 combined targeted tests pass locally.
+The queued producer remains frozen at `4c58f7969373f447cbb64e6390fceac92548dd31`;
+the collector is developed on the separate `kinetics-ciliberto-full-collection`
+branch. These checks establish collection behavior, not new numerical results.

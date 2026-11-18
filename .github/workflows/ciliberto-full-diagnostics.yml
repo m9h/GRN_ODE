@@ -5,7 +5,9 @@ on:
     paths:
       - '.github/workflows/ciliberto-full-diagnostics.yml'
       - 'python/scripts/run_ciliberto_full_diagnostics.py'
+      - 'python/scripts/collect_ciliberto_full_diagnostics.py'
       - 'python/tests/test_ciliberto_full_diagnostics.py'
+      - 'python/tests/test_ciliberto_full_collection.py'
       - 'python/results/catalog-breaking-ciliberto-full-diagnostics-20261118/**'
   workflow_dispatch:
     inputs:
@@ -42,7 +44,8 @@ jobs:
       - name: Test full selection, retained failures and independent array auditing
         run: >-
           uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
-          tests/test_ciliberto_full_diagnostics.py tests/test_ciliberto_full_inventory.py
+          tests/test_ciliberto_full_diagnostics.py tests/test_ciliberto_full_collection.py
+          tests/test_ciliberto_full_inventory.py
           tests/test_scipy_breaking_diagnostic.py tests/test_scipy_breaking_audit.py
           tests/test_scipy_breaking_case_audit.py
   compute:
