@@ -1,0 +1,111 @@
+name: Ciliberto complete remaining controls
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ciliberto-later-controls.yml'
+      - 'python/scripts/run_ciliberto_later_controls.py'
+      - 'python/scripts/audit_ciliberto_later_controls.py'
+      - 'python/tests/test_ciliberto_later_controls.py'
+      - 'python/results/catalog-breaking-ciliberto-later-controls-20261118/**'
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [test, compute]
+        default: test
+        description: Validate or execute all 6859 remaining controls in fixed partitions
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Test full scope, original worker and independent array auditing
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_ciliberto_later_controls.py tests/test_ciliberto_full_controls.py
+          tests/test_scipy_breaking_case_audit.py tests/test_scipy_breaking_controls.py
+      - name: Download pinned complete case inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release download kinetics-ciliberto-full-controls-20261118
+          --repo m9h/GRN_ODE --dir results/ciliberto-full-controls-download
+      - name: Verify all original inputs, complete plan and actual numerical runtime
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/run_ciliberto_later_controls.py
+          check --plan results/catalog-breaking-ciliberto-later-controls-20261118/plan.json
+          --plan-sha256 d1e73a51b8cc8b7e5ab2f283c5a31de6a09415db8782551e9ec6392d1a5740c0
+          --inputs results/ciliberto-full-controls-download
+      - id: matrix
+        name: Use every fixed partition
+        run: |
+          uv run --locked --extra test --extra jaxkineticmodel python - <<'PY'
+          import json, os
+          with open('results/catalog-breaking-ciliberto-later-controls-20261118/plan.json') as stream:
+              plan = json.load(stream)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
+              stream.write('matrix=' + json.dumps({'index': [p['index'] for p in plan['partitions']]}) + '\n')
+          PY
+  compute:
+    if: ${{ inputs.operation == 'compute' }}
+    needs: validation
+    name: ciliberto-later-controls-${{ matrix.index }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix: ${{ fromJSON(needs.validation.outputs.matrix) }}
+    defaults:
+      run:
+        working-directory: python
+    env:
+      PARTITION_INDEX: ${{ matrix.index }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Download pinned complete case inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release download kinetics-ciliberto-full-controls-20261118
+          --repo m9h/GRN_ODE --dir results/ciliberto-full-controls-download
+      - name: Compute and independently audit all controls in this fixed partition
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/run_ciliberto_later_controls.py
+          compute --plan results/catalog-breaking-ciliberto-later-controls-20261118/plan.json
+          --plan-sha256 d1e73a51b8cc8b7e5ab2f283c5a31de6a09415db8782551e9ec6392d1a5740c0
+          --inputs results/ciliberto-full-controls-download --index "$PARTITION_INDEX" --budget 19200
+          --output "results/ciliberto-later-controls/partition-$PARTITION_INDEX"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: ciliberto-controls-BIOMD0000000697-partition-${{ matrix.index }}-attempt-${{ github.run_attempt }}
+          path: python/results/ciliberto-later-controls/partition-${{ matrix.index }}/
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 90
