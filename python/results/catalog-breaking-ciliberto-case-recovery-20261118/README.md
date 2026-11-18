@@ -5,7 +5,8 @@ selected cases from all 215 branches and 860 saved trajectories, including a
 passing untreated baseline. All 18 fixed replacements have been verified and
 assembled with the preserved original evidence. The separate whole-model
 result is unchanged. The full trajectory package has separate
-[checksums and reproduction instructions](RELEASE.md).
+[checksums and reproduction instructions](RELEASE.md). A fresh download of the
+complete release reproduces the entire case audit.
 
 The original producer finished all 215 control branches for two selected cases
 on 14 November. Its unchanged report has SHA-256

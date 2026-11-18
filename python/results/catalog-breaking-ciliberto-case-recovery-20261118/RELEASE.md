@@ -7,10 +7,12 @@ import, and all eighteen original replacement ZIPs. The separate
 preserved archive member. The original API snapshot, plans, reports, complete
 audit and source references are retained in this pinned repository directory.
 
-The release tag used below is `kinetics-ciliberto-cases-20261118`. The completed
+The [complete evidence release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-ciliberto-cases-20261118)
+uses tag `kinetics-ciliberto-cases-20261118`. All 38 server asset sizes and SHA-256
+checksums match the manifest, including the manifest file itself. A
+[fresh download and complete case audit](fresh-download-reproduction.json)
+reproduced the result across all 215 branches and 860 trajectories. The completed
 scientific audit is documented in [COMPLETED_AUDIT.md](COMPLETED_AUDIT.md).
-Release notes record publication and fresh-download reproduction separately
-from the original scientific audit.
 
 Use a full clone so that the collector can inspect the pinned producer commit:
 
@@ -52,5 +54,8 @@ dataset is required separately.
 A [fresh local extraction of all 37 packaged assets](local-package-reproduction.json)
 reproduced the full audit across 215 branches and 860 arrays. The complete audit
 JSON agrees after accounting only for the assembly timestamp and its report hash.
-This validates the packaged bytes; release notes separately record the subsequent
-fresh-download check.
+The subsequent [fresh-download check](fresh-download-reproduction.json) also passed,
+with audit SHA-256
+`26a6cf44dbec580cf5b3b4caed7f4186ffad08ada01d7c3c37e23b05ab304108`.
+Both reproductions preserve the same scientific results; their assembly timestamps
+and consequently the report hashes differ. No ODE integrations were performed.
