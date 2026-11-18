@@ -83,8 +83,8 @@ without fallback to older favorable data. Synthetic transport fixtures are not
 experimental evidence; the existing full-array case-auditor tests run alongside
 them.
 
-The surviving full dataset and replacement results have not yet been published
-as a complete downloadable package. Final publication still requires the
-unaffected arrays, restored import, all replacement ZIPs, API snapshots and the
-complete-case audit. The completed audit establishes two selected-case recoveries;
+The [full downloadable package](RELEASE.md) includes the unaffected arrays,
+restored import, all replacement ZIPs, API snapshots and the complete-case audit.
+Release notes record publication and fresh-download reproduction status.
+The completed audit establishes two selected-case recoveries;
 the initial pending-state smoke check makes no such claim.

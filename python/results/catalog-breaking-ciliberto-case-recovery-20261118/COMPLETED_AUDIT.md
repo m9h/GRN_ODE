@@ -35,7 +35,8 @@ full-model result remains **548/622 passing cases, with 74 failures**. Historica
 passes have not been combined with these calculations to claim a new whole-model
 total. No local numerical workers were resumed for this repair.
 
-The complete assembled evidence is preserved outside temporary storage, but a
-full downloadable release and fresh-download reproduction are still pending.
-The committed audit is not a substitute for those trajectory files. See
-[COLLECTION.md](COLLECTION.md) for the collection and assembly procedure.
+The complete assembled evidence is preserved outside temporary storage. The
+full trajectory package, checksums and fresh-download reproduction procedure
+are described in [RELEASE.md](RELEASE.md). The committed audit is not a substitute
+for those trajectory files. See [COLLECTION.md](COLLECTION.md) for the collection
+and assembly procedure; release notes record publication and reproduction status.
