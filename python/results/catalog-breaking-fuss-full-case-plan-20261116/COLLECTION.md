@@ -61,3 +61,20 @@ producer revision, protocols, tolerances and acceptance criteria. A completed
 integration is reused only after its source, metadata, protocol and array bytes
 have been verified. Work inside an interrupted integration must currently be
 repeated; this makes the long Radau integrations a scheduling bottleneck.
+
+## Continuation checkpoint, 18 November 2026
+
+The first sixteen partitions of run 44142019165 have been collected through the
+GitHub artifact connector and verified offline with the same collector. Their
+original ZIP hashes, extracted bytes, source and protocol metadata, complete
+arrays and completed comparisons all validate. The remaining sixteen partitions
+are still pending in this dated snapshot; all 32 remain in the fixed selection.
+
+`continuation-progress-20261118.json` compares each collected partition with its
+first-pass parent artifact and verifies the recorded resume lineage. All 137
+previously complete arrays in these sixteen partitions remain byte-identical.
+They now contain 274 complete arrays, an addition of 137. Their 58 completed
+four-integration trajectories pass all 348 pairwise comparisons. These counts
+describe only the collected continuation partitions; they are not a union chosen
+from passing trajectories across runs. No partition is complete, and no selected
+case or whole model has been promoted.
