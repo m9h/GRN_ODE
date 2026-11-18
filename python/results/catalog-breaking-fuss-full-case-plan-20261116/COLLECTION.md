@@ -108,6 +108,10 @@ time budget with zero integrations and the original 1,309-trajectory inventory
 intact; workflow lint also passes. The Linux full-suite gate and ordinary CI
 passed on this revision. After the complete parent inventory was verified,
 [run 44385665111](https://github.com/m9h/GRN_ODE/actions/runs/44385665111) was dispatched
-for all 32 original partitions with parent run 44142019165. It must pass its
-full test gate and verify exact parent/runtime compatibility before integration.
+for all 32 original partitions with parent run 44142019165. Its full test gate
+passed. The [fixed collection selection](continuation-selection-20261118.json)
+binds every original index to its new immutable job ID, source revision and
+attempt, before any result is available. The initial run/job API snapshot is
+preserved in [continuation-selection-api-20261118](continuation-selection-api-20261118).
+Active jobs have passed exact parent/runtime verification and begun integration.
 This changes scheduling only; the experiment scope and numerical requests remain fixed.
