@@ -48,3 +48,9 @@ tests pass locally. They include changed payloads with updated outer checksums,
 path traversal, symlinks, missing members and scientific-result changes.
 Synthetic tests establish transport behavior; fresh reproduction of the real
 dataset is required separately.
+
+A [fresh local extraction of all 37 packaged assets](local-package-reproduction.json)
+reproduced the full audit across 215 branches and 860 arrays. The complete audit
+JSON agrees after accounting only for the assembly timestamp and its report hash.
+This validates the packaged bytes; release notes separately record the subsequent
+fresh-download check.
