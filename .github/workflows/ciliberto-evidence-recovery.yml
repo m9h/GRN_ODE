@@ -41,7 +41,7 @@ jobs:
           --plan-sha256 c5fe2486bfa6b2f531e95ab5f2cf06006b2089a01065f0ace568c0ef2d152814
           --check-only
       - name: Check selection and complete-case audit gates
-        run: uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q tests/test_ciliberto_evidence_selection.py tests/test_scipy_breaking_case_audit.py
+        run: uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q tests/test_ciliberto_collection.py tests/test_ciliberto_evidence_selection.py tests/test_scipy_breaking_case_audit.py
   compute:
     if: ${{ inputs.operation == 'compute' }}
     needs: validation

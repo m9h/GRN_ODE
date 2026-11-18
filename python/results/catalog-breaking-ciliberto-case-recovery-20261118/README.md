@@ -31,6 +31,9 @@ The partially preserved branch is recomputed with all four requests, so the
 fixed cloud plan produces 72 arrays. Its two surviving arrays remain in the
 unchanged historical snapshot; no choice between old and new outcomes is made.
 
+The [offline collection and complete-case audit](COLLECTION.md) preserve the
+fixed replacement selection and all unaffected original evidence.
+
 The original SBML model, all 215 branch specifications, both selected cases,
 complete observation grids, reset schedules, solver tolerances and acceptance
 thresholds remain fixed. All 18 bound numerical implementation files must match
