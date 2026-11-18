@@ -36,5 +36,5 @@ expected = np.where(times < .5, 1+times, np.where(times < 1, 4.5+times,
 values = jitcdde_with_resets([y(0,t-1)], times, [1.], 1., {.5: {0:5.}}, step=.001)
 np.testing.assert_allclose(values[:,0], expected, rtol=1e-7, atol=1e-8)
 '''
-    result = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=60)
+    result = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, encoding="utf-8", timeout=60)
     assert result.returncode == 0, result.stdout + result.stderr

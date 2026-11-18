@@ -7,6 +7,12 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
+      validation_scope:
+        description: 'Full validation, or only the native and JAX full-suite CI jobs'
+        required: true
+        default: 'full'
+        type: choice
+        options: ['full', 'tests']
       breaking_networks:
         description: 'JSON array of network numbers for complete-case partitions; blank runs ordinary validation'
         required: false
@@ -127,7 +133,7 @@ jobs:
           compression-level: 0
           retention-days: 7
   catalog-paired-solver-regression:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.breaking_networks == '' && inputs.validation_scope != 'tests') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -172,7 +178,7 @@ jobs:
           name: catalog-paired-solver-regression
           path: python/results/catalog-paired-recovery-ci/
   catalog-breaking-smoke:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.breaking_networks == '' && inputs.validation_scope != 'tests') }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     defaults:
@@ -220,7 +226,7 @@ jobs:
             python/results/catalog-breaking-ci/
             python/results/catalog-breaking-refinement-ci/
   catalog-repeated:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.breaking_networks == '' && inputs.validation_scope != 'tests') }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     defaults:
@@ -247,7 +253,7 @@ jobs:
           name: catalog-repeated-validation
           path: python/results/catalog-repeated-ci/
   catalog-paired-smoke:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.breaking_networks == '' && inputs.validation_scope != 'tests') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -274,7 +280,7 @@ jobs:
           name: catalog-paired-smoke-validation
           path: python/results/catalog-paired-ci/
   catalog-jax:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.breaking_networks == '' && inputs.validation_scope != 'tests') }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     defaults:
@@ -352,7 +358,7 @@ jobs:
             python/results/catalog-paired-scipy-ci/
             python/results/catalog-paired-scipy-case-audit-ci/
   catalog-memory:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.breaking_networks == '' && inputs.validation_scope != 'tests') }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     defaults:
@@ -379,7 +385,7 @@ jobs:
           name: catalog-memory-validation
           path: python/results/catalog-memory-ci/
   catalog:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.breaking_networks == '' }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.breaking_networks == '' && inputs.validation_scope != 'tests') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -417,6 +423,8 @@ jobs:
       MPLCONFIGDIR: /tmp/grn-mpl
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -426,7 +434,7 @@ jobs:
           cache-dependency-glob: python/uv.lock
       # RoadRunner's Linux wheel links libpython; use setup-python's shared build.
       - run: uv sync --python python --locked --extra test
-      - run: uv run --locked python -m pytest -q
+      - run: uv run --locked --extra test python -m pytest -q
       - run: uv run --locked python -m grn_memory.suite --no-traces
       - uses: actions/upload-artifact@v4
         if: always()
@@ -449,6 +457,8 @@ jobs:
       OMP_NUM_THREADS: '1'
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
