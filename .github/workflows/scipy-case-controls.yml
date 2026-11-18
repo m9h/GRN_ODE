@@ -90,7 +90,7 @@ jobs:
     timeout-minutes: 360
     strategy:
       fail-fast: false
-      max-parallel: 8
+      max-parallel: 16
       matrix:
         index: ${{ fromJSON(needs.validation.outputs.indices) }}
     defaults:
@@ -120,11 +120,13 @@ jobs:
         run: |
           resume=()
           if [ "$PARENT_RUN" != 0 ]; then resume=(--resume); fi
-          timeout --signal=TERM --kill-after=60s 17400s \
+          # Reserve 30 minutes of the six-hour job for setup, verified restore,
+          # termination grace and upload. Numerical settings remain in the plan.
+          timeout --signal=TERM --kill-after=60s 19800s \
             uv run --locked --extra test --extra jaxkineticmodel --extra delay python scripts/run_scipy_case_partition.py \
             --inputs results/catalog-breaking-fuss-full-case-plan-20261116 \
             --output "results/scipy-case-parts/partition-$PARTITION_INDEX" \
-            --shard-index "$PARTITION_INDEX" --budget-seconds 16800 "${resume[@]}"
+            --shard-index "$PARTITION_INDEX" --budget-seconds 19200 "${resume[@]}"
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
