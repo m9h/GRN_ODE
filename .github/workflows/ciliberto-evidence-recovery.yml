@@ -1,0 +1,85 @@
+name: Ciliberto missing-evidence recovery
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - '.github/workflows/ciliberto-evidence-recovery.yml'
+      - 'python/scripts/recompute_ciliberto_evidence.py'
+      - 'python/tests/test_ciliberto_evidence_selection.py'
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [test, compute]
+        default: test
+        description: Validate inputs or compute all 18 fixed replacement branches
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Verify original sources, package versions, model and complete case scope
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/recompute_ciliberto_evidence.py
+          --inputs results/catalog-breaking-ciliberto-case-recovery-20261118
+          --plan-sha256 c5fe2486bfa6b2f531e95ab5f2cf06006b2089a01065f0ace568c0ef2d152814
+          --check-only
+      - name: Check selection and complete-case audit gates
+        run: uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q tests/test_ciliberto_evidence_selection.py tests/test_scipy_breaking_case_audit.py
+  compute:
+    if: ${{ inputs.operation == 'compute' }}
+    needs: validation
+    name: ciliberto-replacement-${{ matrix.index }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+    defaults:
+      run:
+        working-directory: python
+    env:
+      REPLACEMENT_INDEX: ${{ matrix.index }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Compute four full trajectories using the unchanged producer
+        run: >-
+          timeout --signal=TERM --kill-after=60s 19800s
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/recompute_ciliberto_evidence.py
+          --inputs results/catalog-breaking-ciliberto-case-recovery-20261118
+          --plan-sha256 c5fe2486bfa6b2f531e95ab5f2cf06006b2089a01065f0ace568c0ef2d152814
+          --index "$REPLACEMENT_INDEX"
+          --output "results/ciliberto-replacements/branch-$REPLACEMENT_INDEX"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: ciliberto-evidence-replacement-${{ matrix.index }}-attempt-${{ github.run_attempt }}
+          path: python/results/ciliberto-replacements/branch-${{ matrix.index }}/
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 90

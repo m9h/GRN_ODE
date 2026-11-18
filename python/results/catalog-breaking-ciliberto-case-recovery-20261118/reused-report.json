@@ -1,0 +1,141 @@
+{
+  "purpose": "Check complete breaking branches with Radau and native RoadRunner refinements.\n\nPreserve each captured branch's entire grid and reset schedule, saving all raw\narrays. These branch diagnostics do not recover complete cases or recompute\nthe conditional search. No native failure is overwritten.\n",
+  "model_id": "BIOMD0000000697",
+  "model_sha256": "49fa7d62694291db1d001a1c8c0a77c3f2c183e6def7d352b57a9714c542be33",
+  "source_evidence_sha256": "53108c2d88550f08972b64215536fc3e42b71164fd53ac64d6a15fce64ade5ad",
+  "source_report_sha256": "2da1eca24df9d7ad9a548c572811e4683f753f50ec0e9d313b170dc9c394754c",
+  "source_fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3",
+  "requests": {
+    "roadrunner": {
+      "rtol": 1e-13,
+      "atol": 1e-15
+    },
+    "roadrunner_refined": {
+      "rtol": 5e-14,
+      "atol": 5e-16
+    },
+    "scipy": {
+      "method": "Radau",
+      "rtol": 1e-10,
+      "atol": 1e-12
+    },
+    "scipy_refined": {
+      "method": "Radau",
+      "rtol": 1e-11,
+      "atol": 1e-13
+    }
+  },
+  "acceptance": {
+    "rtol": 2e-05,
+    "atol": 1e-07
+  },
+  "implementation_sha256": {
+    "jaxkineticmodel/load_sbml/sbml_model.py": "57ddfef282e220affab237ce15e760e8b01aeb4b8e5fd4c39b91696f619477cb",
+    "jaxkineticmodel/load_sbml/jax_kinetic_model.py": "04dabdfc81da14da8a008aa406e723b974213f208442225a1d512d03ab4547b2",
+    "jaxkineticmodel/load_sbml/sympy_converter.py": "8b4bfec0fd8a6ea4dfd72bf6a66af8b50faa9f3975827aac609c460287b9e504",
+    "jaxkineticmodel/load_sbml/export_sbml.py": "54b054ceaef678ae77827ce560e198d70865a34692542c798235af2121114ee9",
+    "jaxkineticmodel/load_sbml/sbml_load_utils.py": "f914d0ee1bf06602d7c9ccac6643c9814ad4f63b9c520acf92e98839e64626ca",
+    "grn_memory/catalog_jax.py": "c2ee2f06f10880232ed6faa1ffa17caebf274306ab0be152ad6d6d703bba49e5",
+    "grn_memory/catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+    "grn_memory/native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+    "scripts/diagnose_scipy_breaking.py": "8b70959e1bc0cc9621554e16863c6f9af803172e450e0e050fa4892117cacfb7",
+    "grn_memory/scipy_reference.py": "69c2a55bb79731db6744d6f9d3f78c564f07d5a221ad2f8f2ebb0a033e536b5c",
+    "grn_memory/jax_protocols.py": "d15e5b53081c6392446d5ae3029d43a17292f00d025102dad5c1e27fcb6eb9f7",
+    "grn_memory/catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315",
+    "grn_memory/catalog_breaking.py": "48834a2d0ed8c9105b381413a27314ef71f5d37c4243a677a583d47955e48c73"
+  },
+  "versions": {
+    "jax": "0.12.0.1",
+    "jaxlib": "0.12.0.1",
+    "jaxkineticmodel": "0.0.1",
+    "diffrax": "0.7.2",
+    "equinox": "0.13.8",
+    "scipy": "1.18.1",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "libroadrunner": "2.11.0",
+    "python-libsbml": "5.21.2"
+  },
+  "sample_grid_sha256": "66243b83edca81f2805214b92022df591cb568a21228783cda8aac88d179db7c",
+  "selected_branch_ids": [
+    "112ddc0389073f05e7022e4290eb72b22e4e9cb4c699c01eff62519ef228f03c",
+    "45e38704fa9a69ab946f3c6112cc1933067b52e3f455b25627694343ead900f4",
+    "48ff9bfd8796a84be771891ed2877e9055ca03508e79b941cf44db91e5a41895",
+    "62a7d4c8147602a77a0fb45b1afdebd55be2e38066a828db6f6fb84a59a6a345",
+    "87d5e5e2756a69390620cc048bf256c8095fb730af3757a3abfab3cd5e45d2a3",
+    "8ce57f1dbe7137ffe5c4e899048006f17fd6df968082d7be85fd9335c64803f3",
+    "a2af2f11681cfd468001d7026c767c725c32fbb19a2abeeb6449847a5ef5fff5",
+    "a482d951f9ecd78bceda5bbfa0ef6b0717128ce1753d24f447d5d48eb3b5ed28",
+    "bb9eaff2d0e95a0f83df5fef18dcc606d1299827887a942a0d96899a9a5f6648",
+    "f5f676b080bd30123e56a4619737c544a2fdee487b0b6c827bf33672e4bfdcfb"
+  ],
+  "case_recovery_claimed": false,
+  "fingerprint": "17942c8e58246ab951b9747d62da7dccb18650c4dd3b6d269aca2aeb22cbad55",
+  "expected_branches": 10,
+  "status": "completed",
+  "branches": [
+    {
+      "record_id": "112ddc0389073f05e7022e4290eb72b22e4e9cb4c699c01eff62519ef228f03c",
+      "file": "112ddc0389073f05e7022e4290eb72b22e4e9cb4c699c01eff62519ef228f03c.json",
+      "sha256": "0338ca68f81353e4c99a6947e77840f22dd21e928fe8956abedd9334b71c217a",
+      "status": "confirmed"
+    },
+    {
+      "record_id": "45e38704fa9a69ab946f3c6112cc1933067b52e3f455b25627694343ead900f4",
+      "file": "45e38704fa9a69ab946f3c6112cc1933067b52e3f455b25627694343ead900f4.json",
+      "sha256": "0f38c6c5d55f9d9beb1c898ef4b07119732fed3a054371b500689bbf839c11b3",
+      "status": "confirmed"
+    },
+    {
+      "record_id": "48ff9bfd8796a84be771891ed2877e9055ca03508e79b941cf44db91e5a41895",
+      "file": "48ff9bfd8796a84be771891ed2877e9055ca03508e79b941cf44db91e5a41895.json",
+      "sha256": "8c690b5f79615447d98143d6f7289d6b661d49f6a29763f230c091f62bdf8005",
+      "status": "confirmed"
+    },
+    {
+      "record_id": "62a7d4c8147602a77a0fb45b1afdebd55be2e38066a828db6f6fb84a59a6a345",
+      "file": "62a7d4c8147602a77a0fb45b1afdebd55be2e38066a828db6f6fb84a59a6a345.json",
+      "sha256": "c16c541c38679ffcdca3fd88fa63be7b6702283311c5e41fe70fe77a15fe5b0e",
+      "status": "confirmed"
+    },
+    {
+      "record_id": "87d5e5e2756a69390620cc048bf256c8095fb730af3757a3abfab3cd5e45d2a3",
+      "file": "87d5e5e2756a69390620cc048bf256c8095fb730af3757a3abfab3cd5e45d2a3.json",
+      "sha256": "af607db240d9df81be8b808ed41046493388736d142f367b12664e5ff0f65b06",
+      "status": "confirmed"
+    },
+    {
+      "record_id": "8ce57f1dbe7137ffe5c4e899048006f17fd6df968082d7be85fd9335c64803f3",
+      "file": "8ce57f1dbe7137ffe5c4e899048006f17fd6df968082d7be85fd9335c64803f3.json",
+      "sha256": "001549b0e53e5bf20640e07c7c2599f79d10a16d04ff4bd4f66a41e0c51079b0",
+      "status": "confirmed"
+    },
+    {
+      "record_id": "a2af2f11681cfd468001d7026c767c725c32fbb19a2abeeb6449847a5ef5fff5",
+      "file": "a2af2f11681cfd468001d7026c767c725c32fbb19a2abeeb6449847a5ef5fff5.json",
+      "sha256": "fa1e854ea1a577c5757b59cfc79c1179501e0817f1f804da1e2561ce2a23937c",
+      "status": "confirmed"
+    },
+    {
+      "record_id": "a482d951f9ecd78bceda5bbfa0ef6b0717128ce1753d24f447d5d48eb3b5ed28",
+      "file": "a482d951f9ecd78bceda5bbfa0ef6b0717128ce1753d24f447d5d48eb3b5ed28.json",
+      "sha256": "2c8930f480288e196b4aea1c58e4c3155faa7dac7d84311ae4cc1b4560dfa112",
+      "status": "confirmed"
+    },
+    {
+      "record_id": "bb9eaff2d0e95a0f83df5fef18dcc606d1299827887a942a0d96899a9a5f6648",
+      "file": "bb9eaff2d0e95a0f83df5fef18dcc606d1299827887a942a0d96899a9a5f6648.json",
+      "sha256": "3ad67ba6a03e22d6008c3f9b64e0cec5f5c563b3391c1cd7852dddaea680be42",
+      "status": "confirmed"
+    },
+    {
+      "record_id": "f5f676b080bd30123e56a4619737c544a2fdee487b0b6c827bf33672e4bfdcfb",
+      "file": "f5f676b080bd30123e56a4619737c544a2fdee487b0b6c827bf33672e4bfdcfb.json",
+      "sha256": "b37ac0bc6d729e831b4a102beb4043ebe0b084228b3c174545949296ea8ca9ca",
+      "status": "confirmed"
+    }
+  ],
+  "started_at": "2026-11-12T19:20:10.731569+00:00",
+  "confirmed_branches": 10,
+  "finished_at": "2026-11-12T20:17:09.024222+00:00"
+}

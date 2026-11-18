@@ -1,0 +1,2461 @@
+{
+  "original_report": {
+    "network": 28,
+    "biomodel_id": "BIOMD0000000697",
+    "name": "Ciliberto2003 - CyclinE / Cdk2 timer in the cell cycle of Xenopus laevis embryo",
+    "configuration": {
+      "dt": 0.01,
+      "post_reset_offset": 1e-05,
+      "prefix": [
+        {
+          "pulse": 1,
+          "start": 50.0,
+          "stop": 100.0,
+          "rest_stop": 160.0
+        },
+        {
+          "pulse": 2,
+          "start": 160.0,
+          "stop": 220.0,
+          "rest_stop": 290.0
+        },
+        {
+          "pulse": 3,
+          "start": 290.0,
+          "stop": 360.0,
+          "rest_stop": 440.0
+        },
+        {
+          "pulse": 4,
+          "start": 440.0,
+          "stop": 520.0,
+          "rest_stop": 610.0
+        },
+        {
+          "pulse": 5,
+          "start": 610.0,
+          "stop": 700.0,
+          "rest_stop": 800.0
+        },
+        {
+          "pulse": 6,
+          "start": 800.0,
+          "stop": 900.0,
+          "rest_stop": 1010.0
+        }
+      ],
+      "trials": {
+        "prefix": [
+          0.0,
+          1010.0
+        ],
+        "intervention_1": [
+          1010.0,
+          1110.0
+        ],
+        "pre_1": [
+          1110.0,
+          1210.0
+        ],
+        "cue_1": [
+          1210.0,
+          1310.0
+        ],
+        "post_1": [
+          1310.0,
+          1410.0
+        ],
+        "intervention_2": [
+          1410.0,
+          1510.0
+        ],
+        "pre_2": [
+          1510.0,
+          1610.0
+        ],
+        "cue_2": [
+          1610.0,
+          1710.0
+        ],
+        "post_2": [
+          1710.0,
+          1810.0
+        ],
+        "intervention_3": [
+          1810.0,
+          1910.0
+        ],
+        "pre_3": [
+          1910.0,
+          2010.0
+        ],
+        "cue_3": [
+          2010.0,
+          2110.0
+        ],
+        "post_3": [
+          2110.0,
+          2210.0
+        ]
+      },
+      "reset_interval": 0.1,
+      "prefix_endpoint_resets": true,
+      "later_endpoint_resets": false,
+      "later_resets_per_exposure": 999,
+      "calibration": "unchanged repeated-screen levels, untreated t=0..1010",
+      "candidate_selection": "union of both engines' literal MATLAB resistance/sensitization eligibility",
+      "continuation": "continue if any eligible engine has not passed the raw MATLAB reversal test",
+      "third_trial": "new breaker identity excluding UCS, first breaker and response; both nonzero levels",
+      "zero_breaker_policy": "exclude as in MATLAB; record candidate count before simulation",
+      "integration_settings": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        },
+        "copasi": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "case_integration_overrides": {},
+      "integration_error_fallbacks": {},
+      "retry_policy": "one declared fallback after solver exception only; no retry after a completed numerical mismatch",
+      "timed_drive_encoding": null,
+      "comparison_rtol": 2e-05,
+      "comparison_atol": 1e-07,
+      "candidate_plan_sha256": "a3c22dd8baa5a5e85d06fb600531c55cbcb2aa58bf4820db535d0c611e2b0658",
+      "summary_statistic": "arithmetic sample means and ranges; not continuous-time integrals",
+      "controls": "prior history x breaker sequence x final rechallenge, all eight combinations"
+    },
+    "model_sha256": "49fa7d62694291db1d001a1c8c0a77c3f2c183e6def7d352b57a9714c542be33",
+    "reference_fingerprint": "dff9a75abf57db194235636e9dbe6ab3582e21bed2b4be0eafb2732b55bcc1ab",
+    "reference_file_sha256": "4accae5ac7d5bc0e744f9e5508651a14a8ae3c3dffa7aa78702ce2bb3cd89866",
+    "implementation_sha256": {
+      "catalog_breaking.py": "48834a2d0ed8c9105b381413a27314ef71f5d37c4243a677a583d47955e48c73",
+      "breaking_scores.py": "62f7ceab84cbf9c7e48c0ba4b84efdae4b3123574fcf78f2f27a320264c7c174",
+      "catalog_archive.py": "09a8ca95bc0b984f99d585747f65e47d8bbaf4a071859ec4e3963cbcfde6e3bf",
+      "paired_scores.py": "05296ff67845d08805637c97ab4688f80584332410340e7171bb9420908d12fa",
+      "catalog_repeated.py": "9245a0403d9469080d027cf7a5d3f582524ec2ec07ca685530e440ddfd85f315",
+      "catalog_runner.py": "0f3d14d6e70743481dc3d2d85fc23b0657481be1ce3606e4eab0be1e641d57c2",
+      "catalog_memory.py": "abc6b6a497bf5686ec930918ebda320f784329952f45282a0f042f726fb1e1ba",
+      "catalog_validation.py": "d5fa5611d1c3c8ab0ed5fb4aca567c6504dae33e7e79800d640008746b16669f",
+      "native_protocols.py": "bc7d49a05a87cb2855131985ca88f47e1d32ca29d31fd5c0f567714699f172c9",
+      "delay_protocols.py": "48024ecc642d0bdb371a864254920e2a03ec942959609e2b38c5915be973697b",
+      "scheper_delay.py": "608f356480422ad71078cc08a59809ba621e5ffd1df4c417078cfb3e3eb487a6",
+      "simulation.py": "05ba872cd321027388d535472b2dc44c81ce11f4c7b08117e3483c501f6b86a0",
+      "analysis.py": "797192b61e09064237806b5663b06e11644d4eb746adf5a1ad8c0b1d4d8d07de",
+      "timed_drives.py": "f4c53952319f9fda8699a1490bb4129fb96db40cb39e024d5d75e1fd9fa73d25",
+      "protocol_retries.py": "eff8716e9976b55d27e872caefa80ec553cf1b428dd32690ca0ccb99c97e6b83"
+    },
+    "versions": {
+      "libroadrunner": "2.11.0",
+      "python-copasi": "4.48.311",
+      "copasi-basico": "0.92",
+      "python-libsbml": "5.21.2",
+      "numpy": "2.5.4"
+    },
+    "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3",
+    "targets": {
+      "PCdk2_CycE": "concentration",
+      "Cdk2_CycE": "concentration",
+      "Wee1_a": "concentration",
+      "Cdk2_CycErem": "concentration",
+      "PCdk2_CycErem": "concentration",
+      "Deg_a": "concentration",
+      "Xic": "concentration",
+      "Xic_Cdk2_CycE": "concentration",
+      "Xic_PCdk2_CycE": "concentration",
+      "Xic_Cdk2_CycErem": "concentration",
+      "Xic_PCdk2_CycErem": "concentration",
+      "Xicrem": "concentration",
+      "Kin_a": "concentration"
+    },
+    "excluded_species": {
+      "Wee1_total": "constant",
+      "Cyc_total": "assignment rule",
+      "Xic_total": "assignment rule"
+    },
+    "engines": [
+      "roadrunner",
+      "copasi"
+    ],
+    "expected_cases": 622,
+    "expected_initial_response_assessments": 3322,
+    "cases": {
+      "Cdk2_CycE__down--Cdk2_CycErem__down": {
+        "record_id": "187c190f8dcbfb2c3738edf9f5d151addf624a334fc763e6b51f9acaaf8f6d1c",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 67,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 1,
+          "no_resolved_breaker_effect_on_history": 1,
+          "half_restoration_threshold_unresolved": 2,
+          "no_resolved_history_effect_at_rechallenge": 63
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Cdk2_CycErem__up": {
+        "record_id": "50ce8364d09c40cdfaf6fbb7b4d46e759a67a0f0431468c1944f3fc06f8fca8e",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 46,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_reduced_by_half": 1,
+          "half_restoration_threshold_unresolved": 1,
+          "no_resolved_history_effect_at_rechallenge": 43
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Deg_a__down": {
+        "record_id": "663426be72fa7c46d83bca0fbf8f71d0ea38b62e99ed70d1a0348e21be8553b9",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 89,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_amplified": 3,
+          "no_resolved_breaker_effect_on_history": 3,
+          "no_resolved_history_effect_at_rechallenge": 63,
+          "half_restoration_threshold_unresolved": 17,
+          "history_effect_reduced_by_half": 1,
+          "history_effect_reversed": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Deg_a__up": {
+        "record_id": "e475e0c164177f7349df2c216e83f59c650694b10defbbcdcb4b986f318870f5",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 89,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_reduced_by_half": 8,
+          "no_resolved_breaker_effect_on_history": 1,
+          "half_restoration_threshold_unresolved": 16,
+          "no_resolved_history_effect_at_rechallenge": 63
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Kin_a__down": {
+        "record_id": "f3dbe6a7178f57451528703be8258774c8babc220e8f680f25daf1a4acd8dd17",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 48,
+        "controlled_categories": {
+          "no_resolved_breaker_effect_on_history": 11,
+          "half_restoration_threshold_unresolved": 6,
+          "no_resolved_history_effect_at_rechallenge": 23,
+          "history_effect_reversed": 4,
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_reduced_by_half": 1,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Kin_a__up": {
+        "record_id": "99a76bd2d306d1b7d41af9333aff9732de33abad2666eb609851df0d24c6a905",
+        "status": "mismatch",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 89,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 3,
+          "history_effect_changed_without_half_restoration": 2,
+          "no_resolved_breaker_effect_on_history": 11,
+          "no_resolved_history_effect_at_rechallenge": 57,
+          "half_restoration_threshold_unresolved": 3,
+          "history_effect_reversed": 5
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--PCdk2_CycE__down": {
+        "record_id": "dc38aacce15dd4e724a702a75c21166782290d570fa9efc711e853d4af7dfd7f",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 88,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 3,
+          "half_restoration_threshold_unresolved": 16,
+          "no_resolved_history_effect_at_rechallenge": 63,
+          "history_effect_reversed": 3,
+          "no_resolved_breaker_effect_on_history": 1,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--PCdk2_CycE__up": {
+        "record_id": "1cc28ab890ab78411511d57d57cf346dcb40a9625993e6729bd1cbada6d8d842",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 46,
+        "controlled_categories": {
+          "history_effect_reversed": 5,
+          "history_effect_changed_without_half_restoration": 1,
+          "no_resolved_history_effect_at_rechallenge": 22,
+          "history_effect_reduced_by_half": 3,
+          "half_restoration_threshold_unresolved": 14,
+          "history_effect_amplified": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--PCdk2_CycErem__down": {
+        "record_id": "60af4b33b4cc869bb5bc42d603c6afb25ce3c0418a8418eae5a6c0047a133d7b",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 89,
+        "controlled_categories": {
+          "no_resolved_breaker_effect_on_history": 12,
+          "half_restoration_threshold_unresolved": 7,
+          "no_resolved_history_effect_at_rechallenge": 63,
+          "history_effect_reversed": 3,
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_reduced_by_half": 1,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--PCdk2_CycErem__up": {
+        "record_id": "5f1f8286c9161458e80c0e3bd515335d7f77ed3c55e62ca3f10d02dc172a68c1",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 68,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 3,
+          "history_effect_reversed": 17,
+          "half_restoration_threshold_unresolved": 3,
+          "no_resolved_history_effect_at_rechallenge": 43,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Wee1_a__down": {
+        "record_id": "6db53cb549abfb8475b9cd6fc43c25225272b794a0e3fb5230c75efc9daebf8f",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 89,
+        "controlled_categories": {
+          "no_resolved_breaker_effect_on_history": 12,
+          "half_restoration_threshold_unresolved": 6,
+          "no_resolved_history_effect_at_rechallenge": 63,
+          "history_effect_reversed": 4,
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_reduced_by_half": 1,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Wee1_a__up": {
+        "record_id": "5b6d3d84d7b9278f78bf808e8fea5cc5b3a6f6dd5ec9a047eed9ce3fb3622b53",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 90,
+        "controlled_categories": {
+          "history_effect_amplified": 17,
+          "history_effect_reduced_by_half": 7,
+          "half_restoration_threshold_unresolved": 12,
+          "no_resolved_history_effect_at_rechallenge": 43,
+          "no_resolved_breaker_effect_on_history": 2,
+          "history_effect_reversed": 8,
+          "history_effect_changed_without_half_restoration": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic_Cdk2_CycE__down": {
+        "record_id": "84a312561cea225425a2d87c611a9e46f57a105c4df5836b495ce8a0236a6bfa",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 89,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 3,
+          "half_restoration_threshold_unresolved": 2,
+          "no_resolved_history_effect_at_rechallenge": 63,
+          "history_effect_reduced_by_half": 16,
+          "history_effect_reversed": 4,
+          "history_effect_amplified": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic_Cdk2_CycE__up": {
+        "record_id": "3f8dd3c7a90b3ae988ef57b8b43edfc2390663d19f5e352fef967c310a613c23",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 22,
+        "evaluated_response_trials": 27,
+        "controlled_categories": {
+          "history_effect_reversed": 1,
+          "history_effect_amplified": 4,
+          "no_resolved_history_effect_at_rechallenge": 22
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic_Cdk2_CycErem__down": {
+        "record_id": "2481c9225db8e7dd8fec7d13fc1e1c6d3bcb332090d8c61b3a9ff0ed07051ff3",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 67,
+        "controlled_categories": {
+          "no_resolved_breaker_effect_on_history": 12,
+          "no_resolved_history_effect_at_rechallenge": 42,
+          "half_restoration_threshold_unresolved": 6,
+          "history_effect_reversed": 3,
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_reduced_by_half": 1,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic_Cdk2_CycErem__up": {
+        "record_id": "c296b645466ef774032638f44faa905a3ee7e37384527ffde9b7f8d047c9f3cc",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 46,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 5,
+          "history_effect_changed_without_half_restoration": 1,
+          "no_resolved_history_effect_at_rechallenge": 22,
+          "half_restoration_threshold_unresolved": 15,
+          "history_effect_reversed": 2,
+          "history_effect_amplified": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic_PCdk2_CycE__down": {
+        "record_id": "c785a05dccb1c07d2f58d651443fdec9a9a283f0202b4d7d14b730de2a546fa0",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 67,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 2,
+          "half_restoration_threshold_unresolved": 13,
+          "no_resolved_history_effect_at_rechallenge": 43,
+          "history_effect_reduced_by_half": 4,
+          "history_effect_reversed": 4,
+          "history_effect_amplified": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic_PCdk2_CycE__up": {
+        "record_id": "f0b97544aa8c974e01ea30931ffdce36dc68dccecd3ae380c3a92ae7a987e751",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 67,
+        "controlled_categories": {
+          "history_effect_reversed": 12,
+          "history_effect_reduced_by_half": 3,
+          "history_effect_amplified": 3,
+          "no_resolved_history_effect_at_rechallenge": 43,
+          "half_restoration_threshold_unresolved": 6
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic_PCdk2_CycErem__down": {
+        "record_id": "f9455d66d996797ea8f3e0162db0199e2d787875f6730e7db7ded0ebc88bf831",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 67,
+        "controlled_categories": {
+          "no_resolved_breaker_effect_on_history": 12,
+          "half_restoration_threshold_unresolved": 7,
+          "no_resolved_history_effect_at_rechallenge": 41,
+          "history_effect_reversed": 3,
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_reduced_by_half": 1,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic_PCdk2_CycErem__up": {
+        "record_id": "f27cfc8671648e70869228b9574047c05758d7f7a4e2cd4522eb6e7204cad2db",
+        "status": "passed",
+        "initial_response_assessments": 4,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 46,
+        "controlled_categories": {
+          "history_effect_reversed": 19,
+          "history_effect_reduced_by_half": 2,
+          "no_resolved_history_effect_at_rechallenge": 21,
+          "half_restoration_threshold_unresolved": 2,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic__down": {
+        "record_id": "da95c3d12f000ff8483b9127a0757aed2daf657e3ebedcaccfacdf37c9b1583d",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 89,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 2,
+          "history_effect_reduced_by_half": 1,
+          "half_restoration_threshold_unresolved": 15,
+          "no_resolved_history_effect_at_rechallenge": 63,
+          "no_resolved_breaker_effect_on_history": 2,
+          "history_effect_reversed": 4,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xic__up": {
+        "record_id": "e136f316f320bdfe628c1c284f9c7cb8a011ff237d95475fa1adb1c841f95a8d",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 110,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 35,
+          "half_restoration_threshold_unresolved": 3,
+          "history_effect_changed_without_half_restoration": 1,
+          "no_resolved_history_effect_at_rechallenge": 63,
+          "history_effect_amplified": 3,
+          "history_effect_reversed": 5
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xicrem__down": {
+        "record_id": "bd59f8f2c8478b62b79cdf6babb7473733d30a6ec28eb191b055ef5f6b234569",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 89,
+        "controlled_categories": {
+          "no_resolved_breaker_effect_on_history": 11,
+          "half_restoration_threshold_unresolved": 7,
+          "no_resolved_history_effect_at_rechallenge": 63,
+          "history_effect_reversed": 4,
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_reduced_by_half": 1,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__down--Xicrem__up": {
+        "record_id": "7abd7f2eb562b32a1a89ee1033005cd3da200749c83019cc754cf8079de1916e",
+        "status": "passed",
+        "initial_response_assessments": 5,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 89,
+        "controlled_categories": {
+          "no_resolved_breaker_effect_on_history": 11,
+          "half_restoration_threshold_unresolved": 7,
+          "no_resolved_history_effect_at_rechallenge": 63,
+          "history_effect_reversed": 4,
+          "history_effect_changed_without_half_restoration": 1,
+          "history_effect_reduced_by_half": 1,
+          "history_effect_amplified": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Cdk2_CycErem__down": {
+        "record_id": "771b7431bbec9d83ed42b6bbad69e8058a8f241f0619b30f0b9ff51283fd209b",
+        "status": "passed",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 114,
+        "controlled_categories": {
+          "no_resolved_breaker_effect_on_history": 14,
+          "history_effect_changed_without_half_restoration": 13,
+          "half_restoration_threshold_unresolved": 2,
+          "no_resolved_history_effect_at_rechallenge": 82,
+          "history_effect_amplified": 2,
+          "history_effect_reduced_by_half": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Cdk2_CycErem__up": {
+        "record_id": "24d87188607aa2370360e75aa7eccb1cc32c8bb9a191389ed3f58abbd7cc01e6",
+        "status": "passed",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 114,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 9,
+          "history_effect_amplified": 19,
+          "history_effect_changed_without_half_restoration": 2,
+          "half_restoration_threshold_unresolved": 2,
+          "no_resolved_history_effect_at_rechallenge": 82
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Deg_a__down": {
+        "record_id": "40d681bf2fc6517e72534259dcbaa8c02335936281fd4246aba3b4e38ff8fc4a",
+        "status": "passed",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 93,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 8,
+          "history_effect_amplified": 1,
+          "half_restoration_threshold_unresolved": 2,
+          "no_resolved_history_effect_at_rechallenge": 82
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Deg_a__up": {
+        "record_id": "623d1571e149dc54f0bcacf420e275e4fe57c39d0b1d2f6db9c9ef3767ca11bb",
+        "status": "passed",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 51,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 4,
+          "history_effect_changed_without_half_restoration": 3,
+          "history_effect_amplified": 4,
+          "no_resolved_history_effect_at_rechallenge": 40
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Kin_a__down": {
+        "record_id": "9c2a0161be69674e4c245b952e7deba66451309a7ed370d2334dd7da902d246c",
+        "status": "passed",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 114,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 11,
+          "history_effect_amplified": 4,
+          "no_resolved_breaker_effect_on_history": 15,
+          "half_restoration_threshold_unresolved": 2,
+          "no_resolved_history_effect_at_rechallenge": 82
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Kin_a__up": {
+        "record_id": "80540bb962b3d3ac467e8a55a83eb42886faf951a953f3f9ab3a01de80aadfda",
+        "status": "mismatch",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 178,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 6,
+          "history_effect_reduced_by_half": 38,
+          "history_effect_amplified": 3,
+          "history_effect_reversed": 3,
+          "no_resolved_history_effect_at_rechallenge": 118,
+          "half_restoration_threshold_unresolved": 2
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--PCdk2_CycE__down": {
+        "record_id": "83d545243f1c4a9bbb331ae3dd7f8ff1c79452a9a86a03918f52275879c158d8",
+        "status": "passed",
+        "initial_response_assessments": 10,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 73,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 15,
+          "history_effect_amplified": 5,
+          "history_effect_reduced_by_half": 3,
+          "no_resolved_history_effect_at_rechallenge": 41,
+          "no_resolved_breaker_effect_on_history": 9
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--PCdk2_CycE__up": {
+        "record_id": "56353da7d35b49ad74fa60c77eec769a958bf6dfdaff95b3a3edcd8edb7a53bd",
+        "status": "passed",
+        "initial_response_assessments": 10,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 115,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 10,
+          "history_effect_changed_without_half_restoration": 16,
+          "history_effect_amplified": 4,
+          "half_restoration_threshold_unresolved": 2,
+          "no_resolved_history_effect_at_rechallenge": 82,
+          "no_resolved_breaker_effect_on_history": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--PCdk2_CycErem__down": {
+        "record_id": "3692eb869fad5c35f9e5f70d06cd297e2ed49c74ce69a91eacc1d1fb19337c64",
+        "status": "passed",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 114,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 11,
+          "history_effect_reversed": 1,
+          "no_resolved_breaker_effect_on_history": 12,
+          "history_effect_reduced_by_half": 2,
+          "half_restoration_threshold_unresolved": 2,
+          "no_resolved_history_effect_at_rechallenge": 82,
+          "history_effect_amplified": 4
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--PCdk2_CycErem__up": {
+        "record_id": "e700a8c3fd97f95e05a50a47f13e527cf4652cae36378a4e76d1aaf04b91e7ef",
+        "status": "passed",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 114,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 10,
+          "history_effect_amplified": 4,
+          "history_effect_reduced_by_half": 6,
+          "half_restoration_threshold_unresolved": 3,
+          "no_resolved_history_effect_at_rechallenge": 82,
+          "no_resolved_breaker_effect_on_history": 9
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Wee1_a__down": {
+        "record_id": "39aa384541dc72fb29939a1192057c3656b7b7a577ce15bf588f9accd642870d",
+        "status": "passed",
+        "initial_response_assessments": 10,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 94,
+        "controlled_categories": {
+          "history_effect_changed_without_half_restoration": 5,
+          "history_effect_amplified": 20,
+          "no_resolved_breaker_effect_on_history": 7,
+          "no_resolved_history_effect_at_rechallenge": 61,
+          "history_effect_reduced_by_half": 1
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Wee1_a__up": {
+        "record_id": "7ac81864958dbb2feb38ec67c2d3d2addffe16bb9aa81f84d7e81574306ec1bb",
+        "status": "passed",
+        "initial_response_assessments": 10,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 94,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 6,
+          "history_effect_amplified": 20,
+          "history_effect_changed_without_half_restoration": 5,
+          "half_restoration_threshold_unresolved": 2,
+          "no_resolved_history_effect_at_rechallenge": 61
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Xic_Cdk2_CycE__down": {
+        "record_id": "97d1747700ab5747454e334c6db01f55c80ab94e0aad75473b0b30d3c23b322e",
+        "status": "passed",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 114,
+        "controlled_categories": {
+          "no_resolved_breaker_effect_on_history": 13,
+          "history_effect_changed_without_half_restoration": 12,
+          "history_effect_reduced_by_half": 2,
+          "history_effect_reversed": 2,
+          "no_resolved_history_effect_at_rechallenge": 82,
+          "history_effect_amplified": 3
+        },
+        "raw_disagreeing_response_trials": 0
+      },
+      "Cdk2_CycE__up--Xic_Cdk2_CycE__up": {
+        "record_id": "bdc56df95caaab7496bf8df51a7379c7f25aa4f69902a5548ee7a9212207c5a7",
+        "status": "passed",
+        "initial_response_assessments": 9,
+        "evaluated_trials": 24,
+        "evaluated_response_trials": 114,
+        "controlled_categories": {
+          "history_effect_reduced_by_half": 5,
+          "history_effect_reversed": 6,
+          "history_effect_amplified": 4,
+          "no_resolved_history_effect_at_rechallenge": 82,
+          "history_effect_changed_without_half_restoration": 14,
+          "no_resolved_breaker_effect_on_history": 3
+        },
+        "raw_disagreeing_response_trials": 0
+      }
+    },
+    "status": "incomplete_or_failed",
+    "no_candidates": false,
+    "started_at": "2026-11-12T17:54:10.172422+00:00",
+    "control_comparison": {
+      "passed": true,
+      "max_scaled_error": 0.007127355781818495,
+      "max_absolute_error": 7.310152483341881e-10,
+      "worst_observable": "Deg_a",
+      "worst_time": 554.77,
+      "samples": 221001,
+      "observables": 20,
+      "per_observable_max_scaled_error": {
+        "PCdk2_CycE": 2.4626288845017096e-06,
+        "Cdk2_CycE": 7.009052129925805e-06,
+        "Wee1_a": 9.51680017911445e-05,
+        "Wee1_total": 5.547647843223781e-12,
+        "Cdk2_CycErem": 2.214679476157216e-05,
+        "PCdk2_CycErem": 1.7347645610993887e-05,
+        "Deg_a": 0.007127355781818495,
+        "Xic": 3.873625736192302e-05,
+        "Xic_Cdk2_CycE": 3.1125320112255155e-05,
+        "Xic_PCdk2_CycE": 2.6976764400973624e-05,
+        "Xic_Cdk2_CycErem": 3.871830858665455e-05,
+        "Xic_PCdk2_CycErem": 3.528434911635179e-05,
+        "Xicrem": 0.00024071239415323573,
+        "Cyc_total": 2.7877715905479617e-05,
+        "Xic_total": 1.3475850340215881e-05,
+        "Kin_a": 7.668094647503037e-07,
+        "pool": 2.8057663804077148e-05,
+        "phi": 6.841300912084921e-05,
+        "x": 0.001093261171406716,
+        "Heav": 0.0
+      }
+    },
+    "evidence_archives": {
+      "branches": [
+        {
+          "file": "evidence/BIOMD0000000697-branches-00000.jsonl.gz",
+          "records": 100,
+          "bytes": 1086075,
+          "sha256": "446d4810a9fc06e28f483d7146e56a9af8b168c71aa464bf556562ad51ed906b"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00001.jsonl.gz",
+          "records": 100,
+          "bytes": 1097951,
+          "sha256": "0519757a0465d6263c09c3516cf786f017bcc48257f1267c813af1848ebda0fc"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00002.jsonl.gz",
+          "records": 100,
+          "bytes": 1113772,
+          "sha256": "fa164d3bf7bc4c4d0a65399f51bba1bd899da5181c98abb30efc45da8260f1c9"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00003.jsonl.gz",
+          "records": 100,
+          "bytes": 1107211,
+          "sha256": "7589b68aa6c3ddffe953c18be37b2bee0b6da8b8251d23a06c5034ec3d854bb4"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00004.jsonl.gz",
+          "records": 100,
+          "bytes": 1098710,
+          "sha256": "080f6a6707ebe39b0cc7c7ce8c009fd80d32124eb56d8d761985da588fa7e5d1"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00005.jsonl.gz",
+          "records": 100,
+          "bytes": 1127057,
+          "sha256": "b24b395702d786a1d1653f89c2b7cc86da1136094502a037dd9ab25e07b8ea5f"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00006.jsonl.gz",
+          "records": 100,
+          "bytes": 1108896,
+          "sha256": "b63a9e371d53c328e71d3d9892989c82be2a5a991c2ff6c1a9335d25294ae57e"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00007.jsonl.gz",
+          "records": 100,
+          "bytes": 1104350,
+          "sha256": "d2da734c03d708167bf595076a446123ec3c13c4af1262960c273e18eb0278f6"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00008.jsonl.gz",
+          "records": 100,
+          "bytes": 1116695,
+          "sha256": "63458e2957a37449dcfcc093949819b3ef7fe5ec843017a3bcbd9eadcec38c02"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00009.jsonl.gz",
+          "records": 100,
+          "bytes": 1138329,
+          "sha256": "cdd110d4452ac6681f5ef35e83c1adce830287f70171cdac107a2ba4eaca0d67"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00010.jsonl.gz",
+          "records": 100,
+          "bytes": 1076088,
+          "sha256": "76309211fc4db183dd61cee5d5835c0d038c80c903d6e7689edf3830972d309d"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00011.jsonl.gz",
+          "records": 100,
+          "bytes": 1083602,
+          "sha256": "cf8c912a235e3a8248b7acbd6e978b9ac8fd0a3ebbae58117b821d837de042f1"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00012.jsonl.gz",
+          "records": 100,
+          "bytes": 1109358,
+          "sha256": "ef46cf1b6027fa176ca207c6dc2965a9d96a7641c1d6ed1b71c9384dca1f8c6b"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00013.jsonl.gz",
+          "records": 100,
+          "bytes": 1101856,
+          "sha256": "722f59c0a7d0a53d134aad7bb3568c046c63a2b7663bc9dd7b2f594c56b40654"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00014.jsonl.gz",
+          "records": 100,
+          "bytes": 1062753,
+          "sha256": "d28181ab69d00e4ef78e1a9ee752c1d3fa38281d897b86ff7e663c8e5cd770e9"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00015.jsonl.gz",
+          "records": 100,
+          "bytes": 1097539,
+          "sha256": "5bbbf0ee6bee4e4656104b6d055497f5076fac22b5bc24ae230fc16080d47f70"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00016.jsonl.gz",
+          "records": 100,
+          "bytes": 1069611,
+          "sha256": "6d8026486e8e0db6814397c0d2b4bf5c180732d9fbad50c17785bf59912293fb"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00017.jsonl.gz",
+          "records": 100,
+          "bytes": 1117250,
+          "sha256": "7d5daaacebe26845194f20d9cb1fe9be44c0ade592b40489704b9641f38f4b90"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00018.jsonl.gz",
+          "records": 100,
+          "bytes": 1110417,
+          "sha256": "eeac89a0f6342dcdb42e09ef721ad1976a8f34fe8226093819f6489465bc9bb7"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00019.jsonl.gz",
+          "records": 100,
+          "bytes": 1080754,
+          "sha256": "c5065b647c6bff78fa71c875d4c7dcd93ac69c5f4b651c765fe357d2677e145c"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00020.jsonl.gz",
+          "records": 100,
+          "bytes": 1095697,
+          "sha256": "1b6ccf27c42b76f048fb99635bfaceeef035a72201cb2e39d86784b4c675c026"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00021.jsonl.gz",
+          "records": 100,
+          "bytes": 1122224,
+          "sha256": "b89ac98ac9bf22636655b1177a22b7c781ab273a4db03e20115d0df5e733a42c"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00022.jsonl.gz",
+          "records": 100,
+          "bytes": 1106556,
+          "sha256": "09f87e489558d435c87bc031489e4036c1254f61e67996aa066ed900152a85d7"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00023.jsonl.gz",
+          "records": 100,
+          "bytes": 1054263,
+          "sha256": "43f09793708af6dfb4c9246c36bd3b4ba3e64c94c320041888b8dcf526aeafbb"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00024.jsonl.gz",
+          "records": 100,
+          "bytes": 1120648,
+          "sha256": "5616bfc2ec1d2568cf4b8e3d168849d00717ec414cc08ec2ebd37f6e2b09042b"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00025.jsonl.gz",
+          "records": 100,
+          "bytes": 1108740,
+          "sha256": "7adffffc40e881ac01aaa4554d2ddab63139e44b25fa6e5db7b8e4ee0d1087c7"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00026.jsonl.gz",
+          "records": 100,
+          "bytes": 1095208,
+          "sha256": "50d833237f39c7f8aafedc3597d3e309997d82d0e76acbba6d2014b749f15590"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00027.jsonl.gz",
+          "records": 100,
+          "bytes": 1109871,
+          "sha256": "987a47375254236d794760c96500ff1466353a8ac003fecca3d23089c89776d4"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00028.jsonl.gz",
+          "records": 100,
+          "bytes": 1117491,
+          "sha256": "22dc8cc39bf0c13ef74c393c5dd536d6d4b23567f4de328c65d6c0c461768929"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00029.jsonl.gz",
+          "records": 100,
+          "bytes": 1108152,
+          "sha256": "1e47d03e7e7af35b59af74e3ea272abbbdf74925c0f999ed0358031d836b1f45"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00030.jsonl.gz",
+          "records": 100,
+          "bytes": 1109344,
+          "sha256": "296ba899fec6ee82a1cfeccf1168221e4f91e86402361a1e51273674a7b4503a"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00031.jsonl.gz",
+          "records": 100,
+          "bytes": 1135132,
+          "sha256": "c8c60f337b07770583f017aded2d9c9cd8c179cf25677d5df507170375a41b2c"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00032.jsonl.gz",
+          "records": 100,
+          "bytes": 1116147,
+          "sha256": "7d5ba1449dc451a3f519f7d427b8e2fbfed16fb2f5b4e32ebda2568d35f867db"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00033.jsonl.gz",
+          "records": 100,
+          "bytes": 1094304,
+          "sha256": "e032219d646a9a5da8200274e60cbd314b55f93a0a3ab355222cf44694f88d6f"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00034.jsonl.gz",
+          "records": 100,
+          "bytes": 1091284,
+          "sha256": "1dc7454ea764a5100f4ae9d2e65291335c9c0aee190d61e1d71c258d2d15f776"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00035.jsonl.gz",
+          "records": 100,
+          "bytes": 1085888,
+          "sha256": "076d7806e09b1631ed40cb4231d223478a2df77a8fb4184625cfa4696d3aafc2"
+        },
+        {
+          "file": "evidence/BIOMD0000000697-branches-00036.jsonl.gz",
+          "records": 50,
+          "bytes": 567320,
+          "sha256": "f80c65597081da53ef0fec4679c738c9db30f8e0a21901bf966e2b774e807dc0"
+        }
+      ],
+      "cases": [
+        {
+          "file": "evidence/BIOMD0000000697-cases-00000.jsonl.gz",
+          "records": 38,
+          "bytes": 1020474,
+          "sha256": "b47cf0cf010d9c4c9b54fe5928b438a9a0a789fda5af5a6d61d73422cd96c577"
+        }
+      ]
+    },
+    "evaluated_cases": 38,
+    "passed_cases": 36,
+    "evaluated_unique_branches": 3650,
+    "solver_retry_branches": 0,
+    "finished_at": "2026-11-12T17:57:32.541532+00:00"
+  },
+  "original_report_sha256": "2da1eca24df9d7ad9a548c572811e4683f753f50ec0e9d313b170dc9c394754c",
+  "verified_source_archives": {
+    "evidence/BIOMD0000000697-branches-00000.jsonl.gz": "446d4810a9fc06e28f483d7146e56a9af8b168c71aa464bf556562ad51ed906b",
+    "evidence/BIOMD0000000697-branches-00001.jsonl.gz": "0519757a0465d6263c09c3516cf786f017bcc48257f1267c813af1848ebda0fc",
+    "evidence/BIOMD0000000697-branches-00002.jsonl.gz": "fa164d3bf7bc4c4d0a65399f51bba1bd899da5181c98abb30efc45da8260f1c9",
+    "evidence/BIOMD0000000697-branches-00003.jsonl.gz": "7589b68aa6c3ddffe953c18be37b2bee0b6da8b8251d23a06c5034ec3d854bb4",
+    "evidence/BIOMD0000000697-branches-00004.jsonl.gz": "080f6a6707ebe39b0cc7c7ce8c009fd80d32124eb56d8d761985da588fa7e5d1",
+    "evidence/BIOMD0000000697-branches-00005.jsonl.gz": "b24b395702d786a1d1653f89c2b7cc86da1136094502a037dd9ab25e07b8ea5f",
+    "evidence/BIOMD0000000697-branches-00006.jsonl.gz": "b63a9e371d53c328e71d3d9892989c82be2a5a991c2ff6c1a9335d25294ae57e",
+    "evidence/BIOMD0000000697-branches-00007.jsonl.gz": "d2da734c03d708167bf595076a446123ec3c13c4af1262960c273e18eb0278f6",
+    "evidence/BIOMD0000000697-branches-00008.jsonl.gz": "63458e2957a37449dcfcc093949819b3ef7fe5ec843017a3bcbd9eadcec38c02",
+    "evidence/BIOMD0000000697-branches-00009.jsonl.gz": "cdd110d4452ac6681f5ef35e83c1adce830287f70171cdac107a2ba4eaca0d67",
+    "evidence/BIOMD0000000697-branches-00010.jsonl.gz": "76309211fc4db183dd61cee5d5835c0d038c80c903d6e7689edf3830972d309d",
+    "evidence/BIOMD0000000697-branches-00011.jsonl.gz": "cf8c912a235e3a8248b7acbd6e978b9ac8fd0a3ebbae58117b821d837de042f1",
+    "evidence/BIOMD0000000697-branches-00012.jsonl.gz": "ef46cf1b6027fa176ca207c6dc2965a9d96a7641c1d6ed1b71c9384dca1f8c6b",
+    "evidence/BIOMD0000000697-branches-00013.jsonl.gz": "722f59c0a7d0a53d134aad7bb3568c046c63a2b7663bc9dd7b2f594c56b40654",
+    "evidence/BIOMD0000000697-branches-00014.jsonl.gz": "d28181ab69d00e4ef78e1a9ee752c1d3fa38281d897b86ff7e663c8e5cd770e9",
+    "evidence/BIOMD0000000697-branches-00015.jsonl.gz": "5bbbf0ee6bee4e4656104b6d055497f5076fac22b5bc24ae230fc16080d47f70",
+    "evidence/BIOMD0000000697-branches-00016.jsonl.gz": "6d8026486e8e0db6814397c0d2b4bf5c180732d9fbad50c17785bf59912293fb",
+    "evidence/BIOMD0000000697-branches-00017.jsonl.gz": "7d5daaacebe26845194f20d9cb1fe9be44c0ade592b40489704b9641f38f4b90",
+    "evidence/BIOMD0000000697-branches-00018.jsonl.gz": "eeac89a0f6342dcdb42e09ef721ad1976a8f34fe8226093819f6489465bc9bb7",
+    "evidence/BIOMD0000000697-branches-00019.jsonl.gz": "c5065b647c6bff78fa71c875d4c7dcd93ac69c5f4b651c765fe357d2677e145c",
+    "evidence/BIOMD0000000697-branches-00020.jsonl.gz": "1b6ccf27c42b76f048fb99635bfaceeef035a72201cb2e39d86784b4c675c026",
+    "evidence/BIOMD0000000697-branches-00021.jsonl.gz": "b89ac98ac9bf22636655b1177a22b7c781ab273a4db03e20115d0df5e733a42c",
+    "evidence/BIOMD0000000697-branches-00022.jsonl.gz": "09f87e489558d435c87bc031489e4036c1254f61e67996aa066ed900152a85d7",
+    "evidence/BIOMD0000000697-branches-00023.jsonl.gz": "43f09793708af6dfb4c9246c36bd3b4ba3e64c94c320041888b8dcf526aeafbb",
+    "evidence/BIOMD0000000697-branches-00024.jsonl.gz": "5616bfc2ec1d2568cf4b8e3d168849d00717ec414cc08ec2ebd37f6e2b09042b",
+    "evidence/BIOMD0000000697-branches-00025.jsonl.gz": "7adffffc40e881ac01aaa4554d2ddab63139e44b25fa6e5db7b8e4ee0d1087c7",
+    "evidence/BIOMD0000000697-branches-00026.jsonl.gz": "50d833237f39c7f8aafedc3597d3e309997d82d0e76acbba6d2014b749f15590",
+    "evidence/BIOMD0000000697-branches-00027.jsonl.gz": "987a47375254236d794760c96500ff1466353a8ac003fecca3d23089c89776d4",
+    "evidence/BIOMD0000000697-branches-00028.jsonl.gz": "22dc8cc39bf0c13ef74c393c5dd536d6d4b23567f4de328c65d6c0c461768929",
+    "evidence/BIOMD0000000697-branches-00029.jsonl.gz": "1e47d03e7e7af35b59af74e3ea272abbbdf74925c0f999ed0358031d836b1f45",
+    "evidence/BIOMD0000000697-branches-00030.jsonl.gz": "296ba899fec6ee82a1cfeccf1168221e4f91e86402361a1e51273674a7b4503a",
+    "evidence/BIOMD0000000697-branches-00031.jsonl.gz": "c8c60f337b07770583f017aded2d9c9cd8c179cf25677d5df507170375a41b2c",
+    "evidence/BIOMD0000000697-branches-00032.jsonl.gz": "7d5ba1449dc451a3f519f7d427b8e2fbfed16fb2f5b4e32ebda2568d35f867db",
+    "evidence/BIOMD0000000697-branches-00033.jsonl.gz": "e032219d646a9a5da8200274e60cbd314b55f93a0a3ab355222cf44694f88d6f",
+    "evidence/BIOMD0000000697-branches-00034.jsonl.gz": "1dc7454ea764a5100f4ae9d2e65291335c9c0aee190d61e1d71c258d2d15f776",
+    "evidence/BIOMD0000000697-branches-00035.jsonl.gz": "076d7806e09b1631ed40cb4231d223478a2df77a8fb4184625cfa4696d3aafc2",
+    "evidence/BIOMD0000000697-branches-00036.jsonl.gz": "f80c65597081da53ef0fec4679c738c9db30f8e0a21901bf966e2b774e807dc0"
+  },
+  "failed_branches": [
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 50.0,
+            "stop": 100.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 160.0,
+            "stop": 220.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 290.0,
+            "stop": 360.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 440.0,
+            "stop": 520.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 610.0,
+            "stop": 700.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 800.0,
+            "stop": 900.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "Wee1_a": 102.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 2010.0,
+            "stop": 2110.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (201202, 33)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (201202, 33)",
+      "elapsed_seconds": 4.119188547000007,
+      "record_id": "112ddc0389073f05e7022e4290eb72b22e4e9cb4c699c01eff62519ef228f03c",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 50.0,
+            "stop": 100.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 160.0,
+            "stop": 220.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 290.0,
+            "stop": 360.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 440.0,
+            "stop": 520.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 610.0,
+            "stop": 700.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 800.0,
+            "stop": 900.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "PCdk2_CycE": 94.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (185802, 32)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (185802, 32)",
+      "elapsed_seconds": 23.659438971,
+      "record_id": "45e38704fa9a69ab946f3c6112cc1933067b52e3f455b25627694343ead900f4",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "Wee1_a": 102.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 2010.0,
+            "stop": 2110.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (201242, 27)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (201242, 27)",
+      "elapsed_seconds": 3.116459211999995,
+      "record_id": "48ff9bfd8796a84be771891ed2877e9055ca03508e79b941cf44db91e5a41895",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "PCdk2_CycE": 94.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (185372, 26)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (185372, 26)",
+      "elapsed_seconds": 22.088597432999997,
+      "record_id": "62a7d4c8147602a77a0fb45b1afdebd55be2e38066a828db6f6fb84a59a6a345",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 50.0,
+            "stop": 100.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 160.0,
+            "stop": 220.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 290.0,
+            "stop": 360.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 440.0,
+            "stop": 520.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 610.0,
+            "stop": 700.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 800.0,
+            "stop": 900.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "PCdk2_CycE": 94.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 2010.0,
+            "stop": 2110.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (185442, 33)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (185442, 33)",
+      "elapsed_seconds": 15.910990106,
+      "record_id": "87d5e5e2756a69390620cc048bf256c8095fb730af3757a3abfab3cd5e45d2a3",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "PCdk2_CycE": 94.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (184772, 26)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (184772, 26)",
+      "elapsed_seconds": 20.311927397999995,
+      "record_id": "8ce57f1dbe7137ffe5c4e899048006f17fd6df968082d7be85fd9335c64803f3",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "PCdk2_CycE": 94.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 2010.0,
+            "stop": 2110.0,
+            "values": {
+              "Cdk2_CycE": 5.397490187475292e-06
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (188062, 27)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (188062, 27)",
+      "elapsed_seconds": 14.745940456,
+      "record_id": "a2af2f11681cfd468001d7026c767c725c32fbb19a2abeeb6449847a5ef5fff5",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 50.0,
+            "stop": 100.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 160.0,
+            "stop": 220.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 290.0,
+            "stop": 360.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 440.0,
+            "stop": 520.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 610.0,
+            "stop": 700.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 800.0,
+            "stop": 900.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "PCdk2_CycE": 94.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 2010.0,
+            "stop": 2110.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (186072, 33)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (186072, 33)",
+      "elapsed_seconds": 29.719255489999995,
+      "record_id": "a482d951f9ecd78bceda5bbfa0ef6b0717128ce1753d24f447d5d48eb3b5ed28",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "PCdk2_CycE": 94.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 2010.0,
+            "stop": 2110.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (185492, 27)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (185492, 27)",
+      "elapsed_seconds": 21.040141320000004,
+      "record_id": "bb9eaff2d0e95a0f83df5fef18dcc606d1299827887a942a0d96899a9a5f6648",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    },
+    {
+      "specification": {
+        "reset_trains": [
+          {
+            "start": 50.0,
+            "stop": 100.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 160.0,
+            "stop": 220.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 290.0,
+            "stop": 360.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 440.0,
+            "stop": 520.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 610.0,
+            "stop": 700.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 800.0,
+            "stop": 900.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": true,
+            "include_stop": true
+          },
+          {
+            "start": 1010.0,
+            "stop": 1110.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1210.0,
+            "stop": 1310.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1410.0,
+            "stop": 1510.0,
+            "values": {
+              "Kin_a": 99.99785780044783
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1610.0,
+            "stop": 1710.0,
+            "values": {
+              "Cdk2_CycE": 8.36202437105591
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          },
+          {
+            "start": 1810.0,
+            "stop": 1910.0,
+            "values": {
+              "PCdk2_CycE": 94.0
+            },
+            "interval": 0.1,
+            "include_start": false,
+            "include_stop": false
+          }
+        ],
+        "stop": 2210.0,
+        "integration_settings": {
+          "roadrunner": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          },
+          "copasi": {
+            "rtol": 1e-12,
+            "atol": 1e-14
+          }
+        }
+      },
+      "sample_count": 221001,
+      "passed": false,
+      "solver_attempts": {
+        "roadrunner": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "completed"
+          }
+        ],
+        "copasi": [
+          {
+            "settings": {
+              "rtol": 1e-12,
+              "atol": 1e-14
+            },
+            "status": "error",
+            "error": "ValueError: Unexpected output shape (187392, 32)"
+          }
+        ]
+      },
+      "integration_settings_used": {
+        "roadrunner": {
+          "rtol": 1e-12,
+          "atol": 1e-14
+        }
+      },
+      "error": "ValueError: Unexpected output shape (187392, 32)",
+      "elapsed_seconds": 27.903857808999987,
+      "record_id": "f5f676b080bd30123e56a4619737c544a2fdee487b0b6c827bf33672e4bfdcfb",
+      "fingerprint": "b36f0dabdb04d5022a971b6aa599a7778b6515d60d56f9bf8f02ba233478bdd3"
+    }
+  ]
+}
