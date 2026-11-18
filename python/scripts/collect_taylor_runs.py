@@ -1,8 +1,11 @@
 """Collect immutable precision artifacts and independently audit completed arrays.
 
-This collector never integrates, retries or dispatches work. Partial checkpoint
+This collector never integrates or dispatches numerical work. Partial checkpoint
 bytes are preserved; their MPFR state is validated in the matching runtime on
 resume. Finished arrays are audited here without requiring Heyoka.
+Watch mode stops when the selected run is terminal and its artifacts are
+collected, even if its original numerical inventory remains incomplete. Three
+consecutive collection-error polls stop with an explicit failure status.
 """
 
 import argparse
@@ -170,13 +173,13 @@ def main():
     require(args.run > 0 and 1 <= args.interval <= 60, "Positive run ID and 1–60 second poll interval required")
     args.output = args.output.resolve()
     args.output.mkdir(parents=True, exist_ok=True)
-    previous = None
+    previous, failed_polls = None, 0
     with (args.output / ".collector.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         while True:
             try:
                 result = collect_run(GitHub(args.repository), args.run, args.model, args.output)
-                summary = {k: result[k] for k in ("run_id", "model", "status", "complete_original_failure_coverage",
+                summary = {k: result[k] for k in ("run_id", "model", "github_status", "status", "complete_original_failure_coverage",
                                                   "needs_continuation", "missing_artifact_indices", "collection_errors")}
             except Exception as error:
                 summary = {"run_id": args.run, "error": f"{type(error).__name__}: {error}"}
@@ -184,8 +187,12 @@ def main():
             if summary != previous:
                 print(json.dumps(summary), flush=True)
                 previous = summary
-            if not args.watch:
-                return int("error" in summary or bool(summary.get("collection_errors")) or summary.get("status") == "audit_error")
+            errors = ("error" in summary or bool(summary.get("collection_errors"))
+                      or summary.get("status") == "audit_error")
+            failed_polls = failed_polls + 1 if errors else 0
+            if (not args.watch or failed_polls >= 3
+                    or summary.get("github_status") == "completed" and not errors):
+                return int(errors)
             time.sleep(args.interval)
 
 
