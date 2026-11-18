@@ -67,9 +67,12 @@ pairwise comparisons use unchanged acceptance tolerances `2e-5` and `1e-7`.
 Original passing native records are preserved as historical evidence. They are
 not substituted for the four requested arrays in this selected-case computation.
 
-The execution wrapper and a complete-case auditor that accepts explicitly new
-potential branches are still required. The original numerical solvers and
-case-audit mathematics have not been changed. No local stopped worker was used.
+The [full-control input adapter](../catalog-breaking-ciliberto-full-controls-20261118/README.md)
+now authenticates all original case/branch records while explicitly representing
+the 200 unsaved potential branches. Execution of the later controls and a
+complete-case array auditor consuming this input format are still required.
+The original numerical solvers and case-audit mathematics have not been changed.
+No local stopped worker was used.
 
 ## Reproduce the preparation
 

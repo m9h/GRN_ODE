@@ -1,0 +1,54 @@
+name: Ciliberto complete control inputs
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ciliberto-full-controls-inputs.yml'
+      - 'python/scripts/prepare_ciliberto_full_controls.py'
+      - 'python/tests/test_ciliberto_full_controls.py'
+      - 'python/results/catalog-breaking-ciliberto-full-controls-20261118/**'
+  workflow_dispatch:
+    inputs:
+      verify_released_inputs:
+        type: boolean
+        default: false
+        description: Download and audit the complete published input bundle
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Test full control scope and unchanged conditional-search gates
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_ciliberto_full_controls.py tests/test_ciliberto_full_inventory.py
+          tests/test_scipy_breaking_case_audit.py
+      - name: Download all original case and control inputs
+        if: ${{ inputs.verify_released_inputs }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release download kinetics-ciliberto-full-controls-20261118
+          --repo m9h/GRN_ODE --dir results/ciliberto-full-controls-download
+      - name: Verify all original records and generated specifications
+        if: ${{ inputs.verify_released_inputs }}
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python
+          scripts/prepare_ciliberto_full_controls.py check
+          --inputs results/ciliberto-full-controls-download
+          --manifest-sha256 ab3b592ed1d25786ff22e4611331e633caf3d2ba0fa00907e4607d865d235857
