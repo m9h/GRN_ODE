@@ -1,0 +1,45 @@
+name: Ciliberto complete case audit
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ciliberto-full-case-audit.yml'
+      - 'python/scripts/audit_ciliberto_full_cases.py'
+      - 'python/tests/test_ciliberto_full_case_audit.py'
+      - 'python/results/catalog-breaking-ciliberto-full-case-audit-20261118/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Test complete scope, artifact verification and unchanged case scoring
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_ciliberto_full_case_audit.py tests/test_scipy_breaking_case_audit.py
+          tests/test_ciliberto_later_controls.py tests/test_ciliberto_full_collection.py
+      - name: Download pinned complete original case inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release download kinetics-ciliberto-full-controls-20261118
+          --repo m9h/GRN_ODE --dir results/ciliberto-full-case-inputs
+      - name: Reproduce all original inputs and complete 7334-branch scope without integration
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/audit_ciliberto_full_cases.py check
+          --inputs results/ciliberto-full-case-inputs --output results/ciliberto-full-case-scope.json
