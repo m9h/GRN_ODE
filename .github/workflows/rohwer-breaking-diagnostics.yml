@@ -6,7 +6,9 @@ on:
     paths:
       - '.github/workflows/rohwer-breaking-diagnostics.yml'
       - 'python/scripts/run_rohwer_breaking_diagnostics.py'
+      - 'python/scripts/collect_rohwer_breaking_diagnostics.py'
       - 'python/tests/test_rohwer_breaking_diagnostics.py'
+      - 'python/tests/test_rohwer_breaking_collection.py'
       - 'python/results/catalog-breaking-rohwer-diagnostics-20261118/**'
   workflow_dispatch:
     inputs:
@@ -44,7 +46,7 @@ jobs:
         run: >-
           uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
           tests/test_rohwer_breaking_diagnostics.py tests/test_scipy_breaking_diagnostic.py
-          tests/test_scipy_breaking_audit.py
+          tests/test_scipy_breaking_audit.py tests/test_rohwer_breaking_collection.py
   compute:
     if: ${{ inputs.operation == 'compute' }}
     needs: validation

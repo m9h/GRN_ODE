@@ -85,3 +85,6 @@ separate from whether the model exhibits a resolved history effect.
 
 The nine original local numerical workers remain stopped. This preparation and
 the cloud workflow do not resume them or alter their source trees.
+
+The separate [offline collection guide](COLLECTION.md) explains fixed job binding,
+original ZIP verification, full-array audits and preservation of interrupted work.
