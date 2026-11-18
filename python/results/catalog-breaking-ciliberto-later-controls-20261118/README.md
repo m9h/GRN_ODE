@@ -88,5 +88,8 @@ failures and interrupted writes. These tests establish execution/audit behavior,
 not Ciliberto convergence. The independent real-input/runtime check and workflow
 lint also pass. Linux validation must pass separately before numerical jobs run.
 
-Fixed-run artifact collection and the full-array case auditor consuming the new
-input format are still required. No stopped local numerical worker is used.
+The separate [fixed-run artifact collector](COLLECTION.md) now preserves and
+checks complete or interrupted evidence across all 256 partitions. Binding the
+real compute-job IDs awaits successful Linux validation and the complete job
+list. Full-array case assembly and replay using the new input format remain
+required. No stopped local numerical worker is used.

@@ -1,0 +1,41 @@
+name: Ciliberto later-control artifact collection
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ciliberto-later-collection.yml'
+      - 'python/scripts/collect_ciliberto_later_controls.py'
+      - 'python/tests/test_ciliberto_later_collection.py'
+      - 'python/results/catalog-breaking-ciliberto-later-controls-20261118/COLLECTION.md'
+      - 'python/results/catalog-breaking-ciliberto-later-controls-20261118/collector-*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Test fixed job selection, full arrays and interrupted evidence
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_ciliberto_later_collection.py tests/test_ciliberto_later_controls.py
+          tests/test_ciliberto_full_collection.py
+      - name: Verify frozen plan, model and actual numerical runtime without integrating
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/run_ciliberto_later_controls.py
+          check --plan results/catalog-breaking-ciliberto-later-controls-20261118/plan.json
+          --plan-sha256 d1e73a51b8cc8b7e5ab2f283c5a31de6a09415db8782551e9ec6392d1a5740c0
