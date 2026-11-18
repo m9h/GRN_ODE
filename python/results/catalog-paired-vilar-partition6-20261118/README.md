@@ -59,3 +59,8 @@ every extracted file, original protocol and source identities, all three full
 arrays and all three comparisons. Its complete audit JSON must equal the saved
 audit, including the native mismatch. It performs no integrations and does not
 require a local Heyoka installation.
+
+A [fresh download and extraction of the release ZIP](fresh-download-reproduction.json)
+reproduced the complete audit exactly, including both native mismatches. The
+unchanged audit SHA-256 is
+`248efb870470c28b6a06f6bdee3f19ad68ec841c469ba3903346183ca3bd1cbb`.
