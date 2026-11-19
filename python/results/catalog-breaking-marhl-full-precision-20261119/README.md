@@ -128,7 +128,10 @@ verbatim from validated revision `f189ca3145d4be660af67e9c5451203946008c4c`.
 The workflow now includes full cloud execution and authenticated checkpoint
 restoration. Its validation gate must pass before any numerical task starts.
 Independent artifact collection and the final twelve-case replay still need to
-be connected. No full Marhl precision trajectory, new case recovery or
+be run on the completed numerical evidence. The [offline collector and complete
+twelve-case auditor](COLLECTION.md) are implemented, with 47 passing local tests
+covering all task bindings, full arrays, continuation ancestry, original case
+records and controlled scoring. No full Marhl precision trajectory, new case recovery or
 whole-model validation is claimed by the implementation tests.
 
 ## Cloud execution and continuation
