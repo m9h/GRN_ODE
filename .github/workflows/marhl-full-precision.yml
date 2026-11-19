@@ -1,23 +1,51 @@
-name: Marhl full precision validation
+name: Marhl full precision computation
 permissions:
   contents: read
 on:
   push:
-    branches: [kinetics-marhl-full-precision]
+    branches: [kinetics-marhl-precision-cloud]
   pull_request:
     paths:
       - 'python/grn_memory/marhl_precision.py'
       - 'python/scripts/run_marhl_precision.py'
       - 'python/tests/test_marhl_precision.py'
+      - 'python/grn_memory/marhl_cloud.py'
+      - 'python/scripts/run_marhl_cloud.py'
+      - 'python/tests/test_marhl_cloud.py'
       - '.github/workflows/marhl-full-precision.yml'
   workflow_dispatch:
+    inputs:
+      operation:
+        description: 'Validate the implementation or compute one complete original task batch'
+        required: true
+        default: validate
+        type: choice
+        options: [validate, compute]
+      batch:
+        description: 'Original batch from the complete 1520-task plan'
+        required: true
+        default: '0'
+        type: choice
+        options: ['0', '1', '2', '3', '4', '5']
+      resume_run:
+        description: 'Exact parent workflow run whose terminal task checkpoints should be restored'
+        required: false
+        default: ''
+        type: string
+      task_indices:
+        description: 'Optional JSON subset within this original batch; only for explicit continuation'
+        required: false
+        default: ''
+        type: string
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
 jobs:
   marhl-full-precision:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    outputs:
+      tasks: ${{ steps.selection.outputs.tasks }}
     defaults:
       run:
         working-directory: python
@@ -40,7 +68,7 @@ jobs:
       - name: Validate complete scope, actual adapters, restart behavior and array auditing
         run: >-
           .venv-marhl/bin/python -B -m pytest -q
-          tests/test_marhl_precision.py tests/test_marhl_checkpoints.py
+          tests/test_marhl_precision.py tests/test_marhl_cloud.py tests/test_marhl_checkpoints.py
           tests/test_marhl_full_controls.py tests/test_taylor_checkpoints.py
           tests/test_taylor_reference.py
           --junitxml=results/marhl-full-precision-tests.xml
@@ -48,8 +76,77 @@ jobs:
         run: >-
           .venv-marhl/bin/python -B scripts/run_marhl_precision.py check
           --plan results/catalog-breaking-marhl-full-precision-20261119/plan.json
+      - name: Bind the original task batch
+        id: selection
+        env:
+          BATCH: ${{ inputs.batch || '0' }}
+          PARENT_RUN: ${{ inputs.resume_run }}
+          TASK_INDICES: ${{ inputs.task_indices }}
+        run: |
+          resume_args=()
+          if [[ -n "$PARENT_RUN" ]]; then
+            resume_args=(--resume-run "$PARENT_RUN")
+          fi
+          .venv-marhl/bin/python -B scripts/run_marhl_cloud.py select \
+            --batch "$BATCH" --task-indices "$TASK_INDICES" "${resume_args[@]}" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: marhl-full-precision-test-report
           path: python/results/marhl-full-precision-tests.xml
+  marhl-tasks:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.operation == 'compute' }}
+    needs: marhl-full-precision
+    name: marhl-precision-task-${{ matrix.task }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 345
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        task: ${{ fromJSON(needs.marhl-full-precision.outputs.tasks) }}
+    defaults:
+      run:
+        working-directory: python
+    env:
+      OMP_NUM_THREADS: 1
+      HEYOKA_CACHE_DIR: /tmp/marhl-full-precision-compute
+      BATCH: ${{ inputs.batch }}
+      TASK: ${{ matrix.task }}
+      PARENT_RUN: ${{ inputs.resume_run }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv .venv-marhl --python python
+      - run: uv pip install --python .venv-marhl/bin/python -r environments/marhl-full-precision-requirements.txt
+      - name: Verify, restore and compute the full original trajectory
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          resume_args=()
+          if [[ -n "$PARENT_RUN" ]]; then
+            resume_args=(--resume-run "$PARENT_RUN")
+          fi
+          # Four-hour cooperative budget, five-hour hard limit and upload margin.
+          timeout --signal=TERM --kill-after=30s 18000s \
+            .venv-marhl/bin/python -u -B scripts/run_marhl_cloud.py compute \
+            --batch "$BATCH" --task "$TASK" "${resume_args[@]}" \
+            --output results/marhl-precision-task
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: marhl-precision-task-${{ matrix.task }}-attempt-${{ github.run_attempt }}
+          path: |
+            python/results/marhl-precision-task/
+            !python/results/marhl-precision-task/**/*.tmp
+            !python/results/marhl-precision-task/**/*.lock
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90

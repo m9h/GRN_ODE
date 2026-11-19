@@ -125,7 +125,66 @@ short numerical tests exercise the actual adapters; those tests are not full
 breaking results. The Heyoka checkpoint implementation and tests are copied
 verbatim from validated revision `f189ca3145d4be660af67e9c5451203946008c4c`.
 
-This workflow currently validates the implementation. Full cloud execution,
-authenticated cross-job checkpoint restoration and collection, and the final
-twelve-case replay remain to be connected. No full Marhl precision trajectory,
-new case recovery or whole-model validation is claimed by this preparation.
+The workflow now includes full cloud execution and authenticated checkpoint
+restoration. Its validation gate must pass before any numerical task starts.
+Independent artifact collection and the final twelve-case replay still need to
+be connected. No full Marhl precision trajectory, new case recovery or
+whole-model validation is claimed by the implementation tests.
+
+## Cloud execution and continuation
+
+The six original batches contain 256, 256, 256, 256, 256 and 240 tasks. A fresh
+campaign requires every batch, numbered 0 through 5. For example, dispatch batch
+0 with:
+
+```sh
+gh workflow run marhl-full-precision.yml --repo m9h/GRN_ODE \
+  --ref kinetics-marhl-precision-cloud -f operation=compute -f batch=0
+```
+
+Record the returned run URL before dispatching the next batch. Every task keeps
+its original index; a fresh run cannot request only a convenient subset of a
+batch. The computation source is frozen once numerical runs are dispatched.
+The task matrix is limited to eight simultaneous workers per batch. A
+four-hour cooperative checkpoint budget and a five-hour external deadline
+leave time to upload evidence within the job limit. Artifacts are retained for
+90 days and still require durable collection.
+
+After a selected parent task is terminal, a continuation may name that exact
+parent run and an explicit JSON list of unfinished task indices within the
+same original batch:
+
+```sh
+gh workflow run marhl-full-precision.yml --repo m9h/GRN_ODE \
+  --ref kinetics-marhl-precision-cloud -f operation=compute -f batch=0 \
+  -f resume_run=PARENT_RUN_ID -f 'task_indices=[2,3]'
+```
+
+Here `PARENT_RUN_ID` is the recorded numeric GitHub run ID. Partial continuation
+does not replace any of the other 1,520 original tasks or their selected
+evidence. Each completed result must ultimately be tied to a predetermined
+task/job selection, including its continuation lineage.
+
+Before accepting a parent checkpoint, the cloud wrapper verifies:
+
+- The exact workflow path, run attempt, terminal job, task index and batch.
+- The server-reported original ZIP size and SHA-256, artifact creation time,
+  producer revision, execution envelope and tracked source-file hashes.
+- The original model, complete protocol, requests, numerical sources and
+  matching runtime, including checkpoint counters, full observation prefix,
+  internal high-precision state and compensated Heyoka clock.
+- Every saved complete trajectory and its final checkpoint before reuse.
+
+Only then is the restored directory published. Restoration performs no ODE
+integration. A failed restore stops execution and cannot silently start a fresh
+calculation. The new artifact retains the complete restoration history and
+parent API identities. A valid newer checkpoint can survive an interrupted
+wrapper; an orphan trajectory remains unclaimed until the resumed runner
+finishes and verifies it. Original parent archives are left unchanged.
+
+The cloud wrapper checks all producer files against its exact Git commit before
+starting a task. Scientific sources and the original task plan are unchanged
+from `a09ed95826191b3b652a22e432b1e85212884e99`. The new transport tests cover
+corrupt archives, wrong jobs and attempts, changed runtimes, unsafe ZIP entries,
+failed restores, complete-array reuse and real short checkpoint continuation.
+Those short tests do not substitute for the full original numerical protocols.
