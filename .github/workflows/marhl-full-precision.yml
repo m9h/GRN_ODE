@@ -1,0 +1,55 @@
+name: Marhl full precision validation
+permissions:
+  contents: read
+on:
+  push:
+    branches: [kinetics-marhl-full-precision]
+  pull_request:
+    paths:
+      - 'python/grn_memory/marhl_precision.py'
+      - 'python/scripts/run_marhl_precision.py'
+      - 'python/tests/test_marhl_precision.py'
+      - '.github/workflows/marhl-full-precision.yml'
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  marhl-full-precision:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: python
+    env:
+      OMP_NUM_THREADS: 1
+      HEYOKA_CACHE_DIR: /tmp/marhl-full-precision-tests
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the exact historical evidence revisions
+        run: |
+          git fetch --no-tags --depth=1 origin 079e35d8bc0795f427b6cb5b8514f35830f01909
+          git fetch --no-tags --depth=1 origin 70a3afad61357e94873ff62a7300c099b4c7ae3e
+          git fetch --no-tags --depth=1 origin 2e7327b0d273f4b33bdd8aa37601c1a497854a2a
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv .venv-marhl --python python
+      - run: uv pip install --python .venv-marhl/bin/python -r environments/marhl-full-precision-requirements.txt
+      - name: Validate complete scope, actual adapters, restart behavior and array auditing
+        run: >-
+          .venv-marhl/bin/python -B -m pytest -q
+          tests/test_marhl_precision.py tests/test_marhl_checkpoints.py
+          tests/test_marhl_full_controls.py tests/test_taylor_checkpoints.py
+          tests/test_taylor_reference.py
+          --junitxml=results/marhl-full-precision-tests.xml
+      - name: Reproduce the immutable 1520-task plan
+        run: >-
+          .venv-marhl/bin/python -B scripts/run_marhl_precision.py check
+          --plan results/catalog-breaking-marhl-full-precision-20261119/plan.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: marhl-full-precision-test-report
+          path: python/results/marhl-full-precision-tests.xml
