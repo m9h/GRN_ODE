@@ -1,0 +1,54 @@
+name: Marhl precision checkpoint validation
+on:
+  push:
+    branches: ['**']
+    paths:
+      - '.github/workflows/marhl-checkpoints.yml'
+      - 'python/grn_memory/marhl_*.py'
+      - 'python/tests/test_marhl_*.py'
+      - 'python/environments/marhl-checkpoint-requirements.txt'
+  pull_request:
+    paths:
+      - '.github/workflows/marhl-checkpoints.yml'
+      - 'python/grn_memory/marhl_*.py'
+      - 'python/tests/test_marhl_*.py'
+      - 'python/environments/marhl-checkpoint-requirements.txt'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  marhl-checkpoints:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv .venv-marhl --python python
+      - run: uv pip install --python .venv-marhl/bin/python -r environments/marhl-checkpoint-requirements.txt
+      - name: Check exact restart, original model and complete breaking scope
+        run: >-
+          uv run --no-project --python .venv-marhl/bin/python python -B -m pytest -q
+          tests/test_marhl_checkpoints.py tests/test_marhl_mpmath.py
+          tests/test_marhl_mpmath_audit.py tests/test_marhl_controls.py
+          tests/test_marhl_case_audit.py tests/test_marhl_full_controls.py
+          --junitxml=results/marhl-checkpoint-tests.xml
+      - name: Reproduce all original cases and potential controls
+        run: >-
+          uv run --no-project --python .venv-marhl/bin/python python -B
+          scripts/prepare_marhl_full_controls.py check
+          --inventory results/catalog-breaking-marhl-full-controls-20261118/inventory.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: marhl-checkpoint-test-report
+          path: python/results/marhl-checkpoint-tests.xml
+          if-no-files-found: error
