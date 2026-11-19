@@ -5,9 +5,10 @@ import hashlib
 import json
 from pathlib import Path
 
-import mpmath
 import numpy as np
 import pytest
+
+mpmath = pytest.importorskip('mpmath')
 
 from grn_memory import marhl_checkpoints as adapter
 

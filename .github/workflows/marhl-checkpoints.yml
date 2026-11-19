@@ -28,6 +28,12 @@ jobs:
         working-directory: python
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch the exact historical revisions required by provenance checks
+        run: >-
+          git fetch --no-tags --depth=1 origin
+          079e35d8bc0795f427b6cb5b8514f35830f01909
+          70a3afad61357e94873ff62a7300c099b4c7ae3e
+          2e7327b0d273f4b33bdd8aa37601c1a497854a2a
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.13'

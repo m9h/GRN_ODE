@@ -64,6 +64,13 @@ inconsistent counters and malformed state. An interrupted atomic write preserves
 the previous checkpoint. A separate full-inventory test checks all 380 original
 grids, horizons and reset counts without integrating them.
 
+[Verification](verification.json) records 55 new checkpoint tests and 122
+combined tests passing, including a clean shallow checkout after fetching the
+three exact historical revisions used by the source audits. The first Linux
+run passed all 55 checkpoint tests but correctly failed provenance checks because
+those revisions were absent. The workflow now fetches them explicitly; corrected
+Linux validation remains pending. No scientific check was removed or relaxed.
+
 These tests validate restart mechanics and short numerical regressions. They
 do not establish convergence over 1410–2210, resolve any failed breaking branch,
 or increase the original 26/38 passing-case result.

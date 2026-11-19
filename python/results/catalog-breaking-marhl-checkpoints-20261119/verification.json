@@ -5,9 +5,9 @@
   "purpose": "Exact restart mechanics for complete breaking protocols; not a full-horizon numerical recovery",
   "sha256": {
     "python/grn_memory/marhl_checkpoints.py": "03f928478ef799d8aaaff47f6b5dd6bcaf9c3994de9fdae42b06bea9e60882ae",
-    "python/tests/test_marhl_checkpoints.py": "20791acb9f84fb289bbefbdce6441f819898b2236327bfef8e81501856e8a335",
+    "python/tests/test_marhl_checkpoints.py": "7a287d05bc75342155c7a3391daf64ceaebcc774c443d7b2ccd0707020866d12",
     "python/environments/marhl-checkpoint-requirements.txt": "690b1d6c827bdc5fb11ebf58b5be0a371c5a5a82662f167ca9e425a0087a1997",
-    ".github/workflows/marhl-checkpoints.yml": "3dd6be9ab52a8f5e4da638c68f4fedffb4f7f7f081d0a86f01223cd09eb6cb2e"
+    ".github/workflows/marhl-checkpoints.yml": "0fcbdef9ab2de32fa694065cc37c75e5f69dc00562aac2fac2fbb7871eb74dec"
   },
   "new_tests_passed": 55,
   "combined_targeted_tests_passed": 122,
@@ -38,6 +38,34 @@
   "case_recovery_claimed": false,
   "full_model_coverage_claimed": false,
   "stopped_worker_signals_sent": [],
-  "linux_validation": "pending",
-  "full_precision_producer_and_complete_case_audit_still_required": true
+  "linux_validation": "pending_corrected_workflow",
+  "full_precision_producer_and_complete_case_audit_still_required": true,
+  "clean_shallow_checkout": {
+    "original_commits_initially_absent": true,
+    "fetched_exact_revisions": [
+      "079e35d8bc0795f427b6cb5b8514f35830f01909",
+      "70a3afad61357e94873ff62a7300c099b4c7ae3e",
+      "2e7327b0d273f4b33bdd8aa37601c1a497854a2a"
+    ],
+    "combined_tests_passed": 122,
+    "seconds": 28.0,
+    "test_session": 62714,
+    "junit_sha256": "b449bee1f3cef8ba00cbe982639fc435a0741e29e5a718a878c43c6828a019f8",
+    "complete_inventory_reproduced": true,
+    "inventory_check_session": 83720
+  },
+  "optional_mpmath_absence": "The checkpoint test module skips cleanly; confirmed with mpmath imports blocked.",
+  "initial_linux_validation": {
+    "run_id": 44455105552,
+    "job_id": 135328127889,
+    "source_revision": "a35031cb2ba666fa71e88a9b516634c8ac733445",
+    "conclusion": "failure",
+    "passed_tests": 86,
+    "failed_tests": 6,
+    "setup_errors": 30,
+    "cause": "Shallow checkout omitted historical revisions required by provenance audits.",
+    "new_checkpoint_tests_passed": 55,
+    "fix": "Fetch all three exact source revisions before validation.",
+    "job_log_sha256": "82809d61f4b13e6a5b9ef5921dc94c51fc57df10f4fe886531a473d9721ea4d2"
+  }
 }
