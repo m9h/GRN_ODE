@@ -54,14 +54,26 @@ Its archive SHA-256 is
 The exact original report is bound by SHA-256
 `26b75b6a08bed830f9e10acc3fb04d647b7cc81df5d46a0e145c42b5a8d1d258`.
 
-**Raw-evidence publication remains pending.** All 32 new original ZIPs
-(9,781,886,357 bytes), their extracted arrays, the preserved inputs and the
-assembled evidence are retained locally. They are not included in this Git
-directory. The pinned Actions artifacts remain downloadable until their
-recorded expiry dates. A durable release of the new raw evidence is still
-required; the JSON reports alone are not the complete reproducibility package.
+The [complete evidence release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-ueda-complete-20261121)
+provides all 32 original cloud ZIPs (9,781,886,357 bytes) and the original
+302-case evidence archive (82,914,711 bytes), with their sizes and SHA-256
+checksums in [release-manifest.json](release-manifest.json). It also requires
+the existing [preservation release](https://github.com/m9h/GRN_ODE/releases/tag/kinetics-ueda-preservation-20261118);
+that dependency is pinned by manifest checksum rather than duplicated.
+The new release preserves the exact Actions ZIP bytes. Its use does not
+depend on Actions artifact retention.
+
+The four recovered cases include all 1,292 full trajectories. The original
+298 passing cases are reaudited from saved pointwise comparison records and
+window summaries; their full raw trajectories were not archived. This
+distinction also applies to the combined 302-case result.
 
 ## Reproduce the verification
+
+Follow [REPRODUCE.md](REPRODUCE.md) for complete download, checksum,
+preservation, collection and whole-model accounting commands. They use the
+existing numerical auditors without running a new simulation. A full Git
+clone is required to check the original producer revisions.
 
 Use the unchanged [collection and assembly guide](../catalog-breaking-ueda-continuation-20261118/COLLECTION.md)
 with the selection and API snapshots here. Keep every original ZIP as
