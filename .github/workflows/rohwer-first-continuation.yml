@@ -1,0 +1,94 @@
+name: Rohwer first diagnostic continuation
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - '.github/workflows/rohwer-first-continuation.yml'
+      - 'python/scripts/continue_rohwer_first.py'
+      - 'python/scripts/collect_rohwer_first_continuation.py'
+      - 'python/tests/test_rohwer_first_continuation.py'
+      - 'python/tests/test_rohwer_first_continuation_collection.py'
+      - 'python/results/catalog-breaking-rohwer-first-continuation-20261121/**'
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [test, compute]
+        default: test
+        description: Validate or continue all 32 original partitions with preserved evidence
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Verify fixed parent identities and frozen numerical runtime
+        run: uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_first.py check
+      - name: Test full-grid auditing, failure preservation and continuation scheduling
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_rohwer_first_continuation.py tests/test_rohwer_breaking_collection.py
+          tests/test_rohwer_first_continuation_collection.py
+          tests/test_rohwer_breaking_diagnostics.py tests/test_scipy_breaking_diagnostic.py
+          tests/test_scipy_breaking_audit.py
+  compute:
+    if: ${{ inputs.operation == 'compute' }}
+    needs: validation
+    name: rohwer-first-continuation-${{ matrix.index }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+    defaults:
+      run:
+        working-directory: python
+    env:
+      PARTITION_INDEX: ${{ matrix.index }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Download and fully reaudit the immutable original checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          artifact_id=$(uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_first.py artifact --index "$PARTITION_INDEX")
+          gh api "repos/m9h/GRN_ODE/actions/artifacts/$artifact_id/zip" > parent.zip
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_first.py restore --index "$PARTITION_INDEX" --archive parent.zip --output "results/rohwer-first-continuation/partition-$PARTITION_INDEX"
+      - name: Continue untouched and partial branches with unchanged requests
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_first.py
+          compute --index "$PARTITION_INDEX" --budget 19200
+          --output "results/rohwer-first-continuation/partition-$PARTITION_INDEX"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: rohwer-first-continuation-BIOMD0000000038-partition-${{ matrix.index }}-attempt-${{ github.run_attempt }}
+          path: python/results/rohwer-first-continuation/partition-${{ matrix.index }}/
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 90
