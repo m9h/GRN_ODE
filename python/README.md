@@ -1,5 +1,10 @@
 # Learning and memory experiments in SBML networks
 
+The [complete Ueda breaking-case audit](results/catalog-breaking-ueda-complete-20261121/README.md)
+now validates all 302 cases: 298 original passes plus four recoveries checked
+against 1,292 full trajectories. The result retains the original failures and
+documents the remaining raw-evidence publication work.
+
 This code reproduces selected demonstrations from Biswas, Clawson and Levin,
 [Learning in Transcriptional Network Models: Computational Discovery of Pathway-Level Memory and Effective Interventions](https://doi.org/10.3390/ijms24010285).
 The question is whether a network's response to an input depends on its previous
