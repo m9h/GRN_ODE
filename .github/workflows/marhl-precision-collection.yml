@@ -1,9 +1,9 @@
-name: Marhl complete artifact and case audit
+name: Marhl missing-output recovery and complete case audit
 permissions:
   contents: read
 on:
   push:
-    branches: [kinetics-marhl-precision-collection]
+    branches: [kinetics-marhl-no-output-recovery]
   pull_request:
     paths:
       - 'python/grn_memory/marhl_collection.py'
@@ -11,15 +11,34 @@ on:
       - 'python/scripts/collect_marhl_precision.py'
       - 'python/tests/test_marhl_collection.py'
       - 'python/tests/test_marhl_cases.py'
+      - 'python/grn_memory/marhl_missing_output.py'
+      - 'python/scripts/run_marhl_missing_output.py'
+      - 'python/tests/test_marhl_missing_output.py'
       - '.github/workflows/marhl-precision-collection.yml'
   workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [validate, compute]
+        default: validate
+        description: Validate or recover all sixteen cancelled tasks with absent outputs
+      resume_run:
+        type: string
+        default: ''
+        description: Exact previous recovery run for checkpoint continuation
+      task_indices:
+        type: string
+        default: ''
+        description: Optional explicit subset, available only for checkpoint continuation
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
 jobs:
-  complete-artifact-and-case-audit:
+  marhl-full-precision:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
+    outputs:
+      tasks: ${{ steps.selection.outputs.tasks }}
     defaults:
       run:
         working-directory: python
@@ -27,6 +46,8 @@ jobs:
       OMP_NUM_THREADS: 1
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Fetch the exact numerical producer and original evidence revisions
         run: |
           git fetch --no-tags --depth=1 origin a3778b8cbb8bfdc16a9ddd4bbe84dd213fdf1022
@@ -38,16 +59,88 @@ jobs:
           python-version: '3.12.13'
       - uses: astral-sh/setup-uv@v5
       - run: uv venv .venv-marhl-audit --python python
-      - run: uv pip install --python .venv-marhl-audit/bin/python -r environments/marhl-checkpoint-requirements.txt
+      - run: uv pip install --python .venv-marhl-audit/bin/python -r environments/marhl-full-precision-requirements.txt
       - name: Verify original scope, transport, continuation prefixes and case mathematics
         run: >-
           .venv-marhl-audit/bin/python -B -m pytest -q
           tests/test_marhl_collection.py tests/test_marhl_cases.py
+          tests/test_marhl_missing_output.py tests/test_marhl_precision.py
+          tests/test_marhl_cloud.py tests/test_marhl_checkpoints.py
+          tests/test_marhl_full_controls.py tests/test_taylor_checkpoints.py tests/test_taylor_reference.py
           --junitxml=results/marhl-collection-tests.xml
       - name: Reproduce the complete original Marhl case inventory
         run: .venv-marhl-audit/bin/python -B scripts/collect_marhl_precision.py check
+      - name: Verify every original missing-output job and frozen numerical source
+        run: .venv-marhl-audit/bin/python -B scripts/run_marhl_missing_output.py check
+      - name: Select all original missing-output tasks or an explicit checkpoint continuation
+        id: selection
+        env:
+          PARENT_RUN: ${{ inputs.resume_run }}
+          TASK_INDICES: ${{ inputs.task_indices }}
+        run: |
+          resume_args=()
+          if [[ -n "$PARENT_RUN" ]]; then
+            resume_args=(--resume-run "$PARENT_RUN")
+          fi
+          .venv-marhl-audit/bin/python -B scripts/run_marhl_missing_output.py select \
+            --task-indices "$TASK_INDICES" "${resume_args[@]}" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: marhl-collection-test-report
           path: python/results/marhl-collection-tests.xml
+  recovery:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.operation == 'compute' }}
+    needs: marhl-full-precision
+    name: marhl-precision-task-${{ matrix.task }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 345
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        task: ${{ fromJSON(needs.marhl-full-precision.outputs.tasks) }}
+    defaults:
+      run:
+        working-directory: python
+    env:
+      OMP_NUM_THREADS: 1
+      HEYOKA_CACHE_DIR: /tmp/marhl-missing-output-compute
+      TASK: ${{ matrix.task }}
+      PARENT_RUN: ${{ inputs.resume_run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv .venv-marhl --python python
+      - run: uv pip install --python .venv-marhl/bin/python -r environments/marhl-full-precision-requirements.txt
+      - name: Verify missing-output provenance and run the unchanged numerical task
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          resume_args=()
+          if [[ -n "$PARENT_RUN" ]]; then
+            resume_args=(--resume-run "$PARENT_RUN")
+          fi
+          timeout --signal=TERM --kill-after=30s 18000s \
+            .venv-marhl/bin/python -u -B scripts/run_marhl_missing_output.py compute \
+            --task "$TASK" "${resume_args[@]}" --output results/marhl-missing-output-task
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: marhl-precision-task-${{ matrix.task }}-attempt-${{ github.run_attempt }}
+          path: |
+            python/results/marhl-missing-output-task/
+            !python/results/marhl-missing-output-task/**/*.tmp
+            !python/results/marhl-missing-output-task/**/*.lock
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90

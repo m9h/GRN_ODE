@@ -44,20 +44,25 @@ def regular(path):
     return path
 
 
-def snapshot(root, run_id, attempt):
+def snapshot(root, run_id, attempt, revision=None):
     require(type(run_id) is int and run_id > 0 and type(attempt) is int and attempt > 0,
             'Exact positive run and attempt required')
     directory = Path(root)/str(run_id)/f'attempt-{attempt}'
     run, jobs, artifacts = [read(regular(directory/(name+'.json'))) for name in ('run', 'jobs', 'artifacts')]
-    require(run['id'] == run_id and run['run_attempt'] == attempt and run['head_sha'] == PRODUCER
-            and run['path'] == cloud.WORKFLOW and run['event'] == 'workflow_dispatch',
+    expected_revision, workflow = PRODUCER, cloud.WORKFLOW
+    if revision is not None:
+        from . import marhl_missing_output as recovery
+        recovery.source_at_revision(revision)
+        expected_revision, workflow = revision, recovery.WORKFLOW
+    require(run['id'] == run_id and run['run_attempt'] == attempt and run['head_sha'] == expected_revision
+            and run['path'] == workflow and run['event'] == 'workflow_dispatch',
             'Selected workflow run, attempt or frozen source differs')
     for data, field in ((jobs, 'jobs'), (artifacts, 'artifacts')):
         require(type(data['total_count']) is int and data['total_count'] == len(data[field])
                 and len({row['id'] for row in data[field]}) == len(data[field]),
                 'Complete unique API inventory required: '+field)
     for job in jobs['jobs']:
-        require(job['run_id'] == run_id and job['run_attempt'] == attempt and job['head_sha'] == PRODUCER,
+        require(job['run_id'] == run_id and job['run_attempt'] == attempt and job['head_sha'] == expected_revision,
                 'Job run, attempt or source differs')
     gates = [j for j in jobs['jobs'] if j['name'] == 'marhl-full-precision']
     require(len(gates) == 1 and gates[0]['status'] == 'completed' and gates[0]['conclusion'] == 'success',
@@ -101,10 +106,19 @@ def validate_selection(selection, plan):
             'Selection identity or complete scope differs')
     require([r['index'] for r in selection['selected']] == list(range(plan['task_count'])),
             'Every original task must appear exactly once in order')
+    recovery_context = None
+    if any('recovery_revision' in row for row in selection['selected']):
+        from . import marhl_missing_output as recovery
+        recovery_context = recovery.context()
     for row in selection['selected']:
         current, seen = row, set()
         while current is not None:
-            require(set(current) in (FIELDS, FIELDS | {'previous'})
+            fields = FIELDS
+            if 'recovery_revision' in current:
+                require(recovery_context is not None, 'Recovery ancestry cannot be hidden in an original task')
+                recovery.validate_row(current, recovery_context)
+                fields = FIELDS | recovery.RECOVERY_FIELDS
+            require(set(current) in (fields, fields | {'previous'})
                     and all(type(current[k]) is int for k in ('index', 'batch', 'run_id', 'run_attempt', 'job_id'))
                     and current['index'] == row['index'] and current['batch'] == row['index']//plan['batch_size']
                     and min(current['run_id'], current['run_attempt'], current['job_id']) > 0
@@ -185,15 +199,19 @@ def checkpoint_payload(path, report, times, request, trains):
 
 def verify_task(directory, row, plan, inventory):
     execution = read(regular(directory/'execution.json'))
-    expected = {'schema': 1, 'repository': REPOSITORY, 'run_id': row['run_id'],
-                'run_attempt': row['run_attempt'], 'job_id': row['job_id'], 'head_sha': PRODUCER,
-                'workflow_path': cloud.WORKFLOW, 'task_index': row['index'], 'batch': row['batch'],
-                'task_count': plan['task_count'], 'plan_sha256': PLAN_SHA,
-                'inventory_sha256': work.INVENTORY_SHA256, 'evidence_directory': 'evidence'}
-    require(all(execution.get(k) == v for k, v in expected.items()), 'Execution identity differs')
-    require(execution['source_provenance'] == {'source_revision': PRODUCER,
-            'file_sha256': cloud.source_files(), 'implementation_files_differing_from_revision': []},
-            'Producer source provenance differs')
+    if 'recovery_revision' in row:
+        from . import marhl_missing_output as recovery
+        recovery.verify_execution(execution, row, plan)
+    else:
+        expected = {'schema': 1, 'repository': REPOSITORY, 'run_id': row['run_id'],
+                    'run_attempt': row['run_attempt'], 'job_id': row['job_id'], 'head_sha': PRODUCER,
+                    'workflow_path': cloud.WORKFLOW, 'task_index': row['index'], 'batch': row['batch'],
+                    'task_count': plan['task_count'], 'plan_sha256': PLAN_SHA,
+                    'inventory_sha256': work.INVENTORY_SHA256, 'evidence_directory': 'evidence'}
+        require(all(execution.get(k) == v for k, v in expected.items()), 'Execution identity differs')
+        require(execution['source_provenance'] == {'source_revision': PRODUCER,
+                'file_sha256': cloud.source_files(), 'implementation_files_differing_from_revision': []},
+                'Producer source provenance differs')
     parent = row.get('previous')
     require(execution.get('requested_parent_run') == (parent['run_id'] if parent else None),
             'Executed parent differs from the fixed selection')
@@ -228,9 +246,9 @@ def verify_task(directory, row, plan, inventory):
             'error': report.get('error'), 'interruption': report.get('interruption')}
 
 
-def validate_artifact(artifact, run, job, row):
+def validate_artifact(artifact, run, job, row, revision=PRODUCER):
     require(artifact['name'] == row['artifact_name'] and not artifact['expired']
-            and artifact['workflow_run']['id'] == run['id'] and artifact['workflow_run']['head_sha'] == PRODUCER
+            and artifact['workflow_run']['id'] == run['id'] and artifact['workflow_run']['head_sha'] == revision
             and datetime.fromisoformat(artifact['created_at']) >= datetime.fromisoformat(job['started_at'])
             and type(artifact['id']) is int and artifact['id'] > 0
             and type(artifact['size_in_bytes']) is int and 0 < artifact['size_in_bytes'] <= cloud.MAX_ARCHIVE_BYTES
@@ -247,7 +265,8 @@ def check_parent(directory, parent_directory, parent_result):
     for key, value in {'parent_run_id': parent_result['run_id'], 'parent_run_attempt': parent_result['run_attempt'],
             'parent_job_id': parent_result['job_id'], 'artifact_id': parent_result['artifact_id'],
             'archive_sha256': parent_result['archive_sha256'], 'archive_bytes': parent_result['archive_bytes'],
-            'archived_file_sha256': parent_result['extracted_file_sha256'], 'parent_revision': PRODUCER,
+            'archived_file_sha256': parent_result['extracted_file_sha256'],
+            'parent_revision': parent_result.get('recovery_revision', PRODUCER),
             'task_index': parent_result['index']}.items():
         require(last.get(key) == value, 'Restoration lineage differs: '+key)
     old = read(parent_directory/'evidence/report.json')
@@ -273,13 +292,13 @@ def collect(selection_path, snapshots, archives, output):
     output.mkdir(parents=True)
     shutil.copyfile(selection_path, output/'selection.json')
     memo, preserved = {}, {}
-    cached_snapshot = lru_cache(maxsize=None)(lambda run, attempt: snapshot(snapshots, run, attempt))
+    cached_snapshot = lru_cache(maxsize=None)(lambda run, attempt, revision: snapshot(snapshots, run, attempt, revision))
 
     def collect_one(row):
         key = (row['run_id'], row['run_attempt'], row['index'])
         if key in memo:
             return memo[key]
-        run, jobs, artifacts, source = cached_snapshot(*key[:2])
+        run, jobs, artifacts, source = cached_snapshot(*key[:2], row.get('recovery_revision'))
         require({k: row[k] for k in FIELDS} == task_binding(row['index'], row['batch'], run, jobs),
                 'Selected task job differs from the original API inventory')
         stamp = f'{key[0]}/attempt-{key[1]}'
@@ -289,6 +308,8 @@ def collect(selection_path, snapshots, archives, output):
         job = next(j for j in jobs if j['id'] == row['job_id'])
         result = {**{k: row[k] for k in FIELDS}, 'job_status': job['status'], 'job_conclusion': job['conclusion'],
                   'status': 'pending', 'complete_array_verified': False}
+        if 'recovery_revision' in row:
+            result.update(recovery_revision=row['recovery_revision'], missing_output_parent=row['missing_output_parent'])
         if job['status'] != 'completed':
             result['pending_reason'] = 'job_'+job['status']
             memo[key] = result
@@ -300,7 +321,7 @@ def collect(selection_path, snapshots, archives, output):
             memo[key] = result
             return result
         artifact = matches[0]
-        validate_artifact(artifact, run, job, row)
+        validate_artifact(artifact, run, job, row, revision=row.get('recovery_revision', PRODUCER))
         archive = regular(archives/f'artifact-{artifact["id"]}.zip')
         require(archive.stat().st_size == artifact['size_in_bytes'] and 'sha256:'+digest(archive) == artifact['digest'],
                 'Original archive size or server SHA-256 differs')
@@ -316,6 +337,16 @@ def collect(selection_path, snapshots, archives, output):
                       archive_bytes=artifact['size_in_bytes'], extracted_file_sha256=files,
                       evidence_directory=str((directory/'evidence').resolve()))
         result.update(verify_task(directory, row, plan, inventory))
+        if 'missing_output_parent' in row:
+            missing = row['missing_output_parent']
+            prior_run, prior_jobs, prior_artifacts, _ = cached_snapshot(missing['run_id'], missing['run_attempt'], None)
+            from . import marhl_missing_output as recovery
+            recovery.validate_missing_parent(prior_run, next(j for j in prior_jobs if j['id'] == missing['job_id']),
+                                             prior_artifacts, missing)
+            prior = collect_one(missing)
+            require(prior.get('pending_reason') == 'missing_artifact' and 'artifact_id' not in prior,
+                    'Missing-output parent no longer has the recorded absent output')
+            result['cancelled_parent_job_preserved'] = missing['job_id']
         if 'previous' in row:
             parent = collect_one(row['previous'])
             require('artifact_id' in parent, 'Original parent artifact is required')
