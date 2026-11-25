@@ -10,6 +10,7 @@ on:
       - 'python/scripts/collect_rohwer_checkpoint.py'
       - 'python/tests/test_rohwer_checkpoint*.py'
       - 'python/results/catalog-breaking-rohwer-checkpoint-continuation-20261124/**'
+      - 'python/results/catalog-breaking-rohwer-checkpoint-continuation-20261125/**'
       - 'python/scripts/collect_rohwer_first_continuation.py'
       - 'python/tests/test_rohwer_first_continuation.py'
       - 'python/tests/test_rohwer_first_continuation_collection.py'
@@ -25,6 +26,10 @@ on:
 permissions:
   contents: read
   actions: read
+
+env:
+  ROHWER_BINDINGS: results/catalog-breaking-rohwer-checkpoint-continuation-20261125
+  ROHWER_BINDING_SHA256: 700ff6ac98c8caf12111527e508b6cc8a0f803a2068f2eaa3cf22c714960bb76
 
 jobs:
   validation:
@@ -43,7 +48,7 @@ jobs:
       - uses: astral-sh/setup-uv@v5
       - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
       - name: Verify fixed parent identities and frozen numerical runtime
-        run: uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_checkpoint.py check
+        run: uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_checkpoint.py check --bindings "$ROHWER_BINDINGS" --binding-sha "$ROHWER_BINDING_SHA256"
       - name: Test full-grid auditing, failure preservation and continuation scheduling
         run: >-
           uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
@@ -81,14 +86,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          artifact_id=$(uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_checkpoint.py artifact --index "$PARTITION_INDEX")
+          artifact_id=$(uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_checkpoint.py artifact --index "$PARTITION_INDEX" --bindings "$ROHWER_BINDINGS" --binding-sha "$ROHWER_BINDING_SHA256")
           gh api "repos/m9h/GRN_ODE/actions/artifacts/$artifact_id/zip" > parent.zip
-          uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_checkpoint.py restore --index "$PARTITION_INDEX" --archive parent.zip --output "results/rohwer-checkpoint-continuation/partition-$PARTITION_INDEX"
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_checkpoint.py restore --index "$PARTITION_INDEX" --archive parent.zip --output "results/rohwer-checkpoint-continuation/partition-$PARTITION_INDEX" --bindings "$ROHWER_BINDINGS" --binding-sha "$ROHWER_BINDING_SHA256"
       - name: Continue untouched and partial branches with unchanged requests
         run: >-
           uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_checkpoint.py
           compute --index "$PARTITION_INDEX" --budget 19200
-          --output "results/rohwer-checkpoint-continuation/partition-$PARTITION_INDEX"
+          --output "results/rohwer-checkpoint-continuation/partition-$PARTITION_INDEX" --bindings "$ROHWER_BINDINGS" --binding-sha "$ROHWER_BINDING_SHA256"
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
