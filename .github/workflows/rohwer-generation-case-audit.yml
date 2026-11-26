@@ -1,0 +1,59 @@
+name: Validate complete Rohwer checkpoint case assembly
+
+on:
+  push:
+    paths:
+      - '.github/workflows/rohwer-generation-case-audit.yml'
+      - 'python/scripts/audit_rohwer_generation_cases.py'
+      - 'python/scripts/collect_rohwer_diagnostic_generations.py'
+      - 'python/scripts/continue_rohwer_first.py'
+      - 'python/scripts/collect_rohwer_first_continuation.py'
+      - 'python/scripts/continue_rohwer_checkpoint.py'
+      - 'python/scripts/collect_rohwer_checkpoint.py'
+      - 'python/tests/test_rohwer_diagnostic_generations.py'
+      - 'python/results/catalog-breaking-rohwer-generation-case-audit-20261126/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Test generation ancestry, immutable arrays and complete-case routing
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_rohwer_diagnostic_generations.py tests/test_rohwer_checkpoint_continuation.py
+          tests/test_rohwer_checkpoint_collection.py tests/test_rohwer_first_continuation.py
+          tests/test_rohwer_first_continuation_collection.py tests/test_rohwer_full_case_audit.py
+          tests/test_scipy_breaking_case_audit.py tests/test_rohwer_later_continuation_collection.py
+      - name: Download complete pinned scientific inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download kinetics-rohwer-full-controls-20261118 --repo m9h/GRN_ODE --dir results/rohwer-full-controls-download
+      - name: Validate the full 11674-branch and 123-case scope
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/audit_rohwer_generation_cases.py check
+          --inputs results/rohwer-full-controls-download --output results/rohwer-generation-scope.json
+      - name: Check captured job identities and frozen checkpoint validators
+        run: |
+          uv run --locked --extra test --extra jaxkineticmodel python - <<'PY'
+          from collections import Counter
+          from scripts.collect_rohwer_diagnostic_generations import DiagnosticGenerations
+          value=DiagnosticGenerations('results/catalog-breaking-rohwer-generation-case-audit-20261126/diagnostic-generations.example.json')
+          assert Counter(value.for_index(i).generation for i in range(32))=={2:15,3:17}
+          print({'partitions':32,'branches':750,'metadata_only':True,'numerical_integrations_performed':0})
+          PY
