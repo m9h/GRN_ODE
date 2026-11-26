@@ -155,12 +155,17 @@ def preserve_snapshots(name, sources, output):
     return {'directory': str(destination.resolve()), 'sha256': hashes}
 
 
-def verify_stage(name, paths, context, first_plan, input_validation, output, store):
+def verify_stage(name, paths, context, first_plan, input_validation, output, store, *, recovery=None):
     """Recheck original ZIPs and complete branch reports; never trust status.json."""
     module = first if name == 'diagnostics' else later
     plan = first_plan if name == 'diagnostics' else context[0]
     selection, batches, sources = stage_snapshots(name, paths, plan)
     preserved = preserve_snapshots(name, sources, output)
+    recovery_provenance = None
+    if recovery is not None:
+        require(name == 'controls', 'Missing-output recovery applies only to later controls')
+        recovery.validate_original(selection, batches)
+        recovery_provenance = recovery.preserve(output)
     script = 'run_rohwer_breaking_diagnostics.py' if name == 'diagnostics' else 'run_rohwer_later_controls.py'
     source = first.RUN['head_sha'] if name == 'diagnostics' else later.SOURCE
     runner_sha = hashlib.sha256(subprocess.check_output(['git', 'show', source +
@@ -172,8 +177,14 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
         try:
             snapshot = batches[0 if batch is None else batch]
             run, jobs, artifacts = (snapshot[key] for key in ('run', 'jobs', 'artifacts'))
+            selected_module, selected_cache, selected_runner = module, paths['cache'], runner_sha
+            replaced = recovery is not None and row['index'] == 23
+            if replaced:
+                row = recovery.row
+                run, jobs, artifacts = recovery.run, recovery.jobs, recovery.artifacts
+                selected_module, selected_cache, selected_runner = recovery.module, recovery.paths['cache'], recovery.runner_sha
             job = next(j for j in jobs['jobs'] if j['id'] == row['job_id'])
-            module.validate_job(row, run, job)
+            selected_module.validate_job(row, run, job)
             if job['status'] != 'completed':
                 pending.append({**lineage, 'reason': 'job_' + job['status']})
                 continue
@@ -183,8 +194,8 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
                 continue
             require(len(matches) == 1, 'Duplicate selected artifact')
             artifact = matches[0]
-            module.validate_artifact(row, run, job, artifact)
-            directory = paths['cache'] / str(run['id']) / 'attempt-1' / f'artifact-{artifact["id"]}'
+            selected_module.validate_artifact(row, run, job, artifact)
+            directory = selected_cache / str(run['id']) / 'attempt-1' / f'artifact-{artifact["id"]}'
             archive, evidence = directory / 'download.zip', directory / 'evidence'
             require(archive.is_file() and not archive.is_symlink() and evidence.is_dir()
                     and not evidence.is_symlink() and not directory.is_symlink(), 'Original cached ZIP or evidence is missing')
@@ -194,7 +205,7 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
             if name == 'diagnostics':
                 checked = first.verify_partition(evidence, row, FIRST_INPUTS, plan, runner_sha)
             else:
-                checked = later.verify_partition(evidence, row, context, runner_sha, input_validation)
+                checked = selected_module.verify_partition(evidence, row, context, selected_runner, input_validation)
             require([b['record_id'] for b in checked['branches']] == [b['record_id'] for b in row['branches']],
                     'Verified branch inventory differs from the exact selected partition')
             for branch in checked['branches']:
@@ -214,12 +225,17 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
                 'complete_selected_diagnostics': checked['complete_selected_diagnostics'],
                 'producer_status': checked['producer_status'],
                 'unverified_checkpoint_files': checked.get('unverified_checkpoint_files', [])})
+            if replaced:
+                partitions[-1].update(recovery_run=recovery.binding['recovery_run'], original_missing_job_id=135270755047)
         except (ValueError, KeyError, TypeError, OSError, zipfile.BadZipFile) as error:
             errors.append({**lineage, 'error': f'{type(error).__name__}: {error}'})
     require(all(digest(path) == preserved['sha256'][key] for key, path in sources.items()),
             'Source API evidence changed during audit')
-    return {'runs': [dict(b['run']) for b in batches], 'preserved_api_snapshots': preserved,
-            'partitions': partitions, 'pending_partitions': pending, 'verification_errors': errors}
+    result = {'runs': [dict(b['run']) for b in batches], 'preserved_api_snapshots': preserved,
+              'partitions': partitions, 'pending_partitions': pending, 'verification_errors': errors}
+    if recovery_provenance is not None:
+        result['missing_output_recovery'] = recovery_provenance
+    return result
 
 
 def replay(inventory, branches, captured, reference, config):
@@ -251,7 +267,7 @@ def discrepancies(bundle, store):
     return results
 
 
-def audit(bundle, sources_path, output):
+def audit(bundle, sources_path, output, *, controls_recovery=None):
     require(not output.exists(), 'Use a new full-case audit directory')
     context, first_plan = load_context(bundle)
     selected = scope(context, first_plan)
@@ -267,6 +283,13 @@ def audit(bundle, sources_path, output):
             paths = resolve_descriptor(sources[name], parent)
             protected.extend(paths[k] for k in ('snapshots', 'cache'))
             protected_files.append(paths['selection'])
+    recovery = None
+    if controls_recovery is not None:
+        from scripts.rohwer_missing_output import Recovery
+        require(sources['controls'] is not None, 'The full original controls selection is still required')
+        recovery = Recovery(controls_recovery)
+        protected.extend(recovery.paths[k] for k in ('snapshots', 'cache'))
+        protected_files.extend([Path(controls_recovery).resolve(), recovery.paths['binding']])
     require(not output.is_symlink() and not any(output.resolve().is_relative_to(path) for path in protected),
             'Audit output must be outside the input evidence directories')
     require(not any(path.is_relative_to(output.resolve()) for path in protected_files),
@@ -285,7 +308,7 @@ def audit(bundle, sources_path, output):
             continue
         try:
             stages[name] = verify_stage(name, resolve_descriptor(sources[name], parent), context, first_plan,
-                                       validation, output, store)
+                                       validation, output, store, **({'recovery': recovery} if name == 'controls' and recovery else {}))
             errors.extend({'stage': name, **e} for e in stages[name]['verification_errors'])
         except (ValueError, KeyError, TypeError, OSError, zipfile.BadZipFile) as error:
             errors.append({'stage': name, 'error': f'{type(error).__name__}: {error}'})
@@ -325,6 +348,7 @@ if __name__ == '__main__':
     parser.add_argument('operation', choices=['check', 'audit'])
     parser.add_argument('--inputs', type=Path, required=True)
     parser.add_argument('--sources', type=Path)
+    parser.add_argument('--controls-recovery', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.operation == 'check':
@@ -338,6 +362,6 @@ if __name__ == '__main__':
                'numerical_integrations_performed': 0})
     else:
         require(args.sources is not None, 'Declare all evidence stages in a sources JSON file')
-        result = audit(args.inputs, args.sources, args.output)
+        result = audit(args.inputs, args.sources, args.output, controls_recovery=args.controls_recovery)
         print({k: result[k] for k in ('status', 'complete_branch_outcomes', 'verified_arrays', 'recovered_selected_cases')})
         sys.exit(1 if result['verification_errors'] else 0)

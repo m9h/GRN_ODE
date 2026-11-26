@@ -1,0 +1,120 @@
+name: Recover Rohwer missing output
+
+on:
+  push:
+    paths:
+      - '.github/workflows/rohwer-missing-output-recovery.yml'
+      - 'python/scripts/rohwer_missing_output.py'
+      - 'python/scripts/audit_rohwer_full_cases.py'
+      - 'python/tests/test_rohwer_missing_output.py'
+      - 'python/results/catalog-breaking-rohwer-missing-output-20261126/**'
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [test, compute]
+        default: test
+        description: Validate or recover only the authenticated missing output
+      partitions:
+        type: string
+        default: '[23]'
+        description: Only missing partition 23; all 512 scientific partitions remain required
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Test full scope, provenance, original arrays and unchanged case replay
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_rohwer_missing_output.py tests/test_rohwer_later_collection.py
+          tests/test_rohwer_full_case_audit.py tests/test_rohwer_later_controls.py
+          tests/test_rohwer_full_controls.py tests/test_scipy_breaking_case_audit.py
+      - name: Download pinned complete case inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release download kinetics-rohwer-full-controls-20261118
+          --repo m9h/GRN_ODE --dir results/rohwer-full-controls-download
+      - name: Verify original missing output, all 512 partitions and frozen runtime
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/rohwer_missing_output.py
+          check --runtime --inputs results/rohwer-full-controls-download
+      - id: matrix
+        name: Select only the authenticated missing output
+        env:
+          RECOVERY_INDICES: ${{ inputs.partitions || '[23]' }}
+        run: |
+          uv run --locked --extra test --extra jaxkineticmodel python - <<'PY'
+          import json, os
+          from scripts.rohwer_missing_output import check_capture, indices
+          check_capture()
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
+              stream.write('matrix=' + json.dumps({'index': indices(os.environ['RECOVERY_INDICES'])}) + '\n')
+          PY
+  compute:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.operation == 'compute' }}
+    needs: validation
+    name: rohwer-later-controls-batch-0-partition-${{ matrix.index }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix: ${{ fromJSON(needs.validation.outputs.matrix) }}
+    defaults:
+      run:
+        working-directory: python
+    env:
+      PARTITION_INDEX: ${{ matrix.index }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Download pinned complete case inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release download kinetics-rohwer-full-controls-20261118
+          --repo m9h/GRN_ODE --dir results/rohwer-full-controls-download
+      - name: Recheck frozen source, complete scope and actual runtime
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/rohwer_missing_output.py
+          check --runtime --inputs results/rohwer-full-controls-download
+      - name: Execute the unchanged original numerical producer
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/run_rohwer_later_controls.py
+          compute --plan results/catalog-breaking-rohwer-later-controls-20261118/plan.json
+          --plan-sha256 571526958023ac93789c4e48924ceb44106e378a1520339569e9bb818e84d98e
+          --inputs results/rohwer-full-controls-download --batch 0 --index "$PARTITION_INDEX" --budget 19200
+          --output "results/rohwer-missing-output/partition-$PARTITION_INDEX"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: rohwer-controls-BIOMD0000000038-batch-0-partition-${{ matrix.index }}-attempt-${{ github.run_attempt }}
+          path: python/results/rohwer-missing-output/partition-${{ matrix.index }}/
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 90
