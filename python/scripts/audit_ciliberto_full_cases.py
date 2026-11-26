@@ -165,7 +165,7 @@ def resolve_descriptor(value, parent):
     return {name: (parent / path).resolve() for name, path in value.items()}
 
 
-def verify_stage(name, paths, context, first_plan, input_validation, output, store, *, archive_provider=None):
+def verify_stage(name, paths, context, first_plan, input_validation, output, store, *, archive_provider=None, recovery=None):
     """Recheck original ZIPs and complete branch reports; never trust status.json."""
     module = first if name == 'diagnostics' else later
     plan = first_plan if name == 'diagnostics' else context[0]
@@ -177,27 +177,42 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
             and artifacts['total_count'] == len(artifacts['artifacts']), 'Complete unique API inventories are required')
     require(module.bind_selection(plan, run, jobs) == selection, 'Fixed source selection differs')
     preserved = later.preserve_snapshots(paths['selection'], snapshots, output)
+    recovery_provenance = None
+    if recovery is not None:
+        require(name == 'controls', 'Missing-output recovery applies only to later controls')
+        recovery.validate_original(selection, run, jobs, artifacts)
+        recovery_provenance = recovery.preserve(output)
     script = 'run_ciliberto_full_diagnostics.py' if name == 'diagnostics' else 'run_ciliberto_later_controls.py'
     runner_sha = hashlib.sha256(subprocess.check_output(['git', 'show', module.RUN['head_sha'] +
         ':python/scripts/' + script], cwd=ROOT)).hexdigest()
     pending, errors, partitions = [], [], []
     for row in selection['selected']:
         try:
-            job = next(j for j in jobs['jobs'] if j['id'] == row['job_id'])
-            module.validate_job(row, run, job)
+            replaced = recovery is not None and row['index'] == 43
+            selected_module, selected_run, selected_jobs, selected_artifacts = module, run, jobs, artifacts
+            selected_cache, selected_runner = paths['cache'], runner_sha
+            if replaced:
+                row = recovery.row
+                selected_module, selected_run = recovery.module, recovery.run
+                selected_jobs, selected_artifacts = recovery.jobs, recovery.artifacts
+                selected_cache, selected_runner = recovery.paths['cache'], recovery.runner_sha
+            job = next(j for j in selected_jobs['jobs'] if j['id'] == row['job_id'])
+            selected_module.validate_job(row, selected_run, job)
             if job['status'] != 'completed':
                 pending.append({'index': row['index'], 'reason': 'job_' + job['status']})
                 continue
-            matches = [a for a in artifacts['artifacts'] if a['name'] == row['artifact_name']]
+            matches = [a for a in selected_artifacts['artifacts'] if a['name'] == row['artifact_name']]
             if not matches:
                 pending.append({'index': row['index'], 'reason': 'no_artifact'})
                 continue
             require(len(matches) == 1, 'Duplicate selected artifact')
             artifact = matches[0]
-            module.validate_artifact(row, run, job, artifact)
-            directory = paths['cache'] / str(run['id']) / 'attempt-1' / f'artifact-{artifact["id"]}'
+            selected_module.validate_artifact(row, selected_run, job, artifact)
+            directory = selected_cache / str(selected_run['id']) / 'attempt-1' / f'artifact-{artifact["id"]}'
             archive, evidence = directory / 'download.zip', directory / 'evidence'
-            transport = (archive_provider(name, row, run, artifact) if archive_provider is not None
+            # The original archive index cannot authorize a different producer.
+            # A replacement uses its separately declared, checksum-bound cache.
+            transport = (archive_provider(name, row, selected_run, artifact) if archive_provider is not None and not replaced
                          else nullcontext((archive, evidence, {})))
             with transport as (archive, evidence, preservation):
                 require(archive.is_file() and not archive.is_symlink() and evidence.is_dir()
@@ -208,7 +223,7 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
                 if name == 'diagnostics':
                     checked = first.verify_partition(evidence, row, FIRST_INPUTS, plan, runner_sha)
                 else:
-                    checked = later.verify_partition(evidence, row, context, runner_sha, input_validation)
+                    checked = selected_module.verify_partition(evidence, row, context, selected_runner, input_validation)
                 for branch in checked['branches']:
                     bid = branch['record_id']
                     require(bid in context[1]['branches'], 'Audited branch is outside full scope')
@@ -227,10 +242,16 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
                     'unverified_checkpoint_files': checked['unverified_checkpoint_files']})
                 if preservation:
                     partitions[-1]['archive_preservation'] = preservation
+                if replaced:
+                    partitions[-1]['recovery_run'] = dict(recovery.binding['recovery_run'])
+                    partitions[-1]['original_missing_job_id'] = row['previous']['job_id']
         except (ValueError, KeyError, TypeError, OSError, zipfile.BadZipFile, subprocess.SubprocessError) as error:
             errors.append({'index': row['index'], 'error': f'{type(error).__name__}: {error}'})
-    return {'run': dict(module.RUN), 'preserved_api_snapshots': preserved,
-            'partitions': partitions, 'pending_partitions': pending, 'verification_errors': errors}
+    result = {'run': dict(module.RUN), 'preserved_api_snapshots': preserved,
+              'partitions': partitions, 'pending_partitions': pending, 'verification_errors': errors}
+    if recovery_provenance is not None:
+        result['missing_output_recovery'] = recovery_provenance
+    return result
 
 
 def replay(inventory, branches, captured, reference, config):
@@ -262,7 +283,7 @@ def discrepancies(bundle, store):
     return results
 
 
-def audit(bundle, sources_path, output, *, archive_providers=None):
+def audit(bundle, sources_path, output, *, archive_providers=None, controls_recovery=None):
     require(not output.exists(), 'Use a new full-case audit directory')
     context, first_plan = load_context()
     selected = scope(context, first_plan)
@@ -278,6 +299,12 @@ def audit(bundle, sources_path, output, *, archive_providers=None):
         if sources[name] is not None:
             paths = resolve_descriptor(sources[name], parent)
             protected.extend(paths[k] for k in ('snapshots', 'cache'))
+    recovery = None
+    if controls_recovery is not None:
+        from scripts.ciliberto_missing_output import Recovery
+        require(sources['controls'] is not None, 'The full original controls selection is still required')
+        recovery = Recovery(controls_recovery)
+        protected.extend(recovery.paths[k] for k in ('snapshots', 'cache'))
     require(not any(output.resolve().is_relative_to(path) for path in protected),
             'Audit output must be outside the input evidence directories')
     output.mkdir(parents=True)
@@ -298,6 +325,8 @@ def audit(bundle, sources_path, output, *, archive_providers=None):
             else:
                 provider = (archive_providers or {}).get(name)
                 options = {'archive_provider': provider} if provider is not None else {}
+                if name == 'controls' and recovery is not None:
+                    options['recovery'] = recovery
                 stages[name] = verify_stage(name, resolve_descriptor(sources[name], parent), context, first_plan,
                                            validation, output, store, **options)
                 errors.extend({'stage': name, **e} for e in stages[name]['verification_errors'])
@@ -343,6 +372,7 @@ if __name__ == '__main__':
     parser.add_argument('--archive-index', type=Path)
     parser.add_argument('--archive-scratch', type=Path)
     parser.add_argument('--archive-budget-gib', type=int, default=16)
+    parser.add_argument('--controls-recovery', type=Path)
     args = parser.parse_args()
     if args.operation == 'check':
         require(not args.output.exists(), 'Use a new scope file')
@@ -362,6 +392,7 @@ if __name__ == '__main__':
             provider = ReleaseArchiveProvider(args.archive_index, args.archive_scratch,
                                               max_bytes=args.archive_budget_gib * 1024**3)
             providers = {stage: provider for stage in provider.index}
-        result = audit(args.inputs, args.sources, args.output, archive_providers=providers)
+        result = audit(args.inputs, args.sources, args.output, archive_providers=providers,
+                       controls_recovery=args.controls_recovery)
         print({k: result[k] for k in ('status', 'complete_branch_outcomes', 'verified_arrays', 'recovered_selected_cases')})
         sys.exit(1 if result['verification_errors'] else 0)
