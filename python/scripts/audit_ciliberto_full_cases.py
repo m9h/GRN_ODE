@@ -7,6 +7,7 @@ modifies producer evidence. It writes a new audit directory on each invocation.
 
 import argparse
 from collections.abc import Mapping
+from contextlib import nullcontext
 from functools import lru_cache
 import hashlib
 from pathlib import Path
@@ -164,7 +165,7 @@ def resolve_descriptor(value, parent):
     return {name: (parent / path).resolve() for name, path in value.items()}
 
 
-def verify_stage(name, paths, context, first_plan, input_validation, output, store):
+def verify_stage(name, paths, context, first_plan, input_validation, output, store, *, archive_provider=None):
     """Recheck original ZIPs and complete branch reports; never trust status.json."""
     module = first if name == 'diagnostics' else later
     plan = first_plan if name == 'diagnostics' else context[0]
@@ -196,32 +197,37 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
             module.validate_artifact(row, run, job, artifact)
             directory = paths['cache'] / str(run['id']) / 'attempt-1' / f'artifact-{artifact["id"]}'
             archive, evidence = directory / 'download.zip', directory / 'evidence'
-            require(archive.is_file() and not archive.is_symlink() and evidence.is_dir()
-                    and not evidence.is_symlink() and not directory.is_symlink(), 'Original cached ZIP or evidence is missing')
-            require(digest(archive) == artifact['digest'].removeprefix('sha256:')
-                    and archive.stat().st_size == artifact['size_in_bytes'], 'Original cached ZIP differs')
-            files = first.verify_zip(archive, evidence)
-            if name == 'diagnostics':
-                checked = first.verify_partition(evidence, row, FIRST_INPUTS, plan, runner_sha)
-            else:
-                checked = later.verify_partition(evidence, row, context, runner_sha, input_validation)
-            for branch in checked['branches']:
-                bid = branch['record_id']
-                require(bid in context[1]['branches'], 'Audited branch is outside full scope')
-                windows = {}
-                if branch['complete_diagnostic']:
-                    independent = branch['independent_audit']
-                    windows = (independent['branches'][0]['windows'] if name == 'diagnostics' else independent['windows'])
-                store.add(bid, {**branch, 'windows': windows, 'origin': context[1]['branch_origins'][bid],
-                               'stage': name, 'partition': row['index'], 'job_id': job['id'],
-                               'job_conclusion': job['conclusion'], 'artifact_id': artifact['id'],
-                               'evidence_directory': str((evidence / bid).resolve())})
-            partitions.append({'index': row['index'], 'job_id': job['id'], 'job_conclusion': job['conclusion'],
-                'artifact_id': artifact['id'], 'archive_sha256': artifact['digest'], 'evidence_sha256': files,
-                'complete_selected_diagnostics': checked['complete_selected_diagnostics'],
-                'producer_status': checked['producer_status'],
-                'unverified_checkpoint_files': checked['unverified_checkpoint_files']})
-        except (ValueError, KeyError, TypeError, OSError, zipfile.BadZipFile) as error:
+            transport = (archive_provider(name, row, run, artifact) if archive_provider is not None
+                         else nullcontext((archive, evidence, {})))
+            with transport as (archive, evidence, preservation):
+                require(archive.is_file() and not archive.is_symlink() and evidence.is_dir()
+                        and not evidence.is_symlink() and not archive.parent.is_symlink(), 'Original cached ZIP or evidence is missing')
+                require(digest(archive) == artifact['digest'].removeprefix('sha256:')
+                        and archive.stat().st_size == artifact['size_in_bytes'], 'Original cached ZIP differs')
+                files = first.verify_zip(archive, evidence)
+                if name == 'diagnostics':
+                    checked = first.verify_partition(evidence, row, FIRST_INPUTS, plan, runner_sha)
+                else:
+                    checked = later.verify_partition(evidence, row, context, runner_sha, input_validation)
+                for branch in checked['branches']:
+                    bid = branch['record_id']
+                    require(bid in context[1]['branches'], 'Audited branch is outside full scope')
+                    windows = {}
+                    if branch['complete_diagnostic']:
+                        independent = branch['independent_audit']
+                        windows = (independent['branches'][0]['windows'] if name == 'diagnostics' else independent['windows'])
+                    store.add(bid, {**branch, 'windows': windows, 'origin': context[1]['branch_origins'][bid],
+                                   'stage': name, 'partition': row['index'], 'job_id': job['id'],
+                                   'job_conclusion': job['conclusion'], 'artifact_id': artifact['id'],
+                                   'evidence_directory': str((evidence / bid).resolve())})
+                partitions.append({'index': row['index'], 'job_id': job['id'], 'job_conclusion': job['conclusion'],
+                    'artifact_id': artifact['id'], 'archive_sha256': artifact['digest'], 'evidence_sha256': files,
+                    'complete_selected_diagnostics': checked['complete_selected_diagnostics'],
+                    'producer_status': checked['producer_status'],
+                    'unverified_checkpoint_files': checked['unverified_checkpoint_files']})
+                if preservation:
+                    partitions[-1]['archive_preservation'] = preservation
+        except (ValueError, KeyError, TypeError, OSError, zipfile.BadZipFile, subprocess.SubprocessError) as error:
             errors.append({'index': row['index'], 'error': f'{type(error).__name__}: {error}'})
     return {'run': dict(module.RUN), 'preserved_api_snapshots': preserved,
             'partitions': partitions, 'pending_partitions': pending, 'verification_errors': errors}
@@ -256,7 +262,7 @@ def discrepancies(bundle, store):
     return results
 
 
-def audit(bundle, sources_path, output):
+def audit(bundle, sources_path, output, *, archive_providers=None):
     require(not output.exists(), 'Use a new full-case audit directory')
     context, first_plan = load_context()
     selected = scope(context, first_plan)
@@ -290,8 +296,10 @@ def audit(bundle, sources_path, output):
             if name == 'published':
                 stages[name] = verify_published((parent / sources[name]).resolve(), context, store)
             else:
+                provider = (archive_providers or {}).get(name)
+                options = {'archive_provider': provider} if provider is not None else {}
                 stages[name] = verify_stage(name, resolve_descriptor(sources[name], parent), context, first_plan,
-                                           validation, output, store)
+                                           validation, output, store, **options)
                 errors.extend({'stage': name, **e} for e in stages[name]['verification_errors'])
         except (ValueError, KeyError, TypeError, OSError, zipfile.BadZipFile) as error:
             errors.append({'stage': name, 'error': f'{type(error).__name__}: {error}'})
@@ -332,6 +340,9 @@ if __name__ == '__main__':
     parser.add_argument('--inputs', type=Path, required=True)
     parser.add_argument('--sources', type=Path)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--archive-index', type=Path)
+    parser.add_argument('--archive-scratch', type=Path)
+    parser.add_argument('--archive-budget-gib', type=int, default=16)
     args = parser.parse_args()
     if args.operation == 'check':
         require(not args.output.exists(), 'Use a new scope file')
@@ -344,6 +355,13 @@ if __name__ == '__main__':
                'numerical_integrations_performed': 0})
     else:
         require(args.sources is not None, 'Declare all evidence stages in a sources JSON file')
-        result = audit(args.inputs, args.sources, args.output)
+        providers = None
+        if args.archive_index is not None:
+            from scripts.archive_release_chunks import ReleaseArchiveProvider
+            require(args.archive_scratch is not None, 'Declare a scratch directory for streaming archives')
+            provider = ReleaseArchiveProvider(args.archive_index, args.archive_scratch,
+                                              max_bytes=args.archive_budget_gib * 1024**3)
+            providers = {stage: provider for stage in provider.index}
+        result = audit(args.inputs, args.sources, args.output, archive_providers=providers)
         print({k: result[k] for k in ('status', 'complete_branch_outcomes', 'verified_arrays', 'recovered_selected_cases')})
         sys.exit(1 if result['verification_errors'] else 0)
