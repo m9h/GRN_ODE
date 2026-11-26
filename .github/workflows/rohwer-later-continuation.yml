@@ -1,0 +1,127 @@
+name: Continue unfinished Rohwer later controls
+
+on:
+  push:
+    paths:
+      - '.github/workflows/rohwer-later-continuation.yml'
+      - 'python/scripts/rohwer_later_continuation_inputs.py'
+      - 'python/scripts/audit_rohwer_resumed_branch.py'
+      - 'python/scripts/continue_rohwer_later.py'
+      - 'python/scripts/collect_rohwer_later_continuation.py'
+      - 'python/scripts/audit_rohwer_full_cases.py'
+      - 'python/tests/test_continue_rohwer_later.py'
+      - 'python/tests/test_rohwer_later_resume_audit.py'
+      - 'python/tests/test_rohwer_later_continuation_collection.py'
+      - 'python/results/catalog-breaking-rohwer-later-continuation-20261126/**'
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [test, compute]
+        default: test
+        description: Continue a bounded batch; retain all 231 unfinished parents and all 512 partitions
+      partition_indices:
+        type: string
+        default: '[0,1,2,3]'
+        description: One to four sorted unique eligible partition indices
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - name: Test full scope, immutable parent data, resume history and case routing
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python -m pytest -q
+          tests/test_continue_rohwer_later.py tests/test_rohwer_later_resume_audit.py
+          tests/test_rohwer_later_continuation_collection.py tests/test_rohwer_missing_output.py
+          tests/test_rohwer_later_collection.py tests/test_rohwer_later_controls.py
+          tests/test_rohwer_full_case_audit.py tests/test_scipy_breaking_case_audit.py
+      - name: Download complete pinned scientific inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download kinetics-rohwer-full-controls-20261118 --repo m9h/GRN_ODE --dir results/rohwer-full-controls-download
+      - name: Check original plan, requests and actual runtime
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_later.py
+          check --inputs results/rohwer-full-controls-download
+      - id: matrix
+        name: Preserve full scope and select a bounded computation batch
+        env:
+          REQUESTED_INDICES: ${{ inputs.partition_indices || '[0,1,2,3]' }}
+        run: |
+          uv run --locked --extra test --extra jaxkineticmodel python - <<'PY'
+          import json, os, subprocess
+          from scripts.collect_rohwer_later_continuation import source_proof, selected_indices
+          from scripts.rohwer_later_continuation_inputs import check_bindings
+          source_proof(subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip())
+          indices=check_bindings()['requirements']['continue_indices']
+          assert len(indices)==231 and 5 not in indices and 23 not in indices
+          requested=selected_indices(os.environ['REQUESTED_INDICES'])
+          with open(os.environ['GITHUB_OUTPUT'],'a') as stream:
+              stream.write('matrix='+json.dumps({'index':requested})+'\n')
+          PY
+  compute:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.operation == 'compute' }}
+    needs: validation
+    name: rohwer-later-continuation-${{ matrix.index }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix: ${{ fromJSON(needs.validation.outputs.matrix) }}
+    defaults:
+      run:
+        working-directory: python
+    env:
+      PARTITION_INDEX: ${{ matrix.index }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python python --locked --extra test --extra jaxkineticmodel
+      - run: gh release download kinetics-rohwer-full-controls-20261118 --repo m9h/GRN_ODE --dir results/rohwer-full-controls-download
+      - name: Download the exact original parent archive
+        run: |
+          artifact_id=$(uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_later.py artifact --inputs results/rohwer-full-controls-download --index "$PARTITION_INDEX")
+          gh api --allow-escape-sequences "repos/m9h/GRN_ODE/actions/artifacts/$artifact_id/zip" > results/rohwer-parent.zip
+      - name: Verify all parent arrays and preserve complete outcomes
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_later.py restore
+          --inputs results/rohwer-full-controls-download --index "$PARTITION_INDEX"
+          --archive results/rohwer-parent.zip --output "results/rohwer-later-continuation/partition-$PARTITION_INDEX"
+      - name: Continue with the unchanged original numerical implementation
+        run: >-
+          uv run --locked --extra test --extra jaxkineticmodel python scripts/continue_rohwer_later.py compute
+          --inputs results/rohwer-full-controls-download --index "$PARTITION_INDEX" --budget 19200
+          --output "results/rohwer-later-continuation/partition-$PARTITION_INDEX"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: rohwer-controls-continuation-partition-${{ matrix.index }}-attempt-${{ github.run_attempt }}
+          path: python/results/rohwer-later-continuation/partition-${{ matrix.index }}/
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 90

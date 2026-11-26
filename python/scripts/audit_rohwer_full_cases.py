@@ -155,7 +155,7 @@ def preserve_snapshots(name, sources, output):
     return {'directory': str(destination.resolve()), 'sha256': hashes}
 
 
-def verify_stage(name, paths, context, first_plan, input_validation, output, store, *, recovery=None):
+def verify_stage(name, paths, context, first_plan, input_validation, output, store, *, recovery=None, continuation=None):
     """Recheck original ZIPs and complete branch reports; never trust status.json."""
     module = first if name == 'diagnostics' else later
     plan = first_plan if name == 'diagnostics' else context[0]
@@ -166,6 +166,12 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
         require(name == 'controls', 'Missing-output recovery applies only to later controls')
         recovery.validate_original(selection, batches)
         recovery_provenance = recovery.preserve(output)
+    continuation_provenance = None
+    if continuation is not None:
+        require(name == 'controls', 'Continuation applies only to later controls')
+        continuation.validate_original(selection, batches)
+        require(recovery is None or recovery.row['index'] not in continuation.indices, 'Conflicting replacement sources')
+        continuation_provenance = continuation.preserve(output)
     script = 'run_rohwer_breaking_diagnostics.py' if name == 'diagnostics' else 'run_rohwer_later_controls.py'
     source = first.RUN['head_sha'] if name == 'diagnostics' else later.SOURCE
     runner_sha = hashlib.sha256(subprocess.check_output(['git', 'show', source +
@@ -183,6 +189,13 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
                 row = recovery.row
                 run, jobs, artifacts = recovery.run, recovery.jobs, recovery.artifacts
                 selected_module, selected_cache, selected_runner = recovery.module, recovery.paths['cache'], recovery.runner_sha
+            selected_continuation = continuation.for_index(row['index']) if continuation is not None else None
+            continued = selected_continuation is not None and selected_continuation.available(row['index'])
+            if continued:
+                row = selected_continuation.binding['selected'][row['index']]
+                run, jobs, artifacts = selected_continuation.run, selected_continuation.jobs, selected_continuation.artifacts
+                selected_module, selected_cache = selected_continuation, selected_continuation.paths['cache']
+                selected_runner = selected_continuation.binding['source_proof']['continuation_files']['scripts/continue_rohwer_later.py']
             job = next(j for j in jobs['jobs'] if j['id'] == row['job_id'])
             selected_module.validate_job(row, run, job)
             if job['status'] != 'completed':
@@ -227,6 +240,9 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
                 'unverified_checkpoint_files': checked.get('unverified_checkpoint_files', [])})
             if replaced:
                 partitions[-1].update(recovery_run=recovery.binding['recovery_run'], original_missing_job_id=135270755047)
+            if continued:
+                partitions[-1].update(continuation_run=selected_continuation.binding['run'],
+                                      original_parent_job_id=row['previous']['job_id'])
         except (ValueError, KeyError, TypeError, OSError, zipfile.BadZipFile) as error:
             errors.append({**lineage, 'error': f'{type(error).__name__}: {error}'})
     require(all(digest(path) == preserved['sha256'][key] for key, path in sources.items()),
@@ -235,6 +251,8 @@ def verify_stage(name, paths, context, first_plan, input_validation, output, sto
               'partitions': partitions, 'pending_partitions': pending, 'verification_errors': errors}
     if recovery_provenance is not None:
         result['missing_output_recovery'] = recovery_provenance
+    if continuation_provenance is not None:
+        result['controls_continuation'] = continuation_provenance
     return result
 
 
@@ -267,7 +285,7 @@ def discrepancies(bundle, store):
     return results
 
 
-def audit(bundle, sources_path, output, *, controls_recovery=None):
+def audit(bundle, sources_path, output, *, controls_recovery=None, controls_continuation=None):
     require(not output.exists(), 'Use a new full-case audit directory')
     context, first_plan = load_context(bundle)
     selected = scope(context, first_plan)
@@ -290,6 +308,15 @@ def audit(bundle, sources_path, output, *, controls_recovery=None):
         recovery = Recovery(controls_recovery)
         protected.extend(recovery.paths[k] for k in ('snapshots', 'cache'))
         protected_files.extend([Path(controls_recovery).resolve(), recovery.paths['binding']])
+    continuation = None
+    if controls_continuation is not None:
+        from scripts.collect_rohwer_later_continuation import ContinuationSet
+        require(sources['controls'] is not None, 'Both original control batches remain required')
+        descriptors = controls_continuation if isinstance(controls_continuation, (list, tuple)) else [controls_continuation]
+        continuation = ContinuationSet(descriptors)
+        for member in continuation.members:
+            protected.extend(member.paths[k] for k in ('snapshots', 'cache'))
+            protected_files.extend([member.descriptor, member.paths['binding']])
     require(not output.is_symlink() and not any(output.resolve().is_relative_to(path) for path in protected),
             'Audit output must be outside the input evidence directories')
     require(not any(path.is_relative_to(output.resolve()) for path in protected_files),
@@ -307,8 +334,12 @@ def audit(bundle, sources_path, output, *, controls_recovery=None):
             stages[name] = {'status': 'not_supplied'}
             continue
         try:
+            options = {}
+            if name == 'controls':
+                if recovery is not None: options['recovery'] = recovery
+                if continuation is not None: options['continuation'] = continuation
             stages[name] = verify_stage(name, resolve_descriptor(sources[name], parent), context, first_plan,
-                                       validation, output, store, **({'recovery': recovery} if name == 'controls' and recovery else {}))
+                                       validation, output, store, **options)
             errors.extend({'stage': name, **e} for e in stages[name]['verification_errors'])
         except (ValueError, KeyError, TypeError, OSError, zipfile.BadZipFile) as error:
             errors.append({'stage': name, 'error': f'{type(error).__name__}: {error}'})
@@ -349,6 +380,7 @@ if __name__ == '__main__':
     parser.add_argument('--inputs', type=Path, required=True)
     parser.add_argument('--sources', type=Path)
     parser.add_argument('--controls-recovery', type=Path)
+    parser.add_argument('--controls-continuation', type=Path, action='append')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.operation == 'check':
@@ -362,6 +394,7 @@ if __name__ == '__main__':
                'numerical_integrations_performed': 0})
     else:
         require(args.sources is not None, 'Declare all evidence stages in a sources JSON file')
-        result = audit(args.inputs, args.sources, args.output, controls_recovery=args.controls_recovery)
+        result = audit(args.inputs, args.sources, args.output, controls_recovery=args.controls_recovery,
+                       controls_continuation=args.controls_continuation)
         print({k: result[k] for k in ('status', 'complete_branch_outcomes', 'verified_arrays', 'recovered_selected_cases')})
         sys.exit(1 if result['verification_errors'] else 0)
