@@ -65,9 +65,14 @@ class GitHub:
         return json.loads(subprocess.check_output(['gh', 'api', endpoint]))
 
     def download(self, endpoint, path):
+        require(re.fullmatch(r'repos/m9h/GRN_ODE/(actions/artifacts/[0-9]+/zip|releases/assets/[0-9]+)',
+                             endpoint), 'Unsupported binary download endpoint')
+        # The Actions ZIP endpoint redirects from a JSON API response and rejects
+        # octet-stream (HTTP 415). Release assets require octet-stream to return
+        # their bytes instead of metadata. Keep the endpoint contracts separate.
+        headers = ['-H', 'Accept: application/octet-stream'] if '/releases/assets/' in endpoint else []
         with path.open('xb') as stream:
-            subprocess.run(['gh', 'api', '--allow-escape-sequences',
-                            '-H', 'Accept: application/octet-stream', endpoint],
+            subprocess.run(['gh', 'api', '--allow-escape-sequences', *headers, endpoint],
                            stdout=stream, check=True)
 
     def assets(self, release_id):

@@ -45,6 +45,21 @@ class FakeGitHub:
             stream.write(self.files[int(endpoint.rsplit('/', 1)[1])])
 
 
+@pytest.mark.parametrize('kind', ['actions/artifacts/123/zip', 'releases/assets/123'])
+def test_binary_endpoint_accept_contracts_differ(kind, tmp_path, monkeypatch):
+    def run(command, *, stdout, check):
+        assert command[-1] == f'repos/{chunks.REPOSITORY}/{kind}' and check
+        if kind.startswith('actions/'):
+            assert '-H' not in command  # Real Actions endpoint rejects octet-stream with HTTP 415.
+        else:
+            assert command[3:5] == ['-H', 'Accept: application/octet-stream']
+        stdout.write(b'original binary payload')
+    monkeypatch.setattr(chunks.subprocess, 'run', run)
+    output = tmp_path / 'download'
+    chunks.GitHub().download(f'repos/{chunks.REPOSITORY}/{kind}', output)
+    assert output.read_bytes() == b'original binary payload'
+
+
 @pytest.fixture
 def archive(tmp_path):
     path = tmp_path / 'original.zip'
