@@ -13,7 +13,32 @@ sys.path.insert(0, str(ROOT))
 from scripts import archive_release_chunks as transport
 
 INPUTS = ROOT / 'results/catalog-breaking-ciliberto-archive-preservation-20261126'
-PLAN_SHA = '60f3c1f1e7e40aae487fbd9b6377c35d9675aa6726b24328045cc26d202a54b2'
+PLAN_SHA = '95709d654abdce1fcea4610b9f92746e4de309175663f6ca310aa2f12097a924'
+PRIOR_PLAN_SHA = '60f3c1f1e7e40aae487fbd9b6377c35d9675aa6726b24328045cc26d202a54b2'
+
+
+def validate_capture_ancestry(plan):
+    """Newly available archives cannot replace or omit earlier identities."""
+    reference = plan['parent_capture']
+    transport.require(reference == {
+        'source_revision': 'b19f222cb6a83f4f4f07ec4b639adc0359b7cbfd',
+        'plan_file': 'prior-plan.json', 'plan_sha256': PRIOR_PLAN_SHA,
+        'archive_count': 177, 'archive_bytes': 434442559593}, 'Prior archive capture identity differs')
+    path = INPUTS / 'prior-plan.json'
+    transport.require(transport.digest(path) == PRIOR_PLAN_SHA, 'Prior archive plan changed')
+    prior = transport.read(path)
+    for key in ('source_run', 'source_selection_sha256', 'required_partitions',
+                'required_later_control_branches', 'required_full_case_branches', 'required_cases'):
+        transport.require(plan[key] == prior[key], 'Original scientific selection changed')
+    transport.require(len(plan['selected']) == len(prior['selected']) == 256, 'All original partitions remain required')
+    for old, current in zip(prior['selected'], plan['selected'], strict=True):
+        for key in ('index', 'job_id', 'release_tag'):
+            transport.require(current[key] == old[key], 'Original archive route changed')
+        if old['artifact'] is not None:
+            transport.require(current['artifact'] is not None, 'Previously captured archive omitted')
+            for key in ('id', 'name', 'size_in_bytes', 'digest', 'workflow_run', 'created_at'):
+                transport.require(current['artifact'][key] == old['artifact'][key],
+                                  'Previously captured archive identity changed')
 
 
 def load_plan():
@@ -24,6 +49,7 @@ def load_plan():
         and plan['required_later_control_branches'] == 6859
         and plan['required_full_case_branches'] == 7334 and plan['required_cases'] == 74,
         'The complete original scientific scope is required')
+    validate_capture_ancestry(plan)
     return plan
 
 

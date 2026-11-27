@@ -1,13 +1,15 @@
 # Bounded storage for the complete Ciliberto audit
 
-The pinned 26 November 2026 snapshot contains **177 original ZIPs totaling
-434,442,559,593 bytes**. The audit machine had 108,544,000,000 bytes free. Downloading
-and extracting every archive into the old persistent cache cannot fit. These
+The refreshed 27 November 2026 snapshot contains **198 original ZIPs totaling
+486,059,082,836 bytes**. The previous 177-archive plan is retained verbatim in
+`prior-plan.json`; validation requires every earlier artifact identity and the
+complete original partition selection to remain unchanged. Downloading and
+extracting every archive into the persistent local cache cannot fit. These
 scripts change transport and cache lifetime; the models, solvers, environments,
 requests, grids, numerical comparisons, and case scoring remain unchanged.
 
 The complete scientific selection is still **256 partitions / 6,859 later
-controls / 7,334 total branches / 74 cases**. The snapshot explicitly retains 78
+controls / 7,334 total branches / 74 cases**. The snapshot explicitly retains 57
 pending partitions and partition 43's missing artifact. GitHub reports that its
 runner lost communication and its upload step was skipped. That is missing
 evidence, not a numerical failure result.
@@ -19,6 +21,12 @@ all API snapshots, actual jobs, archive metadata, and the complete scientific
 scope with the existing frozen collectors. The new workflow's `partitions`
 input selects archive transfers only. Its default `[0]` is a transport pilot;
 it cannot reduce the scientific selection or produce a case pass.
+
+Partition 0 already has an accepted cloud preservation job. Partition 194 has
+a separate local transfer pilot using the same transport code. Check their
+current receipts before selecting a new transfer batch; omit archives already
+preserved or covered by an accepted pending job. Capturing 198 archive records
+does not mean those archives have been preserved or scientifically audited.
 
 Each cloud job downloads one original artifact and verifies its exact size and
 SHA-256. `archive_release_chunks.py` publishes it in 500 MiB pieces, checks
